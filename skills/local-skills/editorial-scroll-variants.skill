@@ -1,0 +1,422 @@
+# editorial-scroll-variants.skill
+
+> **Tipo:** Local Skill
+> **Dominio:** scroll-animation · editorial-layout · pattern-library
+> **Acao:** escolher · adaptar · validar
+> **Fonte:** https://gsap.com/docs/v3/Plugins/ScrollTrigger/
+> **Quando usar:** Quando o projeto pedir variacoes de scroll editorial, como cards alternados, trilha dupla, imagens passando verticalmente ou parallax leve sem perder clareza e ritmo premium
+
+---
+
+## Proposito
+
+Oferecer variacoes reutilizaveis de sections editoriais com scroll travado.
+
+Esta skill entra quando a direcao ja esta clara, mas a composicao ainda nao:
+
+- cards alternados ou empilhados
+- duas trilhas de imagens
+- parallax leve entre camadas
+- final fixando a ultima imagem ou ultimo bloco visual
+
+Ela complementa `editorial-scroll-gallery.skill`.
+
+Use esta skill para escolher o padrao certo antes de implementar.
+
+---
+
+## Quando usar
+
+Use quando o usuario pedir:
+
+- "uma variacao mais editorial"
+- "fotos em duas colunas"
+- "cards subindo com ritmos diferentes"
+- "parallax leve, sem parecer efeito gratuito"
+- "quero a mesma logica sticky, mas com outro desenho"
+
+Nao usar quando a necessidade for apenas uma galeria vertical simples. Nesse caso, prefira `editorial-scroll-gallery.skill`.
+
+---
+
+## Como decidir o padrao
+
+| Objetivo visual | Padrao recomendado |
+|---|---|
+| Leitura limpa com uma unica narrativa | **Trilha unica editorial** |
+| Mais ritmo e assimetria visual | **Cards alternados** |
+| Volume maior de imagens e sensacao de revista | **Trilha dupla** |
+| Profundidade sutil sem excesso de motion | **Parallax leve em camadas** |
+
+Regra:
+
+1. escolha o padrao mais simples que sustenta a narrativa
+2. use `translateY` como movimento principal
+3. use `opacity` e `scale` apenas como apoio
+4. simplifique em tablet/mobile
+
+---
+
+## Padrao 1 - Cards alternados
+
+Bom para:
+
+- marcas de moda
+- portfolios
+- landing pages com 3 a 5 imagens fortes
+
+Estrutura:
+
+```html
+<section class="editorial-rail editorial-rail--alternating">
+  <div class="editorial-rail-stage">
+    <div class="editorial-rail-copy">...</div>
+
+    <div class="editorial-rail-window">
+      <div class="editorial-rail-track">
+        <figure class="editorial-card">...</figure>
+        <figure class="editorial-card editorial-card--offset">...</figure>
+        <figure class="editorial-card">...</figure>
+        <figure class="editorial-card editorial-card--offset">...</figure>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+CSS base:
+
+```css
+.editorial-rail {
+  height: 320vh;
+  overflow-x: clip;
+}
+
+.editorial-rail-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(18rem, 28rem) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: center;
+  overflow: hidden;
+}
+
+.editorial-rail-window {
+  height: min(82vh, 48rem);
+  overflow: hidden;
+}
+
+.editorial-rail-track {
+  display: grid;
+  gap: 1rem;
+}
+
+.editorial-card {
+  width: min(92%, 26rem);
+  aspect-ratio: 4 / 5;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.editorial-card--offset {
+  margin-left: auto;
+  width: min(82%, 22rem);
+}
+```
+
+JS base:
+
+```js
+gsap.to(".editorial-rail-track", {
+  yPercent: -52,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".editorial-rail",
+    start: "top top",
+    end: "bottom bottom",
+    scrub: 1,
+  },
+});
+```
+
+Escolha esse padrao quando a assimetria visual for parte do resultado.
+
+---
+
+## Padrao 2 - Trilha dupla
+
+Bom para:
+
+- colecoes maiores
+- storytelling com mais densidade visual
+- quando uma unica coluna parecer pobre
+
+Estrutura:
+
+```html
+<section class="dual-gallery">
+  <div class="dual-gallery-stage">
+    <div class="dual-gallery-copy">...</div>
+
+    <div class="dual-gallery-visual">
+      <div class="dual-gallery-column dual-gallery-column--a">...</div>
+      <div class="dual-gallery-column dual-gallery-column--b">...</div>
+    </div>
+  </div>
+</section>
+```
+
+CSS base:
+
+```css
+.dual-gallery {
+  height: 340vh;
+  overflow-x: clip;
+}
+
+.dual-gallery-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(18rem, 28rem) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: center;
+  overflow: hidden;
+}
+
+.dual-gallery-visual {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.dual-gallery-column {
+  display: grid;
+  gap: 1rem;
+}
+
+.dual-gallery-column img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 1.25rem;
+  display: block;
+}
+```
+
+JS base:
+
+```js
+const dualTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".dual-gallery",
+    start: "top top",
+    end: "bottom bottom",
+    scrub: 1.1,
+  },
+});
+
+dualTl
+  .fromTo(".dual-gallery-column--a", { yPercent: 18 }, { yPercent: -30 }, 0)
+  .fromTo(".dual-gallery-column--b", { yPercent: 34 }, { yPercent: -54 }, 0);
+```
+
+Escolha esse padrao quando quiser mais volume e um ritmo de revista, mas sem cair em grid estatico.
+
+---
+
+## Padrao 3 - Parallax leve em camadas
+
+Bom para:
+
+- paginas premium com menos imagens
+- quando o foco esta em profundidade sutil
+- quando duas velocidades ja resolvem sem precisar de duas trilhas completas
+
+Estrutura:
+
+```html
+<section class="layered-editorial">
+  <div class="layered-editorial-stage">
+    <div class="layered-editorial-copy">...</div>
+
+    <div class="layered-editorial-visual">
+      <figure class="layered-card layered-card--back">...</figure>
+      <figure class="layered-card layered-card--front">...</figure>
+    </div>
+  </div>
+</section>
+```
+
+CSS base:
+
+```css
+.layered-editorial {
+  height: 300vh;
+  overflow-x: clip;
+}
+
+.layered-editorial-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(18rem, 28rem) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: center;
+  overflow: hidden;
+}
+
+.layered-editorial-visual {
+  position: relative;
+  height: min(82vh, 48rem);
+}
+
+.layered-card {
+  position: absolute;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.layered-card--back {
+  inset: 8% 18% 12% 8%;
+}
+
+.layered-card--front {
+  inset: 22% 4% 0 28%;
+}
+```
+
+JS base:
+
+```js
+const layeredTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".layered-editorial",
+    start: "top top",
+    end: "bottom bottom",
+    scrub: 1,
+  },
+});
+
+layeredTl
+  .fromTo(".layered-card--back", { yPercent: 12 }, { yPercent: -18 }, 0)
+  .fromTo(".layered-card--front", { yPercent: 28 }, { yPercent: -36 }, 0)
+  .fromTo(".layered-card--front", { scale: 0.97 }, { scale: 1 }, 0);
+```
+
+Escolha esse padrao quando quiser sofisticação sutil, nao volume.
+
+---
+
+## Como finalizar a sequencia
+
+Voce pode encerrar a narrativa de 3 formas:
+
+1. **Ultima imagem permanece**
+   bom para CTA forte no fim
+
+2. **Ultimo bloco continua visivel parcialmente**
+   bom para sugerir continuidade sem travar demais
+
+3. **Tudo sai e a pagina retoma**
+   bom quando a secao e apenas transicao
+
+Default:
+
+- editorial mais premium: deixe a ultima imagem assentar no fim
+- editorial mais dinamico: deixe o ultimo bloco quase inteiro e continue
+
+---
+
+## Regras visuais
+
+- manter o copy da esquerda mais estavel que o lado visual
+- trabalhar com assimetria, mas sem quebrar o grid
+- usar espacamento generoso e movimento lento
+- evitar escalas agressivas e fades duros
+- evitar 3D, rotações ou skew
+
+---
+
+## Regras tecnicas
+
+- `position: sticky` apenas no stage
+- `translateY` como motor principal
+- `scrub` entre `1` e `1.2` para dar peso
+- `overflow-x: clip` ou controle equivalente
+- `object-fit: cover` em todas as imagens
+- cleanup de triggers em `resize`
+- fallback simples em tablet/mobile
+
+---
+
+## Simplificacao responsiva
+
+Em tablet:
+
+- manter no maximo uma trilha
+- reduzir altura da secao
+- remover offset exagerado entre cards
+
+Em mobile:
+
+- remover sticky pesado
+- deixar tudo em fluxo normal
+- manter apenas pilha vertical de cards
+
+---
+
+## Validacao
+
+- [ ] Verificar se a section trava corretamente no desktop
+- [ ] Verificar se as imagens sobem de baixo para cima
+- [ ] Verificar se o copy fica estavel e legivel
+- [ ] Verificar se o scroll continua normalmente ao final
+- [ ] Verificar se nao ha overflow horizontal
+- [ ] Verificar tablet e mobile com fallback simples
+
+---
+
+## Anti-padroes
+
+- duas trilhas com velocidades muito distantes
+- offsets horizontais exagerados
+- parallax que depende de `scale` forte em vez de deslocamento
+- manter sticky complexo em mobile
+- usar muitas imagens pequenas sem hierarquia
+
+---
+
+## Formato de resposta
+
+```markdown
+## Editorial Scroll Variant
+**Objetivo:** [efeito editorial desejado]
+**Padrao escolhido:** [cards alternados | trilha dupla | parallax leve]
+**Motivo:** [por que esse padrao sustenta melhor a narrativa]
+
+### O que implementar
+1. [estrutura]
+2. [movimento principal]
+3. [fallback responsivo]
+
+### O que validar
+- [sticky desktop]
+- [ritmo visual]
+- [sem overflow]
+```
+
+---
+
+## Skills complementares
+
+- `editorial-scroll-gallery.skill` para a receita base de copy fixa + trilha vertical
+- `responsive-craft.skill` para fallback e breakpoints
+- `emil-design-eng.skill` para ritmo, composicao e polish visual
+- `lenis-scroll.skill` se o projeto ja usar smooth scroll

@@ -1,0 +1,14 @@
+v: "5.1"
+updated: "2026-05-20"
+active: false
+
+feature:
+  id: null
+  name: null
+  path: null
+
+spec:
+  required: false
+
+status:
+  phase: idle

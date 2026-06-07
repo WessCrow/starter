@@ -1,0 +1,279 @@
+---
+name: hyperframes
+description: Criar composições de vídeo em HTML com HyperFrames: cenas, títulos, overlays, captions, voiceover/TTS, transições e animações determinísticas com GSAP. Use quando o pedido envolver vídeo programático em HTML, motion design renderizado em MP4, legendas sincronizadas, ou edição de composições HyperFrames. Para o loop de CLI (`init`, `lint`, `inspect`, `preview`, `render`), seguir o fluxo desta skill.
+---
+
+# HyperFrames
+
+> **Domínio:** video-html · motion-design · render determinístico
+> **Ativado por:** pedidos de vídeo em HTML, composições HyperFrames, captions, cenas animadas, title cards, overlays
+> **Origem:** adaptada de `heygen-com/hyperframes`
+
+---
+
+## O que esta skill faz
+
+Usa **HTML como fonte da verdade** para composições de vídeo:
+
+- estrutura visual em HTML + CSS
+- timing com `data-*`
+- animação com `GSAP`
+- render em MP4/WebM via `npx hyperframes`
+
+Use esta skill para **criar** ou **editar** composições. Não invente uma DSL paralela, nem traduza para React por padrão.
+
+---
+
+## Workflow padrão
+
+### 1. Entender o pedido
+
+Se o pedido for aberto ("faz um vídeo de produto"), confirmar:
+
+- público
+- plataforma/formato (`16:9`, `9:16`, hero, demo, social)
+- duração aproximada
+- prioridade: velocidade, fidelidade de marca, impacto visual, clareza
+
+Se o pedido já for específico ("adiciona title card", "ajusta timing da cena 3"), pular discovery.
+
+### 2. Verificar identidade visual
+
+Antes de escrever HTML:
+
+1. Procurar `design.md` ou `DESIGN.md`
+2. Se existir, usar cores, tipografia e restrições exatas
+3. Se citar fonte custom sem arquivos `.woff2`, avisar o usuário antes
+4. Se não existir, pedir base mínima: mood, light/dark, cores e fontes da marca
+
+**Regra:** não cair em defaults preguiçosos como `#333`, azul genérico, `Roboto`, etc.
+
+### 3. Planejar antes de animar
+
+Definir rapidamente:
+
+- arco narrativo
+- quantidade de cenas
+- ritmo (`rápido-rápido-pausa`, `crescendo`, `hold final`)
+- tracks de vídeo, áudio, overlays e captions
+- onde entram transições
+
+### 4. Layout antes da animação
+
+Monte primeiro o **hero frame** de cada cena: o estado em que os elementos estão totalmente visíveis e corretamente posicionados.
+
+Depois:
+
+- entradas com `gsap.from()`
+- saídas com `gsap.to()`
+- em composições multi-cena, a transição faz a saída da cena
+
+**Regra de layout:** contêiner de conteúdo deve preencher a cena com `width: 100%`, `height: 100%`, `padding`, `gap` e `box-sizing: border-box`. Use `position: absolute` só para decorativos, não como base de layout.
+
+---
+
+## Estrutura mínima
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="intro-video"
+      data-start="0"
+      data-duration="8"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div
+        id="title-card"
+        class="clip"
+        data-start="0"
+        data-duration="3"
+        data-track-index="1"
+      >
+        <h1 class="title">Launch faster</h1>
+      </div>
+
+      <video
+        id="bg-video"
+        data-start="0"
+        data-duration="8"
+        data-track-index="0"
+        src="intro.mp4"
+        muted
+        playsinline
+      ></video>
+
+      <audio
+        id="music"
+        data-start="0"
+        data-duration="8"
+        data-track-index="2"
+        data-volume="0.5"
+        src="music.wav"
+      ></audio>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        tl.from(".title", {
+          y: 48,
+          opacity: 0,
+          duration: 0.7,
+          ease: "power3.out",
+        }, 0.2);
+
+        window.__timelines["intro-video"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
+```
+
+---
+
+## Contrato de composição
+
+### Atributos obrigatórios
+
+- `data-composition-id`: id único da composição
+- `data-start`: início em segundos
+- `data-duration`: duração do clip/composição
+- `data-track-index`: track temporal; clips da mesma track não podem se sobrepor
+- `data-width` e `data-height`: dimensões do root
+
+### Regras importantes
+
+- `data-track-index` **não** controla camada visual; isso é `z-index`
+- vídeo deve ser sempre `muted playsinline`
+- áudio deve ser um elemento `audio` separado
+- composição principal vai direto no `body`
+- sub-composição externa usa `data-composition-src`
+
+---
+
+## Regras críticas
+
+### Timeline
+
+- toda timeline começa com `{ paused: true }`
+- sempre registrar em `window.__timelines["id"] = tl`
+- duração vem de `data-duration`, não de tween fake
+- nunca construir timeline de forma assíncrona
+
+### Determinismo
+
+- proibido `Math.random()`, `Date.now()`, relógio real, `setTimeout`
+- se precisar pseudo-aleatoriedade, usar PRNG com seed fixa
+
+### GSAP
+
+- animar só propriedades visuais: `opacity`, `x`, `y`, `scale`, `rotation`, `color`, `backgroundColor`, `borderRadius`, transforms
+- não animar `display`, `visibility`
+- não chamar `play()`, `pause()`, `seek()` em mídia
+- não animar o mesmo atributo do mesmo elemento em timelines conflitantes
+- proibido `repeat: -1`; calcular repetição finita
+
+### Estrutura e mídia
+
+- não usar vídeo como fonte de áudio
+- não aninhar vídeo dentro de um wrapper temporizado indevido
+- não usar `data-layer` nem `data-end`
+- não animar dimensão do elemento `video`; animar um wrapper
+- não esquecer `data-composition-id` no contêiner principal
+
+### Texto
+
+- evitar `br` em texto corrido; preferir `max-width` e quebra natural
+- para vídeo renderizado, preferir:
+  - título `60px+`
+  - body `20px+`
+  - labels `16px+`
+- usar `font-variant-numeric: tabular-nums` em colunas numéricas
+
+---
+
+## Transições entre cenas
+
+Em composição com múltiplas cenas:
+
+1. **sempre** usar transição entre cenas
+2. **sempre** animar entrada de cada cena
+3. **não** usar animação de saída antes da transição
+4. só a cena final pode fazer fade-out explícito
+
+Resumo:
+
+- entrada da cena: `gsap.from()`
+- mudança de cena: transição
+- saída explícita: só no final
+
+Sem isso, a composição vira jump cut ou perde o frame de saída para a própria transição.
+
+---
+
+## Loop de validação
+
+Rodar, nessa ordem:
+
+```bash
+npx hyperframes lint
+npx hyperframes inspect
+npx hyperframes preview
+npx hyperframes render
+```
+
+### Checklist
+
+- `lint` sem erros
+- layout sem overflow/clipping não intencional
+- transições presentes em composições multi-cena
+- cores e fontes aderentes ao `design.md`, se existir
+- sem animações infinitas
+- timeline registrada corretamente
+
+---
+
+## Quando editar composição existente
+
+- ler o HTML real antes de mudar
+- reaproveitar cores, fontes, easing e timing existentes
+- alterar apenas o que foi pedido
+- preservar clips e tempos não relacionados
+
+**A composição existente é a spec.** Não reconstruir de memória.
+
+---
+
+## Comandos úteis
+
+```bash
+npx hyperframes init meu-video
+npx hyperframes lint
+npx hyperframes inspect
+npx hyperframes preview
+npx hyperframes render --output final.mp4
+```
+
+**Pré-requisitos:** Node.js >= 22 e FFmpeg.
+
+---
+
+## Limites desta skill
+
+Esta implementação cobre o **núcleo do HyperFrames** para o STARTER.
+
+Se o trabalho exigir profundidade específica, buscar depois as skills upstream complementares:
+
+- `hyperframes-cli`
+- `hyperframes-media`
+- `gsap`
+- `website-to-hyperframes`
+- `remotion-to-hyperframes`
+
+Repositório de origem:
+`https://github.com/heygen-com/hyperframes`

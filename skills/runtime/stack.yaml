@@ -1,0 +1,19 @@
+v: "5.1"
+updated: "2026-05-20"
+type: ai_runtime_governance
+formats: [md, yaml, skill]
+resolution: [local-skills, linked-skills, skills.sh, cache/remote-skills]
+
+recommended_new_projects:
+  primary:
+    frontend: nextjs
+    language: typescript
+    styling: tailwind
+    ui: shadcn
+    package_manager: pnpm
+    structure_skill: structure/nextjs-structure.skill
+  spa_alternative:
+    frontend: react
+    bundler: vite
+    package_manager: pnpm
+    structure_skill: structure/react-vite-structure.skill

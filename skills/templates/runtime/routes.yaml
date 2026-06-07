@@ -1,0 +1,16 @@
+# Template — routes.yaml (customizar intents por projeto)
+version: "1.0"
+updated: "YYYY-MM-DD"
+
+resolution:
+  order: [local-skills, linked-skills, skills.sh, cache/remote-skills]
+  max_primary: 1
+  max_secondary: 2
+
+protocol:
+  name: specialist_asks
+  never_execute_without_confirmation: true
+
+intents:
+  ui_component_visual:
+    primary: interface-design

@@ -1,0 +1,25 @@
+v: "5.1"
+updated: "2026-05-20"
+
+project:
+  id: starter
+  name: STARTER
+  type: ai_runtime
+  root: /Users/drt79427/Desktop/Estudos/STARTER
+
+runtime:
+  path: skills/runtime/
+  orchestrator: governance/Start-ops.md
+  index: runtime/index.yaml
+  schema: runtime/schema/
+  human_context: CONTEXT.md
+  human_prd: PRD.md
+
+ds:
+  lib: none
+  tokens: n/a
+  components: []
+
+int:
+  skills_sh: referenced_untested
+  linked_skills: empty_awaiting_symlinks

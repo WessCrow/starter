@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "starter://runtime/schema/qa.schema.json",
+  "title": "RuntimeQA",
+  "allOf": [{ "$ref": "_meta.schema.json" }],
+  "type": "object",
+  "properties": {
+    "gate": {
+      "type": "object",
+      "properties": {
+        "rigid": { "type": "boolean" },
+        "block_feature_done_without_pass": { "type": "boolean" },
+        "require_sprint_contract": { "type": "boolean" },
+        "require_user_browser_check_after_pass": { "type": "boolean" }
+      },
+      "required": ["rigid", "block_feature_done_without_pass"],
+      "additionalProperties": false
+    },
+    "report": {
+      "type": "object",
+      "properties": {
+        "language": { "type": "string" },
+        "tone": { "type": "string" },
+        "template": { "type": "string" },
+        "output_dir": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "weight": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "min_score": { "type": "number", "minimum": 0, "maximum": 10 },
+          "critical": { "type": "boolean" },
+          "pass_type": { "type": "string" },
+          "label": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "pass_rule": { "type": "string" },
+    "skills": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "smoke_commands": { "type": "object" },
+    "default_stack_new_projects": { "type": "object" },
+    "phase_4_playwright": { "type": "object" }
+  },
+  "required": ["gate", "dimensions", "pass_rule", "skills"],
+  "additionalProperties": false
+}

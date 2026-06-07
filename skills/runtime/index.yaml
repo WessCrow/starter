@@ -1,0 +1,42 @@
+v: "5.1"
+updated: "2026-05-20"
+schema_dir: schema/
+validate_before_load: true
+validate_after_write: true
+
+load_order:
+  hot:
+    - rules.yaml
+    - context.yaml
+    - state.yaml
+  warm:
+    - handoff.yaml
+    - qa.yaml
+    - active-feature.yaml
+  cold:
+    - stack.yaml
+    - architecture.yaml
+    - decisions.yaml
+    - routes.yaml
+
+lazy:
+  warm_requires: active_feature_or_explicit_or_post_implement
+  qa_gate_mandatory_after_implement: true
+  cold_triggers:
+    routes: skill_routing_or_intent_classification
+    architecture: new_project_or_arch_change
+    decisions: arch_decision_review_or_dispute
+    stack: stack_or_ds_change
+
+schemas:
+  index: index.schema.json
+  context: context.schema.json
+  stack: stack.schema.json
+  rules: rules.schema.json
+  state: state.schema.json
+  active-feature: active-feature.schema.json
+  decisions: decisions.schema.json
+  routes: routes.schema.json
+  architecture: architecture.schema.json
+  qa: qa.schema.json
+  handoff: handoff.schema.json

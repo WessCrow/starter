@@ -1,0 +1,155 @@
+# qa-playwright.skill
+
+> **Tipo:** Local Skill · **Domínio:** qa-playwright · e2e-browser  
+> **Fase:** 4 · **Chamado por:** qa-gate.skill (passo 4, antes do relatório final)  
+> **Idioma:** português simples nos relatórios
+
+---
+
+## Propósito
+
+Testar o app **como usuário** no browser — inspirado no evaluator Anthropic (Playwright MCP).
+
+- **Modo A (preferido):** MCP `@playwright/mcp` no Cursor  
+- **Modo B:** CLI `@playwright/test` no projeto  
+- **Modo C:** fallback documentado + teste manual do usuário
+
+**Nunca** dar PASS em critério de UI sem tentar browser quando `playwright.required: true`.
+
+---
+
+## Quando usar
+
+- Feature com interface web (Next.js, React+Vite)
+- Após `qa-smoke` (build ok)
+- `runtime/qa.yaml` → `playwright.enabled: true`
+- App dev server **rodando** (`base_url` acessível)
+
+**Pular** se: API-only, script CLI, ou `e2e-scenario.yaml` → `required: false`
+
+---
+
+## Pré-requisitos
+
+```
+[ ] qa/e2e-scenario.yaml existe (gerar do sprint-contract se ausente)
+[ ] base_url responde (curl ou browser_navigate)
+[ ] MCP playwright ativo OU @playwright/test instalado no projeto
+[ ] Tom de QA cético — mesmo critério do qa-gate
+```
+
+Setup humano: `governance/playwright-setup.md`
+
+---
+
+## Fluxo
+
+```
+[1] Ler qa/e2e-scenario.yaml + sprint-contract.md
+        ↓
+[2] Detectar modo: mcp | cli | manual_fallback
+        ↓
+[3] browser_resize → 375px (mobile) depois 1280px (desktop)
+        ↓
+[4] Para cada passo do cenário:
+        - navigate → snapshot → click/type → assert texto visível
+        - registrar PASS/FAIL por critério #
+        - browser_take_screenshot em falha → qa/reports/screenshots/
+        ↓
+[5] browser_console_messages → erros JS = penalizar Funciona
+        ↓
+[6] Resumo playwright: pass | fail | skipped
+        ↓
+[7] Entregar ao qa-gate.skill (não fechar gate sozinho)
+```
+
+---
+
+## MCP Playwright — ferramentas principais
+
+| Ação | Tool MCP |
+|------|----------|
+| Abrir página | `browser_navigate` |
+| Ver estrutura | `browser_snapshot` |
+| Clicar | `browser_click` |
+| Digitar | `browser_type` / `browser_fill_form` |
+| Screenshot | `browser_take_screenshot` |
+| Mobile | `browser_resize` width 375 |
+| Erros JS | `browser_console_messages` |
+
+**Ordem:** snapshot antes de click — não clicar às cegas.
+
+---
+
+## CLI fallback
+
+Se MCP indisponível e projeto tem Playwright:
+
+```bash
+pnpm exec playwright test tests/e2e --reporter=list
+# ou: npm run test:e2e
+```
+
+Gerar/atualizar spec a partir de `qa/e2e-scenario.yaml` usando template `templates/qa/playwright-smoke.spec.ts.template`.
+
+Colar falhas no relatório QA.
+
+---
+
+## Gerar e2e-scenario.yaml (se não existir)
+
+A partir de cada critério testável do sprint-contract:
+
+```yaml
+steps:
+  - id: 1
+    criterion: "Ao abrir home, vejo título X"
+    action: navigate
+    url: /
+    assert_text: "X"
+  - id: 2
+    criterion: "Botão Salvar funciona"
+    action: click
+    selector: "button:has-text('Salvar')"
+    assert_text: "Salvo"
+```
+
+Salvar em `qa/e2e-scenario.yaml`.
+
+---
+
+## Regras céticas (browser)
+
+- Snapshot sem o texto esperado → **FAIL** no critério
+- Console error no fluxo principal → **FAIL** Funciona
+- Elemento não encontrado → **FAIL**, screenshot obrigatório
+- “Quase funcionou” → **FAIL**
+- Só marcar PASS se executou o passo de verdade
+
+---
+
+## Saída (bloco para qa-report.md)
+
+```markdown
+## Playwright (Fase 4)
+
+| Modo | mcp / cli / manual_fallback |
+| URL | http://localhost:... |
+| Status | pass / fail / skipped |
+| Viewports | 375px, 1280px |
+
+| # | Critério | Resultado | Evidência |
+|---|----------|-----------|-----------|
+| 1 | ... | PASS/FAIL | screenshot / snapshot |
+
+### Erros console (se houver)
+- ...
+```
+
+---
+
+## Integração
+
+- **Antes:** qa-smoke.skill  
+- **Depois:** qa-gate.skill consolida notas  
+- Config: `runtime/qa.yaml` → `playwright`

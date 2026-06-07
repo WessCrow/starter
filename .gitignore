@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node (caso projetos filhos usem)
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Outputs gerados por sessão (não versionados)
+skills/outputs/
+
+# Cache de runtime
+skills/cache/

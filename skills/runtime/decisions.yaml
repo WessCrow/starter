@@ -1,0 +1,16 @@
+v: "5.1"
+updated: "2026-05-20"
+
+decisions:
+  - id: bootstrap_cleanup_auto
+    choice: clean_framework_artifacts_on_comecar_projeto
+    reason: user_should_not_manual_delete_starter_copy_paste
+    since: "2026-05-20"
+  - id: qa_gate_rigid
+    choice: no_feature_done_without_qa_pass
+    reason: reduce_broken_deliveries
+    since: "2026-05-20"
+  - id: kickoff_conversational
+    choice: comecar_projeto_four_questions
+    reason: non_technical_user_no_stack_memory
+    since: "2026-05-20"

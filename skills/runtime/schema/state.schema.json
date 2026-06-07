@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "starter://runtime/schema/state.schema.json",
+  "title": "RuntimeState",
+  "allOf": [{ "$ref": "_meta.schema.json" }],
+  "type": "object",
+  "properties": {
+    "phase": {
+      "type": "object",
+      "properties": {
+        "id": { "type": ["integer", "string"] },
+        "name": { "type": "string" },
+        "previous": { "type": "string" }
+      },
+      "required": ["id", "name"],
+      "additionalProperties": false
+    },
+    "last": { "type": "string" },
+    "last_work": { "type": "string" },
+    "next": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "blockers": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "health": {
+      "type": "object",
+      "additionalProperties": { "type": ["boolean", "string"] }
+    }
+  },
+  "required": ["phase"],
+  "additionalProperties": false
+}

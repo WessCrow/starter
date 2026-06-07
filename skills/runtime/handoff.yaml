@@ -1,0 +1,28 @@
+v: "5.1"
+updated: "2026-05-20"
+
+session:
+  last_completed: bootstrap-cleanup-script
+  next_action: testar_em_projeto_filho
+  blocked: false
+
+qa:
+  last_status: pending
+  last_report_path: null
+  last_run_at: null
+  failures_open: []
+
+feature:
+  id: null
+  sprint_contract_path: null
+  spec_path: null
+
+user:
+  verified_in_browser: false
+  verified_at: null
+  notes: null
+
+reminders:
+  - id: phase_4_playwright
+    when: "Quando pedir ativar Fase 4"
+    action: "skills/_deferred/phase4-playwright/README.md"

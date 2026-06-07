@@ -1,0 +1,48 @@
+v: "5.1"
+updated: "2026-05-20"
+
+gate:
+  rigid: true
+  block_feature_done_without_pass: true
+  require_sprint_contract: true
+  require_user_browser_check_after_pass: true
+
+report:
+  language: pt-BR
+  tone: simples_direto
+  template: templates/qa-report.md
+  output_dir: qa/reports
+
+dimensions:
+  funciona: { weight: 30, min_score: 7, critical: true, label: "Funciona de verdade" }
+  completo: { weight: 20, min_score: 6, critical: true, label: "Contrato entregue" }
+  estavel: { weight: 15, pass_type: build_lint, critical: true, label: "Build ok" }
+  usavel: { weight: 20, min_score: 6, critical: true, label: "Fácil de usar" }
+  visual: { weight: 15, min_score: 6, critical: true, label: "Visual coerente" }
+
+pass_rule: "funciona>=7 AND estavel=pass AND usavel>=6 AND visual>=6 AND contrato_sem_fail_critico"
+
+skills:
+  gate: qa-gate
+  smoke: qa-smoke
+  ux_when_ui: ux-audit
+
+smoke_commands:
+  nextjs:
+    package_manager: [pnpm, npm]
+    build: [pnpm run build, npm run build]
+    lint: [pnpm run lint, npm run lint]
+  react_vite:
+    package_manager: [pnpm, npm]
+    build: [pnpm run build, npm run build]
+    lint: [pnpm run lint, npm run lint]
+
+default_stack_new_projects:
+  primary: nextjs
+  spa_alternative: react_vite
+  package_manager: pnpm
+
+phase_4_playwright:
+  status: deferred
+  enabled: false
+  reminder: "skills/_deferred/phase4-playwright/"

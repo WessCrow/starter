@@ -1,0 +1,22 @@
+v: "5.1"
+updated: "2026-05-20"
+enforcement: required
+
+code:
+  never: [dead_code, console_log, ts_any, css_important]
+  always: [descriptive_names, explicit_error_handling]
+
+html:
+  semantic_elements: [header, main, nav, section, article]
+  never_div_for_semantic: true
+  img_alt_required: true
+
+css:
+  no_hardcoded_tokens: true
+  mobile_first: true
+
+design_system:
+  check_before_create: true
+
+accessibility:
+  standard: WCAG_AA

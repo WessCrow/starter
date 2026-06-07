@@ -1,0 +1,19 @@
+v: "5.1"
+updated: "2026-05-20"
+
+phase:
+  id: 5
+  name: Enterprise Runtime + QA Gate
+  previous: ai_native_runtime
+
+last: "bootstrap-cleanup automatico no Comecar projeto"
+next:
+  - usar_qa_gate_em_projeto_filho
+  - recriar_symlinks_linked_skills
+blockers:
+  - linked_skills_empty
+
+health:
+  runtime_layer: active
+  qa_gate: active
+  bootstrap_cleanup: active

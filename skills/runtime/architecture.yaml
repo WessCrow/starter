@@ -1,0 +1,15 @@
+v: "5.1"
+updated: "2026-05-20"
+pattern: enterprise_ai_native_runtime
+
+context_model:
+  hot: [rules.yaml, context.yaml, state.yaml]
+  warm: [handoff.yaml, qa.yaml, active-feature.yaml]
+  cold: [stack.yaml, architecture.yaml, decisions.yaml, routes.yaml]
+
+flow:
+  - bootstrap_cleanup
+  - kickoff_questions
+  - project_start
+  - execute_features
+  - qa_gate
