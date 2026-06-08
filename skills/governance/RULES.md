@@ -128,12 +128,54 @@
 
 ---
 
-## 🔒 Segurança básica
+## 🔒 Segurança básica & Host Guard (Isolamento)
 
-- **Nunca** expor credenciais, tokens ou chaves em código fonte
-- Sanitizar inputs de usuário antes de renderizar como HTML
-- Nunca usar `dangerouslySetInnerHTML` sem sanitização explícita
-- Variáveis de ambiente: sempre via `.env` e validadas no build
+- **Nunca** expor credenciais, tokens ou chaves em código fonte.
+- Sanitizar inputs de usuário antes de renderizar como HTML.
+- Nunca usar `dangerouslySetInnerHTML` sem sanitização explícita.
+- Variáveis de ambiente: sempre via `.env` e validadas no build.
+- **Isolamento de Host:** É terminantemente proibido executar qualquer comando de leitura, escrita ou execução de arquivos fora da árvore de diretórios do workspace do projeto. Comandos como `rm`, `mv` ou `cp` devem ser restritos estritamente ao escopo relativo do repositório.
+- Proibido ler chaves SSH (`~/.ssh`), arquivos globais do sistema (`/etc/`) ou diretórios de configurações pessoais do desenvolvedor.
+
+---
+
+## 💻 Pilar Técnico: Front-End (Componentes & Estado)
+
+- **React / Next.js Server Components (RSC) vs Client Components (RCC):**
+  * Prefira Server Components por padrão para performance, otimização de bundle e SEO.
+  * Use Client Components (`"use client"`) apenas quando houver necessidade de hooks de estado (`useState`, `useEffect`), eventos (`onClick`), ou APIs específicas do browser.
+  * Mantenha os Client Components o mais abaixo possível na árvore de componentes (folhas) para evitar hidratações desnecessárias.
+- **Prevenção de Re-renders:**
+  * Evite declarar funções anonimas inline em propriedades de renderização frequente (ex: `onClick={() => doSomething()}` em loops longos).
+  * Use `useMemo` e `useCallback` de forma criteriosa para otimizar componentes filhos caros que dependem de referências de objetos estáveis.
+- **Gerenciamento de Estado Previsível:**
+  * Para estados locais simples, use hooks nativos do React.
+  * Para estado global ou compartilhado complexo, utilize **Zustand** de forma modular, criando seletores específicos (ex: `useUserStore(state => state.profile)`) para evitar renderizações extras.
+- **Tokens Semânticos:** Uso estrito de variáveis de CSS semânticas (`--color-bg-primary`, `--color-action-active`) em vez de valores brutos.
+
+---
+
+## ⚙️ Pilar Técnico: Back-End (Segurança & Validação)
+
+- **Validação de Entrada na Borda:**
+  * Todo e qualquer dado de entrada em rotas públicas da API (body, query, params) **deve** ser validado imediatamente usando esquemas de validação determinísticos (como **Zod** ou **Joi**). Dados inválidos devem retornar `HTTP 400 Bad Request` instantaneamente, antes de alcançar a lógica de serviço.
+- **Sanitização de Erros Públicos (Error Sanitization):**
+  * Mensagens de erro de infraestrutura interna ou banco de dados (ex: logs de erro do Prisma, stack traces do Postgres) **nunca** devem ser expostas na resposta HTTP de produção para o cliente. 
+  * Retorne mensagens limpas, acionáveis e amigáveis ao usuário, gravando os logs originais detalhados em sistemas internos seguros.
+- **Strict Environment Validation:**
+  * Valide todas as variáveis de ambiente necessárias no bootstrap da aplicação usando um parser e tipador seguro. O processo deve falhar rápido (`Fail Fast`) no startup caso falte alguma variável obrigatória no `.env`.
+
+---
+
+## 📐 Pilar Técnico: Arquitetura & SOLID
+
+- **SOLID (Responsabilidade Única e Inversão de Dependência):**
+  * Cada módulo, classe ou arquivo deve ter apenas **um único motivo para mudar** (Single Responsibility).
+  * Lógica de negócios de alto nível nunca deve depender diretamente de módulos de infraestrutura de baixo nível (ex: banco de dados, provedor de e-mail). Ambos devem depender de abstrações (interfaces/ports).
+- **Acoplamento Cíclico Zero:**
+  * É proibido criar dependências circulares entre módulos ou camadas (ex: Módulo A importa Módulo B, que por sua vez importa o Módulo A). Use injeção de dependência ou interfaces para quebrar ciclos.
+- **Domínio Puro (Pure Domain):**
+  * A camada de lógica de negócios (entidades e regras de domínio) deve ser puramente agnóstica de frameworks e tecnologias de entrega (Express, Nest.js, Fastify). Ela deve persistir pura e testável isoladamente.
 
 ---
 
@@ -149,4 +191,4 @@
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-07
+> Última atualização: 2026-06-08

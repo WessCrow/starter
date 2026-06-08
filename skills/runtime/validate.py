@@ -94,6 +94,32 @@ def validate_file(yaml_path: Path, schema_path: Path) -> list[str]:
     return errors
 
 
+def check_security_leaks() -> list[str]:
+    """Varre o workspace local buscando vulnerabilidades básicas de segurança e vazamento de segredos."""
+    warnings = []
+    workspace_root = RUNTIME_DIR.parent.parent
+
+    # 1. Verificar se arquivos .env críticos estão sendo rastreados
+    env_files = list(workspace_root.glob("**/.env"))
+    for env in env_files:
+        # Se não estiver no .gitignore, alertar
+        gitignore_path = workspace_root / ".gitignore"
+        if gitignore_path.exists():
+            with gitignore_path.open(encoding="utf-8") as f:
+                content = f.read()
+                if ".env" not in content and "env" not in content:
+                    warnings.append(f"  [Host Guard] Arquivo .env encontrado em '{env.relative_to(workspace_root)}' mas não está devidamente listado no .gitignore!")
+
+    # 2. Verificar arquivos de chaves privadas acidentais
+    private_key_patterns = ["*.pem", "*.key", "*.pkcs12", "*.pfx"]
+    for pattern in private_key_patterns:
+        for key_path in workspace_root.glob(f"**/{pattern}"):
+            if ".venv" not in str(key_path) and "node_modules" not in str(key_path):
+                warnings.append(f"  [Host Guard] Possível chave privada/certificado exposto no workspace: '{key_path.relative_to(workspace_root)}'")
+
+    return warnings
+
+
 def main() -> int:
     targets = sys.argv[1:]
     if targets:
@@ -124,9 +150,21 @@ def main() -> int:
             print(f"OK   {yaml_name}")
             passed += 1
 
+    # Executar validação de vazamentos de segredos (Host Guard)
+    print("\n--- HOST GUARD & SECURITY AUDIT ---")
+    sec_warnings = check_security_leaks()
+    if sec_warnings:
+        print("ALERT - Pendências de segurança detectadas:")
+        for w in sec_warnings:
+            print(w)
+        # Não falha o build por aviso de segurança, mas exibe de forma clara
+    else:
+        print("OK    Nenhum segredo ou chave privada exposta no workspace.")
+
     print(f"\n{passed} passed, {failed} failed")
     return 1 if failed else 0
 
 
 if __name__ == "__main__":
     sys.exit(main())
+

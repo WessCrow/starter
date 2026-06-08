@@ -1,5 +1,5 @@
 v: "5.1"
-updated: "2026-05-20"
+updated: "2026-06-08"
 enforcement: required
 
 code:
@@ -20,3 +20,20 @@ design_system:
 
 accessibility:
   standard: WCAG_AA
+
+host_guard: true
+
+front_end:
+  server_components_preferred: true
+  prevent_inline_callbacks: true
+  zustand_selectors: true
+
+back_end:
+  edge_validation: true
+  sanitize_errors: true
+  env_validation: true
+
+architecture:
+  solid: true
+  cyclic_dependencies_forbidden: true
+

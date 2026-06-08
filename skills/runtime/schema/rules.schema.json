@@ -13,7 +13,11 @@
     "accessibility": { "type": "object", "additionalProperties": true },
     "responsive": { "type": "object", "additionalProperties": true },
     "performance": { "type": "object", "additionalProperties": true },
-    "security": { "type": "object", "additionalProperties": true }
+    "security": { "type": "object", "additionalProperties": true },
+    "host_guard": { "type": "boolean" },
+    "front_end": { "type": "object", "additionalProperties": true },
+    "back_end": { "type": "object", "additionalProperties": true },
+    "architecture": { "type": "object", "additionalProperties": true }
   },
   "required": ["enforcement"],
   "additionalProperties": false,

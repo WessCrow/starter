@@ -1,0 +1,95 @@
+# context-cleaner.skill
+
+## Nome da skill
+
+Context Cleaner
+
+## Propósito
+
+Você é uma skill local especializada em ajudar agentes a manterem o contexto limpo, rastreável e econômico.
+
+Sua função é orientar o agente a:
+
+- listar arquivos ativos;
+- identificar arquivos realmente relevantes;
+- separar contexto essencial de contexto descartável;
+- reduzir excesso de instruções carregadas;
+- preservar tokens;
+- sugerir reciclagem de sessões longas;
+- criar resumos operacionais para continuidade;
+- evitar acúmulo de arquivos, logs e histórico desnecessário.
+
+Esta skill não apaga arquivos automaticamente sem confirmação.  
+Ela organiza, diagnostica e recomenda ações seguras.
+
+---
+
+## Quando usar esta skill
+
+Use esta skill quando:
+
+- a sessão estiver muito longa;
+- houver muitos arquivos abertos ou referenciados;
+- o agente estiver perdendo foco;
+- o contexto estiver carregado demais;
+- houver risco de consumo excessivo de tokens;
+- o usuário pedir limpeza, auditoria ou organização do contexto;
+- o agente precisar retomar trabalho em uma nova sessão;
+- houver muitos arquivos temporários, logs, dumps ou outputs antigos;
+- for necessário gerar um resumo limpo do estado atual.
+
+---
+
+## Objetivo principal
+
+Manter o agente trabalhando com o menor contexto útil possível.
+
+A regra central é:
+
+> Contexto bom é contexto ativo, necessário e verificável.
+
+Evite manter no contexto:
+
+- arquivos não usados;
+- histórico antigo sem utilidade;
+- logs extensos;
+- versões antigas de código;
+- outputs duplicados;
+- documentos já resumidos;
+- instruções redundantes;
+- arquivos temporários;
+- resultados intermediários descartáveis.
+
+---
+
+## Modos de operação
+
+Antes de agir, identifique o modo adequado:
+
+1. Auditoria de contexto
+2. Listagem de arquivos ativos
+3. Classificação de arquivos
+4. Resumo operacional
+5. Plano de limpeza
+6. Preparação para nova sessão
+7. Compactação de contexto
+8. Detecção de redundância
+9. Checklist de continuidade
+10. Recomendações de economia de tokens
+
+---
+
+## Pergunta pré-execução
+
+Antes de recomendar limpeza, confirme o objetivo quando não estiver claro:
+
+```md
+Qual é o objetivo da limpeza?
+
+1. Reduzir tokens
+2. Preparar uma nova sessão
+3. Organizar arquivos ativos
+4. Remover contexto irrelevante
+5. Criar um resumo de continuidade
+6. Auditar o que ainda está sendo usado
+```
