@@ -1,15 +1,15 @@
 v: "5.1"
-updated: "2026-05-20"
+updated: "2026-06-08"
 
 phase:
   id: 5
   name: Enterprise Runtime + QA Gate
   previous: ai_native_runtime
 
-last: "bootstrap-cleanup automatico no Comecar projeto"
+last: "Melhorias de segurança (Host Guard), resiliência do agente (Context Cleaner), lembrete de QA e expansão de regras técnicas de Front, Back e SOLID."
 next:
+  - testar_onboarding_com_projeto_filho
   - usar_qa_gate_em_projeto_filho
-  - recriar_symlinks_linked_skills
 blockers:
   - linked_skills_empty
 

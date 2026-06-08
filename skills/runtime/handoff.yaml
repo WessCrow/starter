@@ -1,9 +1,9 @@
 v: "5.1"
-updated: "2026-05-20"
+updated: "2026-06-08"
 
 session:
-  last_completed: bootstrap-cleanup-script
-  next_action: testar_em_projeto_filho
+  last_completed: implementacao_resiliencia_e_seguranca
+  next_action: validar_onboarding_com_usuario
   blocked: false
 
 qa:
