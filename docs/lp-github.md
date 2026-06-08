@@ -1,4 +1,4 @@
-# 🚀 STARTER
+# STARTER
 
 <p align="center">
   <strong>O ponto de partida inteligente para criar projetos com agentes de IA.</strong><br>
@@ -13,14 +13,15 @@
 
 ---
 
-## ⚡ A Promessa
+## Proposta
+
 **Você entra com uma ideia na cabeça. O STARTER devolve o código pronto, limpo e testado — economizando seu bolso.**
 
 Esqueça o tempo perdido configurando pastas do zero, limpando arquivos inúteis ou gastando fortunas com IA fora de controle. O **STARTER** conduz você por uma conversa rápida de até 4 perguntas simples e gera um setup profissional sob medida. Ele organiza o contexto da IA para economizar seus tokens e ativa um sistema automático que testa tudo para o código nunca quebrar.
 
 ---
 
-## 🎯 Como Funciona em 60 Segundos
+## Como Funciona em 60 Segundos
 
 Apenas 2 arquivos de configuração e 1 comando no chat.
 
@@ -45,32 +46,32 @@ graph TD
 
 ---
 
-## ✨ O que você ganha vs. O que o STARTER evita
+## O que você ganha vs. O que o STARTER evita
 
-| 🎁 O que você ganha | 🚫 O que você nunca mais faz |
-| --- | --- |
-| **Até 80% de economia de tokens** com limpeza inteligente de contexto | ❌ Estourar o limite de uso da IA com arquivos repetitivos ou pesados |
-| **Sincronização entre editores** (Use Cursor, Claude Code, Cline sem perder o ritmo) | ❌ Perder o histórico do projeto ou desconfigurar tudo ao trocar de IDE |
-| **Proteção de Segurança (Host Guard):** Bloqueio contra comandos perigosos | ❌ Executar scripts perigosos por acidente ou vazar suas chaves `.env` no Git |
-| **Guia de Engenharia Completo:** Padrões limpos de Front, Back e Organização | ❌ Escrever códigos confusos, com lentidão ou bagunçados |
-| **Início guiado em minutos** diretamente pelo chat | ❌ Perder horas escrevendo documentações ou planejamentos do zero |
-| **Validação automática de erros** (Sistema de QA integrado) | ❌ Subir código quebrado, com tela preta ou sem testes básicos |
+| O que você ganha                                                                     | 🚫 O que você nunca mais faz                                                  |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| **Até 80% de economia de tokens** com limpeza inteligente de contexto                | ❌ Estourar o limite de uso da IA com arquivos repetitivos ou pesados         |
+| **Sincronização entre editores** (Use Cursor, Claude Code, Cline sem perder o ritmo) | ❌ Perder o histórico do projeto ou desconfigurar tudo ao trocar de IDE       |
+| **Proteção de Segurança (Host Guard):** Bloqueio contra comandos perigosos           | ❌ Executar scripts perigosos por acidente ou vazar suas chaves `.env` no Git |
+| **Guia de Engenharia Completo:** Padrões limpos de Front, Back e Organização         | ❌ Escrever códigos confusos, com lentidão ou bagunçados                      |
+| **Início guiado em minutos** diretamente pelo chat                                   | ❌ Perder horas escrevendo documentações ou planejamentos do zero             |
+| **Validação automática de erros** (Sistema de QA integrado)                          | ❌ Subir código quebrado, com tela preta ou sem testes básicos                |
 
 ---
 
-## 🗺️ Escolha seu Ponto de Partida
+## Escolha seu Ponto de Partida
 
 Durante a conversa inicial, você pode guiar a IA para criar o modelo ideal para o seu objetivo:
 
-* **🌐 Landing Page (LP):** Páginas de produto, validação rápida de mercado e visual premium com animações fluidas.
-* **📊 SaaS Dashboard:** Telas de login seguras, gráficos, tabelas dinâmicas e gerenciamento de dados simples (Zustand).
-* **⚙️ Painel Interno (Backoffice):** Painéis operacionais rápidos, criação/edição automática de dados e foco em eficiência.
-* **🎨 Design System:** Componentes que podem ser reutilizados, identidade de marca visual organizada e acessibilidade nativa.
-* **🔌 Backend & API:** Serviços robustos, validação de dados segura na entrada (Zod) e tratamento limpo de erros.
+- **Landing Page (LP):** Páginas de produto, validação rápida de mercado e visual premium com animações fluidas.
+- **SaaS Dashboard:** Telas de login seguras, gráficos, tabelas dinâmicas e gerenciamento de dados simples (Zustand).
+- **Painel Interno (Backoffice):** Painéis operacionais rápidos, criação/edição automática de dados e foco em eficiência.
+- **Design System:** Componentes que podem ser reutilizados, identidade de marca visual organizada e acessibilidade nativa.
+- **Backend & API:** Serviços robustos, validação de dados segura na entrada (Zod) e tratamento limpo de erros.
 
 ---
 
-## 🛠️ Como Tudo Funciona por Trás dos Panos
+## Como Tudo Funciona por Trás dos Panos
 
 O STARTER funciona como um manual de regras rígido e inteligente para a IA. Ele gerencia o fluxo para garantir estabilidade e gastar o mínimo de dinheiro possível através de 5 pilares:
 
@@ -82,20 +83,20 @@ O STARTER funciona como um manual de regras rígido e inteligente para a IA. Ele
 
 ---
 
-## 💻 Compatibilidade
+## Compatibilidade
 
-* **Experiência Recomendada:** Cursor, Claude Code e Antigravity (leitura nativa direta do arquivo `AGENTS.md`).
-* **Compatível também:** VSCode, Windsurf, Cline, Roo.
-* **Tecnologias Padrão:** Next.js + pnpm (ou React + Vite para páginas e aplicações ultra rápidas).
+- **Experiência Recomendada:** Cursor, Claude Code e Antigravity (leitura nativa direta do arquivo `AGENTS.md`).
+- **Compatível também:** VSCode, Windsurf, Cline, Roo.
+- **Tecnologias Padrão:** Next.js + pnpm (ou React + Vite para páginas e aplicações ultra rápidas).
 
 ---
 
-> ### 🔒 Segurança & Autoria
-> 
+> ### Segurança & Autoria
+>
 > Este framework é open-source, desenvolvido e mantido por **Wesley Alves**.
-> 
+>
 > 🔗 [Meu Portfólio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
-> 
-> *Sinta-se livre para usar, estudar e evoluir a ferramenta! Apenas pedimos que mantenha os créditos originais do criador.*
-> 
+>
+> _Sinta-se livre para usar, estudar e evoluir a ferramenta! Apenas pedimos que mantenha os créditos originais do criador._
+>
 > **Última atualização:** 2026-06-08
