@@ -42,17 +42,16 @@ graph TD
    ```
 4. Responda às perguntas simples do agente, revise o plano gerado e confirme!
 
----
-
 ## ✨ O que você ganha vs. O que o STARTER evita
 
 | 🎁 O que você ganha | 🚫 O que você nunca mais faz |
 | :--- | :--- |
 | **Assistente de desenvolvimento guiado** via chat interativo | ❌ Escrever documentações extensas e PRDs do zero |
-| **Até 80% de economia de tokens** com contexto Hot/Warm/Cold | ❌ Estourar limite de contexto de IA com arquivos redundantes |
-| **Arquitetura modular e limpa** (Next.js, Vite, etc.) | ❌ Limpar arquivos inúteis de templates |
-| **QA Gate integrado** (Validação automática de build/lint) | ❌ Subir código quebrado ou sem testes básicos |
-| **UX & UI Standards aplicados** (Design Tokens, Acessibilidade) | ❌ Hardcodar estilos e cores sem semântica |
+| **Sincronização Multi-IDE Sem Quebras** (Cursor, Antigravity, Cline, etc.) | ❌ Perder histórico ou desconfigurar o projeto ao trocar de editor |
+| **Até 80% de economia de tokens** com contexto Hot/Warm/Cold e Context Cleaner | ❌ Estourar limite de contexto de IA com arquivos redundantes |
+| **Host Guard Integrado:** Isolamento local contra comandos perigosos e vazamentos | ❌ Executar scripts acidentais ou expor credenciais `.env` no Git |
+| **Parceiro de Engenharia Full-Stack:** Diretrizes claras de Front, Back e SOLID | ❌ Hardcodar estilos, gerar re-renders desnecessários ou violar acoplamento |
+| **QA Gate integrado** (Validação automática de build/lint obrigatória) | ❌ Subir código quebrado ou sem testes básicos |
 
 ---
 
@@ -61,15 +60,15 @@ graph TD
 Durante o onboarding interativo, você pode guiar o agente para gerar qualquer um dos perfis abaixo:
 
 *   **🌐 Landing Page (LP)**  
-    *Foco:* Páginas de produto, validação de mercado, conversão rápida e estética premium com animações.
+    *Foco:* Páginas de produto, conversão rápida e estética premium com animações fluidas e tokens de design CSS.
 *   **📊 SaaS Dashboard**  
-    *Foco:* Área logada, visualização de métricas, tabelas de dados dinâmicos, rotas seguras e gerenciamento de estado.
+    *Foco:* Área logada, visualização de métricas, tabelas dinâmicas, gerenciamento previsível de estado (Zustand) e rotas seguras.
 *   **⚙️ App Interno (Backoffice)**  
     *Foco:* Painéis operacionais rápidos, CRUDs automatizados, facilidade de uso e layout eficiente.
 *   **🎨 Design System**  
-    *Foco:* Tokens de design semânticos, consistência de marca, componentes reutilizáveis e documentação acessível.
+    *Foco:* Tokens de design semânticos, consistência de marca, componentes reutilizáveis e acessibilidade nativa (WCAG POUR).
 *   **🔌 Backend & API**  
-    *Foco:* Serviços robustos, validação de dados rígida, rotas limpas, segurança e integração simples.
+    *Foco:* Serviços robustos, validação estrita na borda com Zod, tratamento limpo de erros e segurança de variáveis.
 
 ---
 
@@ -78,9 +77,10 @@ Durante o onboarding interativo, você pode guiar o agente para gerar qualquer u
 O STARTER funciona como um sistema operacional conversacional de desenvolvimento. Ele se autogerencia através de uma arquitetura baseada em estados:
 
 1. **`runtime/index.yaml`**: Ordem de inicialização e dependências ativas.
-2. **`runtime/rules.yaml` & `runtime/context.yaml`**: Contexto quente que dita as diretrizes e regras globais do projeto.
-3. **`validate.py`**: O guardião de integridade que impede que o agente modifique arquivos fora do escopo ou quebre o fluxo de governança.
-4. **`QA Gate (qa-gate.skill)`**: Uma etapa de revisão cética pós-implementação que garante que o projeto compila e atende aos critérios acordados.
+2. **`runtime/rules.yaml` & `runtime/context.yaml`**: Contexto quente com regras do Host Guard, Front, Back e diretrizes de Arquitetura.
+3. **`validate.py`**: O guardião de integridade que valida schemas YAML e audita o workspace contra vazamentos de credenciais locais.
+4. **`context-cleaner.skill`**: O auditor local que ajuda a organizar os arquivos de contexto e reduzir o desperdício de tokens.
+5. **`QA Gate (qa-gate.skill)`**: A revisão obrigatória pós-implementação que garante a corretude funcional antes de liberar o código.
 
 ---
 
