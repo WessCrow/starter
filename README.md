@@ -14,9 +14,9 @@
 ---
 
 ## ⚡ A Promessa
-**Você entra com uma ideia crua. O agente devolve direção clara, estrutura limpa e código pronto.**
+**Você entra com uma ideia crua. O agente conduz o desenvolvimento guiado e entrega estrutura limpa, código pronto e economia de custos.**
 
-Esqueça o tempo gasto configurando ambientes, limpando templates pesados ou decidindo arquiteturas sozinho. Com o **STARTER**, o agente conduz você por uma entrevista de até 4 perguntas simples e gera um setup sob medida com portaria de qualidade rigorosa integrada.
+Esqueça o tempo gasto configurando ambientes, limpando templates pesados ou decidindo arquiteturas sozinho. Com o **STARTER**, um assistente de desenvolvimento guiado conduz você por uma entrevista curta de até 4 perguntas simples e gera um setup sob medida, utilizando uma arquitetura modular de contexto que economiza tokens e mantém a execução focada.
 
 ---
 
@@ -48,7 +48,8 @@ graph TD
 
 | 🎁 O que você ganha | 🚫 O que você nunca mais faz |
 | :--- | :--- |
-| **Kickoff guiado em minutos** sem paralisia de decisão | ❌ Configurar boilerplate manualmente |
+| **Assistente de desenvolvimento guiado** via chat interativo | ❌ Escrever documentações extensas e PRDs do zero |
+| **Até 80% de economia de tokens** com contexto Hot/Warm/Cold | ❌ Estourar limite de contexto de IA com arquivos redundantes |
 | **Arquitetura modular e limpa** (Next.js, Vite, etc.) | ❌ Limpar arquivos inúteis de templates |
 | **QA Gate integrado** (Validação automática de build/lint) | ❌ Subir código quebrado ou sem testes básicos |
 | **UX & UI Standards aplicados** (Design Tokens, Acessibilidade) | ❌ Hardcodar estilos e cores sem semântica |
