@@ -1,8 +1,8 @@
 # 🚀 STARTER
 
 <p align="center">
-  <strong>O ponto de partida inteligente para novos projetos orientados a agentes de IA.</strong><br>
-  Uma estrutura leve, autogerenciada e focada em eliminar a fricção inicial do desenvolvimento.
+  <strong>O ponto de partida inteligente para criar projetos com agentes de IA.</strong><br>
+  Uma estrutura leve, direto ao ponto e feita para eliminar a complicação inicial do desenvolvimento.
 </p>
 
 <p align="center">
@@ -14,89 +14,88 @@
 ---
 
 ## ⚡ A Promessa
-**Você entra com uma ideia crua. O agente conduz o desenvolvimento guiado e entrega estrutura limpa, código pronto e economia de custos.**
+**Você entra com uma ideia na cabeça. O STARTER devolve o código pronto, limpo e testado — economizando seu bolso.**
 
-Esqueça o tempo gasto configurando ambientes, limpando templates pesados ou decidindo arquiteturas sozinho. Com o **STARTER**, um assistente de desenvolvimento guiado conduz você por uma entrevista curta de até 4 perguntas simples e gera um setup sob medida, utilizando uma arquitetura modular de contexto que economiza tokens e mantém a execução focada.
+Esqueça o tempo perdido configurando pastas do zero, limpando arquivos inúteis ou gastando fortunas com IA fora de controle. O **STARTER** conduz você por uma conversa rápida de até 4 perguntas simples e gera um setup profissional sob medida. Ele organiza o contexto da IA para economizar seus tokens e ativa um sistema automático que testa tudo para o código nunca quebrar.
 
 ---
 
 ## 🎯 Como Funciona em 60 Segundos
 
-Apenas 2 arquivos de infraestrutura inicial e 1 comando no chat.
+Apenas 2 arquivos de configuração e 1 comando no chat.
 
 ```mermaid
 graph TD
-    A[Sua Ideia Crua] --> B[Copiar skills/ & AGENTS.md]
+    A[Sua Ideia] --> B[Copiar pasta skills/ e arquivo AGENTS.md]
     B --> C[Digitar: 'Começar projeto']
-    C --> D[Entrevista de IA: Max 4 perguntas]
-    D --> E[Aprovação do Plano]
-    E --> F[Geração da Base + QA Gate Ativo]
+    C --> D[Conversa com a IA: Max 4 perguntas]
+    D --> E[Você aprova o Plano]
+    E --> F[Base Criada + Validação Automática Ativa]
 ```
 
-### O Caminho Principal:
-1. Crie ou abra a pasta vazia do seu novo projeto.
+### Passo a Passo Simples:
+
+1. Crie ou abra uma pasta vazia para o seu novo projeto.
 2. Copie a pasta `skills/` e o arquivo `AGENTS.md` para dentro dela.
-3. No chat do seu editor favorito (Cursor, Claude Code, Antigravity, etc.), digite:
+3. No chat do seu editor favorito (Cursor, Claude Code, Windsurf, etc.), digite:
    ```bash
    Começar projeto
    ```
-4. Responda às perguntas simples do agente, revise o plano gerado e confirme!
+4. Responda às perguntas simples da IA, revise o plano gerado e confirme!
+
+---
 
 ## ✨ O que você ganha vs. O que o STARTER evita
 
 | 🎁 O que você ganha | 🚫 O que você nunca mais faz |
-| :--- | :--- |
-| **Assistente de desenvolvimento guiado** via chat interativo | ❌ Escrever documentações extensas e PRDs do zero |
-| **Sincronização Multi-IDE Sem Quebras** (Cursor, Antigravity, Cline, etc.) | ❌ Perder histórico ou desconfigurar o projeto ao trocar de editor |
-| **Até 80% de economia de tokens** com contexto Hot/Warm/Cold e Context Cleaner | ❌ Estourar limite de contexto de IA com arquivos redundantes |
-| **Host Guard Integrado:** Isolamento local contra comandos perigosos e vazamentos | ❌ Executar scripts acidentais ou expor credenciais `.env` no Git |
-| **Parceiro de Engenharia Full-Stack:** Diretrizes claras de Front, Back e SOLID | ❌ Hardcodar estilos, gerar re-renders desnecessários ou violar acoplamento |
-| **QA Gate integrado** (Validação automática de build/lint obrigatória) | ❌ Subir código quebrado ou sem testes básicos |
+| --- | --- |
+| **Até 80% de economia de tokens** com limpeza inteligente de contexto | ❌ Estourar o limite de uso da IA com arquivos repetitivos ou pesados |
+| **Sincronização entre editores** (Use Cursor, Claude Code, Cline sem perder o ritmo) | ❌ Perder o histórico do projeto ou desconfigurar tudo ao trocar de IDE |
+| **Proteção de Segurança (Host Guard):** Bloqueio contra comandos perigosos | ❌ Executar scripts perigosos por acidente ou vazar suas chaves `.env` no Git |
+| **Guia de Engenharia Completo:** Padrões limpos de Front, Back e Organização | ❌ Escrever códigos confusos, com lentidão ou bagunçados |
+| **Início guiado em minutos** diretamente pelo chat | ❌ Perder horas escrevendo documentações ou planejamentos do zero |
+| **Validação automática de erros** (Sistema de QA integrado) | ❌ Subir código quebrado, com tela preta ou sem testes básicos |
 
 ---
 
 ## 🗺️ Escolha seu Ponto de Partida
 
-Durante o onboarding interativo, você pode guiar o agente para gerar qualquer um dos perfis abaixo:
+Durante a conversa inicial, você pode guiar a IA para criar o modelo ideal para o seu objetivo:
 
-*   **🌐 Landing Page (LP)**  
-    *Foco:* Páginas de produto, conversão rápida e estética premium com animações fluidas e tokens de design CSS.
-*   **📊 SaaS Dashboard**  
-    *Foco:* Área logada, visualização de métricas, tabelas dinâmicas, gerenciamento previsível de estado (Zustand) e rotas seguras.
-*   **⚙️ App Interno (Backoffice)**  
-    *Foco:* Painéis operacionais rápidos, CRUDs automatizados, facilidade de uso e layout eficiente.
-*   **🎨 Design System**  
-    *Foco:* Tokens de design semânticos, consistência de marca, componentes reutilizáveis e acessibilidade nativa (WCAG POUR).
-*   **🔌 Backend & API**  
-    *Foco:* Serviços robustos, validação estrita na borda com Zod, tratamento limpo de erros e segurança de variáveis.
+* **🌐 Landing Page (LP):** Páginas de produto, validação rápida de mercado e visual premium com animações fluidas.
+* **📊 SaaS Dashboard:** Telas de login seguras, gráficos, tabelas dinâmicas e gerenciamento de dados simples (Zustand).
+* **⚙️ Painel Interno (Backoffice):** Painéis operacionais rápidos, criação/edição automática de dados e foco em eficiência.
+* **🎨 Design System:** Componentes que podem ser reutilizados, identidade de marca visual organizada e acessibilidade nativa.
+* **🔌 Backend & API:** Serviços robustos, validação de dados segura na entrada (Zod) e tratamento limpo de erros.
 
 ---
 
-## 🛠️ Sob o Capô: O Runtime OS v5.1
+## 🛠️ Como Tudo Funciona por Trás dos Panos
 
-O STARTER funciona como um sistema operacional conversacional de desenvolvimento. Ele se autogerencia através de uma arquitetura baseada em estados:
+O STARTER funciona como um manual de regras rígido e inteligente para a IA. Ele gerencia o fluxo para garantir estabilidade e gastar o mínimo de dinheiro possível através de 5 pilares:
 
-1. **`runtime/index.yaml`**: Ordem de inicialização e dependências ativas.
-2. **`runtime/rules.yaml` & `runtime/context.yaml`**: Contexto quente com regras do Host Guard, Front, Back e diretrizes de Arquitetura.
-3. **`validate.py`**: O guardião de integridade que valida schemas YAML e audita o workspace contra vazamentos de credenciais locais.
-4. **`context-cleaner.skill`**: O auditor local que ajuda a organizar os arquivos de contexto e reduzir o desperdício de tokens.
-5. **`QA Gate (qa-gate.skill)`**: A revisão obrigatória pós-implementação que garante a corretude funcional antes de liberar o código.
-
----
-
-## 💻 Compatibilidade e Ecossistema
-
-*   **Experiência Premium:** Cursor, Claude Code e Antigravity (leitura nativa de `AGENTS.md` e execução rápida).
-*   **Compatível:** VSCode, Windsurf, Cline, Roo.
-*   **Padrão de Stack:** Next.js + pnpm (ou React + Vite para SPAs rápidas).
+1. **`runtime/index.yaml`**: Organiza a ordem exata em que as ferramentas do projeto devem ser ligadas.
+2. **`runtime/rules.yaml` & `runtime/context.yaml`**: O conjunto de regras absolutas de segurança, código e arquitetura que a IA é obrigada a seguir.
+3. **`validate.py`**: O guardião automatizado que audita a pasta, impedindo a IA de fazer bobagem ou expor senhas locais.
+4. **`context-cleaner.skill`**: O faxineiro que limpa o histórico inútil para reduzir drasticamente o desperdício de tokens.
+5. **`QA Gate (qa-gate.skill)`**: A barreira final de qualidade que testa e garante que tudo compila perfeitamente antes de te entregar o código.
 
 ---
 
-> ### 🔒 Rastro de Segurança & Autoria
->
-> Este framework é desenvolvido e mantido por **Wesley Alves**.
->
+## 💻 Compatibilidade
+
+* **Experiência Recomendada:** Cursor, Claude Code e Antigravity (leitura nativa direta do arquivo `AGENTS.md`).
+* **Compatível também:** VSCode, Windsurf, Cline, Roo.
+* **Tecnologias Padrão:** Next.js + pnpm (ou React + Vite para páginas e aplicações ultra rápidas).
+
+---
+
+> ### 🔒 Segurança & Autoria
+> 
+> Este framework é open-source, desenvolvido e mantido por **Wesley Alves**.
+> 
 > 🔗 [Meu Portfólio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
->
-> *Qualquer reprodução, distribuição ou uso derivado do framework STARTER deve manter esta atribuição.*  
+> 
+> *Sinta-se livre para usar, estudar e evoluir a ferramenta! Apenas pedimos que mantenha os créditos originais do criador.*
+> 
 > **Última atualização:** 2026-06-08
