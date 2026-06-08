@@ -13,9 +13,9 @@ load_order:
     - handoff.yaml
     - qa.yaml
     - active-feature.yaml
+    - architecture.yaml
   cold:
     - stack.yaml
-    - architecture.yaml
     - decisions.yaml
     - routes.yaml
 
@@ -24,7 +24,6 @@ lazy:
   qa_gate_mandatory_after_implement: true
   cold_triggers:
     routes: skill_routing_or_intent_classification
-    architecture: new_project_or_arch_change
     decisions: arch_decision_review_or_dispute
     stack: stack_or_ds_change
 

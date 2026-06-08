@@ -4,12 +4,13 @@ pattern: enterprise_ai_native_runtime
 
 context_model:
   hot: [rules.yaml, context.yaml, state.yaml]
-  warm: [handoff.yaml, qa.yaml, active-feature.yaml]
-  cold: [stack.yaml, architecture.yaml, decisions.yaml, routes.yaml]
+  warm: [handoff.yaml, qa.yaml, active-feature.yaml, architecture.yaml]
+  cold: [stack.yaml, decisions.yaml, routes.yaml]
 
 flow:
   - bootstrap_cleanup
   - kickoff_questions
+  - ux_diamond
   - project_start
   - execute_features
   - qa_gate

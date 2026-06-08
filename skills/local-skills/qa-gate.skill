@@ -80,10 +80,10 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 | Funciona | O usuário completa o fluxo principal? |
 | Completo | Tudo do contrato está lá? |
 | Estável | Build/lint ok? |
-| Usável | Próximo passo óbvio? |
-| Visual | Layout ok no mobile? |
+| Usável | Próximo passo óbvio? Fluxo intuitivo sem instrução? |
+| Visual | Hierarquia visual clara? Consistente com DS? Responsivo? |
 
-**PASS final:** `funciona >= 7` AND `estavel = pass` AND nenhum critério crítico FAIL.
+**PASS final:** `funciona >= 7` AND `estavel = pass` AND `usavel >= 6` AND `visual >= 6` AND nenhum critério crítico FAIL.
 
 ---
 

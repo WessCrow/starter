@@ -15,10 +15,11 @@
 2. skills/runtime/validate.py             → 0 failed (se runtime editado)
 3. Hot: rules.yaml, context.yaml, state.yaml
 4. Warm: active-feature.yaml + SPEC.md    → se feature ativa
-5. Cold: stack|architecture|decisions|routes → sob demanda (index.yaml lazy)
-6. Start-ops.md                           → orchestrator
+5. Warm: architecture.yaml               → sempre (decisões de infra antes de codar)
+6. Cold: stack|decisions|routes           → sob demanda (index.yaml lazy)
+7. Start-ops.md                           → orchestrator
    → sem runtime/: project-start.md → templates/runtime/
-7. UI? → context.yaml#ds.components
+8. UI? → context.yaml#ds.components
 ```
 
 > YAML validado por JSON Schema. CONTEXT.md = humano apenas.
@@ -91,6 +92,7 @@ Sempre executar **antes** de qualquer skill funcional.
 
 | Intenção | Skills prioritárias |
 |---|---|
+| Explorar problema, validar hipóteses antes de codar | `ux-diamond` |
 | Direção visual / referências / estilo | `visual-direction-brief` → `web-design-cloner` → `interface-design` |
 | Criar UI / componente / visual | `interface-design` → `web-design-cloner` → `emil-design-eng` → `responsive-craft` |
 | Decompor site, screenshot ou referência concreta | `web-design-cloner` → `interface-design` |

@@ -33,13 +33,13 @@ Ideia → Especialista que Pergunta → sprint-contract (aprovação)
 
 | Dimensão | Peso | Em português |
 |----------|------|--------------|
-| Funciona | 40% | Abre? Botões respondem? |
-| Completo | 25% | Contrato entregue? |
-| Estável | 20% | Build/lint ok? |
-| Usável | 10% | Próximo passo óbvio? |
-| Visual | 5% | Layout ok no mobile? |
+| Funciona | 30% | Abre? Botões respondem? |
+| Completo | 20% | Contrato entregue? |
+| Estável | 15% | Build/lint ok? |
+| Usável | 20% | Próximo passo óbvio? Fluxo intuitivo? |
+| Visual | 15% | Layout, hierarquia, consistência com DS? |
 
-**PASS:** Funciona ≥ 7 **e** Estável = PASS.
+**PASS:** Funciona ≥ 7 **e** Estável = PASS **e** Usável ≥ 6 **e** Visual ≥ 6.
 
 Relatório: `templates/qa-report.md` → `qa/reports/`
 

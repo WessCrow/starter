@@ -36,11 +36,12 @@ Não exigir stack. Ver `COMECAR-PROJETO.md`.
 | `handoff.yaml` | Retomar sessão ou após QA |
 | `qa.yaml` | Antes/depois de implementar |
 | `active-feature.yaml` | Feature ativa |
+| `architecture.yaml` | Sempre (decisões de infra antes de codar) |
 | `SPEC.md` | Software com feature scope |
 
 ### Cold — lazy
 
-`routes` · `architecture` · `decisions` · `stack`
+`routes` · `decisions` · `stack`
 
 **Docs humanos:** `qa-protocol.md` · `stack-guide.md` (sob demanda)
 
@@ -79,6 +80,7 @@ Ler `governance/stack-guide.md`:
 
 | Momento | Skill |
 |---------|-------|
+| Após kickoff, antes de structure (se UI) | `ux-diamond` |
 | Após implementar | `qa-gate` → `qa-smoke` |
 | UI só revisão | `ux-audit` (secundária) |
 | Direção visual inicial / referências vagas | `visual-direction-brief` |
@@ -105,7 +107,7 @@ Ler `governance/stack-guide.md`:
 ## 6. Fluxo resumido
 
 ```txt
-index → validate → hot → warm → implement → QA GATE → persist
+index → validate → hot → warm (incl. architecture) → implement → QA GATE → persist
 ```
 
 ---

@@ -121,6 +121,22 @@ Posso começar a criar? (sim / ajustar: …)
 
 ---
 
+## Fase 2.5 — UX Diamond (obrigatório se UI)
+
+> Skill: `ux-diamond.skill`
+
+**Quando ativar:** resposta da Pergunta 2 indica tela, landing, MVP ou feature com UI.
+**Pular:** se P2 = "só organizar projeto (pastas + docs, sem tela)".
+
+Executar UX Diamond **após** confirmação do resumo, **antes** de inferir stack.
+O resultado alimenta o sprint-contract com decisões de UX validadas.
+
+```
+Fase 2 "sim" → ★ ux-diamond → Fase 3 (stack)
+```
+
+---
+
 ## Fase 3 — Inferência de stack (agente decide)
 
 | Sinais nas respostas | Stack padrão | Structure skill |
