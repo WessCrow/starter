@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "starter://runtime/schema/index.schema.json",
+  "title": "RuntimeIndex",
+  "allOf": [{ "$ref": "_meta.schema.json" }],
+  "type": "object",
+  "properties": {
+    "schema_dir": { "type": "string", "const": "schema/" },
+    "validate_before_load": { "type": "boolean" },
+    "validate_after_write": { "type": "boolean" },
+    "load_order": {
+      "type": "object",
+      "properties": {
+        "hot": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z0-9-]+\\.yaml$" },
+          "minItems": 1
+        },
+        "warm": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z0-9-]+\\.yaml$" }
+        },
+        "cold": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z0-9-]+\\.yaml$" }
+        }
+      },
+      "required": ["hot"],
+      "additionalProperties": false
+    },
+    "lazy": {
+      "type": "object",
+      "properties": {
+        "warm_requires": { "type": "string" },
+        "qa_gate_mandatory_after_implement": { "type": "boolean" },
+        "cold_triggers": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "schemas": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "\\.schema\\.json$" }
+    }
+  },
+  "required": ["load_order", "schemas"],
+  "additionalProperties": false
+}

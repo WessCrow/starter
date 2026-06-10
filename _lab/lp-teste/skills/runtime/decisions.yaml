@@ -1,0 +1,17 @@
+# Template — decisions.yaml
+v: "5.0"
+updated: "2026-06-09"
+
+decisions:
+  - id: stack_react_vite
+    choice: react_vite_typescript_tailwind_pnpm
+    reason: landing page unica, build rapido, sem necessidade de rotas/SSR
+    since: "2026-06-09"
+  - id: cta_whatsapp
+    choice: link_wa_me_sem_backend
+    reason: usuario pediu contato direto; evita formulario e backend na v1
+    since: "2026-06-09"
+# - id: unique_id
+#   choice: what_was_chosen
+#   reason: why
+#   since: YYYY-MM-DD

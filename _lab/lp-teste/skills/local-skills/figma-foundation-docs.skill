@@ -1,0 +1,353 @@
+---
+name: figma-foundation-docs
+description: Cria foundations de design system diretamente no Figma via `use_figma`: collections de variáveis de cor e spacing, text styles e página de documentação visual. Use quando o usuário pedir para gerar tokens, foundations, color variables, typography scale, spacing tokens ou documentar a base visual de uma marca em um arquivo Figma. Não usar para Figma → código (`figma-implement-design`) nem para Figma Make.
+---
+
+# Figma Foundation Docs
+
+Gerar foundation no Figma com estrutura, consistência e saída reutilizável.
+
+Esta skill cobre a direção **brief de marca → variável/text style/documentação dentro do Figma**.
+
+---
+
+## Quando usar
+
+- "cria as foundations no Figma"
+- "gera variable collections de cor"
+- "monta text styles e spacing tokens"
+- "documenta a base visual da marca no arquivo Figma"
+- "quero uma página Foundation com swatches, tipografia e spacing"
+
+---
+
+## Quando NÃO usar
+
+- Deliverable é código no repositório → `figma-implement-design`
+- A tarefa é prompting para Figma Make → `figma-make`
+- A necessidade ainda é definir direção visual da marca → `visual-direction-brief` ou `interface-design`
+
+---
+
+## Pré-requisitos
+
+Antes de executar:
+
+1. A tool `use_figma` precisa estar disponível
+2. O usuário precisa fornecer:
+   - nome da marca
+   - `fileKey` do Figma
+   - cor primária
+   - neutro base
+   - fonte display
+   - fonte body
+   - cor secundária ou `null`
+3. Se faltar qualquer campo, pedir só os campos faltantes
+
+Se `use_figma` não estiver disponível, parar e reportar bloqueio claramente.
+
+---
+
+## Regra de execução
+
+Executar em blocos sequenciais para reduzir timeout e facilitar retry:
+
+### Bloco A — validar contexto e fontes
+
+1. Confirmar presença de `fileKey` e dados da marca
+2. Verificar fontes disponíveis com `figma.listAvailableFontsAsync()`
+3. Se a fonte pedida não existir:
+   - usar `Inter` como fallback
+   - registrar a substituição no resumo final
+
+### Bloco B — criar foundations estruturais
+
+1. Criar ou reutilizar a collection `Colors`
+2. Criar ou reutilizar a collection `Spacing`
+3. Criar text styles antes da documentação visual
+
+### Bloco C — montar página de referência
+
+1. Criar página `🎨 Foundation`
+2. Navegar com `await figma.setCurrentPageAsync(page)` antes de criar qualquer frame
+3. Criar os frames `Colors`, `Typography` e `Spacing`
+
+### Bloco D — revisar e resumir
+
+1. Confirmar contagem de variáveis e styles criados
+2. Confirmar que a página e os 3 frames existem
+3. Retornar resumo final no formato definido abaixo
+
+---
+
+## Regras críticas
+
+- Usar `figma.createTextStyle()` para text styles
+- Não usar `createPaintStyle()` para tipografia
+- Usar `figma.variables.createVariable()` com type `"COLOR"` para cor
+- Usar `figma.variables.createVariable()` com type `"FLOAT"` para spacing
+- Nomenclatura sempre com hífen: `primary-500`, `spacing-8`
+- `500` é sempre a cor base exata informada
+- Swatches da página Foundation devem usar binding para variável, nunca fill hardcoded
+- Se coleção, variável, style ou página já existir com o mesmo nome, preferir atualizar/reutilizar em vez de duplicar
+
+---
+
+## Escala de cores
+
+### Tokens obrigatórios
+
+**Primary**
+
+- `primary-50`
+- `primary-100`
+- `primary-200`
+- `primary-300`
+- `primary-400`
+- `primary-500`
+- `primary-600`
+- `primary-700`
+- `primary-800`
+- `primary-900`
+- `primary-950`
+
+**Secondary**
+
+Criar só se o usuário fornecer cor secundária.
+Mesma estrutura de `50` a `950`.
+
+**Gray**
+
+- `gray-50`
+- `gray-100`
+- `gray-200`
+- `gray-300`
+- `gray-400`
+- `gray-500`
+- `gray-600`
+- `gray-700`
+- `gray-800`
+- `gray-900`
+- `gray-950`
+
+**Auxiliares fixas**
+
+- success: `50`, `100`, `500`, `600`, `700`
+- warning: `50`, `100`, `500`, `600`, `700`
+- error: `50`, `100`, `500`, `600`, `700`
+- info: `50`, `100`, `500`, `600`, `700`
+
+### Heurística operacional para escalas
+
+Trabalhar em HSL.
+
+Para `primary` e `secondary`:
+
+| Token | Ajuste de lightness | Ajuste de saturação |
+|---|---|---|
+| 50 | +42 | -30% |
+| 100 | +36 | -24% |
+| 200 | +28 | -18% |
+| 300 | +18 | -10% |
+| 400 | +8 | -4% |
+| 500 | base exata | 0 |
+| 600 | -6 | -2% |
+| 700 | -12 | -5% |
+| 800 | -18 | -8% |
+| 900 | -24 | -12% |
+| 950 | -30 | -16% |
+
+Para `gray`:
+
+- usar a cor neutra base como `gray-500` exata
+- manter o hue da base
+- nos tons claros, reduzir saturação com mais agressividade para evitar viés colorido
+- nos tons escuros, manter saturação baixa e estável
+- se a cor base vier muito saturada, limitar a saturação dos tons gray a uma faixa visualmente neutra
+
+Sempre fazer clamp seguro:
+
+- lightness entre `4` e `98`
+- saturação entre `2` e `100`
+
+---
+
+## Tipografia
+
+### Display
+
+Usar a fonte display fornecida.
+Peso `700` ou `600` conforme a tabela:
+
+| Nome | Tamanho | Line height | Weight |
+|---|---|---|---|
+| Display/2xl | 72 | 1.1 | 700 |
+| Display/xl | 60 | 1.1 | 700 |
+| Display/lg | 48 | 1.15 | 700 |
+| Display/md | 36 | 1.2 | 600 |
+| Display/sm | 30 | 1.25 | 600 |
+| Display/xs | 24 | 1.3 | 600 |
+
+### Text
+
+Usar a fonte body fornecida.
+
+| Base | Tamanho | Line height |
+|---|---|---|
+| Text/xl | 20 | 1.5 |
+| Text/lg | 18 | 1.5 |
+| Text/md | 16 | 1.5 |
+| Text/sm | 14 | 1.4 |
+| Text/xs | 12 | 1.4 |
+
+Para cada tamanho criar:
+
+- regular `400`
+- medium `500`
+- semibold `600`
+
+Naming:
+
+- `Text/md`
+- `Text/md Medium`
+- `Text/md Semibold`
+
+---
+
+## Spacing
+
+Criar a collection `Spacing` com variáveis float:
+
+`spacing-0=0`
+`spacing-1=4`
+`spacing-2=8`
+`spacing-3=12`
+`spacing-4=16`
+`spacing-5=20`
+`spacing-6=24`
+`spacing-7=28`
+`spacing-8=32`
+`spacing-10=40`
+`spacing-12=48`
+`spacing-14=56`
+`spacing-16=64`
+`spacing-20=80`
+`spacing-24=96`
+`spacing-32=128`
+
+---
+
+## Página Foundation
+
+Criar a página `🎨 Foundation` e dentro dela os frames:
+
+- `Colors`
+- `Typography`
+- `Spacing`
+
+Configuração comum:
+
+- largura `1200`
+- altura hug
+- fundo `#F8F9FA`
+- padding `48`
+- gap entre seções `32`
+
+### Frame Colors
+
+Para cada grupo:
+
+- label do grupo em `Display/xs`
+- grid de swatches
+
+Cada swatch:
+
+- retângulo `80x80`
+- fill com binding da variável correspondente
+- nome do token abaixo em `Text/sm`
+- valor exibido abaixo em `Text/xs` com cor `gray-400`
+
+Se o valor resolvido não estiver acessível facilmente, exibir o nome do token no lugar do hex.
+
+Aplicar binding assim:
+
+```ts
+node.fills = [
+  {
+    type: 'SOLID',
+    color: { r: 0, g: 0, b: 0 },
+    boundVariables: {
+      color: { type: 'VARIABLE_ALIAS', id: variable.id },
+    },
+  },
+]
+```
+
+### Frame Typography
+
+Separar em duas seções:
+
+- `Display`
+- `Text`
+
+Para cada estilo:
+
+1. nome do estilo em `Text/sm` com cor `gray-400`
+2. linha de exemplo com o próprio style aplicado:
+   `The quick brown fox`
+
+### Frame Spacing
+
+Para cada token:
+
+- nome à esquerda em `Text/sm`
+- barra horizontal no meio com largura igual ao valor do token em px
+- valor à direita em `Text/xs` com cor `gray-400`
+- barra com cor `primary-200`
+
+---
+
+## Template operacional
+
+Ao receber esse tipo de pedido, usar o template em:
+
+- `skills/templates/figma-foundation-docs-template.md`
+
+Substituir os placeholders e preservar a ordem:
+
+1. Contexto
+2. Ações
+3. Expectativa
+4. Formato de entrega
+
+---
+
+## Formato de saída
+
+Retornar:
+
+```markdown
+✅ X variáveis de cor criadas
+✅ X variáveis de spacing criadas
+✅ X text styles criados
+✅ Página Foundation criada com X frames
+⚠️ Fontes substituídas por fallback: [lista ou "nenhuma"]
+```
+
+Se houver bloqueio:
+
+```markdown
+⚠️ Bloqueio
+- [motivo objetivo]
+- [qual dado/tool falta]
+- [próximo passo para destravar]
+```
+
+---
+
+## Integração com o restante do STARTER
+
+- Para direção visual ainda difusa: `visual-direction-brief`
+- Para organizar o design system em código: `structure/design-system-structure.skill`
+- Para implementar tela a partir do Figma no repositório: `figma-implement-design`
+- Para prompting no Figma Make: `figma-make`

@@ -1,0 +1,245 @@
+---
+name: interface-design
+description: Craft, memória e consistência para UI de produtos digitais. Use ao construir interfaces (dashboards, apps, ferramentas, admin panels) quando precisar de direção visual coerente, preservação de decisões entre sessões, e consistência sistemática por componente. NÃO usar para sites de marketing.
+---
+
+# Interface Design
+
+**Craft · Memory · Consistency**
+
+Construir interfaces com intenção. Lembrar decisões entre sessões. Manter consistência sistemática.
+
+---
+
+## Problema que esta skill resolve
+
+Ao construir UI, decisões de design são tomadas: valores de espaçamento, cores, estratégia de profundidade, elevação de surfaces. Sem estrutura, essas decisões derivam entre sessões.
+
+**Sem interface-design:**
+- Cada sessão começa do zero
+- Alturas de botão derivam (36px, 38px, 40px...)
+- Valores de espaçamento aleatórios (14px, 17px, 22px...)
+- Sem consistência entre componentes
+
+**Com interface-design:**
+- Sistema carregado automaticamente a cada sessão
+- Padrões reutilizados (Button: 36px, Card: 16px pad)
+- Espaçamento em grid (4px, 8px, 12px, 16px)
+- Profundidade e surfaces consistentes ao longo de todo o projeto
+
+---
+
+## Flow de Execução
+
+### Se `.interface-design/system.md` existe no projeto:
+
+```
+1. Ler system.md
+2. Carregar padrões estabelecidos
+3. Declarar escolhas de design antes de cada componente
+4. Construir seguindo o sistema
+5. Oferecer salvar novos padrões ao final
+```
+
+### Se não existe system.md:
+
+```
+1. Ler CONTEXT.md do projeto (stack, DS tokens existentes)
+2. Avaliar contexto do projeto (tipo, tom, público)
+3. Sugerir direção de design → aguardar confirmação do usuário
+4. Declarar escolhas antes de cada componente
+5. Construir com princípios consistentes
+6. Oferecer criar system.md ao final da sessão
+```
+
+---
+
+## Direções de Design
+
+O agente infere a direção do contexto do projeto, mas o usuário pode especificar:
+
+| Direção | Sensação | Melhor para |
+|---|---|---|
+| **Precision & Density** | Tight, técnico, monocromático | Developer tools, admin dashboards |
+| **Warmth & Approachability** | Espaçamento generoso, sombras suaves | Ferramentas colaborativas, consumer apps |
+| **Sophistication & Trust** | Tons frios, profundidade em camadas | Finance, enterprise B2B |
+| **Boldness & Clarity** | Alto contraste, espaço dramático | Dashboards modernos, apps data-heavy |
+| **Utility & Function** | Muted, densidade funcional | GitHub-style tools |
+| **Data & Analysis** | Chart-optimized, numbers-first | Analytics, BI tools |
+
+---
+
+## Checkpoint por Componente
+
+**Antes de construir qualquer componente**, declarar:
+
+```
+Depth: [estratégia]
+Surfaces: [escala de elevação]
+Spacing: [base e escala]
+Typography: [escala ativa]
+Borders: [valor/estilo]
+```
+
+Exemplo (Precision & Density):
+```
+Depth: borders-only
+Surfaces: 7% → 9% → 11% lightness scale
+Borders: rgba(255,255,255,0.06)
+Spacing: 8px base | escala: 4, 8, 12, 16, 24, 32
+```
+
+---
+
+## Formato do system.md
+
+Salvar em `.interface-design/system.md` na raiz do projeto:
+
+```markdown
+# Design System
+
+## Direction
+Personality: [direção escolhida]
+Foundation: [Cool / Warm / Neutral]
+Depth: [Borders-only / Shadows / Flat]
+
+## Tokens
+### Spacing
+Base: 4px | 8px
+Scale: 4, 8, 12, 16, 24, 32, 48, 64
+
+### Colors
+--foreground: [valor]
+--secondary: [valor]
+--accent: [valor]
+--surface-1: [valor]
+--surface-2: [valor]
+--border: [valor]
+
+### Typography
+--text-xs: [valor]
+--text-sm: [valor]
+--text-base: [valor]
+--text-lg: [valor]
+--heading-sm: [valor]
+--heading-lg: [valor]
+
+## Patterns
+### Button Primary
+- Height: 36px
+- Padding: 12px 16px
+- Radius: 6px
+- Usage: Ações primárias
+
+### Card Default
+- Border: 0.5px solid var(--border)
+- Padding: 16px
+- Radius: 8px
+- Usage: Containers de conteúdo
+
+### [Padrão adicional]
+- [propriedades]
+```
+
+---
+
+## Integração com STARTER
+
+### Relação com CONTEXT.md
+
+O `system.md` opera **no nível do projeto** — é a manifestação visual do CONTEXT.md:
+
+- `CONTEXT.md` (global) → stack, DS tokens primários, componentes globais
+- `system.md` → direção visual, escala de surfaces, padrões de componente específicos
+
+**Nunca duplicar** tokens de CONTEXT.md no system.md — referenciar ou estender.
+
+### Relação com SPEC.md
+
+Ao trabalhar em uma feature:
+1. system.md define **como** o componente deve parecer visualmente
+2. SPEC.md define **o que** o componente faz funcionalmente
+3. Ambos convivem — não se substituem
+
+### Ao final da sessão
+
+Se novos padrões foram estabelecidos:
+- Atualizar `system.md` com padrões novos
+- Se novo token de DS global → mover para CONTEXT.md
+- Nunca deixar system.md com tokens que deveriam estar em CONTEXT.md
+
+---
+
+## Comandos Equivalentes
+
+| Intenção | Ação |
+|---|---|
+| Iniciar com princípios de design | Invocar esta skill → seguir o flow |
+| Ver sistema atual | Ler `.interface-design/system.md` |
+| Auditar código contra o sistema | Comparar implementação com padrões do system.md |
+| Extrair padrões do código existente | Ler código → inferir tokens → propor system.md |
+
+---
+
+## Filosofia
+
+**Decisões se acumulam.** Um valor de espaçamento escolhido uma vez vira padrão. Uma estratégia de profundidade vira identidade.
+
+**Consistência supera perfeição.** Um sistema coerente com valores "imperfeitos" supera uma interface dispersa com valores "corretos".
+
+**Memória habilita iteração.** Quando você pode ver o que decidiu e por quê, pode evoluir intencionalmente ao invés de derivar acidentalmente.
+
+---
+
+## Regras Críticas
+
+- **Nunca construir UI** sem declarar o checkpoint de design antes
+- **Sempre verificar** se system.md existe antes de propor uma nova direção
+- **Nunca criar** tokens duplicados entre system.md e CONTEXT.md
+- **Sempre oferecer** salvar ou atualizar system.md ao fim da sessão
+- **Não usar** para sites de marketing — apenas para products (apps, dashboards, ferramentas)
+
+---
+
+## Exemplo de Sessão
+
+```
+Usuário: "Construa um dashboard de métricas"
+
+Agente:
+✓ Sem system.md — avaliando contexto
+
+Este é um app data-heavy. Sugestão:
+- Direção: Precision & Density
+- Depth: Borders-only (limpo, técnico)
+- Surfaces: Escala 7% → 9% → 11% lightness
+- Spacing: 8px base
+
+Esta direção faz sentido?
+
+[Usuário: y]
+
+Depth: borders-only
+Surfaces: 7% → 9% → 11%
+Borders: rgba(255,255,255,0.06)
+Spacing: 8px base
+
+[Constrói dashboard com profundidade, espaçamento e surfaces consistentes]
+
+Deseja salvar esses padrões em .interface-design/system.md?
+```
+
+```
+Sessão seguinte:
+Usuário: "Adicione uma página de configurações"
+
+Agente:
+✓ system.md carregado
+
+Depth: borders-only
+Surfaces: escala estabelecida
+Borders: rgba(255,255,255,0.06)
+Spacing: 8px base
+
+[Constrói settings page seguindo o sistema]
+```

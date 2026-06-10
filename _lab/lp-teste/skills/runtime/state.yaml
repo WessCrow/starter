@@ -1,0 +1,16 @@
+v: "5.0"
+updated: "2026-06-09"
+
+phase:
+  id: 1
+  name: Foundation
+
+last: "Landing inicial implementada; QA Gate PASS (build ok)."
+next:
+  - usuario_validar_navegador
+  - conteudo_real_whatsapp_fotos
+blockers: []
+
+health:
+  runtime_layer: active
+framework_v: "5.1"

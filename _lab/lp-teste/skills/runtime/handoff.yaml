@@ -1,0 +1,19 @@
+v: "5.1"
+updated: "2026-06-09"
+
+session:
+  last_completed: landing_inicial_implementada_e_qa_pass
+  next_action: usuario_validar_5min_navegador
+  blocked: false
+
+qa:
+  last_status: pass
+  last_report_path: qa/reports/2026-06-09-landing-inicial.md
+  failures_open: []
+
+feature:
+  id: landing-inicial
+  sprint_contract_path: sprint-contract.md
+
+user:
+  verified_in_browser: false

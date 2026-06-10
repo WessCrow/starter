@@ -1,0 +1,22 @@
+v: "5.0"
+updated: "YYYY-MM-DD"
+
+project:
+  id: project-id
+  name: Project Name
+  type: web_app
+  root: /path/to/project
+
+runtime:
+  index: runtime/index.yaml
+  schema: runtime/schema/
+  orchestrator: governance/Start-ops.md
+  human_context: CONTEXT.md
+  human_prd: PRD.md
+
+ds:
+  lib: shadcn
+  tokens: styles/tokens.css
+  components: []
+
+int: {}

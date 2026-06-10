@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "starter://runtime/schema/architecture.schema.json",
+  "title": "RuntimeArchitecture",
+  "allOf": [{ "$ref": "_meta.schema.json" }],
+  "type": "object",
+  "properties": {
+    "pattern": { "type": "string" },
+    "layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "role": { "type": "string" },
+          "format": { "type": "string" },
+          "load": { "type": "string" },
+          "when": { "type": "string" },
+          "priority": { "type": "integer" }
+        },
+        "required": ["id", "role"],
+        "additionalProperties": false
+      }
+    },
+    "context_model": {
+      "type": "object",
+      "properties": {
+        "hot": { "type": "array", "items": { "type": "string" } },
+        "warm": { "type": "array", "items": { "type": "string" } },
+        "cold": { "type": "array", "items": { "type": "string" } },
+        "global": { "type": "array", "items": { "type": "string" } },
+        "feature": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "object",
+              "properties": {
+                "file": { "type": "string" },
+                "runtime_mirror": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "human_only": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "flow": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "structure_skills_map": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "schema_dir": { "type": "string" },
+        "validate_before_load": { "type": "boolean" },
+        "validate_after_write": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["pattern", "context_model"],
+  "additionalProperties": false
+}

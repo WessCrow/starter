@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "starter://runtime/schema/rules.schema.json",
+  "title": "RuntimeRules",
+  "allOf": [{ "$ref": "_meta.schema.json" }],
+  "type": "object",
+  "properties": {
+    "enforcement": { "type": "string", "enum": ["required", "advisory"] },
+    "code": { "$ref": "#/$defs/ruleGroup" },
+    "html": { "type": "object", "additionalProperties": true },
+    "css": { "type": "object", "additionalProperties": true },
+    "design_system": { "type": "object", "additionalProperties": true },
+    "accessibility": { "type": "object", "additionalProperties": true },
+    "responsive": { "type": "object", "additionalProperties": true },
+    "performance": { "type": "object", "additionalProperties": true },
+    "security": { "type": "object", "additionalProperties": true },
+    "host_guard": { "type": "boolean" },
+    "front_end": { "type": "object", "additionalProperties": true },
+    "back_end": { "type": "object", "additionalProperties": true },
+    "architecture": { "type": "object", "additionalProperties": true }
+  },
+  "required": ["enforcement"],
+  "additionalProperties": false,
+  "$defs": {
+    "ruleGroup": {
+      "type": "object",
+      "properties": {
+        "never": { "type": "array", "items": { "type": "string" } },
+        "always": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    }
+  }
+}

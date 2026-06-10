@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "starter://runtime/schema/decisions.schema.json",
+  "title": "RuntimeDecisions",
+  "allOf": [{ "$ref": "_meta.schema.json" }],
+  "type": "object",
+  "properties": {
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "choice": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 },
+          "since": { "type": "string" }
+        },
+        "required": ["id", "choice", "reason"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["decisions"],
+  "additionalProperties": false
+}

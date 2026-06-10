@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "starter://runtime/schema/active-feature.schema.json",
+  "title": "RuntimeActiveFeature",
+  "allOf": [{ "$ref": "_meta.schema.json" }],
+  "type": "object",
+  "properties": {
+    "active": { "type": "boolean" },
+    "feature": {
+      "type": ["object", "null"],
+      "properties": {
+        "id": { "type": ["string", "null"] },
+        "name": { "type": ["string", "null"] },
+        "path": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "scope": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "human": { "type": ["string", "null"] },
+        "required": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "type": "object",
+      "properties": {
+        "phase": { "type": "string" },
+        "last": { "type": "string" },
+        "next": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "do_not_put_in_spec": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "required": ["active"],
+  "additionalProperties": false
+}

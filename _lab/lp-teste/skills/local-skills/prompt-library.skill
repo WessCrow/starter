@@ -1,0 +1,750 @@
+---
+name: prompt-library
+description: Biblioteca de 20 prompts em markdown para designers, organizados em 5 categorias. Use quando a tarefa for estruturar, revisar ou executar qualquer prompt de design — pesquisa, escrita, crítica, ideação ou carreira. Não usar para tarefas de código ou arquitetura — essas têm skills próprias.
+---
+
+# prompt-library.skill
+
+> **Domínio:** prompt-structure
+> **Ação:** criar · estruturar · reutilizar
+> **Ativado por:** Start.md quando intenção = gerar ou usar prompt de design
+> **Princípios:** `governance/prompt-engineering.md`
+
+---
+
+## 🔒 Antes de usar qualquer prompt
+
+Leia `governance/prompt-engineering.md`.
+Regra central: **zero persona trigger. Contexto + Ações + Expectativa + Formato.**
+
+---
+
+## 📦 Categoria 1 — Pesquisa e Insights
+
+### Prompt 1: Análise de entrevista
+
+```markdown
+## Contexto
+Perfil do entrevistado: [perfil]
+Tópico da entrevista: [tópico]
+
+## Ações
+- Extrair os 5 insights mais relevantes, ordenados por impacto
+- Citar frase literal do entrevistado que sustenta cada insight
+- Marcar contradições ou pontos ambíguos para investigação futura
+
+## Expectativa
+Vou usar isso como input para affinity mapping com o time.
+Insights precisam ser acionáveis, não descritivos.
+
+## Formato de entrega
+## Insight 1: [título]
+**Citação:** "[frase literal]"
+**Por que importa:** [1 frase]
+
+## Contradições a investigar
+- [ponto 1]
+
+## Transcrição
+[colar aqui]
+```
+
+**Dica:** Se a transcrição vem com timestamps ou nomes, manda junto.
+
+---
+
+### Prompt 2: Síntese de múltiplas entrevistas
+
+```markdown
+## Contexto
+Quantidade de entrevistas: [número]
+Perfil: [descrever]
+Tópico: [descrever]
+
+## Ações
+- Agrupar insights similares em temas (affinity mapping textual)
+- Contar quantas entrevistas suportam cada tema
+- Destacar insights que aparecem em apenas 1 entrevista mas são potencialmente relevantes
+
+## Expectativa
+Preciso de uma versão inicial de temas para validar com o time. Não é síntese final.
+
+## Formato de entrega
+## Tema 1: [título] — [N entrevistas]
+- [insight 1]
+- [insight 2]
+
+## Insights únicos a investigar
+- [insight] — [1 entrevista]
+
+## Insights das entrevistas
+[colar]
+```
+
+**Dica:** Isso não substitui affinity mapping em grupo. É versão inicial rápida.
+
+---
+
+### Prompt 3: Hipóteses a partir de dados
+
+```markdown
+## Contexto
+Fonte de dados: [pesquisa, analytics, feedback de suporte, etc]
+Problema ou observação: [descrever]
+
+## Ações
+- Gerar 5 hipóteses testáveis sobre por que isso acontece
+- Para cada hipótese, sugerir tipo de teste ou pesquisa que validaria
+- Dar nível de confiança baixo/médio/alto com base nos dados
+
+## Expectativa
+Hipóteses devem ser afirmações falsificáveis, não perguntas.
+
+## Formato de entrega
+## Hipótese 1
+**Afirmação:** [hipótese]
+**Como validar:** [método]
+**Confiança:** [baixa/média/alta] — [razão curta]
+
+## Dados
+[colar]
+```
+
+**Regra:** Descarta qualquer hipótese que não seja falsificável. Se não pode ser testada, não é hipótese.
+
+---
+
+### Prompt 4: Revisão de guia de entrevista
+
+```markdown
+## Contexto
+Tópico da pesquisa: [tópico]
+Perfil dos entrevistados: [perfil]
+
+## Ações
+- Apontar perguntas potencialmente tendenciosas e reformular
+- Identificar áreas importantes que o guia não cobre
+- Marcar perguntas redundantes ou que podem ser agrupadas
+- Sugerir ordem melhor para o fluxo da conversa
+
+## Expectativa
+Vou rodar entrevistas na próxima semana. Preciso do guia refinado antes.
+
+## Formato de entrega
+## Perguntas para reformular
+- [original] → [sugestão] — [motivo]
+
+## Áreas não cobertas
+- [área] — [pergunta sugerida]
+
+## Perguntas redundantes
+- [perguntas] — [como agrupar]
+
+## Ordem sugerida
+1. [pergunta]
+2. [pergunta]
+
+## Guia atual
+[colar]
+```
+
+---
+
+## ✍️ Categoria 2 — Escrita e Microcopy
+
+### Prompt 5: Simplificar texto técnico
+
+```markdown
+## Contexto
+Público que precisa ler: [descrever nível de familiaridade, faixa etária, contexto]
+Propósito do texto: [informar, convencer, orientar, etc]
+
+## Ações
+- Reescrever em frases curtas, máximo 15 palavras
+- Remover jargão técnico ou explicar quando essencial
+- Usar voz ativa, não passiva
+- Nível de leitura equivalente a ensino médio
+- Manter informação essencial, cortar o resto
+
+## Expectativa
+Preciso de 3 variações para testar com stakeholders.
+
+## Formato de entrega
+## Versão 1 (conservadora)
+[texto]
+
+## Versão 2 (intermediária)
+[texto]
+
+## Versão 3 (radical)
+[texto]
+
+## O que foi cortado e por quê
+- [item] — [razão]
+
+## Texto original
+[colar]
+```
+
+---
+
+### Prompt 6: Variações de CTA
+
+```markdown
+## Contexto
+Ação do botão: [o que acontece ao clicar]
+Produto: [descrever brevemente]
+Público: [descrever]
+Momento do fluxo: [onde o botão aparece]
+
+## Ações
+- Gerar 10 variações cobrindo 4 tipos:
+  - 3 diretas (ação literal)
+  - 3 focadas em benefício
+  - 2 conversacionais
+  - 2 urgentes
+
+## Expectativa
+Vou rodar teste A/B. Preciso de variações distintas o suficiente pra gerar aprendizado.
+
+## Formato de entrega
+| Texto | Tipo | Raciocínio |
+|-------|------|------------|
+| [texto] | Direta | [por quê] |
+```
+
+**Dica:** Nunca usar a primeira sugestão sem testar. Serve como ideação.
+
+---
+
+### Prompt 7: Mensagem de erro humanizada
+
+```markdown
+## Contexto
+Produto: [descrever]
+Erro atual: "[texto atual]"
+O que aconteceu tecnicamente: [explicar]
+O que o usuário pode fazer: [ações possíveis]
+
+## Ações
+- Comunicar em linguagem simples o que aconteceu
+- Explicar por que (se o usuário pode saber)
+- Sugerir ação concreta próxima
+- Não culpar o usuário
+- Gerar 3 variações em tons diferentes
+
+## Expectativa
+Mensagem vai aparecer em fluxo crítico, não pode gerar frustração adicional.
+
+## Formato de entrega
+## Versão formal
+[mensagem]
+
+## Versão intermediária
+[mensagem]
+
+## Versão casual
+[mensagem]
+```
+
+**Complemento:** Ver `guidelines/designer2627.md` → Pilar I para padrões de voz e tom.
+
+---
+
+### Prompt 8: Avaliação de voz e tom
+
+```markdown
+## Contexto
+Voz da marca: [3-5 adjetivos]
+Exemplos que representam a voz:
+[colar 2-3 exemplos]
+
+## Ações
+- Analisar se o texto novo está alinhado com a voz
+- Apontar trechos específicos onde foge
+- Sugerir ajustes concretos
+
+## Expectativa
+Preciso publicar o texto ainda hoje. Preciso saber exatamente o que mudar.
+
+## Formato de entrega
+## Alinhamento geral
+[nota de 1-10 e 1 frase]
+
+## Trechos fora da voz
+- [trecho original] → [sugestão] — [motivo]
+
+## Trechos bem alinhados
+- [trecho]
+
+## Texto a analisar
+[colar]
+```
+
+**Regra:** Quanto melhor os exemplos, melhor o output. Voz mal definida → resultado genérico.
+
+---
+
+## 🔍 Categoria 3 — Crítica e Revisão
+
+### Prompt 9: Avaliação de fluxo
+
+```markdown
+## Contexto
+Nome do fluxo: [ex: cadastro de novo usuário]
+Plataforma: [web, mobile, ambos]
+Público: [descrever]
+
+## Ações
+- Avaliar contra heurísticas de Nielsen
+- Identificar pontos de atrito onde o usuário pode desistir
+- Apontar passos que podem ser eliminados ou simplificados
+- Marcar oportunidades de melhoria em ordem de impacto
+
+## Expectativa
+Vou apresentar pra time de produto. Preciso de argumentos claros.
+
+## Formato de entrega
+## Passo 1: [nome]
+**Problema:** [descrição]
+**Heurística violada:** [qual]
+**Sugestão:** [ação concreta]
+
+## Top 3 melhorias por impacto
+1. [melhoria] — [por que é prioridade]
+
+## Fluxo
+Passo 1: [descrever]
+Passo 2: [descrever]
+[etc]
+```
+
+**Complemento:** Para auditoria completa de UX, usar `local-skills/ux-audit.skill`.
+
+---
+
+### Prompt 10: Stress test de decisão
+
+```markdown
+## Contexto
+Decisão tomada: [decisão específica]
+Justificativa atual: [por que escolhi]
+
+## Ações
+- Gerar 5 contra-argumentos fortes contra a decisão
+- Para cada contra-argumento, explicar por que é sério
+- Indicar que evidência seria necessária pra rebater
+
+## Expectativa
+Preciso defender a decisão pra liderança. Quero ter rebatido tudo antes.
+
+## Formato de entrega
+## Contra-argumento 1
+**Argumento:** [descrição]
+**Por que é sério:** [razão]
+**Evidência para rebater:** [o que precisaria]
+
+## Regra
+Não me apoia na decisão. Força a defender ou reconsiderar.
+```
+
+**Uso:** Salva de apresentar ideia fraca. Pressão interna antes de pressão externa.
+
+---
+
+### Prompt 11: Revisão de viés em interface
+
+```markdown
+## Contexto
+Produto: [descrever]
+Público declarado: [descrever]
+Descrição da interface: [descrever ou colar imagem se IA aceitar]
+
+## Ações
+- Identificar vieses implícitos (quem é excluído)
+- Apontar problemas de acessibilidade visual e cognitiva
+- Marcar suposições sobre o usuário que não são universais
+- Listar elementos que podem alienar grupos específicos
+- Para cada problema, sugerir alternativa
+
+## Expectativa
+Vou apresentar pro time de acessibilidade. Preciso de lista acionável, não crítica genérica.
+
+## Formato de entrega
+## Problema 1
+**Grupo impactado:** [quem]
+**Problema:** [descrição]
+**Sugestão:** [alternativa concreta]
+```
+
+**Complemento:** Ver `governance/RULES.md` → seção Acessibilidade para requisitos técnicos.
+
+---
+
+### Prompt 12: Revisão de case de portfolio
+
+```markdown
+## Contexto
+Vaga alvo: [nível e tipo de empresa]
+Case abaixo, como eu escreveria em portfolio.
+
+## Ações
+- Ler como se fosse recrutador sênior em 30 segundos
+- Marcar o que ficou claro sobre o projeto
+- Marcar o que ficou confuso ou passou batido
+- Avaliar se o impacto do meu trabalho aparece
+- Dar nota de 1 a 10 com justificativa
+
+## Expectativa
+Vou aplicar pra vagas essa semana. Preciso de feedback duro, não encorajamento.
+
+## Formato de entrega
+## Primeira impressão em 30 segundos
+[resumo do que entendi]
+
+## O que ficou claro
+- [ponto]
+
+## O que ficou confuso
+- [ponto]
+
+## O impacto
+- [está claro? como poderia ficar mais?]
+
+## Nota: X/10
+[justificativa em 2 frases]
+
+## Case
+[colar]
+```
+
+---
+
+## 💡 Categoria 4 — Ideação e Exploração
+
+### Prompt 13: Brainstorm estruturado
+
+```markdown
+## Contexto
+Problema: [descrever]
+Contexto (produto, usuário, empresa): [descrever]
+Restrições conhecidas: [tempo, budget, stack, etc]
+
+## Ações
+- Gerar 15 ideias em 3 categorias:
+  - 5 incrementais (pequenas melhorias do que já existe)
+  - 5 médias (mudanças estruturais, investimento médio)
+  - 5 radicais (reimaginações completas, mesmo que impraticáveis)
+
+## Expectativa
+Vou apresentar pro time em brainstorming. Preciso de matéria-prima variada.
+
+## Formato de entrega
+## Incrementais
+1. **[título]** — [descrição] | Vantagem: [x] | Risco: [y]
+
+## Médias
+1. **[título]** — [descrição] | Vantagem: [x] | Risco: [y]
+
+## Radicais
+1. **[título]** — [descrição] | Vantagem: [x] | Risco: [y]
+```
+
+**Insight:** As radicais raramente viram projeto, mas expõem pressupostos que você assumia.
+
+---
+
+### Prompt 14: Perguntas "e se" para desbloqueio
+
+```markdown
+## Contexto
+Feature: [descrever]
+Solução atual: [descrever]
+Sensação: [por que acho que pode ter algo melhor]
+
+## Ações
+- Gerar 10 perguntas "e se..." variando entre:
+  - Remover restrições (tempo, dinheiro, tech)
+  - Inverter assumptions (se o oposto fosse verdade)
+  - Mudar o usuário (se fosse pra outro público)
+  - Outras indústrias (se a solução viesse de fora do digital)
+
+## Expectativa
+Não quero respostas. Só as perguntas. Vou tentar responder sozinho primeiro.
+
+## Formato de entrega
+## Remover restrições
+- E se [pergunta]?
+
+## Inverter assumptions
+- E se [pergunta]?
+
+## Mudar o usuário
+- E se [pergunta]?
+
+## Outras indústrias
+- E se [pergunta]?
+```
+
+**Uso:** Funciona melhor quando você responde cada pergunta sozinho antes de pedir ajuda.
+
+---
+
+### Prompt 15: Referências fora do óbvio
+
+```markdown
+## Contexto
+Produto ou feature: [descrever]
+Contexto de uso: [descrever]
+Já conheço: [referências óbvias, pra evitar repetição]
+
+## Ações
+- Sugerir 10 referências fora do mainstream, divididas:
+  - 3 de produtos de nicho ou regionais
+  - 3 de indústrias não-digitais (sinalização, menu, etc)
+  - 2 históricas (pré-2010)
+  - 2 casos conhecidos por falhar
+
+## Expectativa
+Preciso sair da bolha do Dribbble. Quero inspiração que traga perspectiva nova.
+
+## Formato de entrega
+## Produtos de nicho
+- **[nome]** — [o que é relevante] — [onde ver]
+
+## Indústrias não-digitais
+- **[exemplo]** — [o que aprender]
+
+## Históricas
+- **[nome]** — [contexto] — [relevância hoje]
+
+## Falhas
+- **[caso]** — [o que aprender]
+```
+
+**Insight:** Referências históricas e de falha costumam dar os insights mais ricos.
+
+---
+
+### Prompt 16: Desafiar escopo de briefing
+
+```markdown
+## Contexto
+Briefing recebido: [colar ou descrever]
+Quem passou: [papel do stakeholder]
+
+## Ações
+- Formular 3 perguntas que devo fazer antes de aceitar escopo
+- Identificar 3 pressupostos ocultos que podem estar errados
+- Sugerir 2 formas alternativas de resolver o problema real
+- Formular 1 pergunta que pode revelar se é o projeto certo pra fazer agora
+
+## Expectativa
+Vou ter reunião amanhã. Não quero aceitar escopo sem entender a fundo.
+
+## Formato de entrega
+## Perguntas antes de aceitar
+1. [pergunta] — [por quê]
+
+## Pressupostos ocultos
+1. [pressuposto] — [por que pode estar errado]
+
+## Alternativas
+1. [alternativa] — [quando faz mais sentido]
+
+## Pergunta que revela
+[pergunta única]
+```
+
+**Uso:** Transforma designer de executor em parceiro estratégico.
+
+---
+
+## 🎯 Categoria 5 — Carreira e Comunicação
+
+### Prompt 17: Simulação de entrevista
+
+```markdown
+## Contexto
+Nível da vaga: [júnior, pleno, sênior, staff, lead]
+Tipo de empresa: [fintech, e-commerce, agência, etc]
+Estágio da empresa: [startup, scale-up, big tech]
+
+## Ações
+- Gerar 15 perguntas possíveis, divididas:
+  - 5 sobre fundamentos de design
+  - 3 sobre casos do portfolio (inventar casos plausíveis baseados na vaga)
+  - 3 sobre colaboração e conflito em time
+  - 2 sobre decisões difíceis
+  - 2 curveball (inesperadas, testam raciocínio)
+
+## Expectativa
+Não quero respostas. Vou responder sozinho primeiro e validar depois.
+
+## Formato de entrega
+## Fundamentos
+1. [pergunta]
+
+## Casos
+1. [pergunta]
+
+## Colaboração
+1. [pergunta]
+
+## Decisões
+1. [pergunta]
+
+## Curveball
+1. [pergunta]
+```
+
+**Dica:** Grava em áudio respondendo cada pergunta. Escuta depois. Vai ver onde embrulha.
+
+---
+
+### Prompt 18: Email difícil pra stakeholder
+
+```markdown
+## Contexto
+Destinatário: [papel, relação com você]
+Situação: [descrever em 3 frases]
+Histórico: [conflito anterior, se houver]
+
+## Ações
+- Redigir 2 versões: A (cautelosa) e B (assertiva)
+- Máximo 150 palavras por versão
+- Tom: direto, respeitoso, firme
+- Incluir os pontos:
+  - [ponto 1]
+  - [ponto 2]
+  - [próximo passo desejado]
+
+## Expectativa
+Não vou mandar sem editar. Preciso de ponto de partida que capture o tom certo.
+
+## Formato de entrega
+## Versão A (cautelosa)
+[email]
+
+## Versão B (assertiva)
+[email]
+
+## Recomendação
+[qual versão faz mais sentido e por quê]
+```
+
+**Uso:** Ajuda a achar o tom quando você está emocionalmente envolvido.
+
+---
+
+### Prompt 19: Feedback pra designer júnior
+
+```markdown
+## Contexto
+Pessoa: [tempo na empresa, tempo de carreira]
+Entregável: [o que foi entregue]
+Problema principal: [descrever]
+Situação emocional aparente: [descrever se relevante]
+
+## Ações
+- Estruturar feedback no formato Radical Candor:
+  1. Intenção positiva (por que estou dando feedback)
+  2. Comportamento específico (não julgamento de pessoa)
+  3. Impacto (por que importa)
+  4. Ação concreta (o que fazer diferente)
+  5. Apoio (como vou ajudar)
+
+## Expectativa
+Reunião 1:1 é na terça. Preciso de estrutura, não script pronto.
+
+## Formato de entrega
+## Abertura (intenção positiva)
+[frase]
+
+## Observação (comportamento)
+[frases]
+
+## Impacto
+[frases]
+
+## Ação
+[passos concretos]
+
+## Apoio
+[o que vou oferecer]
+```
+
+---
+
+### Prompt 20: Reflexão de carreira
+
+```markdown
+## Contexto
+Momento profissional: [descrever em 1 frase]
+
+## Ações
+Depois de ler minhas respostas abaixo:
+- Identificar 3 padrões que se repetem
+- Apontar 2 pontos cegos aparentes
+- Formular 1 conversa difícil que devo ter comigo mesmo
+- Sugerir 1 ação concreta pra próxima semana
+
+## Expectativa
+Não quero validação. Quero observação direta e desconfortável.
+
+## Formato de entrega
+## Padrões identificados
+1. [padrão] — [evidência nas respostas]
+
+## Pontos cegos
+1. [ponto] — [por que parece estar acontecendo]
+
+## Conversa difícil
+[pergunta que devo fazer a mim mesmo]
+
+## Ação da semana
+[ação concreta]
+
+## Minhas respostas
+
+**O que mais me deu energia nos últimos 3 meses:**
+[responder]
+
+**O que mais drenou energia nos últimos 3 meses:**
+[responder]
+
+**Que tipo de projeto eu evito:**
+[responder]
+
+**Onde quero estar em 2 anos:**
+[responder]
+
+**O que acho que está faltando pra chegar lá:**
+[responder]
+```
+
+**Cadência:** Fazer esse prompt uma vez por trimestre. Vale mais que muitas sessões de mentoria.
+
+---
+
+## 🛡️ Governance
+
+- Princípios de prompt: `governance/prompt-engineering.md`
+- Para UX writing e microcopy avançado: `guidelines/designer2627.md`
+- Para auditoria completa de UX: `local-skills/ux-audit.skill`
+- Para critique visual e decomposição de referência: `web-design-cloner`
+
+---
+
+## 📤 Como usar esta skill
+
+```
+1. Identificar a categoria do pedido
+2. Localizar o prompt correspondente
+3. Copiar o bloco completo
+4. Substituir [placeholders] com contexto real
+5. Se output não sair bom → refinar a estrutura, nunca adicionar persona
+```
+
+> **Lembrete:** cada prompt é ponto de partida, não fórmula fechada.
+> A biblioteca cresce com uso. Adapte, salve versões suas, iterate.

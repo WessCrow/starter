@@ -1,0 +1,412 @@
+# sticky-scroll-gallery.skill
+
+> **Tipo:** Local Skill
+> **Dominio:** scroll-animation · sticky-section · gallery-transition
+> **Acao:** implementar · refinar · validar
+> **Fonte:** https://gsap.com/docs/v3/Plugins/ScrollTrigger/
+> **Quando usar:** Quando o projeto pedir uma section sticky com galeria controlada por scroll, troca suave entre fotos, labels sincronizados e desbloqueio natural apos a ultima imagem
+
+---
+
+## Proposito
+
+Criar uma `section.sticky-gallery` com narrativa visual por scroll:
+
+- a section fica travada durante parte do scroll
+- a imagem principal troca entre 3 fotos
+- a troca usa crossfade com leve `scale`
+- os labels acompanham a imagem ativa
+- depois da ultima imagem, o scroll da pagina continua normalmente
+
+Esta skill existe para entregar esse efeito com HTML, CSS e JavaScript puro usando GSAP + ScrollTrigger, sem troca abrupta e sem sticky pesado em mobile.
+
+---
+
+## Objetivo
+
+- Criar uma section sticky com galeria controlada pelo scroll, onde uma imagem troca por outra
+- A troca deve ser suave, com crossfade e leve scale
+- Uma lista de labels a esquerda deve indicar qual imagem esta ativa
+- Depois da ultima imagem, o scroll da pagina continua normalmente
+
+---
+
+## Estrutura obrigatoria
+
+Criar:
+
+- `section.sticky-gallery`
+- `.sticky-gallery-stage`
+
+Regras:
+
+- `section.sticky-gallery` com altura alongada, entre `250vh` e `300vh`
+- `.sticky-gallery-stage` com:
+  - `position: sticky`
+  - `top: 0`
+  - `height: 100vh`
+  - `overflow: hidden`
+- coluna esquerda com:
+  - eyebrow
+  - titulo
+  - texto
+  - lista com 3 labels
+- area centro/direita com imagem principal grande
+- 3 imagens empilhadas dentro do mesmo container
+- preview lateral menor apenas se houver espaco no desktop
+
+---
+
+## HTML base
+
+```html
+<section class="sticky-gallery" aria-label="Galeria por scroll">
+  <div class="sticky-gallery-stage">
+    <div class="sticky-gallery-copy">
+      <p class="sticky-gallery-eyebrow">Colecao</p>
+      <h2 class="sticky-gallery-title">Troca de imagem guiada por scroll</h2>
+      <p class="sticky-gallery-text">
+        Enquanto o usuario rola, a foto principal muda suavemente e o label ativo acompanha o estado atual.
+      </p>
+
+      <ul class="sticky-gallery-labels" aria-label="Etapas da galeria">
+        <li class="sticky-gallery-label is-active">Primeira foto</li>
+        <li class="sticky-gallery-label">Segunda foto</li>
+        <li class="sticky-gallery-label">Terceira foto</li>
+      </ul>
+    </div>
+
+    <div class="sticky-gallery-media">
+      <div class="sticky-gallery-figure">
+        <img class="sticky-gallery-photo is-active" src="images/photo-01.jpg" alt="Descricao da foto 1" />
+        <img class="sticky-gallery-photo" src="images/photo-02.jpg" alt="Descricao da foto 2" />
+        <img class="sticky-gallery-photo" src="images/photo-03.jpg" alt="Descricao da foto 3" />
+      </div>
+
+      <aside class="sticky-gallery-preview" aria-hidden="true">
+        <img src="images/photo-03.jpg" alt="" />
+      </aside>
+    </div>
+  </div>
+</section>
+```
+
+---
+
+## CSS base
+
+```css
+.sticky-gallery {
+  position: relative;
+  height: 280vh;
+  overflow-x: clip;
+}
+
+.sticky-gallery-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(18rem, 28rem) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: center;
+  padding: clamp(1.25rem, 3vw, 3rem);
+  overflow: hidden;
+}
+
+.sticky-gallery-copy,
+.sticky-gallery-media {
+  min-width: 0;
+}
+
+.sticky-gallery-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.sticky-gallery-eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.sticky-gallery-title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  line-height: 0.95;
+}
+
+.sticky-gallery-text {
+  max-width: 36ch;
+  margin: 1rem 0 0;
+}
+
+.sticky-gallery-labels {
+  display: grid;
+  gap: 0.875rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sticky-gallery-label {
+  opacity: 0.45;
+  transform: translateX(0);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    color 220ms ease;
+}
+
+.sticky-gallery-label.is-active {
+  opacity: 1;
+  color: inherit;
+  transform: translateX(0.5rem);
+}
+
+.sticky-gallery-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.sticky-gallery-figure {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.sticky-gallery-photo,
+.sticky-gallery-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sticky-gallery-photo {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 500ms ease,
+    transform 700ms ease;
+  will-change: opacity, transform;
+}
+
+.sticky-gallery-photo.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.sticky-gallery-preview {
+  width: clamp(8rem, 14vw, 12rem);
+  aspect-ratio: 3 / 4;
+  border-radius: 1rem;
+  overflow: hidden;
+  opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+  .sticky-gallery-stage {
+    grid-template-columns: 1fr;
+    min-height: 100svh;
+  }
+
+  .sticky-gallery-media {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky-gallery-preview {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .sticky-gallery {
+    height: auto;
+  }
+
+  .sticky-gallery-stage {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: auto;
+    gap: 1.5rem;
+    overflow: visible;
+    padding-block: 4rem;
+  }
+
+  .sticky-gallery-photo {
+    position: absolute;
+  }
+
+  .sticky-gallery-figure {
+    aspect-ratio: 4 / 5;
+  }
+}
+```
+
+---
+
+## JavaScript com GSAP + ScrollTrigger
+
+Requisitos tecnicos desta implementacao:
+
+- usar `ScrollTrigger.create` com `scrub`
+- calcular o indice ativo com base em `self.progress`
+- usar `classList.toggle("is-active")` para fotos e labels
+- manter a troca por `opacity` e `scale`
+- destruir o sticky pesado em mobile
+
+```html
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const gallerySection = document.querySelector(".sticky-gallery");
+  const galleryPhotos = Array.from(document.querySelectorAll(".sticky-gallery-photo"));
+  const galleryLabels = Array.from(document.querySelectorAll(".sticky-gallery-label"));
+
+  function setActiveGalleryItem(index) {
+    galleryPhotos.forEach((photo, photoIndex) => {
+      photo.classList.toggle("is-active", photoIndex === index);
+    });
+
+    galleryLabels.forEach((label, labelIndex) => {
+      label.classList.toggle("is-active", labelIndex === index);
+    });
+  }
+
+  setActiveGalleryItem(0);
+
+  const mediaQuery = window.matchMedia("(max-width: 767px)");
+  let galleryTrigger;
+
+  function mountStickyGallery() {
+    if (!gallerySection || mediaQuery.matches) {
+      if (galleryTrigger) {
+        galleryTrigger.kill();
+        galleryTrigger = null;
+      }
+      setActiveGalleryItem(0);
+      return;
+    }
+
+    if (galleryTrigger) {
+      galleryTrigger.kill();
+    }
+
+    const totalItems = galleryPhotos.length;
+
+    galleryTrigger = ScrollTrigger.create({
+      trigger: gallerySection,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      onUpdate: (self) => {
+        const nextIndex = Math.min(
+          totalItems - 1,
+          Math.floor(self.progress * totalItems)
+        );
+
+        setActiveGalleryItem(nextIndex);
+      },
+    });
+  }
+
+  mountStickyGallery();
+  window.addEventListener("resize", mountStickyGallery);
+  window.addEventListener("orientationchange", mountStickyGallery);
+</script>
+```
+
+---
+
+## Comportamento esperado
+
+- No inicio, a primeira imagem esta ativa
+- Ao avancar o scroll, a segunda imagem substitui a primeira
+- Depois, a terceira imagem substitui a segunda
+- O label ativo muda junto com a imagem
+- Depois da ultima imagem, a section destrava e o scroll segue normalmente
+
+---
+
+## Regras de implementacao
+
+1. Empilhar todas as fotos no mesmo container e trocar apenas classes
+2. Nao usar `display: none` para alternancia principal
+3. Garantir `object-fit: cover` em todas as imagens
+4. Evitar `overflow-x` global causado por preview, `scale` ou gaps exagerados
+5. Em tablet, esconder preview lateral se faltar espaco
+6. Em mobile, remover sticky pesado e deixar a section em fluxo normal
+7. Verificar se nenhum ancestral da area sticky usa `overflow` que quebre o `position: sticky`
+
+---
+
+## Ajustes finos recomendados
+
+- Faixa segura de altura da secao: `250vh` a `300vh`
+- Faixa segura de transicao:
+  - `opacity`: `400ms` a `600ms`
+  - `transform`: `600ms` a `900ms`
+- `scale` inicial sutil: `1.03` a `1.06`
+- Deslocamento do label ativo: `4px` a `10px`
+
+Se a troca parecer "atrasada", reduza a altura da secao ou troque o calculo por `Math.round(self.progress * (totalItems - 1))`.
+
+---
+
+## Validacao
+
+- [ ] Verificar se a imagem troca no scroll
+- [ ] Verificar se o label ativo acompanha a imagem
+- [ ] Verificar se a section destrava apos a terceira imagem
+- [ ] Verificar se nada corta em telas baixas
+- [ ] Verificar desktop, tablet e mobile
+
+---
+
+## Armadilhas conhecidas
+
+- `overflow: hidden` em ancestral errado pode quebrar o sticky
+- `height: 100vh` pode cortar em telas moveis baixas; preferir validar com `100svh` quando fizer sentido
+- `Math.floor(self.progress * totalItems)` precisa de `Math.min(...)` para nao estourar no fim
+- `resize` frequente pode recriar triggers demais; matar a instancia anterior antes de recriar
+- se o crossfade parecer duro, o problema costuma estar mais no CSS da foto do que no ScrollTrigger
+
+---
+
+## Formato de resposta
+
+```markdown
+## Sticky Scroll Gallery
+**Objetivo:** [qual narrativa visual a secao precisa entregar]
+**Estrutura:** [copy a esquerda, imagem principal, preview opcional]
+**Trigger:** [start/end/scrub]
+
+### O que implementar
+1. [estrutura HTML]
+2. [estados CSS]
+3. [ScrollTrigger + indice ativo]
+
+### O que validar
+- [troca de imagem]
+- [label ativo]
+- [fallback mobile]
+```
+
+---
+
+## Skills complementares
+
+- `lenis-scroll.skill` para scroll suave e integracao com experiencias scroll-driven
+- `responsive-craft.skill` para ajustar comportamento em tablet e mobile
+- `fluid-ui-implementation.skill` para refinar transicoes e reduzir motion desnecessario

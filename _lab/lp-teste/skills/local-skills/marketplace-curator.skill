@@ -1,0 +1,223 @@
+---
+name: marketplace-curator
+description: Evaluate external Claude Code skills, plugin marketplaces, and MCP servers before adoption. Use when the user asks what capability is missing, wants to compare marketplace options, assess an MCP/server/plugin, or decide whether to add a local skill versus tracking a future linked-skill. Do not treat linked-skills, skills.sh, or cache as active fallback unless the repository policy explicitly says so.
+---
+
+# Marketplace Curator
+
+Descobrir capability externa com critério, não por impulso.
+
+Esta skill existe para o momento em que o projeto sente uma lacuna e precisa decidir entre:
+
+- criar skill local
+- adotar uma skill externa
+- considerar um MCP server
+- registrar algo apenas como direção futura
+
+---
+
+## Problema que resolve
+
+Marketplace ajuda a descobrir.
+Mas descoberta sozinha não resolve adoção.
+
+Sem curadoria:
+
+- entra dependency demais
+- capability aspiracional vira capability "ativa" por acidente
+- o projeto adota algo redundante com skill local já suficiente
+- ninguém documenta risco, maturidade ou custo operacional
+
+Com curadoria:
+
+- a lacuna fica explícita
+- as opções são comparadas com critério
+- a decisão fica clara: adotar agora, pilotar depois, criar localmente ou ignorar
+
+---
+
+## Quando usar
+
+- "qual skill falta para meu projeto?"
+- "existe skill pronta para isso?"
+- "vale integrar esse MCP server?"
+- "qual marketplace/plugin faz mais sentido?"
+- antes de transformar uma lacuna em nova skill local
+- quando o time quer avaliar capability externa sem quebrar a governança do STARTER
+
+---
+
+## Quando NÃO usar
+
+- A lacuna já está clara e o usuário já pediu para criar uma skill local específica
+- A tarefa não é descoberta, mas implementação direta
+- O projeto quer usar `linked-skills/`, `skills.sh` ou `cache/` como fallback operacional hoje
+
+Nesses casos:
+
+- implementar localmente
+- ou registrar como capability futura sem ativar no fluxo
+
+---
+
+## Regra de governança
+
+Nesta base:
+
+- `local-skills/` e `structure/` são capability ativa
+- `_deferred/` é capability adiada
+- `linked-skills/`, `skills.sh` e `cache/` são capability futura
+
+Logo:
+
+- descoberta externa não vira suporte operacional automaticamente
+- skill externa boa pode justificar uma recomendação, não uma ativação implícita
+- quando houver dúvida, preferir decisão explícita e pequena
+
+---
+
+## Fluxo
+
+### 1. Definir a lacuna real
+
+Antes de listar opções, responder:
+
+- qual problema o projeto tem hoje
+- em que momento do fluxo ele aparece
+- o que já existe localmente
+- o que falta de verdade
+
+Se a lacuna estiver mal definida, primeiro nomeá-la.
+
+### 2. Levantar opções candidatas
+
+Buscar 2-5 opções no máximo.
+Misturar tipos quando fizer sentido:
+
+- skill externa
+- plugin marketplace
+- MCP server
+- criação local como baseline
+
+Não fazer catálogo infinito.
+
+### 3. Comparar por critérios fixos
+
+Avaliar cada opção em:
+
+- **fit:** resolve a lacuna ou só parece próxima
+- **maturidade:** sinais de uso, manutenção e clareza
+- **sobreposição:** conflita com algo já local?
+- **custo operacional:** setup, auth, manutenção, dependência externa
+- **risco de governança:** empurra capability futura para o fluxo ativo?
+
+### 4. Dar um veredito simples
+
+Toda curadoria deve terminar em uma destas decisões:
+
+- **Adotar agora**
+- **Pilotar depois**
+- **Criar skill local**
+- **Ignorar**
+
+### 5. Explicar a forma correta de encaixe
+
+Se recomendar algo externo, esclarecer o tipo de encaixe:
+
+- referência apenas
+- documentação de futura adoção
+- candidato a `linked-skills/` quando a política existir
+- não recomendado para esta fase
+
+---
+
+## Formato de saída
+
+Usar este formato:
+
+```markdown
+## Curadoria de capability
+
+**Lacuna atual:** [o que está faltando]
+
+**O que já existe no projeto:**
+- [skill/capability existente]
+
+**Opções avaliadas:**
+1. **[nome]** — [tipo]
+   - Fit: [alto/médio/baixo]
+   - Maturidade: [alta/média/baixa]
+   - Custo operacional: [alto/médio/baixo]
+   - Risco de governança: [alto/médio/baixo]
+   - Veredito: [adotar agora | pilotar depois | criar local | ignorar]
+
+2. **[nome]** — [tipo]
+   - Fit: [...]
+   - Maturidade: [...]
+   - Custo operacional: [...]
+   - Risco de governança: [...]
+   - Veredito: [...]
+
+**Recomendação principal:** [1 frase]
+
+**Por que esta opção vence agora:**
+- [razão 1]
+- [razão 2]
+
+**Como encaixar no STARTER:**
+- [local-skill | futura linked-skill | só referência | não encaixa]
+
+**Próximo passo recomendado:**
+1. [ação]
+2. [ação]
+```
+
+---
+
+## Heurísticas de decisão
+
+Preferir **criar localmente** quando:
+
+- a necessidade é recorrente do seu fluxo
+- o comportamento precisa refletir governança própria
+- o valor está mais na decisão do que na integração externa
+
+Preferir **pilotar depois** quando:
+
+- a opção externa parece boa, mas exige política de uso ainda inexistente
+- depende de auth, symlink, cache ou estrutura futura
+- ainda não está claro se o ganho compensa a complexidade
+
+Preferir **ignorar** quando:
+
+- é hype sem lacuna real
+- duplica capability já existente
+- cria dependência demais para pouco ganho
+
+---
+
+## Regras críticas
+
+- Não confundir popularidade com fit
+- Não recomendar capability externa só porque existe diretório futuro para isso
+- Não ativar `linked-skills/` por inferência
+- Sempre comparar contra a opção "fazer local"
+- Se a melhor resposta for "não adotar nada agora", dizer isso claramente
+
+---
+
+## Entrega ideal
+
+Saída boa:
+
+- nomeia o gap com precisão
+- reduz o espaço de decisão
+- protege a governança do projeto
+- transforma descoberta em recomendação prática
+
+Saída ruim:
+
+- vira lista de links sem julgamento
+- trata capability futura como pronta
+- recomenda adoção sem falar de custo e risco
+- ignora o que o projeto já tem

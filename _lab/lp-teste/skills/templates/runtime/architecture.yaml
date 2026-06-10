@@ -1,0 +1,18 @@
+# Template — architecture.yaml
+version: "1.0"
+updated: "YYYY-MM-DD"
+pattern: modular_frontend
+
+layers:
+  - id: runtime
+    role: ai_operational_context
+  - id: src
+    role: application_code
+
+context_model:
+  global: [runtime/*.yaml]
+  feature: "src/features/{feature}/SPEC.md"
+
+structure_skills_map:
+  react_vite: structure/react-vite-structure.skill
+  nextjs: structure/nextjs-structure.skill

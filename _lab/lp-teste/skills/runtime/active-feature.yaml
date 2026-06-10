@@ -1,0 +1,19 @@
+# Template — active-feature.yaml
+v: "5.0"
+updated: "2026-06-09"
+
+active: false
+
+feature:
+  id: null
+  name: null
+  path: null
+
+spec:
+  human: null
+  required: false
+
+status:
+  phase: "idle"
+  last: "nenhuma feature ativa"
+  next: "aguardando primeira feature"

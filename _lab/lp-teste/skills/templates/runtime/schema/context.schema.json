@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "starter://runtime/schema/context.schema.json",
+  "title": "RuntimeContext",
+  "allOf": [{ "$ref": "_meta.schema.json" }],
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "type": "string" },
+        "root": { "type": "string" }
+      },
+      "required": ["id", "name", "type"],
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string" },
+        "orchestrator": { "type": "string" },
+        "index": { "type": "string" },
+        "schema": { "type": "string" },
+        "human_context": { "type": "string" },
+        "human_prd": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "conventions": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "ds": {
+      "type": "object",
+      "properties": {
+        "lib": { "type": "string" },
+        "tokens": { "type": "string" },
+        "components": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "design_system": {
+      "type": "object",
+      "properties": {
+        "library": { "type": "string" },
+        "tokens": { "type": "string" },
+        "components_available": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "int": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "integrations": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "properties": { "status": { "type": "string" } },
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "required": ["project"],
+  "additionalProperties": false
+}

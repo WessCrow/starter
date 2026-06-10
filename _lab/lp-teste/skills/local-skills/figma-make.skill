@@ -1,0 +1,270 @@
+---
+name: figma-make
+description: Guia de prompting e melhores práticas para Figma Make — a ferramenta prompt-to-app do Figma (powered by Claude Sonnet 4). Use ao preparar prompts para Figma Make, ao diagnosticar outputs ruins, ou ao planejar como transformar um design existente em protótipo interativo. NÃO é integração MCP — é um guia de uso eficiente da ferramenta.
+---
+
+# Figma Make — Guia de Prompting
+
+> **O que é:** Figma Make é a ferramenta prompt-to-app do Figma, disponível para todos os usuários com Full seat. Usa Claude Sonnet 4 internamente para gerar código funcional (React/HTML/CSS) a partir de prompts — direto dentro do Figma.
+
+> **Quando usar esta skill:** Ao preparar, revisar ou diagnosticar prompts para o Figma Make. Esta skill não controla o Figma Make via API — é um guia de uso eficiente.
+
+---
+
+## Os Dois Modos
+
+| Modo | Descrição |
+|---|---|
+| **0→1** | Criar do zero — sem design existente, só prompt |
+| **1→1** | Transformar design Figma existente em protótipo interativo |
+
+---
+
+## As 8 Práticas Essenciais
+
+---
+
+### 1. Front-load o primeiro prompt com detalhes
+
+**Regra:** Quanto mais detalhe no prompt inicial, menos prompts de correção serão necessários.
+
+> "É melhor chegar o mais próximo da sua visão possível com apenas pequenos ajustes — corrigir o output com múltiplos prompts de follow-up leva muito mais tempo." — Ana Boyer, Designer Advocate
+
+**O que incluir no prompt inicial:**
+
+```
+Tarefa:            O que o Figma Make deve fazer
+Contexto:          Onde este fluxo ou tela se encaixa
+Elementos visuais: Features importantes a incorporar
+Comportamentos:    O que acontece com os elementos na interação
+Restrições:        Device, layout, estilo visual
+```
+
+**Exemplo de prompt estruturado:**
+```
+Crie um dashboard de produtividade mobile-first para gerenciar tarefas.
+Deve ter: lista de tarefas com prioridade, contador de completadas, barra de progresso.
+Ao clicar em uma tarefa: expande com campo de notas inline.
+Estilo: clean, tons neutros, sem sombras pesadas.
+Primeiro passo: construa o componente base da lista com estados de hover.
+```
+
+**Se o primeiro prompt não funcionar:** reformule. Em vez de `alinhe esses dois elementos verticalmente`, tente `mova esse elemento 20px para baixo` ou `adicione 16px de espaço entre esses botões`.
+
+**Se acumular muitos ajustes:** comece um novo arquivo com um prompt melhor — use o aprendizado da tentativa anterior.
+
+---
+
+### 2. Limpe seus arquivos Figma antes de importar
+
+**Para o modo 1→1 (design existente → Make):**
+
+Antes de copiar um frame para o Make, organize:
+- ✅ Auto Layout correto em todos os frames
+- ✅ Constraints de frame configuradas
+- ✅ Nomes de layers baseados em conteúdo/propósito (não "Frame 23", "Group 5")
+
+**Ferramentas úteis:**
+- Figma AI → "Suggest Auto Layout"
+- Figma AI → "Rename layers with AI"
+- Plugin: Clean Document
+
+**Se o design ultrapassar as bordas do preview:**
+```
+Scale this to the size of my screen and make it responsive.
+```
+ou com dimensões específicas:
+```
+Keep this mobile-sized at 390px width.
+```
+
+---
+
+### 3. Quebre projetos complexos em etapas incrementais
+
+**Regra:** Quanto menor o escopo do follow-up, mais preciso o LLM pode ser.
+
+**Estrutura recomendada:**
+
+```
+Prompt 1: Visão geral + core features + estilo visual
+         → aceitar v1 mesmo imperfeita
+
+Prompt 2+: Um ajuste por vez, do macro ao micro
+         → estrutura → layout → tipografia → cores → detalhes → estados
+```
+
+**Extra:** Peça ao Figma Make para mover componentes complexos para arquivos separados. Melhora organização e isola erros:
+```
+Pode mover o código do [componente] para um novo arquivo?
+```
+
+---
+
+### 4. Use seus próprios componentes para consistência visual
+
+**O que fazer:**
+- Copiar um componente (ou frame com múltiplos componentes) e colar no prompt do Make
+- O Make vai inferir estilo, espaçamento e padrões do seu DS sem precisar explicar
+
+**Point and edit para trocar componentes genéricos:**
+1. Selecione um elemento no preview com a ferramenta point and edit
+2. Cole seu componente no prompt
+3. Prompt:
+```
+Replace this component by this design.
+```
+
+---
+
+### 5. Ajustes visuais rápidos com Point and Edit
+
+A ferramenta point and edit permite editar propriedades visuais diretamente no preview:
+
+| Tipo de elemento | Propriedades editáveis |
+|---|---|
+| Texto | Font, tamanho, cor, formatação |
+| Container | Background, espaçamento, border-radius |
+| Imagem | Upload de substituta |
+
+**Uso típico:**
+- Ajuste fino de cor
+- Mudança de tipografia
+- Troca de componente por variante do DS
+
+---
+
+### 6. Use a aba de código para edits rápidos
+
+Para mudanças pequenas não-visuais (velocidade de animação, valores de timing, parâmetros):
+
+1. Clique em `go to source` no elemento
+2. Identifique o parâmetro pelo nome (o Make nomeia o código de forma legível)
+3. Ajuste o valor diretamente — o preview atualiza em tempo real
+
+**Atalho para busca no código:** `Cmd+F` (Mac) / `Ctrl+F` (PC)
+
+**Caso de uso típico:**
+```
+Testar velocidades de animação de 0.3s → 0.8s sem re-gerar o componente
+```
+
+---
+
+### 7. Integre dados realistas ao protótipo
+
+**Sem API (simulado):**
+
+Opção A — Peça dados fictícios diretamente:
+```
+Popule esse dashboard com dados fictícios realistas de vendas de uma startup B2B.
+```
+
+Opção B — Inclua ponto de upload de CSV:
+```
+Antes de mostrar o dashboard, mostre uma tela vazia com placeholder convidando
+o usuário a fazer upload de um .csv com as colunas: date, value, category, status.
+```
+
+**⚠️ Cuidado com APIs reais:** Evitar plugar APIs de terceiros diretamente — risco de expor API keys. Simule os dados ou use mock que emula o comportamento.
+
+**Bonus:** O Make tem acesso ao hardware do browser — câmera, microfone, teclado — útil para protótipos com inputs não-convencionais.
+
+---
+
+### 8. Use o Figma Make como assistente de handoff
+
+Para gerar code snippets prontos para desenvolvedores sem precisar de código manual:
+
+```
+Crie uma interface que gera os CSS variables e output Tailwind CSS
+a partir de uma cor primária de entrada.
+```
+
+Para pseudocódigo específico de plataforma:
+```
+Mantenha o código exatamente como está, mas descreva como essa parte
+está implementada em pseudocódigo. Detalhe considerações específicas para [plataforma].
+```
+
+---
+
+## Estrutura de Prompt Completa — Template
+
+```
+[CONTEXTO DO PROJETO]
+Tipo: [dashboard / app / ferramenta / flow específico]
+Plataforma: [mobile / desktop / responsive]
+Propósito: [o que o usuário faz aqui]
+
+[CORE FEATURES]
+- [feature 1]
+- [feature 2]
+- [feature 3]
+
+[ESTILO VISUAL]
+- Direção: [Precision & Density / Warmth / etc.]
+- Restrições: [sem sombras / bordas apenas / etc.]
+- Referência: [componente colado / DS existente]
+
+[COMPORTAMENTOS]
+- [elemento X] ao [ação Y]: [resultado Z]
+
+[RESTRIÇÕES TÉCNICAS]
+- [dimensões / breakpoints / limitações]
+
+[PRIMEIRO PASSO EXPLÍCITO]
+Primeiro passo: [componente base mais simples, sem tudo de uma vez]
+```
+
+---
+
+## Diagnóstico de Prompts Ruins
+
+| Sintoma | Causa provável | Fix |
+|---|---|---|
+| Output genérico sem identidade | Sem estilo visual especificado | Adicionar direção + restrições visuais |
+| Componentes não correspondem ao DS | Sem referência visual | Colar componentes do DS no prompt |
+| Design "vaza" pelas bordas | Auto Layout mal configurado | Limpar arquivo antes / prompt de escala |
+| Muitos follow-ups para ajustar | Primeiro prompt vago | Refazer com template completo |
+| Animação errada | Velocidade hardcoded | Usar code tab → ajustar parâmetro direto |
+| Dados falsos parecem inventados | Sem contexto de dados | Especificar colunas e tipos esperados |
+
+---
+
+## Integração com STARTER
+
+Ao usar Figma Make como etapa de prototipação:
+
+- **Antes:** verificar `system.md` do `interface-design.skill` — usar a direção visual estabelecida no prompt
+- **Depois:** se o Make gerou padrões novos relevantes → atualizar `system.md` com os tokens descobertos
+- **Para handoff:** o output do Make serve como referência visual para o `figma-implement-design.skill` implementar no codebase real
+
+```
+Fluxo recomendado:
+interface-design → [ Figma Make para prototipação rápida ] → figma-implement-design → código de produção
+```
+
+---
+
+## Referência Rápida de Prompts
+
+```
+# Trocar componente genérico por DS próprio
+"Replace this component by this design." [colar componente]
+
+# Separar componente complexo em arquivo próprio
+"Can you move [componente] code into a new file?"
+
+# Ajustar escala/responsividade
+"Scale this to the size of my screen and make it responsive."
+
+# Adicionar dados realistas sem API
+"Populate this with realistic mock data for [contexto]."
+
+# Handoff em pseudocódigo
+"Keep the code as is, but describe this piece in pseudo-code for [plataforma]."
+
+# Recalibrar após muitos ajustes
+→ Novo arquivo com prompt reescrito usando o template completo
+```
