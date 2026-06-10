@@ -21,7 +21,7 @@ Esqueça o tempo perdido configurando pastas do zero, limpando arquivos inúteis
 
 ---
 
-## Como Funciona em 60 Segundos
+## Como Funciona em Minutos
 
 Apenas 2 arquivos de configuração e 1 comando no chat.
 
@@ -50,7 +50,7 @@ graph TD
 
 | O que você ganha                                                                     | 🚫 O que você nunca mais faz                                                  |
 | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| **Até 80% de economia de tokens** com limpeza inteligente de contexto                | ❌ Estourar o limite de uso da IA com arquivos repetitivos ou pesados         |
+| **Contexto enxuto por design** — carrega só o necessário por sessão                      | ❌ Estourar o limite de uso da IA com arquivos repetitivos ou pesados         |
 | **Sincronização entre editores** (Use Cursor, Claude Code, Cline sem perder o ritmo) | ❌ Perder o histórico do projeto ou desconfigurar tudo ao trocar de IDE       |
 | **Proteção de Segurança (Host Guard):** Bloqueio contra comandos perigosos           | ❌ Executar scripts perigosos por acidente ou vazar suas chaves `.env` no Git |
 | **Guia de Engenharia Completo:** Padrões limpos de Front, Back e Organização         | ❌ Escrever códigos confusos, com lentidão ou bagunçados                      |
