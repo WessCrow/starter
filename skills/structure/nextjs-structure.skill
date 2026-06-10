@@ -72,6 +72,7 @@ Gerar arquitetura base de projeto Next.js com App Router — estrutura de pastas
 ├── tailwind.config.ts
 ├── components.json               (se shadcn/ui)
 ├── .env.example
+├── pnpm-workspace.yaml   (pnpm 11 — ver stack-guide.md)
 └── .env.local
 ```
 

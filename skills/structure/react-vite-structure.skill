@@ -61,9 +61,33 @@ Gerar a arquitetura base de um projeto React com Vite — estrutura de pastas pa
 ├── tsconfig.app.json
 ├── tailwind.config.ts    (se Tailwind detectado)
 ├── components.json       (se shadcn/ui detectado)
+├── pnpm-workspace.yaml   (pnpm 11 — ver stack-guide.md)
 ├── .env.example
 ├── .gitignore
-└── package.json
+├── package.json
+└── src/
+    └── vite-env.d.ts       ← obrigatório (referência types vite/client)
+```
+
+### devDependencies mínimas (package.json)
+
+Incluir sempre:
+
+```json
+"devDependencies": {
+  "@types/node": "^22",
+  "@types/react": "^18",
+  "@types/react-dom": "^18",
+  "@vitejs/plugin-react": "^4",
+  "typescript": "^5",
+  "vite": "^5"
+}
+```
+
+### src/vite-env.d.ts (boilerplate)
+
+```typescript
+/// <reference types="vite/client" />
 ```
 
 ---
