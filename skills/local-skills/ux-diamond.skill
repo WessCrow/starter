@@ -60,19 +60,19 @@ Antes de responder, identifique o modo principal e **integre obrigatoriamente** 
 
 ### 1. Diagnóstico UX & Auditoria
 - **Quando usar:** Avaliar uma interface, tela, fluxo ou produto existente.
-- **Ação:** Chame e siga a skill [ux-audit.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/ux-audit.skill) para uma análise estruturada baseada nas 5 dimensões de usabilidade (Clareza, Fluxo, Consistência, Feedback, Acessibilidade).
+- **Ação:** Chame e siga a skill [ux-audit.skill](skills/local-skills/ux-audit.skill) para uma análise estruturada baseada nas 5 dimensões de usabilidade (Clareza, Fluxo, Consistência, Feedback, Acessibilidade).
 
 ### 2. Product Discovery & Definição de Problema
 - **Quando usar:** Fase inicial de entendimento, pesquisa de usuário, mapeamento de dores e hipóteses.
-- **Ação:** Utilize a biblioteca de prompts e heurísticas da [prompt-library.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/prompt-library.skill) para estruturar a investigação e mitigar viés de confirmação.
+- **Ação:** Utilize a biblioteca de prompts e heurísticas da [prompt-library.skill](skills/local-skills/prompt-library.skill) para estruturar a investigação e mitigar viés de confirmação.
 
 ### 3. Direção Estética & Tom Visual
 - **Quando usar:** Definir a paleta, tipografia, contraste ou tom estético inicial de uma tela/página.
-- **Ação:** Chame a [visual-direction-brief.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/visual-direction-brief.skill) para traduzir referências vagas em um brief visual acionável antes do primeiro prompt de UI.
+- **Ação:** Chame a [visual-direction-brief.skill](skills/local-skills/visual-direction-brief.skill) para traduzir referências vagas em um brief visual acionável antes do primeiro prompt de UI.
 
 ### 4. Estrutura de Página & Wireframe Textual
 - **Quando usar:** Organizar a hierarquia de conteúdo e fluxo de navegação estrutural.
-- **Ação:** Integre com a [interface-design.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/interface-design.skill). Realize o checkpoint de design (Depth, Surfaces, Spacing, Typography, Borders) antes de desenhar a estrutura lógica.
+- **Ação:** Integre com a [interface-design.skill](skills/local-skills/interface-design.skill). Realize o checkpoint de design (Depth, Surfaces, Spacing, Typography, Borders) antes de desenhar a estrutura lógica.
 
 ### 5. Storytelling, Copywriting & UX Writing
 - **Quando usar:** Escrever microtextos de botões, mensagens de erro, fluxos conversacionais e onboarding.
@@ -81,21 +81,21 @@ Antes de responder, identifique o modo principal e **integre obrigatoriamente** 
 ### 6. Animações, Motion & Scroll Dinâmico
 - **Quando usar:** Definir ou codificar comportamentos interativos avançados de scroll e movimento.
 - **Ação:** Direcione a implementação usando as seguintes skills prontas:
-  - Para scroll suave básico: [lenis-scroll.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/lenis-scroll.skill)
-  - Para scroll grudento/ancorado: [sticky-scroll-gallery.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/sticky-scroll-gallery.skill)
-  - Para exibições e galerias estéticas: [editorial-scroll-gallery.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/editorial-scroll-gallery.skill) ou [editorial-scroll-variants.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/editorial-scroll-variants.skill)
-  - Para seções hero cinematográficas: [cinematic-scroll-video-hero.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/cinematic-scroll-video-hero.skill) ou [cinematic-scroll-video-hero-frameworks.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/cinematic-scroll-video-hero-frameworks.skill)
+  - Para scroll suave básico: [lenis-scroll.skill](skills/local-skills/lenis-scroll.skill)
+  - Para scroll grudento/ancorado: [sticky-scroll-gallery.skill](skills/local-skills/sticky-scroll-gallery.skill)
+  - Para exibições e galerias estéticas: [editorial-scroll-gallery.skill](skills/local-skills/editorial-scroll-gallery.skill) ou [editorial-scroll-variants.skill](skills/local-skills/editorial-scroll-variants.skill)
+  - Para seções hero cinematográficas: [cinematic-scroll-video-hero.skill](skills/local-skills/cinematic-scroll-video-hero.skill) ou [cinematic-scroll-video-hero-frameworks.skill](skills/local-skills/cinematic-scroll-video-hero-frameworks.skill)
 
 ### 7. Código, Responsividade & Implementação de UI
 - **Quando usar:** Implementar a UI em código (CSS/JS).
 - **Ação:** Direcione a implementação usando as seguintes skills prontas:
-  - Para layouts responsivos fluidos e consistentes: [fluid-ui-implementation.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/fluid-ui-implementation.skill), [fluid-ui-review.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/fluid-ui-review.skill) ou [fluid-ui-snippets.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/fluid-ui-snippets.skill)
-  - Para craft e refinação de Grid/Flexbox responsivo: [responsive-craft.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/responsive-craft.skill)
-  - Para consistência de tokens e design system: [interface-design.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/interface-design.skill)
+  - Para layouts responsivos fluidos e consistentes: [fluid-ui-implementation.skill](skills/local-skills/fluid-ui-implementation.skill), [fluid-ui-review.skill](skills/local-skills/fluid-ui-review.skill) ou [fluid-ui-snippets.skill](skills/local-skills/fluid-ui-snippets.skill)
+  - Para craft e refinação de Grid/Flexbox responsivo: [responsive-craft.skill](skills/local-skills/responsive-craft.skill)
+  - Para consistência de tokens e design system: [interface-design.skill](skills/local-skills/interface-design.skill)
 
 ### 8. Validação de Entrega & QA Gate
 - **Quando usar:** Após qualquer codificação de interface para assegurar o funcionamento e o rigor estético/técnico.
-- **Ação:** Execute o checklist do [qa-gate.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/qa-gate.skill) e realize a fumaça de compilação através do [qa-smoke.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/local-skills/qa-smoke.skill).
+- **Ação:** Execute o checklist do [qa-gate.skill](skills/local-skills/qa-gate.skill) e realize a fumaça de compilação através do [qa-smoke.skill](skills/local-skills/qa-smoke.skill).
 
 ---
 
@@ -103,7 +103,7 @@ Antes de responder, identifique o modo principal e **integre obrigatoriamente** 
 
 O UX Diamond produz e atualiza os seguintes artefatos:
 - `outputs/UX-DIAMOND.md` — Registro da exploração (Problema validado + Decisão de solução)
-- User flow definido e documentado que alimenta o [sprint-contract.md](file:///Users/drt79427/.gemini/antigravity-ide/brain/61d21ee2-cba7-45c5-b6b6-88b9749f873b/sprint-contract.md)
+- User flow definido e documentado que alimenta o `sprint-contract.md` na raiz (kickoff) ou em `specs/NNN-*/` (feature-flow)
 - Copy de storytelling completa e testada para GenUI/Multimodalidade
 - Recomendações explícitas de microinteração, animação e acessibilidade (POUR)
 - Código de página estruturado usando os tokens semânticos declarados

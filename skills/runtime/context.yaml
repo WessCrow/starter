@@ -5,7 +5,7 @@ project:
   id: starter
   name: STARTER
   type: ai_runtime
-  root: /Users/drt79427/Desktop/Estudos/STARTER
+  root: .
 
 runtime:
   path: skills/runtime/
