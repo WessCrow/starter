@@ -36,6 +36,33 @@ npm install -g pnpm
 
 ---
 
+## pnpm 11 — evitar travas em agentes e usuários leigos
+
+O pnpm 11 exige aprovação explícita de scripts de build. **Não use** `pnpm approve-builds` — é interativo e trava agentes de IA.
+
+**Solução:** incluir `pnpm-workspace.yaml` na raiz de todo projeto novo com pnpm:
+
+```yaml
+packages:
+  - "."
+
+onlyBuiltDependencies:
+  - esbuild
+  - "@swc/core"
+  - sharp
+
+verifyDepsBeforeRun: false
+```
+
+- `onlyBuiltDependencies` — lista pacotes que podem rodar scripts de install sem prompt
+- `verifyDepsBeforeRun: false` — evita bloqueio em CI e em agentes
+
+As structure skills (`nextjs-structure.skill`, `react-vite-structure.skill`) devem gerar este arquivo junto com `package.json`.
+
+**Proibido:** `pnpm approve-builds` em fluxos automatizados ou kickoff.
+
+---
+
 ## Stack “disruptiva” no sentido produto (não experimental)
 
 Evitar stacks exóticas só por hype — **disruptivo = produto + UX + velocidade de iteração**.

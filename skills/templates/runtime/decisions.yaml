@@ -1,9 +1,9 @@
 # Template — decisions.yaml
-version: "1.0"
+v: "5.0"
 updated: "YYYY-MM-DD"
 
 decisions: []
 # - id: unique_id
 #   choice: what_was_chosen
 #   reason: why
-#   since: YYYY-MM-DD
+#   since: "YYYY-MM-DD"   ← OBRIGATÓRIO entre aspas (senão YAML vira date e falha o schema)

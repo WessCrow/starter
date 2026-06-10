@@ -22,6 +22,8 @@ Rodar comandos mínimos de **build** (e **lint** se existir) conforme stack. Res
 
 **Gerenciador:** se existir `pnpm-lock.yaml` → `pnpm`. Se só `package-lock.json` → `npm`.
 
+**pnpm 11:** se o build falhar pedindo aprovação de scripts, verificar `pnpm-workspace.yaml` na raiz (`onlyBuiltDependencies` + `verifyDepsBeforeRun: false`). Ver `governance/stack-guide.md`. **Nunca** rodar `pnpm approve-builds` — trava agentes.
+
 ---
 
 ## Comandos (ordem)
