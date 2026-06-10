@@ -33,6 +33,10 @@ FORBIDDEN_GLOBS = (
 # Exceções dentro de prefixos proibidos (relativo ao repo)
 ALLOWED_IN_FORBIDDEN = {
     "docs/private/README.md",
+    # Seeds do framework (espelho dos templates — exigido por validate-skills.py / CI)
+    "skills/outputs/ARCHITECTURE.md",
+    "skills/outputs/PROJECT_BRIEF.md",
+    "skills/outputs/ROADMAP.md",
 }
 
 # Padrões de nome — em qualquer pasta (exceto templates do framework)

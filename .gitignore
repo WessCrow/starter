@@ -17,8 +17,11 @@ node_modules/
 *.swp
 *.swo
 
-# Outputs gerados por sessão (não versionados)
-skills/outputs/
+# Outputs gerados por sessão (artefatos de kickoff não versionados)
+skills/outputs/*
+!skills/outputs/ARCHITECTURE.md
+!skills/outputs/PROJECT_BRIEF.md
+!skills/outputs/ROADMAP.md
 
 # Cache de runtime
 skills/cache/

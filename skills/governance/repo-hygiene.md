@@ -36,7 +36,7 @@ docs/
 | Caminho | Motivo |
 |---------|--------|
 | `_lab/` | Fixtures e testes de execução local |
-| `skills/outputs/` | Gerados por sessão de kickoff |
+| `skills/outputs/` | Gerados por sessão de kickoff (exceção no repo framework: 3 seeds `ARCHITECTURE.md`, `PROJECT_BRIEF.md`, `ROADMAP.md`) |
 | `skills/cache/` | Cache operacional |
 | `qa/reports/` | Relatórios QA por feature (projeto filho) |
 | `node_modules/`, `dist/`, `.next/`, `build/` | Build/deps |
