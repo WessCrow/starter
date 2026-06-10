@@ -1,17 +1,17 @@
 v: "5.1"
-updated: "2026-06-08"
+updated: "2026-06-09"
+framework_v: "5.1"
 
 phase:
   id: 5
   name: Enterprise Runtime + QA Gate
   previous: ai_native_runtime
 
-last: "Melhorias de segurança (Host Guard), resiliência do agente (Context Cleaner), lembrete de QA e expansão de regras técnicas de Front, Back e SOLID."
+last: "Plano de ação críticos executado: P0–P2 + feature-flow 001-depoimentos validado em _lab/lp-teste."
 next:
-  - testar_onboarding_com_projeto_filho
-  - usar_qa_gate_em_projeto_filho
-blockers:
-  - linked_skills_empty
+  - usuario_validar_lp_teste_no_navegador
+  - revisar_docs/relatorio-teste-feature-flow.md
+blockers: []
 
 health:
   runtime_layer: active

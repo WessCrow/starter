@@ -28,6 +28,10 @@
     "health": {
       "type": "object",
       "additionalProperties": { "type": ["boolean", "string"] }
+    },
+    "framework_v": {
+      "type": "string",
+      "description": "Versão do framework STARTER usada para bootstrap/upgrade"
     }
   },
   "required": ["phase"],

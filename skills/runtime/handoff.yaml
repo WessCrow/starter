@@ -1,26 +1,26 @@
 v: "5.1"
-updated: "2026-06-08"
+updated: "2026-06-09"
 
 session:
-  last_completed: implementacao_resiliencia_e_seguranca
-  next_action: validar_onboarding_com_usuario
+  last_completed: plano_acao_criticos_e_feature_flow_001_depoimentos
+  next_action: usuario_validar_depoimentos_no_navegador
   blocked: false
 
 qa:
-  last_status: pending
-  last_report_path: null
-  last_run_at: null
+  last_status: pass
+  last_report_path: _lab/lp-teste/qa/reports/2026-06-09-depoimentos.md
+  last_run_at: "2026-06-09"
   failures_open: []
 
 feature:
-  id: null
-  sprint_contract_path: null
-  spec_path: null
+  id: 001-depoimentos
+  sprint_contract_path: _lab/lp-teste/specs/001-depoimentos/sprint-contract.md
+  spec_path: _lab/lp-teste/specs/001-depoimentos/spec.md
 
 user:
   verified_in_browser: false
   verified_at: null
-  notes: null
+  notes: "Validar LP de teste: cd _lab/lp-teste && pnpm run dev"
 
 reminders:
   - id: phase_4_playwright
