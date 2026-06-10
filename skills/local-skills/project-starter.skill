@@ -41,6 +41,8 @@ Só depois do **"sim"** do usuário: pastas, runtime, PRD, código (se aplicáve
         ↓
 [4] CONTEXT.md + PRD.md na raiz do PROJETO
         ↓
+[4b] sprint-contract.md na raiz (se P2 pediu UI — ver kickoff.md Fase 4)
+        ↓
 [5] skills/outputs/ preenchidos
         ↓
 [6] Código inicial só se usuário pediu tela/MVP na pergunta 2
@@ -67,6 +69,7 @@ O agente infere e documenta em linguagem simples no resumo (Fase 2).
 ## Checklist de saída
 
 - [ ] Kickoff: usuário confirmou com "sim"  
+- [ ] `sprint-contract.md` na raiz (se primeira entrega inclui UI)  
 - [ ] `skills/runtime/` criado e validado  
 - [ ] `AGENTS.md` mantido na raiz  
 - [ ] `CONTEXT.md` + `PRD.md` do **app** na raiz (≤50 linhas no CONTEXT)  

@@ -191,6 +191,7 @@ Antes de considerar o projeto inicializado:
 - [ ] Stack detectada → `runtime/stack.yaml`
 - [ ] Structure skill executada
 - [ ] `CONTEXT.md` humano na raiz (≤50 linhas)
+- [ ] `sprint-contract.md` na raiz (se kickoff incluiu UI — aprovado na Fase 2)
 - [ ] `PRD.md` criado
 - [ ] Decisões em `runtime/decisions.yaml`
 - [ ] Nenhum componente criado que já existe no Design System

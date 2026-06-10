@@ -2,7 +2,9 @@
 
 > **Data:** YYYY-MM-DD  
 > **Feature:** [id]  
-> **Aprovado por você:** [ ] Sim — só implementar após marcar
+> **Aprovado por você:** [ ] Sim — só implementar após marcar  
+> **Local:** kickoff → raiz do projeto · feature spec-driven → `specs/NNN-[feature]/sprint-contract.md`
+> **Aprovação kickoff:** o "sim" da Fase 2 do `kickoff.md` = aprovação deste contrato (marcar [x] Sim)
 
 ---
 

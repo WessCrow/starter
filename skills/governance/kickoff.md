@@ -119,6 +119,8 @@ Posso começar a criar? (sim / ajustar: …)
 
 **Aguardar "sim"** (ou ajuste). **Proibido** criar arquivos antes do sim.
 
+> **Equivalência de aprovação:** o **"sim"** nesta fase aprova também o **contrato da primeira entrega** (`sprint-contract.md` na raiz). Não é necessário pedir aprovação duplicada — o contrato é gerado automaticamente na Fase 4 a partir deste resumo.
+
 ---
 
 ## Fase 2.5 — UX Diamond (obrigatório se UI)
@@ -162,11 +164,26 @@ Seguir na ordem:
 2. Copiar templates/runtime/ → skills/runtime/
 3. Structure skill detectada
 4. CONTEXT.md + PRD.md na raiz (do projeto, não do STARTER)
-5. skills/outputs/ (BRIEF, ROADMAP, ARCHITECTURE)
-6. Código inicial só se P2 pedir tela/MVP — senão só estrutura + docs
-7. validate.py → 0 failed
-8. Mensagem final: o que foi criado + próximo passo em 1 frase
+5. sprint-contract.md na raiz (primeira entrega — template templates/sprint-contract.md)
+   → preencher critérios a partir do resumo aprovado na Fase 2
+   → marcar "Aprovado por você: [x] Sim" (o "sim" da Fase 2 = aprovação do contrato)
+6. skills/outputs/ (BRIEF, ROADMAP, ARCHITECTURE)
+7. Código inicial só se P2 pedir tela/MVP — senão só estrutura + docs
+8. validate.py → 0 failed
+9. Mensagem final: o que foi criado + próximo passo em 1 frase
 ```
+
+### sprint-contract.md no kickoff (primeira entrega)
+
+Gerar **na raiz do projeto** (não em `specs/`) quando P2 pedir tela, landing ou MVP com UI.
+Preencher a partir do resumo da Fase 2 + saída do UX Diamond (se aplicável):
+
+- **O que o usuário deve conseguir:** itens do "Primeiro passo" do resumo
+- **Critérios testáveis:** 3–4 linhas verificáveis (Hero, CTA, mobile 375px, build)
+- **Fora desta sprint:** itens do "Fora do escopo"
+- **Aprovado:** `[x] Sim — aprovado no kickoff (Fase 2)`
+
+Sem UI na P2 → **não** gerar sprint-contract (QA Gate de código só entra com entrega visual).
 
 **Manter na raiz:** `AGENTS.md`, `CONTEXT.md`, `PRD.md` — **nunca apagar** após kickoff.
 
@@ -176,7 +193,7 @@ Seguir na ordem:
 
 > Projeto **[nome]** iniciado.  
 > Abra `CONTEXT.md` para o resumo. `PRD.md` tem o escopo.  
-> Próximo passo: **[ex: aprovar sprint-contract da primeira tela]** — é só me pedir.
+> Próximo passo: **[ex: pedir nova feature ou testar no navegador 5 min]** — é só me pedir.
 
 ---
 
