@@ -78,6 +78,7 @@ Sempre executar **antes** de qualquer skill funcional.
                        figma-implement-design · figma-foundation-docs · figma-make · interface-design · web-design-cloner
                        visual-direction-brief · marketplace-curator
                        fluid-ui-review · fluid-ui-implementation · fluid-ui-snippets
+                       context-cleaner · ux-diamond
                        hyperframes · hyperframes-cli · hyperframes-media
 3. _deferred/       → incubação; não entra no roteamento ativo
 4. linked-skills/ + skills.sh + cache
@@ -99,6 +100,7 @@ Sempre executar **antes** de qualquer skill funcional.
 | Revisar ou implementar fluidez, motion e microinterações | `fluid-ui-review` → `fluid-ui-implementation` → `fluid-ui-snippets` |
 | Auditar UX / identificar problemas | `ux-audit` |
 | Iniciar projeto novo | structure skill → `project-starter` |
+| Nova feature em projeto existente (spec-driven) | `governance/feature-flow.md` → `templates/specs/` → `qa-gate` |
 | Refatorar projeto existente | `ux-audit` → `interface-design` |
 | Padrões web / boas práticas | `emil-design-eng` → `responsive-craft` |
 | Documentação / kickoff | `project-starter` → `templates/` |

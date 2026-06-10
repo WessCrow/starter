@@ -1,5 +1,5 @@
 # Template — active-feature.yaml
-version: "1.0"
+v: "5.0"
 updated: "YYYY-MM-DD"
 
 active: false
@@ -14,6 +14,6 @@ spec:
   required: false
 
 status:
-  phase: null
-  last: null
-  next: null
+  phase: "idle"
+  last: "nenhuma feature ativa"
+  next: "aguardando primeira feature"

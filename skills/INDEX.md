@@ -45,6 +45,16 @@
 | [`scripts/clean-framework-artifacts.sh`](scripts/clean-framework-artifacts.sh) | Script de limpeza |
 | [`local-skills/project-starter.skill`](local-skills/project-starter.skill) | Execução após "sim" |
 
+## Nova feature — fluxo spec-driven ★
+
+| Recurso | Papel |
+|---------|-------|
+| [`governance/feature-flow.md`](governance/feature-flow.md) | Protocolo: specify → clarify → plan → tasks → analyze → implementar |
+| [`templates/specs/spec-template.md`](templates/specs/spec-template.md) | O quê + por quê (sem stack) + Clarificações |
+| [`templates/specs/plan-template.md`](templates/specs/plan-template.md) | Como: stack, dados, arquitetura + constitution check |
+| [`templates/specs/tasks-template.md`](templates/specs/tasks-template.md) | Tarefas com dependências, `[P]` e rastreabilidade |
+| [`templates/overrides/README.md`](templates/overrides/README.md) | Customização de templates por projeto (override vence core) |
+
 ## Governance
 
 | Doc | Papel |
@@ -78,4 +88,4 @@
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-07
+> Última atualização: 2026-06-09

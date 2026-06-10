@@ -85,6 +85,8 @@ Referências centrais:
 | **qa-gate.skill** | QA cético obrigatório após implementação |
 | **qa-smoke.skill** | Smoke de build/lint conforme stack |
 | **ux-audit.skill** | Auditoria de UX e identificação de problemas |
+| **ux-diamond.skill** | Discovery duplo diamante pós-kickoff: divergir e convergir antes de codar |
+| **context-cleaner.skill** | Resumo operacional para nova sessão; limpeza de contexto e economia de tokens |
 | **lenis-scroll.skill** | Scroll suave, scroll-driven e parallax |
 | **editorial-scroll-gallery.skill** | Section editorial sticky com copy fixa e fotos subindo verticalmente ao lado |
 | **editorial-scroll-variants.skill** | Variações de scroll editorial com cards alternados, trilha dupla e parallax leve |

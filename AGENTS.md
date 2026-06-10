@@ -20,6 +20,20 @@ O usuário **não** precisa citar stack. Ver `COMECAR-PROJETO.md` na raiz.
 
 ---
 
+## 0a. Nova feature — fluxo spec-driven (obrigatório)
+
+Se o usuário pedir **nova feature/funcionalidade** em projeto já iniciado:
+
+1. Ler `skills/governance/feature-flow.md`
+2. Criar `specs/NNN-nome/` → **specify** (`spec.md`, sem tecnologia) → **clarify** (≤5 perguntas registradas) → **plan** (`plan.md`) → **tasks** (`tasks.md`, dependências + `[P]`)
+3. **Analyze:** checar spec ↔ plan ↔ tasks ↔ `rules.yaml` antes do contrato
+4. `sprint-contract.md` aprovado → implementar → QA Gate (seção 3)
+
+Templates: `skills/templates/specs/` (resolução: `templates/overrides/` vence o core — ver `templates/overrides/README.md`).
+Ajuste trivial (≤ ~20 linhas, sem entidade nova) **não** passa pelo fluxo, mas mantém QA.
+
+---
+
 ## 0b. Alinhamento de Estado Multi-IDE (Sem Quebras de Histórico)
 
 Ao abrir este repositório em uma IDE diferente ou reiniciar uma sessão:
@@ -67,6 +81,7 @@ skills/governance/Start-ops.md
 
 ## 3. QA Gate — obrigatório após implementar
 
+0. Feature do fluxo spec-driven → fase **Analyze** do `feature-flow.md` concluída  
 1. Existe `sprint-contract.md` aprovado pelo usuário  
 2. Executar `qa-gate.skill` (tom **cético**, relatório **PT-BR simples**)  
 3. `qa-smoke.skill` — `pnpm run build` (ou `npm` se lock npm)  

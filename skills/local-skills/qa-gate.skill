@@ -30,6 +30,9 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 ```
 [ ] runtime/qa.yaml carregado
 [ ] sprint-contract.md existe e foi aprovado pelo usuário
+[ ] Se feature veio do fluxo spec-driven (governance/feature-flow.md):
+    specs/NNN-[feature]/ existe com spec.md + plan.md + tasks.md e a fase
+    Analyze foi executada (sem [PRECISA CLARIFICAR] pendente)
 [ ] handoff.yaml atualizado com feature atual
 [ ] Builder NÃO é este passo — reiniciar mentalmente como QA
 ```
@@ -52,6 +55,10 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
         ↓
 [6] Marcar cada critério do contrato PASS/FAIL
         ↓
+[6b] Constitution check — a implementação viola runtime/rules.yaml
+     ou governance/RULES.md? (segurança, código, acessibilidade)
+     Violação = FAIL, citando a regra violada
+        ↓
 [7] Decisão final PASS ou FAIL (pass_rule)
         ↓
 [8] Gerar qa/reports/YYYY-MM-DD-[feature].md (template qa-report.md)
@@ -68,6 +75,7 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 
 - Assumir que há bugs até provar o contrário
 - Build falhou → **Estável = FAIL** → status final **FAIL**
+- Regra de `rules.yaml`/`RULES.md` violada → **FAIL** (constitution check)
 - Critério do contrato não testado → **FAIL** com "não verificado"
 - Não suavizar: bug no fluxo principal = **FAIL**
 
@@ -109,4 +117,5 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 ## Governança
 
 - `governance/qa-protocol.md`
+- `governance/feature-flow.md` — fluxo spec-driven por feature (specs/NNN-*/)
 - `runtime/handoff.yaml`

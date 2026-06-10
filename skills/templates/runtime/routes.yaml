@@ -1,5 +1,5 @@
 # Template — routes.yaml (customizar intents por projeto)
-version: "1.0"
+v: "5.0"
 updated: "YYYY-MM-DD"
 
 resolution:

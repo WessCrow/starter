@@ -22,3 +22,6 @@ skills/outputs/
 
 # Cache de runtime
 skills/cache/
+
+# pnpm local store (nunca versionar)
+.pnpm-store/
