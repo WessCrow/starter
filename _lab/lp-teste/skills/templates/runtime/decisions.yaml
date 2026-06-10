@@ -1,9 +1,0 @@
-# Template — decisions.yaml
-version: "1.0"
-updated: "YYYY-MM-DD"
-
-decisions: []
-# - id: unique_id
-#   choice: what_was_chosen
-#   reason: why
-#   since: YYYY-MM-DD

@@ -25,3 +25,26 @@ skills/cache/
 
 # pnpm local store (nunca versionar)
 .pnpm-store/
+
+# --- Repo hygiene (ver skills/governance/repo-hygiene.md) ---
+
+# Documentação interna do mantenedor
+docs/private/*
+!docs/private/README.md
+
+# Fixtures e testes de execução local
+_lab/
+
+# Relatórios QA (projetos filhos e sessões locais)
+qa/reports/
+
+# Build / artefatos compilados
+dist/
+build/
+.next/
+*.tsbuildinfo
+
+# Ambiente local
+.env
+.env.*
+!.env.example

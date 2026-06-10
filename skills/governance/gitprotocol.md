@@ -79,21 +79,28 @@ Se algo essencial estiver ausente, informar claramente.
 
 # 🧹 ETAPA 3 — Higiene do Repositório
 
-Bloquear arquivos indevidos:
+Executar **antes de commit ou push**:
 
-- `node_modules/`
-- `dist/`
-- `build/`
-- `.next/`
-- `coverage/`
-- logs
-- cache
-- arquivos temporários
-- arquivos de IDE
+```bash
+python3 skills/scripts/check-repo-hygiene.py
+python3 skills/scripts/check-repo-hygiene.py --staged   # opcional: só o próximo commit
+```
 
-Validar `.gitignore`.
+Política completa: `skills/governance/repo-hygiene.md`
 
-Se estiver ausente ou incompleto, sugerir correção imediata.
+## Bloquear arquivos indevidos
+
+- `node_modules/`, `dist/`, `build/`, `.next/`, `coverage/`
+- `_lab/` (fixtures de teste local)
+- `docs/private/*` (relatórios, planos, diagnósticos — exceto `README.md`)
+- `qa/reports/` (relatórios QA de sessão)
+- `skills/outputs/` (artefatos gerados por kickoff)
+- Padrões de nome: `relatorio-*`, `plano-acao*`, `plano-melhoria*`, `diagnostico.md`
+- logs, cache, arquivos temporários, arquivos de IDE
+
+Validar `.gitignore`. Se estiver ausente ou incompleto, sugerir correção imediata.
+
+Se `check-repo-hygiene.py` retornar FAIL → **bloquear commit/push** até `git rm --cached` e mover para `docs/private/`.
 
 ---
 

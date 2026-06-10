@@ -7,10 +7,10 @@ phase:
   name: Enterprise Runtime + QA Gate
   previous: ai_native_runtime
 
-last: "Plano de ação críticos executado: P0–P2 + feature-flow 001-depoimentos validado em _lab/lp-teste."
+last: "Repo hygiene: docs/public vs private, check-repo-hygiene.py, QA PASS."
 next:
-  - usuario_validar_lp_teste_no_navegador
-  - revisar_docs/relatorio-teste-feature-flow.md
+  - push_para_github
+  - nova_feature_via_feature_flow
 blockers: []
 
 health:

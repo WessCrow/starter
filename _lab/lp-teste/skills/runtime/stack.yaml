@@ -1,8 +1,0 @@
-v: "5.0"
-updated: "2026-06-09"
-frontend: react
-bundler: vite
-ui: tailwind
-architecture: modular
-language: typescript
-structure_skill: structure/react-vite-structure.skill

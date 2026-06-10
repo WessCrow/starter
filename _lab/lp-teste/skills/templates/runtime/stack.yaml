@@ -1,8 +1,0 @@
-v: "5.0"
-updated: "YYYY-MM-DD"
-frontend: react
-bundler: vite
-ui: shadcn
-architecture: modular
-language: typescript
-structure_skill: structure/react-vite-structure.skill

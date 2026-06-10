@@ -63,6 +63,8 @@
 | [`skills-governance.md`](governance/skills-governance.md) | Define capability ativa, adiada e futura |
 | [`Start.md`](governance/Start.md) | Matriz de roteamento de skills |
 | [`validate-skills.py`](scripts/validate-skills.py) | Validador antidrift de skills, docs, templates e bootstrap |
+| [`check-repo-hygiene.py`](scripts/check-repo-hygiene.py) | Bloqueia relatórios/planos/fixtures no índice git |
+| [`repo-hygiene.md`](governance/repo-hygiene.md) | O que versionar vs. `docs/private/` |
 | [`runtime-protocol.md`](governance/runtime-protocol.md) | Protocolo v5 |
 | [`RULES.md`](governance/RULES.md) | Humano (completo) |
 | [`runtime/rules.yaml`](runtime/rules.yaml) | IA (hot, validado) |

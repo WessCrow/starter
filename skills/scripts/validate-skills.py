@@ -467,6 +467,27 @@ def validate_runtime_template_mirror() -> tuple[list[str], list[str]]:
     return ["OK   runtime:mirror"], []
 
 
+def validate_repo_hygiene() -> tuple[list[str], list[str]]:
+    """Delega para check-repo-hygiene.py — arquivos que não devem estar versionados."""
+    checker = SKILLS_DIR / "scripts" / "check-repo-hygiene.py"
+    if not checker.exists():
+        return [], [f"Script ausente: {rel(checker)}"]
+
+    import subprocess
+
+    result = subprocess.run(
+        [sys.executable, str(checker)],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        detail = (result.stdout or result.stderr or "").strip()
+        return [], [f"Repo hygiene: violações detectadas\n{detail}"]
+    return ["OK   repo:hygiene"], []
+
+
 def validate_bootstrap_contract() -> tuple[list[str], list[str]]:
     errors: list[str] = []
 
@@ -516,6 +537,7 @@ def validate() -> tuple[list[str], list[str]]:
         validate_doc_snippets,
         validate_template_output_consistency,
         validate_runtime_template_mirror,
+        validate_repo_hygiene,
         validate_bootstrap_contract,
     ]:
         ok_items, err_items = validator()
