@@ -190,6 +190,7 @@ Antes de considerar o projeto inicializado:
 - [ ] `runtime/index.yaml` com load_order hot/warm/cold
 - [ ] Stack detectada → `runtime/stack.yaml`
 - [ ] Structure skill executada
+- [ ] `.env.example` na raiz (placeholders — sem valores reais; `.env.local` no `.gitignore`)
 - [ ] `CONTEXT.md` humano na raiz (≤50 linhas)
 - [ ] `sprint-contract.md` na raiz (se kickoff incluiu UI — aprovado na Fase 2)
 - [ ] `PRD.md` criado

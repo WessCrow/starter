@@ -1,0 +1,235 @@
+# fluid-ui.skill
+
+> **Tipo:** Local Skill (canônica — consolida a família fluid-ui)
+> **Dominio:** ui-motion · interaction-review · interaction-implementation · recipes
+> **Acao:** auditar · decidir · implementar · exemplificar
+> **Fonte:** https://karlkoch.me/writing/10-principles-for-fluid-ui
+> **Quando usar:** Review ou implementacao de motion, microinteracoes, drag, transicoes, layout animation e reduced motion — quando a interface parece "travada", "mecanica" ou "slideshow", ou quando e preciso corrigir isso com criterio
+> **Consolida:** fluid-ui-review · fluid-ui-implementation · fluid-ui-snippets (originais completos em `skills/_deferred/consolidated-2026-06/`)
+
+---
+
+## Proposito
+
+Tratar motion como feedback, continuidade espacial, resposta ao gesto e clareza de estado — nunca como decoracao. Fluxo unico: **diagnosticar → decidir estrategia → implementar com receitas**.
+
+Nao usar para "colocar animacao em tudo". Se a melhor resposta for reduzir motion, dizer isso explicitamente.
+
+---
+
+## Etapa 1 — Enquadramento (obrigatorio antes de qualquer review)
+
+### Classe de uso
+
+| Classe | Regra |
+|---|---|
+| **Alta frequencia** | velocidade, previsibilidade, minimo motion |
+| **Uso ocasional** | mais continuidade espacial e transicoes perceptiveis |
+| **Exploratorio / showcase** | mais motion se ajudar narrativa |
+
+### Tipo de interacao
+
+| Tipo | Exemplo | Solucao padrao |
+|---|---|---|
+| Feedback local | hover, press, toggle | `transition` curta em transform/opacity/cores |
+| Abrir / fechar | modal, sheet, dropdown | transition curta ou spring leve |
+| Gesto direto | drag, swipe, reorder | spring com velocity, tracking 1:1 |
+| Mudanca de layout | lista, filtros, accordion | layout animation / FLIP |
+| Mudanca de contexto | thumbnail → detalhe | shared element transition |
+
+Bom senso: nao penalizar tela por nao ter drag onde ninguem espera drag, nem stagger em lista utilitaria.
+
+---
+
+## Etapa 2 — Review: os 10 principios (aplicar so os relevantes)
+
+1. **Fisica, nao duracao fixa** — `300ms ease-in-out` em tudo e sinal de problema; springs para gesto, transicoes curtas para hover/press
+2. **Animacao interativa interrompivel** — usuario muda de ideia no meio e o componente responde; herdar estado atual, nao reiniciar
+3. **Manipulacao direta quando a expectativa for forte** — sheet fecha por swipe, card dismissable arrasta; decisao no release
+4. **Preservar velocidade do gesto** — usar velocity inicial no spring; flick rapido ≠ release lento
+5. **Continuidade espacial** — o usuario entende de onde veio e para onde foi; shared transition quando houver relacao clara
+6. **Responder ao metodo de entrada** — hover como enhancement, targets maiores no touch, teclado funciona
+7. **Animar mudancas de layout** — lista nao "salta" ao inserir/remover; FLIP/layout animation
+8. **Resistencia progressiva nos limites** — elasticidade sutil e snap-back, nao hard stop seco
+9. **Coreografar entradas com moderacao** — stagger curto so em primeira impressao; nunca em fluxo repetido
+10. **Reduced motion e obrigatorio** — a interface continua clara com menos movimento
+
+### Sinais vermelhos rapidos
+
+`transition: all` · `ease-in` em entrada de UI · `scale(0)` para aparecer · drag sem momentum · lista que salta · acao critica so por hover · ausencia de `prefers-reduced-motion`
+
+### Severidade e prioridade
+
+| Severidade | Quando |
+|---|---|
+| **Critico** | quebra feedback, controle ou compreensao do estado |
+| **Moderado** | reduz qualidade ou clareza sem bloquear uso |
+| **Refino** | polish perceptivo menor |
+
+Ordem: falta de controle → falta de clareza espacial → layout abrupto → motion inadequado a frequencia → refinos.
+
+---
+
+## Etapa 3 — Decisao de estrategia
+
+Ordem de escolha (comece pelo mais simples que preserva clareza):
+
+1. Sem animacao
+2. Feedback simples
+3. Transition curta
+4. Layout animation
+5. Spring com gesto
+6. Shared transition
+
+**CSS puro** quando: feedback simples, sem gesto, sem continuidade complexa.
+**Biblioteca spring/motion** quando: interrompibilidade, drag, velocity, layout animation robusta.
+
+### Mapeamento achado → resposta
+
+| Achado | Melhor resposta inicial |
+|---|---|
+| "Parece mecanico" | remover ease generico; escolher por caso |
+| "Nao responde no meio" | spring/transition interrompivel |
+| "Sheet duro" | drag 1:1 + snap spring + velocity |
+| "Lista salta" | layout animation / FLIP |
+| "Nao sei de onde veio" | shared transition ou direcao espacial consistente |
+| "Touch ruim" | targets maiores, hover como enhancement |
+| "Motion demais" | reduzir distancia, duracao e elementos animados |
+| "Sem reduced motion" | fallback opacity / mudanca instantanea |
+
+---
+
+## Etapa 4 — Receitas
+
+### 1. Feedback local (buttons, chips, tabs, rows)
+
+Defaults: 100–180ms, `ease-out`, so transform/opacity/cores.
+
+```css
+.pressable {
+  transition: transform 140ms ease-out, opacity 140ms ease-out,
+    background-color 140ms ease-out, border-color 140ms ease-out;
+}
+.pressable:active { transform: scale(0.98); }
+```
+
+### 2. Abrir/fechar overlay (modal, popover, dropdown, sheet)
+
+Defaults: overlays pequenos 140–220ms; maiores 180–320ms; entrada e saida com a mesma logica espacial.
+
+```css
+.overlay-enter { opacity: 0; transform: translateY(8px) scale(0.98); }
+.overlay-enter-active {
+  opacity: 1; transform: translateY(0) scale(1);
+  transition: transform 180ms ease-out, opacity 180ms ease-out;
+}
+.overlay-exit-active {
+  opacity: 0; transform: translateY(4px) scale(0.99);
+  transition: transform 140ms ease-out, opacity 140ms ease-out;
+}
+```
+
+### 3. Bottom sheet / dismiss com drag
+
+Tracking 1:1 durante o gesto; decisao no release por distancia + velocidade; release rapido pode dismissar com distancia menor.
+
+```ts
+const shouldDismiss =
+  dragDistance > dismissDistance || releaseVelocity > dismissVelocity;
+animateTo(shouldDismiss ? "closed" : "open", {
+  type: "spring", velocity: releaseVelocity,
+});
+```
+
+### 4. Lista sem teleporte (filtros, insert/remove, reorder)
+
+Defaults: 160–260ms, posicao + opacidade, preservar enter/exit antes de desmontar.
+
+```css
+.list-item { transition: transform 180ms ease-out, opacity 180ms ease-out; }
+.list-item-enter { opacity: 0; transform: translateY(6px); }
+.list-item-exit-active { opacity: 0; transform: translateY(-4px); }
+```
+
+Lista complexa → layout animation / FLIP.
+
+### 5. Shared transition (somente origem e destino percebidos como o mesmo objeto)
+
+```ts
+const transitionConfig = {
+  layoutId: `card-${id}`,
+  transition: { type: "spring", stiffness: 320, damping: 30 },
+};
+```
+
+Pergunta-chave: o destino e percebido como expansao do mesmo objeto? Se nao, transicao simples.
+
+### 6. Reduced motion (todo motion relevante precisa de fallback)
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+}
+```
+
+Manter feedback por opacity/cor/estado; reduzir deslocamento, nao clareza. Se reduced motion deixar a UI confusa, a animacao carregava estrutura demais.
+
+---
+
+## Anti-padroes
+
+- `transition: all` · `ease-in` em entrada · `scale(0)` na aparicao
+- motion igual para todo componente; bounce em contexto utilitario
+- stagger longo em tela de trabalho; drag sem velocity
+- animacao antes de resolver feedback basico
+- hover como unica forma de revelar acao critica
+- snippet aplicado sem relacao com a friccao real
+
+---
+
+## Checklist final
+
+- [ ] A mudanca melhora clareza ou controle, nao so estetica
+- [ ] A interacao parece mais responsiva, nao mais lenta
+- [ ] Motion combina com a frequencia de uso
+- [ ] Gestos preservam velocidade no release
+- [ ] Layout nao teletransporta; entrada/saida com mesma logica espacial
+- [ ] `prefers-reduced-motion` coberto
+- [ ] Nada mantido so porque "parece premium"
+
+---
+
+## Formato de resposta
+
+```markdown
+## Fluid UI — [Tela, componente ou fluxo]
+**Escopo:** [o que foi avaliado/implementado]
+**Classe de uso:** [alta frequencia | ocasional | exploratorio]
+**Veredito/estrategia:** [travada | aceitavel | fluida → transition curta | spring | layout animation | shared transition | reduzir motion]
+
+### Achados criticos
+1. [Problema] — [Impacto] — [Direcao concreta]
+
+### O que mudar
+1. [Mudanca concreta + snippet adaptado se pedido]
+
+### O que preservar
+- [Aspectos que ja funcionam]
+
+### Validacao
+- [como verificar se melhorou]
+```
+
+---
+
+## Skills complementares
+
+- `ux-audit.skill` quando o problema for fluxo/usabilidade, nao interacao
+- `interface-design.skill` para coerencia visual e memoria de decisoes
+- `responsive-craft.skill` quando a friccao vier de layout responsivo
+- `emil-design-eng.skill` para craft fino de animacao
+- `scroll-animation.skill` para motion no eixo de scroll
+- Originais completos: `skills/_deferred/consolidated-2026-06/`

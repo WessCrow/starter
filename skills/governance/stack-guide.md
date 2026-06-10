@@ -80,7 +80,7 @@ Evitar stacks exóticas só por hype — **disruptivo = produto + UX + velocidad
 
 - **IA:** `runtime/stack.yaml` no projeto filho  
 - **Humano:** uma linha no `CONTEXT.md`  
-- **QA:** `qa-smoke.skill` roda `pnpm run build` conforme stack detectada
+- **QA:** `qa-smoke.skill` roda `pnpm run build` (+ lint/test se scripts existirem) conforme stack detectada
 
 ---
 

@@ -84,14 +84,26 @@ python3 skills/scripts/check-repo-hygiene.py --staged
 git rm --cached docs/private/plano-acao-criticos.md
 ```
 
-Integrado em `validate-skills.py` (checagem antidrift do sistema).
+Integrado em `validate-skills.py` (checagem antidrift do sistema) e na CI (`.github/workflows/validate.yml`).
+
+---
+
+## Hook pré-commit (opcional, recomendado)
+
+Para bloquear automaticamente commits com arquivo privado/proibido staged:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+O hook em `.githooks/pre-commit` roda `check-repo-hygiene.py --staged` a cada commit. Para desativar: `git config --unset core.hooksPath`.
 
 ---
 
 ## Fluxo recomendado
 
 1. Relatório / plano / diagnóstico → salvar em `docs/private/`
-2. Antes de `git commit` → rodar `check-repo-hygiene.py`
+2. Antes de `git commit` → rodar `check-repo-hygiene.py` (ou ativar o hook acima)
 3. Documentação para usuário final → `docs/public/` ou `README.md` na raiz
 
 ---
@@ -100,4 +112,4 @@ Integrado em `validate-skills.py` (checagem antidrift do sistema).
 >
 > Este documento faz parte do framework **STARTER**, criado e mantido por **Wesley Alves**.
 >
-> Última atualização: 2026-06-09
+> Última atualização: 2026-06-10

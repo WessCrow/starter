@@ -74,10 +74,10 @@ Sempre executar **antes** de qualquer skill funcional.
 ```
 1. structure/       → usar apenas em projeto novo / definição estrutural
 2. local-skills/    → project-starter · qa-gate · qa-smoke · ux-audit
-                       lenis-scroll · editorial-scroll-gallery · editorial-scroll-variants · sticky-scroll-gallery · cinematic-scroll-video-hero · cinematic-scroll-video-hero-frameworks · responsive-craft · emil-design-eng · prompt-library
+                       scroll-animation · responsive-craft · emil-design-eng · prompt-library
                        figma-implement-design · figma-foundation-docs · figma-make · interface-design · web-design-cloner
                        visual-direction-brief · marketplace-curator
-                       fluid-ui-review · fluid-ui-implementation · fluid-ui-snippets
+                       fluid-ui
                        context-cleaner · ux-diamond
                        hyperframes · hyperframes-cli · hyperframes-media
 3. _deferred/       → incubação; não entra no roteamento ativo
@@ -97,7 +97,7 @@ Sempre executar **antes** de qualquer skill funcional.
 | Direção visual / referências / estilo | `visual-direction-brief` → `web-design-cloner` → `interface-design` |
 | Criar UI / componente / visual | `interface-design` → `web-design-cloner` → `emil-design-eng` → `responsive-craft` |
 | Decompor site, screenshot ou referência concreta | `web-design-cloner` → `interface-design` |
-| Revisar ou implementar fluidez, motion e microinterações | `fluid-ui-review` → `fluid-ui-implementation` → `fluid-ui-snippets` |
+| Revisar ou implementar fluidez, motion e microinterações | `fluid-ui` |
 | Auditar UX / identificar problemas | `ux-audit` |
 | Iniciar projeto novo | structure skill → `project-starter` |
 | Nova feature em projeto existente (spec-driven) | `governance/feature-flow.md` → `templates/specs/` → `qa-gate` |
@@ -107,12 +107,7 @@ Sempre executar **antes** de qualquer skill funcional.
 | Descobrir capability externa / marketplace / MCP | `marketplace-curator` |
 | Implementar design Figma / Figma → código | `figma-implement-design` |
 | Criar foundations no Figma / variables / text styles / página Foundation | `figma-foundation-docs` |
-| Scroll suave / scroll-driven / parallax | `lenis-scroll` |
-| Section editorial com scroll travado e fotos verticais | `editorial-scroll-gallery` → `responsive-craft` → `emil-design-eng` |
-| Variacoes de scroll editorial / cards alternados / trilha dupla / parallax leve | `editorial-scroll-variants` → `editorial-scroll-gallery` → `responsive-craft` |
-| Section sticky com troca de imagem por scroll | `sticky-scroll-gallery` → `lenis-scroll` → `responsive-craft` |
-| Hero cinematografica com video scrub controlado por scroll | `cinematic-scroll-video-hero` → `responsive-craft` → `emil-design-eng` |
-| Hero cinematografica com video scrub em React / Next / Vite | `cinematic-scroll-video-hero-frameworks` → `cinematic-scroll-video-hero` → `responsive-craft` |
+| Scroll suave / parallax / section editorial sticky / galeria por scroll / hero com video scrub (HTML ou React) | `scroll-animation` → `responsive-craft` → `emil-design-eng` |
 | Layout responsivo / breakpoints / fluido | `responsive-craft` |
 | Animação / micro-interação / polish de UI | `emil-design-eng` |
 | Review de código de UI (before/after) | `emil-design-eng` |

@@ -1,31 +1,34 @@
 v: "5.1"
-updated: "2026-06-09"
+updated: "2026-06-10"
 
 session:
-  last_completed: repo_hygiene_qa_pass
-  next_action: push_para_github_ou_proxima_feature
+  last_completed: sprint_002_release_v5_2_0
+  next_action: nova_feature_via_feature_flow
   blocked: false
 
 qa:
   last_status: pass
   last_report_path: qa/reports/2026-06-09-repo-hygiene.md
-  last_run_at: "2026-06-09"
+  last_run_at: "2026-06-10"
   failures_open: []
 
 feature:
-  id: repo-hygiene
+  id: sprint-002-ci-readme-governance
   sprint_contract_path: null
-  spec_path: skills/governance/repo-hygiene.md
+  spec_path: docs/private/plano-sprint-proxima.md
 
 user:
   verified_in_browser: false
   verified_at: null
-  notes: "Manutenção de framework — sem UI para validar no navegador."
+  notes: "Manutenção de framework — sem UI. P2.8-10 executados; validate-skills 15/0; decisões registradas em skills-governance.md."
 
 reminders:
   - id: phase_4_playwright
     when: "Quando pedir ativar Fase 4"
-    action: "skills/_deferred/phase4-playwright/README.md"
+    action: "No-go registrado em skills-governance.md (P2.10); reativação exige decisão explícita + skills/_deferred/phase4-playwright/README.md"
   - id: pre_push_hygiene
     when: "Antes de commit ou push"
     action: "python3 skills/scripts/check-repo-hygiene.py"
+  - id: sprint_002_fechamento
+    when: "Próxima sessão"
+    action: "Commit/push da consolidação P2 + tag v5.2.0 (critérios de saída da Sprint 002 cumpridos)"

@@ -122,7 +122,9 @@ Incluir sempre:
         ↓
 [6] Configurar alias @/ em vite.config + tsconfig
         ↓
-[7] Registrar decisões em outputs/ARCHITECTURE.md
+[7] Gerar .env.example com placeholders (ex.: `VITE_*` — sem valores reais)
+        ↓
+[8] Registrar decisões em outputs/ARCHITECTURE.md
 ```
 
 ---
@@ -133,6 +135,7 @@ Incluir sempre:
 - **Nunca** misturar lógica de negócio em componentes de UI (`components/ui/`)
 - **Sempre** tipar props com TypeScript (sem `any` explícito)
 - **Sempre** configurar alias `@/` antes de qualquer import
+- **Sempre** criar `.env.example` — variáveis `VITE_*` documentadas; nunca commitar `.env.local`
 
 ---
 

@@ -1,15 +1,14 @@
-v: "5.1"
-updated: "2026-06-09"
-framework_v: "5.1"
+v: "5.2"
+updated: "2026-06-10"
+framework_v: "5.2"
 
 phase:
   id: 5
   name: Enterprise Runtime + QA Gate
   previous: ai_native_runtime
 
-last: "Repo hygiene: docs/public vs private, check-repo-hygiene.py, QA PASS."
+last: "Sprint 002 publicada: commit+push main, tag v5.2.0 — CI, README honesto, consolidação scroll/fluid-ui, governança P2."
 next:
-  - push_para_github
   - nova_feature_via_feature_flow
 blockers: []
 

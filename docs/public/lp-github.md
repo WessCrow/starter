@@ -1,23 +1,27 @@
+<!-- lp-github.md = espelho do README.md (fonte). Sincronizar a cada edição do README (ajustar link relativo de O-QUE-E-O-STARTER). Sprint 002 · P0.2+P1.7 -->
+
 # STARTER
 
 <p align="center">
-  <strong>O ponto de partida inteligente para criar projetos com agentes de IA.</strong><br>
+  <strong>O ponto de partida organizado para criar projetos com agentes de IA.</strong><br>
   Uma estrutura leve, direto ao ponto e feita para eliminar a complicação inicial do desenvolvimento.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Runtime-v5.1_Enterprise-blueviolet?style=for-the-badge" alt="Runtime v5.1">
-  <img src="https://img.shields.io/badge/QA_Gate-Strict-emerald?style=for-the-badge" alt="QA Gate Strict">
-  <img src="https://img.shields.io/badge/UX_Standard-Designer2627-ff69b4?style=for-the-badge" alt="UX Standard Designer2627">
+  <img src="https://img.shields.io/badge/Runtime-v5.1-blueviolet?style=for-the-badge" alt="Runtime v5.1">
+  <img src="https://img.shields.io/badge/QA_Gate-build_+_revisão-emerald?style=for-the-badge" alt="QA Gate build + revisão">
+  <img src="https://img.shields.io/badge/Compatível-AGENTS.md-ff69b4?style=for-the-badge" alt="Compatível AGENTS.md">
 </p>
 
 ---
 
 ## Proposta
 
-**Você entra com uma ideia na cabeça. O STARTER devolve o código pronto, limpo e testado — economizando seu bolso.**
+**Você entra com uma ideia na cabeça. O STARTER organiza o caminho: kickoff guiado, contexto enxuto e validação antes de qualquer entrega.**
 
-Esqueça o tempo perdido configurando pastas do zero, limpando arquivos inúteis ou gastando fortunas com IA fora de controle. O **STARTER** conduz você por uma conversa rápida de até 4 perguntas simples e gera um setup profissional sob medida. Ele organiza o contexto da IA para economizar seus tokens e ativa um sistema automático que testa tudo para o código nunca quebrar.
+Esqueça o tempo perdido configurando pastas do zero ou limpando arquivos inúteis. O **STARTER** conduz você por uma conversa rápida de até 4 perguntas simples e gera um setup profissional sob medida. Ele organiza o contexto da IA para economizar seus tokens e fecha cada entrega com um QA Gate: o build precisa passar e o próprio agente faz uma revisão cética antes de marcar algo como pronto.
+
+Quer entender o que o STARTER é (e o que ele não é)? Leia [O que é o STARTER](O-QUE-E-O-STARTER.md).
 
 ---
 
@@ -48,14 +52,25 @@ graph TD
 
 ## O que você ganha vs. O que o STARTER evita
 
-| O que você ganha                                                                     | 🚫 O que você nunca mais faz                                                  |
-| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| **Contexto enxuto por design** — carrega só o necessário por sessão                      | ❌ Estourar o limite de uso da IA com arquivos repetitivos ou pesados         |
-| **Sincronização entre editores** (Use Cursor, Claude Code, Cline sem perder o ritmo) | ❌ Perder o histórico do projeto ou desconfigurar tudo ao trocar de IDE       |
-| **Proteção de Segurança (Host Guard):** Bloqueio contra comandos perigosos           | ❌ Executar scripts perigosos por acidente ou vazar suas chaves `.env` no Git |
-| **Guia de Engenharia Completo:** Padrões limpos de Front, Back e Organização         | ❌ Escrever códigos confusos, com lentidão ou bagunçados                      |
-| **Início guiado em minutos** diretamente pelo chat                                   | ❌ Perder horas escrevendo documentações ou planejamentos do zero             |
-| **Validação automática de erros** (Sistema de QA integrado)                          | ❌ Subir código quebrado, com tela preta ou sem testes básicos                |
+| O que você ganha                                                                      | 🚫 O que você nunca mais faz                                                   |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| **Contexto enxuto por design** — carrega só o necessário por sessão                   | ❌ Estourar o limite de uso da IA com arquivos repetitivos ou pesados          |
+| **Sincronização entre editores** (Use Cursor, Claude Code, Cline sem perder o ritmo)  | ❌ Perder o histórico do projeto ou desconfigurar tudo ao trocar de IDE        |
+| **Proteção de Segurança (Host Guard):** Bloqueio contra comandos perigosos            | ❌ Executar scripts perigosos por acidente ou vazar suas chaves `.env` no Git  |
+| **Guia de Engenharia Completo:** Padrões limpos de Front, Back e Organização          | ❌ Escrever códigos confusos, com lentidão ou bagunçados                       |
+| **Início guiado em minutos** diretamente pelo chat                                    | ❌ Perder horas escrevendo documentações ou planejamentos do zero              |
+| **QA Gate em toda entrega** (build obrigatório + revisão cética do agente)            | ❌ Marcar uma feature como pronta sem o build passar                           |
+
+---
+
+## O que o QA Gate verifica (e o que não verifica)
+
+Para você saber exatamente o que esperar:
+
+- ✅ **Build (smoke):** `pnpm run build` precisa passar antes de qualquer entrega.
+- ✅ **Revisão cética:** o agente audita a própria implementação contra o contrato da sprint e gera relatório em PT-BR.
+- ✅ **Validação de estrutura:** scripts auditam os YAML do runtime, as skills e a higiene do repositório.
+- ⚠️ **Não inclui:** testes E2E automatizados em navegador (módulo Playwright existe no repositório, mas está desativado por decisão registrada). O passo final é sempre você testar 5 minutos no navegador.
 
 ---
 
@@ -78,8 +93,8 @@ O STARTER funciona como um manual de regras rígido e inteligente para a IA. Ele
 1. **`runtime/index.yaml`**: Organiza a ordem exata em que as ferramentas do projeto devem ser ligadas.
 2. **`runtime/rules.yaml` & `runtime/context.yaml`**: O conjunto de regras absolutas de segurança, código e arquitetura que a IA é obrigada a seguir.
 3. **`validate.py`**: O guardião automatizado que audita a pasta, impedindo a IA de fazer bobagem ou expor senhas locais.
-4. **`context-cleaner.skill`**: O faxineiro que limpa o histórico inútil para reduzir drasticamente o desperdício de tokens.
-5. **`QA Gate (qa-gate.skill)`**: A barreira final de qualidade que testa e garante que tudo compila perfeitamente antes de te entregar o código.
+4. **`context-cleaner.skill`**: O faxineiro que limpa o histórico inútil para reduzir o desperdício de tokens.
+5. **`QA Gate (qa-gate.skill)`**: A barreira de qualidade que roda o build e uma revisão cética antes de marcar a entrega como pronta.
 
 ---
 
@@ -99,4 +114,4 @@ O STARTER funciona como um manual de regras rígido e inteligente para a IA. Ele
 >
 > _Sinta-se livre para usar, estudar e evoluir a ferramenta! Apenas pedimos que mantenha os créditos originais do criador._
 >
-> **Última atualização:** 2026-06-08
+> **Última atualização:** 2026-06-10

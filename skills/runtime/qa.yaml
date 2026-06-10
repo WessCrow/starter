@@ -16,7 +16,7 @@ report:
 dimensions:
   funciona: { weight: 30, min_score: 7, critical: true, label: "Funciona de verdade" }
   completo: { weight: 20, min_score: 6, critical: true, label: "Contrato entregue" }
-  estavel: { weight: 15, pass_type: build_lint, critical: true, label: "Build ok" }
+  estavel: { weight: 15, pass_type: build_lint_test, critical: true, label: "Build ok" }
   usavel: { weight: 20, min_score: 6, critical: true, label: "Fácil de usar" }
   visual: { weight: 15, min_score: 6, critical: true, label: "Visual coerente" }
 
@@ -32,10 +32,12 @@ smoke_commands:
     package_manager: [pnpm, npm]
     build: [pnpm run build, npm run build]
     lint: [pnpm run lint, npm run lint]
+    test: [pnpm run test, npm run test]
   react_vite:
     package_manager: [pnpm, npm]
     build: [pnpm run build, npm run build]
     lint: [pnpm run lint, npm run lint]
+    test: [pnpm run test, npm run test]
 
 default_stack_new_projects:
   primary: nextjs

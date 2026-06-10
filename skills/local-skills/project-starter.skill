@@ -74,6 +74,7 @@ O agente infere e documenta em linguagem simples no resumo (Fase 2).
 - [ ] `AGENTS.md` mantido na raiz  
 - [ ] `CONTEXT.md` + `PRD.md` do **app** na raiz (≤50 linhas no CONTEXT)  
 - [ ] Stack registrada em `runtime/stack.yaml`  
+- [ ] `.env.example` na raiz do app (placeholders; nunca commitar `.env.local`)  
 - [ ] `skills/outputs/` com BRIEF, ROADMAP, ARCHITECTURE  
 - [ ] Nenhum CONTEXT/PRD do STARTER meta copiado por engano  
 

@@ -1,7 +1,7 @@
-# skills-governance.md — Decisão Operacional de Skills (Sprint 1)
+# skills-governance.md — Decisão Operacional de Skills (Sprints 1–2)
 
 > **Papel:** definir o que é capacidade real, capacidade adiada e capacidade futura no STARTER  
-> **Status:** decisão ativa a partir de 2026-05-26  
+> **Status:** decisão ativa desde 2026-05-26 · **Sprint 2 concluída em 2026-06-10**  
 > **Escopo:** catálogo, roteamento, fallback remoto e prioridade de fonte da verdade
 
 ---
@@ -17,7 +17,7 @@ Esta decisão existe para responder, sem interpretação:
 - o que é apenas intenção futura
 - qual arquivo manda em cada tipo de decisão
 
-Enquanto a Sprint 2 não terminar, este documento **prevalece** sobre descrições ambíguas em outros arquivos.
+Este documento **prevalece** sobre descrições ambíguas em outros arquivos.
 
 ---
 
@@ -73,7 +73,7 @@ Implicações:
 
 - diretório vazio não conta como suporte existente
 - skill remota só existe quando houver arquivo real apontando para destino válido
-- o roteamento não deve depender de `linked-skills/` até a Sprint 2 saneá-lo
+- o roteamento não depende de `linked-skills/` (saneado na Sprint 2)
 
 ### `skills.sh`
 
@@ -130,7 +130,7 @@ Função:
 
 Regra:
 
-- após a Sprint 2, `Start.md` deve listar apenas capability ativa ou capability explicitamente marcada como futura/adiada
+- `Start.md` lista apenas capability ativa ou capability explicitamente marcada como futura/adiada — **cumprido e verificado mecanicamente por `validate-skills.py` (CI)**
 
 ### Catálogo humano
 
@@ -168,7 +168,7 @@ Regra:
 
 ---
 
-## Regra de precedência até a Sprint 2
+## Regra de precedência (permanente)
 
 Se houver conflito entre documentação e diretório real:
 
@@ -228,6 +228,47 @@ As próximas sprints agora podem atacar saneamento e validação sem discutir pr
 
 ---
 
+## Encerramento da Sprint 2 (2026-06-10)
+
+Critérios cumpridos:
+
+- **Roteamento saneado:** `Start.md` ↔ filesystem sem skills fantasma (`validate-skills.py`: 15 passed, 0 failed).
+- **Antidrift mecânico:** cobertura de `local-skills/` + `structure/` + bloqueio de `_deferred/` no `validate-skills.py`, rodando em CI (`.github/workflows/validate.yml`).
+- **Capacidades futuras sem menção operacional:** `linked-skills/`, `cache/` e `skills.sh` aparecem em `Start.md`, `README.md`, `INDEX.md` e `STRUCTURE.md` apenas marcadas como futuras/reservadas.
+
+Um único lugar (este documento) define active/deferred/future. Validação automática contínua fica a cargo da CI (antiga meta da Sprint 3, antecipada).
+
+---
+
+## Decisões P2 — Sprint 002 (2026-06-10)
+
+### P2.8 — Consolidação das famílias scroll e fluid-ui
+
+**Decisão:** merge por família em 2 skills canônicas ativas.
+
+- `local-skills/scroll-animation.skill` ← lenis-scroll · editorial-scroll-gallery · editorial-scroll-variants · sticky-scroll-gallery · cinematic-scroll-video-hero · cinematic-scroll-video-hero-frameworks
+- `local-skills/fluid-ui.skill` ← fluid-ui-review · fluid-ui-implementation · fluid-ui-snippets
+
+Originais completos preservados em `skills/_deferred/consolidated-2026-06/` (área de incubação — fora do roteamento, regra padrão de `_deferred/`). Roteamento de `Start.md`/`Start-ops.md` reduzido a 1 entrada por família. Motivo: 9 skills com overlap confundiam o roteamento por intenção; cada canônica tem roteador interno por padrão.
+
+### P2.9 — Medição de tokens
+
+**Decisão:** manter claim **qualitativo** ("organiza o contexto para economizar tokens") sem publicar número.
+
+Motivo: o consumo varia por projeto e stack; publicar um número fixo violaria a linha "marketing verificável" do P0.2. Reabrir apenas se houver medição reprodutível (kickoff com/sem STARTER, mesma tarefa, mesmo modelo) com resultado conclusivo.
+
+### P2.10 — Playwright Fase 4: no-go (permanente até nova decisão)
+
+**Decisão:** `_deferred/phase4-playwright/` permanece adiado. Promessas de QA "Strict"/E2E automatizado saem do marketing em definitivo.
+
+Implicações:
+
+- o QA Gate é descrito como: build smoke (`qa-smoke`) + revisão cética pelo agente (`qa-gate`) — nada além disso
+- nenhum doc público pode prometer "impede código quebrado" ou teste E2E automatizado
+- reativação exige: decisão explícita do mantenedor + setup documentado + integração ao QA Gate + atualização deste documento
+
+---
+
 > **Autoria & Rastro de Segurança**
 >
 > Este documento faz parte do framework **STARTER**, criado e mantido por **Wesley Alves**.
@@ -235,4 +276,4 @@ As próximas sprints agora podem atacar saneamento e validação sem discutir pr
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-07
+> Última atualização: 2026-06-10

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# STARTER — hook pré-commit opcional (Sprint 002 · P1.4)
+# Ativação: git config core.hooksPath .githooks
+# Bloqueia commit se um arquivo privado/proibido estiver staged.
+
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+python3 skills/scripts/check-repo-hygiene.py --staged || {
+  echo ""
+  echo "❌ Commit bloqueado: arquivo privado/proibido staged."
+  echo "   Veja skills/governance/repo-hygiene.md para detalhes."
+  exit 1
+}

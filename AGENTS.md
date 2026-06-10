@@ -84,7 +84,7 @@ skills/governance/Start-ops.md
 0. Feature do fluxo spec-driven → fase **Analyze** do `feature-flow.md` concluída  
 1. Existe `sprint-contract.md` aprovado pelo usuário  
 2. Executar `qa-gate.skill` (tom **cético**, relatório **PT-BR simples**)  
-3. `qa-smoke.skill` — `pnpm run build` (ou `npm` se lock npm)  
+3. `qa-smoke.skill` — `pnpm run build` (+ lint/test se scripts existirem; ou `npm` se lock npm)
 4. **FAIL** → não marcar feature pronta; listar correções claras  
 5. **PASS** → pedir usuário testar 5 min no navegador  
 

@@ -17,7 +17,7 @@
 |----------|-------------|-----------|----------------------|
 | Funciona | | | |
 | Completo | | | |
-| Estável | | | build/lint: ok / falhou |
+| Estável | | | build/lint/test: ok / falhou / test SKIP |
 | Usável | | | |
 | Visual | | | |
 
@@ -42,7 +42,7 @@
 ## Build / terminal
 
 ```
-[colar saída de pnpm run build ou npm run build]
+[colar saída de build, lint e test (se existir script test)]
 ```
 
 ---

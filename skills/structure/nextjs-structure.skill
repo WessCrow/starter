@@ -110,9 +110,11 @@ Gerar arquitetura base de projeto Next.js com App Router — estrutura de pastas
         ↓
 [6] Gerar lib/utils.ts com cn()
         ↓
-[7] Gerar middleware.ts se auth detectado
+[7] Gerar .env.example com placeholders (sem valores reais; ver stack-guide se integrações)
         ↓
-[8] Registrar decisões em outputs/ARCHITECTURE.md
+[8] Gerar middleware.ts se auth detectado
+        ↓
+[9] Registrar decisões em outputs/ARCHITECTURE.md
 ```
 
 ---
@@ -124,6 +126,7 @@ Gerar arquitetura base de projeto Next.js com App Router — estrutura de pastas
 - **Nunca** usar `fetch` diretamente em Client Components — usar hooks ou Server Actions
 - **Sempre** separar Server Actions em `actions/` (nunca inline em componentes)
 - **Sempre** usar grupos de rota `()` para organizar layouts distintos
+- **Sempre** criar `.env.example` com variáveis esperadas — nunca commitar secrets em `.env.local`
 
 ---
 

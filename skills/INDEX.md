@@ -31,7 +31,7 @@
 | [`runtime/qa.yaml`](runtime/qa.yaml) | Pesos, gate rígido |
 | [`runtime/handoff.yaml`](runtime/handoff.yaml) | Retomada + status QA |
 | [`local-skills/qa-gate.skill`](local-skills/qa-gate.skill) | Avaliador cético (obrigatório pós-implementação) |
-| [`local-skills/qa-smoke.skill`](local-skills/qa-smoke.skill) | build/lint |
+| [`local-skills/qa-smoke.skill`](local-skills/qa-smoke.skill) | build/lint/test |
 | [`templates/sprint-contract.md`](templates/sprint-contract.md) | Contrato antes de codar |
 | [`templates/qa-report.md`](templates/qa-report.md) | Relatório PT-BR |
 

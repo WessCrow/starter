@@ -1,0 +1,308 @@
+# scroll-animation.skill
+
+> **Tipo:** Local Skill (canônica — consolida a família scroll)
+> **Dominio:** scroll-animation · sticky-section · video-scrub · smooth-scroll
+> **Acao:** escolher · implementar · validar
+> **Fonte:** https://gsap.com/docs/v3/Plugins/ScrollTrigger/ · https://github.com/darkroomengineering/lenis
+> **Quando usar:** Qualquer experiencia scroll-driven: smooth scroll, parallax, section editorial sticky, galeria controlada por scroll, hero cinematografica com video scrub — em HTML puro ou React/Next/Vite
+> **Consolida:** lenis-scroll · editorial-scroll-gallery · editorial-scroll-variants · sticky-scroll-gallery · cinematic-scroll-video-hero · cinematic-scroll-video-hero-frameworks (originais completos em `skills/_deferred/consolidated-2026-06/`)
+
+---
+
+## Proposito
+
+Skill unica para experiencias scroll-driven premium. Cobre 5 padroes com uma fundacao tecnica comum (GSAP + ScrollTrigger + sticky stage) e um roteador interno para escolher o padrao certo antes de implementar.
+
+---
+
+## Roteador interno — escolha o padrao primeiro
+
+| Pedido do usuario | Padrao |
+|---|---|
+| Scroll suave / scroll-to / base para scroll-driven | **A — Smooth scroll (Lenis)** |
+| Section editorial: copy fixa a esquerda, fotos sobem a direita | **B — Editorial gallery** |
+| Cards alternados / trilha dupla / parallax leve em camadas | **C — Variantes editoriais** |
+| Section sticky com troca de imagem + labels sincronizados | **D — Sticky gallery (crossfade)** |
+| Hero com video de background controlado pelo scroll | **E — Cinematic video hero** |
+| Qualquer padrao acima em React / Next.js / Vite | padrao base + **secao F (frameworks)** |
+
+Regras de escolha:
+
+1. escolha o padrao mais simples que sustenta a narrativa
+2. `translateY` como movimento principal; `opacity` e `scale` apenas como apoio
+3. evitar 3D, rotacoes e skew
+4. simplificar ou remover sticky em tablet/mobile
+
+---
+
+## Fundacao comum (vale para B, C, D e E)
+
+### Sticky stage
+
+```css
+.section-x {
+  position: relative;
+  height: 280vh;            /* faixa segura: 250vh–340vh conforme padrao */
+  overflow-x: clip;
+}
+
+.section-x-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(18rem, 28rem) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: center;
+  padding: clamp(1.25rem, 3vw, 3rem);
+  overflow: hidden;
+}
+```
+
+### Regras tecnicas obrigatorias
+
+- `position: sticky` apenas no stage, nunca na pagina inteira
+- `gsap.registerPlugin(ScrollTrigger)` antes de qualquer trigger
+- trigger padrao: `start: "top top"`, `end: "bottom bottom"`, `scrub: 1` a `1.2`
+- `object-fit: cover` em todas as imagens/videos
+- nenhuma largura que gere overflow horizontal
+- cleanup em `resize`/`orientationchange`: matar trigger anterior antes de recriar
+- conferir se nenhum ancestral quebra o sticky com `overflow`
+
+### Fallback responsivo
+
+- **Tablet:** manter no maximo uma trilha; reduzir altura da secao e offsets
+- **Mobile:** remover sticky pesado; section em fluxo normal (`height: auto`, `position: relative`); pilha vertical simples
+- validar alturas com `100svh` quando texto cortar em telas baixas
+
+### Padrao de mount/cleanup (vanilla)
+
+```js
+let trigger;
+function mount() {
+  if (trigger) { trigger.kill(); trigger = null; }
+  if (mobileQuery.matches) return;          // fallback mobile
+  trigger = ScrollTrigger.create({ /* ... */ });
+}
+mount();
+window.addEventListener("resize", mount);
+window.addEventListener("orientationchange", mount);
+```
+
+---
+
+## Padrao A — Smooth scroll com Lenis
+
+Nao usar em dashboards data-heavy ou apps utilitarios onde o scroll precisa ser imediato.
+
+```js
+import Lenis from 'lenis';
+
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+  touchMultiplier: 2,
+});
+
+// RAF loop — obrigatorio (Lenis nao anima sem ele)
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+```
+
+CDN no-code: `<script src="https://unpkg.com/lenis@latest/dist/lenis.min.js"></script>` + mesmo RAF loop.
+
+### Integracao com ScrollTrigger (obrigatoria quando houver GSAP)
+
+```js
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+```
+
+### scrollTo e padroes
+
+```js
+lenis.scrollTo('#section-about', { offset: -80, duration: 1.5 });
+lenis.scrollTo('top', { immediate: true });
+// ancoras de navegacao
+document.querySelectorAll('a[href^="#"]').forEach((a) => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    lenis.scrollTo(a.getAttribute('href'), { offset: -60 });
+  });
+});
+// modal aberto → lenis.stop(); fechado → lenis.start();
+```
+
+Parametros uteis de `scrollTo`: `target` (px | seletor | elemento), `offset`, `duration`, `easing`, `immediate`, `lock`, `onComplete`.
+
+### Armadilhas Lenis
+
+- nao funciona com `overflow: hidden` no container — precisa de scroll no `window` ou `overflow: auto/scroll` explicito
+- SSR/Next: instanciar somente no cliente (`useEffect`), nunca em top-level de modulo
+- React StrictMode: guardar instancia em `useRef` e chamar `lenis.destroy()` no cleanup
+- `prefers-reduced-motion`: considerar `duration: 0` ou desabilitar
+
+---
+
+## Padrao B — Editorial gallery (copy fixa + trilha vertical)
+
+Estrutura: `.scroll-gallery` (300–340vh) → stage sticky → `.gallery-copy` (esquerda) + `.gallery-image-window` (`overflow: hidden`) contendo `.gallery-image-set` (trilha com 4 imagens, `transform: translateY(28%)` inicial, larguras alternadas por `nth-child`).
+
+```js
+const tl = gsap.timeline({
+  defaults: { ease: "none" },
+  scrollTrigger: { trigger: ".scroll-gallery", start: "top top", end: "bottom bottom", scrub: 1 },
+});
+
+tl.fromTo(".gallery-image-set", { yPercent: 28 }, { yPercent: -52 }, 0)
+  // cards: opacity/scale como apoio, em janelas de progresso (0.18, 0.34, 0.56, 0.74)
+  .fromTo(cards[0], { opacity: 1, scale: 1 }, { opacity: 0.18, scale: 0.92 }, 0.18)
+  .fromTo(cards[2], { opacity: 0.8, scale: 0.96 }, { opacity: 1, scale: 1 }, 0.56);
+```
+
+Ajustes finos: trilha de `yPercent: 24–32` para `-48 a -58`; `scale` 0.94–1; opacidade minima 0.15–0.3. Se parecer rapido, aumente a altura da secao antes de mexer em duracoes. Sem GSAP: normalizar progresso com `getBoundingClientRect()` (apenas se o projeto evita dependencias).
+
+Armadilhas: janela visual estreita corta a primeira entrada por baixo; `yPercent` agressivo some com a ultima imagem antes da hora.
+
+---
+
+## Padrao C — Variantes editoriais
+
+| Objetivo visual | Variante |
+|---|---|
+| Leitura limpa, narrativa unica | trilha unica (= Padrao B) |
+| Ritmo e assimetria | **cards alternados** — `.editorial-card--offset { margin-left: auto; width: min(82%, 22rem); }` + `gsap.to(track, { yPercent: -52, scrollTrigger: {...} })` |
+| Volume de revista | **trilha dupla** — 2 colunas com velocidades distintas: col A `yPercent 18 → -30`, col B `34 → -54`, mesma timeline, `scrub: 1.1` |
+| Profundidade sutil | **parallax em camadas** — 2 cards absolutos: back `12 → -18`, front `28 → -36` + `scale 0.97 → 1` |
+
+Final da sequencia: (1) ultima imagem permanece (CTA forte), (2) ultimo bloco parcialmente visivel (continuidade), (3) tudo sai (transicao). Default premium: deixar a ultima imagem assentar.
+
+Anti-padroes: trilhas com velocidades muito distantes, offsets horizontais exagerados, parallax baseado em `scale` forte, sticky complexo em mobile.
+
+---
+
+## Padrao D — Sticky gallery (crossfade por indice)
+
+Estrutura: `.sticky-gallery` (250–300vh) → stage sticky → copy + lista de 3 labels (esquerda) + figure com 3 imagens empilhadas (`position: absolute; inset: 0`).
+
+CSS de troca: foto inativa `opacity: 0; transform: scale(1.04)`, ativa `opacity: 1; scale(1)`, com `transition: opacity 500ms ease, transform 700ms ease`. Label ativo: `opacity: 1; translateX(0.5rem)`.
+
+```js
+ScrollTrigger.create({
+  trigger: section, start: "top top", end: "bottom bottom", scrub: true,
+  onUpdate: (self) => {
+    const i = Math.min(total - 1, Math.floor(self.progress * total));
+    photos.forEach((p, idx) => p.classList.toggle("is-active", idx === i));
+    labels.forEach((l, idx) => l.classList.toggle("is-active", idx === i));
+  },
+});
+```
+
+Regras: trocar apenas classes (nunca `display: none`); `Math.min` obrigatorio para nao estourar o indice no fim; se a troca parecer atrasada, reduzir altura ou usar `Math.round(progress * (total - 1))`. Faixas seguras: opacity 400–600ms, transform 600–900ms, scale inicial 1.03–1.06.
+
+---
+
+## Padrao E — Cinematic video hero (scrub)
+
+### Pergunta obrigatoria antes de implementar
+
+**"Qual e o caminho do video que devo usar?"** — se nao informado, pare e pergunte. Preferir versao `-scrub.mp4`; nao inventar caminho default.
+
+### Preparacao do video
+
+6–10s, 24/30fps, 1440–1920px, sem audio. Otimizar com keyframe em todo frame (obrigatorio para scrub fluido):
+
+```bash
+ffmpeg -i in.mp4 -an -c:v libx264 -crf 18 -g 1 -keyint_min 1 -sc_threshold 0 -pix_fmt yuv420p -movflags +faststart out-scrub.mp4
+```
+
+### Estrutura
+
+`section.hero-section` (260–300vh) → `.hero-sticky` (sticky, 100vh/100vw, overflow hidden) → video full-bleed (`muted playsinline preload="auto"`, inicia pausado, `opacity: 0` ate fade-in) + `.hero-overlay` (gradiente para legibilidade) + `.hero-content` (grid central, max-width 1280px).
+
+### Motor: playhead + ticker (nunca setar currentTime direto no onUpdate)
+
+```js
+const playhead = { time: 0 };
+
+function syncVideoTime() {
+  if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+  const delta = playhead.time - video.currentTime;
+  if (Math.abs(delta) < 0.015) return;
+  video.currentTime += delta * 0.12;          // aproximacao suave
+}
+
+// apos 'loadedmetadata' (obrigatorio aguardar):
+video.pause(); video.currentTime = 0;
+gsap.ticker.add(syncVideoTime);
+ScrollTrigger.create({
+  trigger: section, start: "top top", end: "bottom bottom", scrub: 1.2,
+  onUpdate: (self) => { playhead.time = self.progress * video.duration; },
+});
+```
+
+Cleanup: matar trigger + `gsap.ticker.remove(syncVideoTime)` em resize/pagehide.
+
+Anti-padroes: autoplay como efeito principal; controlar so com `play()/pause()`; CSS animation simulando scrub; `video.currentTime = target` em todo update (tranco); video sem keyframes por frame (scrub travado); overlay fraco que mata legibilidade.
+
+---
+
+## F — Adaptacao para React / Next.js / Vite
+
+Vale para qualquer padrao; critico para o E.
+
+- instalar `gsap` (`pnpm add gsap`); registrar plugin no topo do modulo
+- **refs, nao estado:** `useRef` para section/video/content/playhead/trigger/ticker; nunca `useState` por frame nem `setState` em `onUpdate`
+- montar dentro de `useEffect`, aguardando `loadedmetadata` (padrao E)
+- **cleanup obrigatorio no return:** matar trigger, remover ticker, remover listeners — StrictMode monta 2x em dev
+- **Next.js App Router:** `"use client"` apenas no componente da secao (nao na pagina); assets de video em `public/` com caminho publico (`/videos/x-scrub.mp4`); nada de `window`/`document` em SSR
+- **Vite:** `public/videos/...` (default para landing) ou `import` do asset se precisar de hashing
+- componente recebe `videoSrc` como prop; estrutura JSX espelha o HTML do padrao base
+- se a secao estiver dentro de grid pai, aplicar `min-width: 0` nos wrappers
+
+Exemplo completo de componente: ver `cinematic-scroll-video-hero-frameworks.skill` em `_deferred/consolidated-2026-06/`.
+
+---
+
+## Validacao (todos os padroes)
+
+- [ ] Padrao escolhido pelo roteador interno e justificado
+- [ ] Section trava (sticky) corretamente no desktop e destrava ao final
+- [ ] Movimento principal e `translateY` (ou `currentTime` no padrao E), reversivel no scroll para cima
+- [ ] Copy permanece estavel e legivel
+- [ ] Sem overflow horizontal em nenhum breakpoint
+- [ ] Fallback tablet/mobile simplificado e testado
+- [ ] Cleanup de triggers/tickers em resize (e no unmount em React)
+- [ ] Padrao E: caminho do video perguntado; versao scrub usada; sem autoplay principal
+
+---
+
+## Formato de resposta
+
+```markdown
+## Scroll Animation — [padrao escolhido]
+**Objetivo:** [narrativa desejada]
+**Padrao:** [A | B | C-variante | D | E] (+ F se React)
+**Motivo:** [por que este padrao sustenta a narrativa]
+
+### O que implementar
+1. [estrutura]
+2. [movimento principal]
+3. [fallback responsivo]
+
+### O que validar
+- [sticky / scrub reversivel]
+- [ritmo e legibilidade]
+- [sem overflow; mobile ok]
+```
+
+---
+
+## Skills complementares
+
+- `responsive-craft.skill` para breakpoints e acabamento responsivo
+- `emil-design-eng.skill` para ritmo, polish e craft visual
+- `fluid-ui.skill` para microinteracoes e motion fora do eixo de scroll
+- Originais completos (receitas integrais): `skills/_deferred/consolidated-2026-06/`

@@ -46,7 +46,7 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
         ↓
 [2] Ler runtime/qa.yaml (pesos, pass_rule)
         ↓
-[3] Executar qa-smoke.skill (build/lint) se projeto tiver package.json
+[3] Executar qa-smoke.skill (build/lint/test) se projeto tiver package.json
         ↓
 [4] Testar como usuário — descrever passos no relatório
         (Fase 4 Playwright: NÃO usar — deferred)
@@ -87,7 +87,7 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 |----------|------------------|
 | Funciona | O usuário completa o fluxo principal? |
 | Completo | Tudo do contrato está lá? |
-| Estável | Build/lint ok? |
+| Estável | Build/lint/test ok? |
 | Usável | Próximo passo óbvio? Fluxo intuitivo sem instrução? |
 | Visual | Hierarquia visual clara? Consistente com DS? Responsivo? |
 
@@ -109,7 +109,7 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 
 ## Skills auxiliares
 
-- `qa-smoke.skill` — build/lint
+- `qa-smoke.skill` — build/lint/test (test só se script existir)
 - `ux-audit.skill` — secundária UI (não substitui gate)
 
 ---

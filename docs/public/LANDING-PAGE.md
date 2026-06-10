@@ -34,7 +34,7 @@ Este documento detalha a estratégia de UX Writing, estrutura de conteúdo e mat
 *   *Tópicos:*
     *   **Adeus Boilerplate Sujo:** O script de cleanup remove resquícios do framework de forma automatizada.
     *   **Entrevista Inteligente:** O agente conduz você com no máximo 4 perguntas em português claro.
-    *   **QA Gate Strict:** Um validador cético (build, lint e regras) que impede código quebrado antes de subir.
+    *   **QA Gate:** Toda entrega fecha com build smoke + revisão cética do agente antes de ser marcada como pronta.
 
 #### C. Perfis de Inicialização (A Versatilidade)
 *   *Título:* "Pronto para qualquer desafio."

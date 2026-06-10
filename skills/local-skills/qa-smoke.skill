@@ -8,7 +8,7 @@
 
 ## Propósito
 
-Rodar comandos mínimos de **build** (e **lint** se existir) conforme stack. Resultado alimenta dimensão **Estável** do QA Gate.
+Rodar comandos mínimos de **build**, **lint** (se existir) e **test** (se existir) conforme stack. Resultado alimenta dimensão **Estável** do QA Gate.
 
 ---
 
@@ -18,7 +18,7 @@ Rodar comandos mínimos de **build** (e **lint** se existir) conforme stack. Res
 |------------------|-------|
 | `next.config.*` | nextjs |
 | `vite.config.*` | react_vite |
-| `package.json` scripts | ler `build`, `lint` |
+| `package.json` scripts | ler `build`, `lint`, `test` |
 
 **Gerenciador:** se existir `pnpm-lock.yaml` → `pnpm`. Se só `package-lock.json` → `npm`.
 
@@ -35,6 +35,8 @@ pnpm run build
 # ou: npm run build
 pnpm run lint
 # ou: npm run lint  (se script existir — senão SKIP lint)
+pnpm run test
+# ou: npm run test  (se script "test" existir em package.json — senão SKIP test)
 ```
 
 ### React + Vite
@@ -42,6 +44,8 @@ pnpm run lint
 ```bash
 pnpm run build
 pnpm run lint
+pnpm run test
+# (lint e test: SKIP se script não existir)
 ```
 
 ---
@@ -53,6 +57,8 @@ pnpm run lint
 | build exit 0 | PASS |
 | build exit ≠ 0 | FAIL — colar erro no relatório QA |
 | lint exit ≠ 0 | FAIL (ou WARN se só style e usuário aceitar — padrão FAIL) |
+| test exit ≠ 0 | FAIL — colar erro no relatório QA |
+| sem script `test` | SKIP test — não exige suíte; opt-in por existência do script |
 | sem package.json | SKIP — anotar "projeto sem build; verificação manual" |
 
 ---

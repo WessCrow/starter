@@ -85,7 +85,8 @@ Ler `governance/stack-guide.md`:
 | UI só revisão | `ux-audit` (secundária) |
 | Direção visual inicial / referências vagas | `visual-direction-brief` |
 | Referência concreta / site / screenshot | `web-design-cloner` |
-| Motion, fluidez e microinterações | `fluid-ui-review` → `fluid-ui-implementation` → `fluid-ui-snippets` |
+| Motion, fluidez e microinterações | `fluid-ui` |
+| Scroll-driven / sticky / video scrub | `scroll-animation` |
 | Curadoria de skill externa / marketplace / MCP | `marketplace-curator` |
 | Vídeo HTML / HyperFrames | `hyperframes` |
 | Preview / render / lint / inspect HyperFrames | `hyperframes-cli` |

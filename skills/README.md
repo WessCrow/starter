@@ -83,21 +83,14 @@ Referências centrais:
 |---|---|
 | **project-starter.skill** | Kickoff e inicialização de projeto novo |
 | **qa-gate.skill** | QA cético obrigatório após implementação |
-| **qa-smoke.skill** | Smoke de build/lint conforme stack |
+| **qa-smoke.skill** | Smoke de build/lint/test conforme stack (test opt-in) |
 | **ux-audit.skill** | Auditoria de UX e identificação de problemas |
 | **ux-diamond.skill** | Discovery duplo diamante pós-kickoff: divergir e convergir antes de codar |
 | **context-cleaner.skill** | Resumo operacional para nova sessão; limpeza de contexto e economia de tokens |
-| **lenis-scroll.skill** | Scroll suave, scroll-driven e parallax |
-| **editorial-scroll-gallery.skill** | Section editorial sticky com copy fixa e fotos subindo verticalmente ao lado |
-| **editorial-scroll-variants.skill** | Variações de scroll editorial com cards alternados, trilha dupla e parallax leve |
+| **scroll-animation.skill** | Canônica de scroll-driven: smooth scroll (Lenis), sections editoriais sticky, galeria por scroll e hero com video scrub — HTML puro ou React/Next/Vite |
 | **responsive-craft.skill** | Layout responsivo, breakpoints e fluidez |
-| **sticky-scroll-gallery.skill** | Section sticky com galeria controlada por scroll e troca suave entre imagens |
-| **cinematic-scroll-video-hero.skill** | Hero cinematografica com video de background controlado pelo scroll e scrub suave via GSAP |
-| **cinematic-scroll-video-hero-frameworks.skill** | Implementacao da hero cinematografica com video scrub em React, Next.js e Vite |
 | **emil-design-eng.skill** | Polish visual, motion e review de UI |
-| **fluid-ui-implementation.skill** | Implementação de motion, gestos e transições com critério de fluidez |
-| **fluid-ui-review.skill** | Review de fluidez, motion e microinterações com foco em feedback e continuidade |
-| **fluid-ui-snippets.skill** | Receitas curtas e adaptáveis para implementar UI fluida sem boilerplate repetido |
+| **fluid-ui.skill** | Canônica de fluidez: review (10 princípios), decisão de estratégia e receitas de motion, gestos e reduced motion |
 | **prompt-library.skill** | Biblioteca de prompts por categoria |
 | **figma-implement-design.skill** | Implementação de design vindo do Figma |
 | **figma-foundation-docs.skill** | Criação de foundations, variables e documentação visual no Figma |

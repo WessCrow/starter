@@ -20,7 +20,7 @@
 ```txt
 Ideia → Especialista que Pergunta → sprint-contract (aprovação)
      → Implementar
-     → qa-smoke (build/lint)
+     → qa-smoke (build/lint/test)
      → qa-gate (relatório PASS/FAIL)
      → você testa no browser → handoff pass
 ```
@@ -35,7 +35,7 @@ Ideia → Especialista que Pergunta → sprint-contract (aprovação)
 |----------|------|--------------|
 | Funciona | 30% | Abre? Botões respondem? |
 | Completo | 20% | Contrato entregue? |
-| Estável | 15% | Build/lint ok? |
+| Estável | 15% | Build/lint/test ok? |
 | Usável | 20% | Próximo passo óbvio? Fluxo intuitivo? |
 | Visual | 15% | Layout, hierarquia, consistência com DS? |
 
