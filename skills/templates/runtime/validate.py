@@ -94,6 +94,94 @@ def validate_file(yaml_path: Path, schema_path: Path) -> list[str]:
     return errors
 
 
+def _is_scan_excluded(path: Path) -> bool:
+    excluded = {"node_modules", ".venv", "venv", ".pnpm-store"}
+    return any(part in excluded for part in path.parts)
+
+
+def _gitignore_protects_env(content: str) -> bool:
+    """Verifica padrão real de .env no .gitignore (linha .env, *.env ou .env*)."""
+    import re
+
+    patterns = (
+        r"^\.env$",
+        r"^\.env\*",
+        r"^\*\.env$",
+        r"^\*\.env\*",
+        r"^\*\*/\.env$",
+        r"^\*\*/\.env\*",
+    )
+    for line in content.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        if any(re.match(pattern, stripped) for pattern in patterns):
+            return True
+    return False
+
+
+def _collect_env_files(workspace_root: Path) -> list[Path]:
+    env_files: list[Path] = []
+    seen: set[Path] = set()
+    for env in workspace_root.glob("**/.env*"):
+        if not env.is_file() or _is_scan_excluded(env):
+            continue
+        if env.name.startswith(".env.example") or env.name.endswith(".example"):
+            continue
+        if env not in seen:
+            seen.add(env)
+            env_files.append(env)
+    return env_files
+
+
+def check_security_leaks() -> list[str]:
+    """Varre o workspace local buscando vulnerabilidades básicas de segurança e vazamento de segredos.
+
+    Casos de teste manuais (resultado esperado):
+    1. .env presente + sem .gitignore → ALERTA MÁXIMO por cada .env encontrado
+    2. .env presente + .gitignore com só 'venv/' → ALERTA (padrão .env ausente)
+    3. .env presente + .gitignore com '.env', '*.env' ou '.env*' → OK (sem alerta de .env)
+    4. Sem .env no workspace → OK para .env (chaves privadas ainda são checadas)
+    """
+    warnings = []
+    workspace_root = RUNTIME_DIR.parent.parent
+
+    gitignore_path = workspace_root / ".gitignore"
+    gitignore_exists = gitignore_path.exists()
+    gitignore_content = (
+        gitignore_path.read_text(encoding="utf-8") if gitignore_exists else ""
+    )
+
+    env_files = _collect_env_files(workspace_root)
+    if env_files:
+        if not gitignore_exists:
+            for env in env_files:
+                rel = env.relative_to(workspace_root)
+                warnings.append(
+                    f"  [Host Guard] ALERTA MÁXIMO: '{rel}' existe e .gitignore AUSENTE — "
+                    "risco de commit acidental de segredos!"
+                )
+        elif not _gitignore_protects_env(gitignore_content):
+            for env in env_files:
+                rel = env.relative_to(workspace_root)
+                warnings.append(
+                    f"  [Host Guard] '{rel}' encontrado, mas .gitignore não protege .env "
+                    "(adicione linha '.env', '*.env' ou '.env*' — 'venv/' sozinho não basta)!"
+                )
+
+    private_key_patterns = ["*.pem", "*.key", "*.pkcs12", "*.pfx"]
+    for pattern in private_key_patterns:
+        for key_path in workspace_root.glob(f"**/{pattern}"):
+            if _is_scan_excluded(key_path):
+                continue
+            warnings.append(
+                f"  [Host Guard] Possível chave privada/certificado exposto no workspace: "
+                f"'{key_path.relative_to(workspace_root)}'"
+            )
+
+    return warnings
+
+
 def main() -> int:
     targets = sys.argv[1:]
     if targets:
@@ -124,9 +212,21 @@ def main() -> int:
             print(f"OK   {yaml_name}")
             passed += 1
 
+    # Executar validação de vazamentos de segredos (Host Guard)
+    print("\n--- HOST GUARD & SECURITY AUDIT ---")
+    sec_warnings = check_security_leaks()
+    if sec_warnings:
+        print("ALERT - Pendências de segurança detectadas:")
+        for w in sec_warnings:
+            print(w)
+        # Não falha o build por aviso de segurança, mas exibe de forma clara
+    else:
+        print("OK    Nenhum segredo ou chave privada exposta no workspace.")
+
     print(f"\n{passed} passed, {failed} failed")
     return 1 if failed else 0
 
 
 if __name__ == "__main__":
     sys.exit(main())
+
