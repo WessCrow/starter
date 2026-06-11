@@ -59,6 +59,7 @@ graph TD
 | **Guia de Engenharia Completo:** Padrões limpos de Front, Back e Organização          | ❌ Escrever códigos confusos, com lentidão ou bagunçados                       |
 | **Início guiado em minutos** diretamente pelo chat                                    | ❌ Perder horas escrevendo documentações ou planejamentos do zero              |
 | **QA Gate em toda entrega** (build obrigatório + revisão cética do agente)            | ❌ Marcar uma feature como pronta sem o build passar                           |
+| **Orquestração por tier de modelo** — economia via `AGENTS.md` §0g (Cursor delega automaticamente; Antigravity via protocolo) | ❌ Queimar tier caro em volume ou escolher subagent/modelo manualmente a cada tarefa |
 
 ---
 

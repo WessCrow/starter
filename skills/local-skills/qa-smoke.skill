@@ -22,7 +22,13 @@ Rodar comandos mínimos de **build**, **lint** (se existir) e **test** (se exist
 
 **Gerenciador:** se existir `pnpm-lock.yaml` → `pnpm`. Se só `package-lock.json` → `npm`.
 
-**pnpm 11:** se o build falhar pedindo aprovação de scripts, verificar `pnpm-workspace.yaml` na raiz (`onlyBuiltDependencies` + `verifyDepsBeforeRun: false`). Ver `governance/stack-guide.md`. **Nunca** rodar `pnpm approve-builds` — trava agentes.
+**pnpm 11:** se o build falhar com `ERR_PNPM_IGNORED_BUILDS` ou pedido de aprovação de scripts:
+
+1. Rodar `bash skills/scripts/patch-pnpm-workspace.sh` na raiz do app (onde está `package.json`)
+2. Repetir `pnpm run build` **uma vez**
+3. Se ainda falhar → FAIL (colar log). Ver `governance/stack-guide.md`.
+
+**Nunca** rodar `pnpm approve-builds` — trava agentes.
 
 ---
 

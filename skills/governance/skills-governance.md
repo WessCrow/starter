@@ -1,316 +1,99 @@
-# skills-governance.md — Decisão Operacional de Skills (Sprints 1–2)
+# skills-governance.md — Decisão Operacional de Skills
 
-> **Papel:** definir o que é capacidade real, capacidade adiada e capacidade futura no STARTER  
-> **Status:** decisão ativa desde 2026-05-26 · **Sprint 2 concluída em 2026-06-10**  
-> **Escopo:** catálogo, roteamento, fallback remoto e prioridade de fonte da verdade
-
----
-
-## Objetivo desta sprint
-
-Fechar a ambiguidade sobre o sistema de skills **antes** de sanear documentação e **antes** de criar skill nova.
-
-Esta decisão existe para responder, sem interpretação:
-
-- o que o STARTER suporta hoje de verdade
-- o que está adiado
-- o que é apenas intenção futura
-- qual arquivo manda em cada tipo de decisão
-
-Este documento **prevalece** sobre descrições ambíguas em outros arquivos.
+> **Papel:** definir o que é capacidade real, adiada e futura no STARTER  
+> **Status:** ativo desde 2026-05-26 · Sprint 6 concluída 2026-06-11  
+> **Este documento prevalece** sobre descrições ambíguas em outros arquivos.
 
 ---
 
-## Decisão principal
+## Classes de capability
 
-O STARTER passa a operar com **3 classes de capacidade**:
-
-### 1. Capacidade ativa
-
-É tudo que pode entrar no fluxo normal hoje.
-
-Inclui:
-
-- `skills/local-skills/*.skill`
-- `skills/structure/*.skill`
-- docs operacionais locais já existentes em `skills/governance/`
-
-### 2. Capacidade adiada
-
-Existe no repositório, mas **não** entra no fluxo padrão.
-
-Inclui:
-
-- `skills/_deferred/**`
-
-Regra:
-
-- itens em `_deferred` não podem aparecer como opção prioritária no roteamento ativo
-
-### 3. Capacidade futura
-
-É intenção arquitetural, mas **não** pode ser tratada como suporte operacional atual.
-
-Inclui:
-
-- `skills/linked-skills/`
-- `skills/cache/`
-- fallback por `skills.sh`
-
-Regra:
-
-- enquanto não houver implementação real e política explícita de uso, esses itens são **futuros**, não ativos
+| Classe | Inclui | Regra |
+|--------|--------|-------|
+| **Ativa** | `skills/local-skills/*.skill` · `skills/structure/*.skill` · docs em `governance/` | Entra no fluxo normal |
+| **Adiada** | `skills/_deferred/**` | Não aparece como opção prioritária no roteamento |
+| **Futura** | `skills/linked-skills/` · `skills/cache/` · fallback por `skills.sh` | Não é suporte operacional atual |
 
 ---
 
 ## Decisões específicas
 
-### `linked-skills/`
-
-**Decisão:** permanece como diretório reservado para integrações futuras por symlink, mas não faz parte da capacidade ativa do STARTER nesta fase.
-
-Implicações:
-
-- diretório vazio não conta como suporte existente
-- skill remota só existe quando houver arquivo real apontando para destino válido
-- o roteamento não depende de `linked-skills/` (saneado na Sprint 2)
-
-### `skills.sh`
-
-**Decisão:** fallback remoto por `skills.sh` está **desligado como capacidade operacional**.
-
-Implicações:
-
-- pode continuar citado como direção futura, mas não como fluxo confiável do sistema
-- nenhuma execução crítica deve depender dele
-- a reativação só pode acontecer com documentação, política de cache e validação
-
-### `cache/`
-
-**Decisão:** `skills/cache/` não é fonte operacional de skills neste momento.
-
-Implicações:
-
-- cache vazio não é erro estrutural
-- o sistema não pode anunciar cache remoto funcional sem implementação real
-- uso de cache remoto depende de política formal posterior
-
-### `_deferred/`
-
-**Decisão:** `_deferred` é área de incubação, não de roteamento.
-
-Implicações:
-
-- conteúdo em `_deferred` pode ser mantido no repo
-- conteúdo em `_deferred` não deve ser promovido implicitamente a capability ativa
+| Item | Decisão |
+|------|---------|
+| `linked-skills/` | Reservado para symlinks futuros. Diretório vazio ≠ suporte existente. |
+| `skills.sh` | Fallback remoto desligado. Pode ser citado como direção futura, não como fluxo confiável. |
+| `cache/` | Não é fonte operacional. Cache vazio ≠ erro estrutural. |
+| `_deferred/` | Incubação — não promover implicitamente a capability ativa. |
+| `_deferred/phase4-playwright/` | Playwright adiado. QA Gate = build smoke + revisão cética — nada mais. |
 
 ---
 
 ## Fonte da verdade por camada
 
-Para reduzir conflito entre arquivos, a hierarquia operacional fica assim:
-
-### Execução em runtime
-
-**Arquivo principal:** `skills/governance/Start-ops.md`
-
-Função:
-
-- orchestrator compacto da sessão
-- define o fluxo operacional real durante uso normal
-
-### Roteamento de skills
-
-**Arquivo principal:** `skills/governance/Start.md`
-
-Função:
-
-- matriz de resolução e roteamento
-- referência de escolha entre skills
-
-Regra:
-
-- `Start.md` lista apenas capability ativa ou capability explicitamente marcada como futura/adiada — **cumprido e verificado mecanicamente por `validate-skills.py` (CI)**
-
-### Catálogo humano
-
-**Arquivo principal:** `skills/README.md`
-
-Função:
-
-- visão humana do sistema
-- descrição resumida das skills disponíveis
-
-Regra:
-
-- `README.md` não define verdade operacional sozinho
-- se houver conflito, prevalecem filesystem + esta decisão + `Start.md`
-
-### Navegação rápida
-
-**Arquivo principal:** `skills/INDEX.md`
-
-Função:
-
-- entrypoint curto para localizar docs centrais
-
-### Estrutura física
-
-**Arquivo principal:** `skills/STRUCTURE.md`
-
-Função:
-
-- mapa de diretórios e convenções de organização
-
-Regra:
-
-- `STRUCTURE.md` descreve a arquitetura esperada, mas não prova que uma capability está ativa
+| Camada | Arquivo principal | Função |
+|--------|-------------------|--------|
+| Execução runtime | `governance/Start-ops.md` | Orchestrator compacto da sessão |
+| Roteamento de skills | `governance/Start.md` | Resolução de skill por intenção |
+| Definição de capability | **Este arquivo** | O que está ativo/adiado/futuro |
+| Regras de código | `runtime/rules.yaml` (hot) + `governance/RULES.md` (humano) | Critérios de aceite |
 
 ---
 
-## Regra de precedência (permanente)
+## Decisões P3 — Superpowers (2026-06-11)
 
-Se houver conflito entre documentação e diretório real:
-
-1. filesystem real
-2. este arquivo
-3. `Start-ops.md`
-4. `Start.md`
-5. `README.md`
-6. `INDEX.md`
-7. `STRUCTURE.md`
-
-Objetivo:
-
-- impedir que capacidade aspiracional seja tratada como capacidade pronta
+| Decisão | Regra |
+|---------|-------|
+| P3.1 — TDD para skills | Toda skill nova passa pelo ciclo RED→GREEN→REFACTOR de `skill-testing.md` antes de entrar no roteamento |
+| P3.2 — HARD-GATE anti-"simples" | Trivial exige declaração explícita + 4 critérios objetivos; na dúvida → fluxo completo |
+| P3.3 — Padrão júnior sem contexto | Toda task em `tasks.md`: arquivo exato + o que fazer + como verificar |
+| P3.4 — Verify-before-done | `local-skills/verify-before-done.skill` ativa. Proibido "pronto" sem evidência. |
+| P3.5 — Protocolos comportamentais | `debugging-protocol.md` (causa raiz antes de fix) + `review-reception.md` (verificar feedback antes de implementar) |
+| P3.6 — Hook session-start (opt-in) | `scripts/session-start-hook.sh` → harnesses com suporte a hooks (Claude Code). Demais: via AGENTS.md. |
+| P3.6 — Subagent-driven dev | **Não assimilado** como núcleo — depende de Task tool uniforme entre harnesses |
+| §0g — Tier de modelo (opt-in) | `model-orchestration.md` + AGENTS.md §0g. Progressive enhancement, não núcleo. |
 
 ---
 
-## Critério para ativar capability futura
+## Decisões P4 — Sprint 005–006 (2026-06-11)
 
-Uma capability hoje marcada como futura só pode virar ativa quando cumprir **todos** os itens abaixo:
+### Skill intake — vereditos finais
 
-- existir fisicamente no repositório
-- ter propósito documentado
-- ter política de uso clara
-- aparecer de forma consistente no roteamento
-- passar por validação automática na Sprint 3
+| Skill | Veredito | Destino |
+|-------|----------|---------|
+| AWDesigner | ASSIMILAR (override mantenedor) | `local-skills/aw-designer.skill` |
+| Visão de Produto | ASSIMILAR | `local-skills/product-vision.skill` |
+| STORYMASTER | ASSIMILAR (enxugada) | `local-skills/storyboard-cinematic.skill` |
+| IGH Investigador | ASSIMILAR | `local-skills/hypothesis-investigation.skill` |
+| Conversion UX LP | ASSIMILAR | `local-skills/landing-conversion.skill` |
+| Storytelling portfólio | ASSIMILAR | `local-skills/portfolio-storytelling.skill` |
+| AI Creative Director | REJEITAR | Overlap + persona inflada |
+| CopyLab | REJEITAR | Duplica `prompt-library` cat.2 |
+| Agente IGH (versão original) | ADIAR | `_deferred/skill-intake-2026-06/` |
 
-Sem isso, continua futura.
+**Regra reforçada:** skill sem intenção descoberta no roteamento = não assimilar.
 
----
+### Fixes bootstrap (Sprint 006 — dogfooding)
 
-## Decisão sobre expansão nesta fase
+| Fix | Entrega |
+|-----|---------|
+| F1 pnpm build | `scripts/patch-pnpm-workspace.sh` + structure skills + `qa-smoke` retry |
+| F2 validate × _lab | `_lab` em `SKIP_MARKDOWN_PARTS` do `validate-skills.py` |
+| F3 runtime pós-Fase 0 | `bootstrap-cleanup.md` + `kickoff.md` — obrigar `project-start` [1] antes de codar |
 
-Nenhuma nova skill funcional deve ser criada antes de:
-
-1. sanear o roteamento
-2. sanear a documentação central
-3. criar mecanismo de antidrift
-
-Consequência:
-
-- a `visual-direction-brief.skill` continua válida como lacuna funcional
-- mas fica explicitamente **fora da Sprint 1**
-
----
-
-## Resultado esperado desta sprint
-
-Ao final da Sprint 1, o projeto passa a ter uma resposta objetiva para:
-
-- o que está ativo
-- o que está adiado
-- o que é futuro
-- qual arquivo manda em cada camada
-
-As próximas sprints agora podem atacar saneamento e validação sem discutir premissas de novo.
+**Aceite pilotos:** `pnpm run build` PASS em `_lab/pilot-landing-en` e `_lab/pilot-dashboard-pt` (evidência 2026-06-11).
 
 ---
 
-## Encerramento da Sprint 2 (2026-06-10)
+## Como adicionar nova skill
 
-Critérios cumpridos:
+1. Criar `.skill` em `local-skills/` (ou `structure/` se estrutural)
+2. Ciclo TDD RED→GREEN em `governance/skill-testing.md`
+3. Atualizar `governance/Start.md` com roteamento
+4. Atualizar este arquivo se mudar capability ativa/adiada/futura
+5. Adicionar linha no `INDEX.md`
 
-- **Roteamento saneado:** `Start.md` ↔ filesystem sem skills fantasma (`validate-skills.py`: 15 passed, 0 failed).
-- **Antidrift mecânico:** cobertura de `local-skills/` + `structure/` + bloqueio de `_deferred/` no `validate-skills.py`, rodando em CI (`.github/workflows/validate.yml`).
-- **Capacidades futuras sem menção operacional:** `linked-skills/`, `cache/` e `skills.sh` aparecem em `Start.md`, `README.md`, `INDEX.md` e `STRUCTURE.md` apenas marcadas como futuras/reservadas.
-
-Um único lugar (este documento) define active/deferred/future. Validação automática contínua fica a cargo da CI (antiga meta da Sprint 3, antecipada).
-
----
-
-## Decisões P2 — Sprint 002 (2026-06-10)
-
-### P2.8 — Consolidação das famílias scroll e fluid-ui
-
-**Decisão:** merge por família em 2 skills canônicas ativas.
-
-- `local-skills/scroll-animation.skill` ← lenis-scroll · editorial-scroll-gallery · editorial-scroll-variants · sticky-scroll-gallery · cinematic-scroll-video-hero · cinematic-scroll-video-hero-frameworks
-- `local-skills/fluid-ui.skill` ← fluid-ui-review · fluid-ui-implementation · fluid-ui-snippets
-
-Originais completos preservados em `skills/_deferred/consolidated-2026-06/` (área de incubação — fora do roteamento, regra padrão de `_deferred/`). Roteamento de `Start.md`/`Start-ops.md` reduzido a 1 entrada por família. Motivo: 9 skills com overlap confundiam o roteamento por intenção; cada canônica tem roteador interno por padrão.
-
-### P2.9 — Medição de tokens
-
-**Decisão:** manter claim **qualitativo** ("organiza o contexto para economizar tokens") sem publicar número.
-
-Motivo: o consumo varia por projeto e stack; publicar um número fixo violaria a linha "marketing verificável" do P0.2. Reabrir apenas se houver medição reprodutível (kickoff com/sem STARTER, mesma tarefa, mesmo modelo) com resultado conclusivo.
-
-### P2.10 — Playwright Fase 4: no-go (permanente até nova decisão)
-
-**Decisão:** `_deferred/phase4-playwright/` permanece adiado. Promessas de QA "Strict"/E2E automatizado saem do marketing em definitivo.
-
-Implicações:
-
-- o QA Gate é descrito como: build smoke (`qa-smoke`) + revisão cética pelo agente (`qa-gate`) — nada além disso
-- nenhum doc público pode prometer "impede código quebrado" ou teste E2E automatizado
-- reativação exige: decisão explícita do mantenedor + setup documentado + integração ao QA Gate + atualização deste documento
+**Capability remota:** só ativar com política explícita para `linked-skills/` + `cache/` + validação.
 
 ---
 
-## Decisões P3 — Assimilação Superpowers (2026-06-11)
-
-Origem: análise comparativa com [obra/superpowers](https://github.com/obra/superpowers). Seis padrões assimilados, adaptados à governança STARTER (PT-BR, gate determinístico, multi-IDE):
-
-### P3.1 — TDD para skills (obrigatório)
-
-**Decisão:** toda skill nova ou regra de governança substancial passa pelo ciclo RED→GREEN→REFACTOR de `governance/skill-testing.md` antes de entrar no roteamento ativo.
-
-Implicações:
-
-- skill sem baseline (RED) documentado é capability **não confiável** — pode existir no repo, mas o log de testes é pré-requisito para roteamento
-- regra ignorada pelo agente em sessão real = RED gratuito: registrar racionalização e plugar a brecha
-
-### P3.2 — HARD-GATE anti-"simples demais"
-
-**Decisão:** a exceção de "ajuste trivial" do `feature-flow.md` foi endurecida. Trivial agora exige declaração explícita no chat + critérios objetivos; na dúvida, segue o fluxo completo. Racionalização "é simples demais para precisar de spec" é tratada como anti-pattern nomeado.
-
-### P3.3 — Padrão "júnior sem contexto" em tasks.md
-
-**Decisão:** toda tarefa em `templates/specs/tasks-template.md` deve ser executável por uma sessão nova sem re-explicação: arquivo exato + o que fazer + como verificar.
-
-### P3.4 — Verificação antes de afirmar conclusão
-
-**Decisão:** nova skill ativa `local-skills/verify-before-done.skill`. Proibido afirmar "pronto/corrigido/funciona" sem evidência de comando executado — em qualquer ponto da sessão, não só no QA Gate.
-
-### P3.5 — Protocolos comportamentais (debug e recepção de review)
-
-**Decisão:** novos docs `governance/debugging-protocol.md` (causa raiz antes de fix) e `governance/review-reception.md` (verificar feedback antes de implementar, sem concordância performática). Carga sob demanda (cold), roteados em `Start.md`.
-
-### P3.6 — Hook de session-start (opt-in por harness)
-
-**Decisão:** `scripts/session-start-hook.sh` injeta o bootstrap (AGENTS.md → Start-ops) automaticamente em harnesses com suporte a hooks (Claude Code). Convenção vira garantia onde possível; nos demais editores, o fluxo via `AGENTS.md` permanece.
-
-**Não assimilado (decisão explícita):** subagent-driven-development como núcleo de execução — depende de Task tool uniforme entre harnesses, que o público-alvo (Cursor/Windsurf/Cline) não tem. Reavaliar se o cenário mudar.
-
----
-
-> **Autoria & Rastro de Segurança**
->
-> Este documento faz parte do framework **STARTER**, criado e mantido por **Wesley Alves**.
->
-> 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
->
-> Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-11
+> **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · Última atualização: 2026-06-11

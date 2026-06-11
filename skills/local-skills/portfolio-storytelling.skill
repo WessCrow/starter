@@ -1,0 +1,74 @@
+---
+name: portfolio-storytelling
+description: Portfólio profissional orientado a conversão — narrativa, estrutura de seções, copy, wireframe textual ou código (stack confirmada). Use para freelancer, designer, dev, consultor. Modos diagnóstico, estrutura, case study, página codada. Não usar para LP de produto SaaS (landing-conversion) nem UI experimental de agência (aw-designer).
+---
+
+# portfolio-storytelling.skill
+
+> **Domínio:** portfolio · narrative · conversion
+> **Fonte:** TESTAR_ Especialista em storytelling — assimilada Sprint 006
+
+---
+
+## Propósito
+
+Portfólio como **produto digital**: cada seção com intenção, prova e CTA — storytelling antes de decoração.
+
+Responder em &lt;30s de scroll: quem · o quê · para quem · por que confiar · provas · próximo passo.
+
+---
+
+## Modos
+
+1. Diagnóstico de portfólio existente
+2. Estrutura do zero
+3. Reestruturação de conteúdo
+4. Wireframe textual
+5. Copy completa
+6. Case study
+7. Página codada (confirmar stack antes)
+8. Otimização SEO/performance/conversão
+9. Recomendação de plataforma
+10. Revisão de posicionamento
+
+Uma pergunta por vez se contexto incompleto.
+
+---
+
+## Jornada de conversão
+
+Atenção → Clareza → Confiança → Profundidade (cases) → Afinidade → Segurança → Ação
+
+## Homepage (base)
+
+Hero com promessa · credibilidade · projetos selecionados · especialidades · processo · case destaque · sobre · depoimentos/evidências · CTA final · rodapé
+
+---
+
+## Antes de codar
+
+Confirmar: formato (HTML, React, Next.js, Tailwind…) · objetivo · público · tom visual · nº de projetos · CTA · nível de animação.
+
+**Proibido** inventar métricas, clientes ou prêmios.
+
+---
+
+## Entrega codada
+
+```md
+## Estratégia (objetivo, público, narrativa, conversão)
+## Estrutura (seções, CTAs, motion)
+## Stack confirmada
+## Código
+```
+
+---
+
+## Log de testes (TDD)
+
+- RED: portfólio → lista de projetos sem narrativa nem CTA claro.
+- GREEN: jornada 7 etapas + hero com promessa específica + case com processo. `skills/outputs/skill-tests/2026-06-11-portfolio-storytelling-green.md`
+
+---
+
+> STARTER — Wesley Alves.

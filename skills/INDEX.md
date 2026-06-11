@@ -1,8 +1,10 @@
-# INDEX — v5.1 Enterprise + QA Gate
+# INDEX — STARTER v5.2 · Roteador de Skills
 
-> **2026-05-20** · Runtime OS · Schema Validation · Quality Gate
+> Runtime OS · QA Gate · Última atualização: 2026-06-11
 
-## Sessão (agente) — ordem mínima
+---
+
+## Ordem de carregamento (agente)
 
 ```
 1. runtime/index.yaml
@@ -13,73 +15,144 @@
 6. validate.py (após editar runtime)
 ```
 
+---
+
 ## Runtime OS
 
 | Recurso | Path |
 |---------|------|
-| Ordem de carga | [`runtime/index.yaml`](runtime/index.yaml) |
-| Validador | [`runtime/validate.py`](runtime/validate.py) |
-| Schemas | [`runtime/schema/`](runtime/schema/) |
-| Docs | [`runtime/schema/README.md`](runtime/schema/README.md) |
+| Ordem de carga | `runtime/index.yaml` |
+| Validador | `runtime/validate.py` |
+| Schemas | `runtime/schema/` |
+
+---
 
 ## QA Gate ★
 
 | Recurso | Papel |
 |---------|-------|
-| [`governance/qa-protocol.md`](governance/qa-protocol.md) | Portaria de qualidade (leia primeiro) |
-| [`governance/stack-guide.md`](governance/stack-guide.md) | Next.js + pnpm vs npm |
-| [`runtime/qa.yaml`](runtime/qa.yaml) | Pesos, gate rígido |
-| [`runtime/handoff.yaml`](runtime/handoff.yaml) | Retomada + status QA |
-| [`local-skills/qa-gate.skill`](local-skills/qa-gate.skill) | Avaliador cético (obrigatório pós-implementação) |
-| [`local-skills/qa-smoke.skill`](local-skills/qa-smoke.skill) | build/lint/test |
-| [`templates/sprint-contract.md`](templates/sprint-contract.md) | Contrato antes de codar |
-| [`templates/qa-report.md`](templates/qa-report.md) | Relatório PT-BR |
+| `governance/qa-protocol.md` | Portaria de qualidade |
+| `runtime/qa.yaml` | Pesos + gate rígido |
+| `runtime/handoff.yaml` | Retomada + status QA |
+| `local-skills/qa-gate.skill` | Avaliador cético (obrigatório pós-código) |
+| `local-skills/qa-smoke.skill` | build/lint/test |
+| `templates/sprint-contract.md` | Contrato antes de codar |
 
-## Iniciar projeto (comando único)
+---
 
-| Recurso | Papel |
-|---------|-------|
-| [`../COMECAR-PROJETO.md`](../COMECAR-PROJETO.md) | **Você:** só diga "Começar projeto" |
-| [`governance/kickoff.md`](governance/kickoff.md) | Agente: limpeza + 4 perguntas |
-| [`governance/bootstrap-cleanup.md`](governance/bootstrap-cleanup.md) | Limpeza automática do framework |
-| [`scripts/clean-framework-artifacts.sh`](scripts/clean-framework-artifacts.sh) | Script de limpeza |
-| [`local-skills/project-starter.skill`](local-skills/project-starter.skill) | Execução após "sim" |
+## Fluxo de sessão
 
-## Nova feature — fluxo spec-driven ★
+```
+index.yaml → validate.py → hot → warm? → cold? → Start-ops → skill → validate → persist
+```
+
+---
+
+## Iniciar projeto
 
 | Recurso | Papel |
 |---------|-------|
-| [`governance/feature-flow.md`](governance/feature-flow.md) | Protocolo: specify → clarify → plan → tasks → analyze → implementar |
-| [`templates/specs/spec-template.md`](templates/specs/spec-template.md) | O quê + por quê (sem stack) + Clarificações |
-| [`templates/specs/plan-template.md`](templates/specs/plan-template.md) | Como: stack, dados, arquitetura + constitution check |
-| [`templates/specs/tasks-template.md`](templates/specs/tasks-template.md) | Tarefas com dependências, `[P]` e rastreabilidade |
-| [`templates/overrides/README.md`](templates/overrides/README.md) | Customização de templates por projeto (override vence core) |
+| `../COMECAR-PROJETO.md` | Só diga "Começar projeto" |
+| `governance/kickoff.md` | Limpeza + 4 perguntas |
+| `local-skills/project-starter.skill` | Execução após "sim" |
+| `scripts/clean-framework-artifacts.sh` | Fase 0 automática |
+
+---
+
+## Nova feature — spec-driven ★
+
+| Recurso | Papel |
+|---------|-------|
+| `governance/feature-flow.md` | specify → clarify → plan → tasks → analyze → implementar |
+| `templates/specs/spec-template.md` | O quê + por quê |
+| `templates/specs/plan-template.md` | Como: stack, dados, arquitetura |
+| `templates/specs/tasks-template.md` | Tarefas com `[P]` e dependências |
+| `templates/overrides/README.md` | Override de templates por projeto |
+
+---
 
 ## Governance
 
 | Doc | Papel |
 |-----|-------|
-| [`Start-ops.md`](governance/Start-ops.md) | Runtime Orchestrator + fluxo QA |
-| [`skills-governance.md`](governance/skills-governance.md) | Define capability ativa, adiada e futura |
-| [`Start.md`](governance/Start.md) | Matriz de roteamento de skills |
-| [`validate-skills.py`](scripts/validate-skills.py) | Validador antidrift de skills, docs, templates e bootstrap |
-| [`check-repo-hygiene.py`](scripts/check-repo-hygiene.py) | Bloqueia relatórios/planos/fixtures no índice git |
-| [`repo-hygiene.md`](governance/repo-hygiene.md) | O que versionar vs. `docs/private/` |
-| [`runtime-protocol.md`](governance/runtime-protocol.md) | Protocolo v5 |
-| [`RULES.md`](governance/RULES.md) | Humano (completo) |
-| [`runtime/rules.yaml`](runtime/rules.yaml) | IA (hot, validado) |
+| `governance/Start-ops.md` | Orchestrator + fluxo QA |
+| `governance/Start.md` | Roteamento de skills |
+| `governance/skills-governance.md` | Capability ativa/adiada/futura |
+| `governance/model-orchestration.md` | Orquestração por tier (opt-in) |
+| `governance/RULES.md` | Regras invioláveis (referência humana) |
+| `runtime/rules.yaml` | Regras IA (hot, validado) |
+| `governance/feature-flow.md` | Fluxo spec-driven |
+| `governance/repo-hygiene.md` | O que versionar |
+| `scripts/validate-skills.py` | Antidrift |
+| `scripts/check-repo-hygiene.py` | Bloqueia fixtures no índice git |
 
-## Templates novos projetos
+---
 
-[`templates/runtime/`](templates/runtime/) — YAML + `schema/` + `index.yaml`
+## Estrutura de diretórios
 
-## Skills
+```
+skills/
+├── runtime/          ★ YAML operacional (hot/warm/cold + schema/)
+├── governance/       Protocolos e orchestrator
+├── local-skills/     Skills funcionais (.skill)
+├── structure/        Arquitetura de pastas por stack
+├── templates/        Boilerplates (runtime/ + specs/ + overrides/)
+├── guidelines/       Padrões de design
+├── outputs/          Docs humanos vivos (não versionar relatórios)
+├── linked-skills/    Reservado — capability futura
+├── cache/            Reservado — cache remoto futuro
+└── _deferred/        Skills adiadas (ex: Playwright)
+```
 
 - **Ativas:** `structure/` + `local-skills/`
 - **Adiadas:** `_deferred/`
 - **Futuras:** `linked-skills/` + `cache/`
-- Estrutura física: [`STRUCTURE.md`](STRUCTURE.md)
-- Catálogo humano: [`README.md`](README.md)
+
+---
+
+## Skills ativas (`local-skills/`)
+
+| Skill | Domínio |
+|-------|---------|
+| `project-starter.skill` | Kickoff de projeto |
+| `qa-gate.skill` | QA cético pós-implementação |
+| `qa-smoke.skill` | Build/lint/test |
+| `verify-before-done.skill` | Evidência antes de afirmação |
+| `context-cleaner.skill` | Resumo para nova sessão |
+| `session-review.skill` | Auto-avaliação pós-sessão |
+| `ux-diamond.skill` | Discovery duplo-diamante |
+| `ux-audit.skill` | Auditoria de UX |
+| `scroll-animation.skill` | Scroll-driven (Lenis, sticky, video) |
+| `responsive-craft.skill` | Layout responsivo + breakpoints |
+| `fluid-ui.skill` | Motion, gestos, reduced-motion |
+| `emil-design-eng.skill` | Polish visual + review de UI |
+| `interface-design.skill` | Criação e refinamento de interfaces |
+| `visual-direction-brief.skill` | Brief visual objetivo |
+| `web-design-cloner.skill` | Decomposição de designs web |
+| `figma-implement-design.skill` | Figma → código |
+| `figma-foundation-docs.skill` | Foundations + variables no Figma |
+| `figma-make.skill` | Figma Make / prompt-to-app |
+| `prompt-library.skill` | Biblioteca de prompts |
+| `marketplace-curator.skill` | Curadoria de skills/MCPs |
+| `product-vision.skill` | Estratégia, roadmap, KPIs |
+| `storyboard-cinematic.skill` | Pré-produção visual |
+| `aw-designer.skill` | UI experimental (Awwwards) |
+| `hypothesis-investigation.skill` | Investigação por hipótese |
+| `landing-conversion.skill` | Landing de alta conversão |
+| `portfolio-storytelling.skill` | Portfólio narrativo |
+| `hyperframes.skill` | Composições de vídeo HTML |
+| `hyperframes-cli.skill` | CLI do HyperFrames |
+| `hyperframes-media.skill` | TTS, transcrição, remoção de fundo |
+
+---
+
+## Checklist de manutenção
+
+- [ ] `governance/Start.md` sincronizado com skills disponíveis?
+- [ ] `governance/skills-governance.md` reflete capability real?
+- [ ] Novos arquivos em `local-skills/` e `structure/` documentados neste INDEX?
+- [ ] `python3 skills/scripts/validate-skills.py` passa sem erro?
+- [ ] Templates atualizados conforme evolução?
 
 ---
 
@@ -90,4 +163,4 @@
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-09
+> Última atualização: 2026-06-11

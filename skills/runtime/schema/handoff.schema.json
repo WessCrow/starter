@@ -49,6 +49,15 @@
       },
       "additionalProperties": false
     },
+    "review": {
+      "type": "object",
+      "properties": {
+        "last_review_path": { "type": ["string", "null"] },
+        "last_review_at": { "type": ["string", "null"] },
+        "reviews_since_improvement_sprint": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
     "reminders": {
       "type": "array",
       "items": {

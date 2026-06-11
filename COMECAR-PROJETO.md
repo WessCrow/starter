@@ -56,6 +56,12 @@ o agente resume, voce confirma e o projeto comeca
 Se aparecerem termos como `runtime`, `governance`, `outputs`, `templates`, `YAML` ou `QA gate`, pode ignorar no inicio.
 Isso e interno do sistema. Para usar, voce so precisa copiar `skills/` + `AGENTS.md` e dizer `Começar projeto`.
 
+## Economia de modelo (opcional)
+
+Em Cursor e Antigravity, o agente pode delegar automaticamente tarefas pesadas (explore, edits mecânicos, shell) para modelos mais leves e econômicos.
+Você não precisa escolher modelo nem subagent — isso é opcional e transparente.
+Detalhes em `AGENTS.md` §0g e `skills/governance/model-orchestration.md`.
+
 ## Compatibilidade rapida
 
 - Melhor em `Cursor`, `Claude Code` e `Antigravity`.

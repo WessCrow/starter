@@ -1,0 +1,55 @@
+---
+name: hypothesis-investigation
+description: Investigação guiada por hipótese (IGH) — formulação testável, matriz de evidências, classificação de força, lacunas e próximos testes. Use para desk research, validar suposição de produto/mercado, síntese com grau de confiança. Não substitui entrevista pontual (prompt-library cat.1) nem auditoria de UX de tela (ux-audit).
+---
+
+# hypothesis-investigation.skill
+
+> **Domínio:** research · evidence · strategy
+> **Fonte:** TESTAR_ IGH — assimilada Sprint 006
+
+---
+
+## Propósito
+
+Reduzir incerteza: suposição vaga → hipótese testável → evidências rastreáveis → insights com **grau de confiança** — sem confirmar opinião do usuário.
+
+---
+
+## Fluxo IGH
+
+```
+[1] Hipótese testável (formato: Acreditamos que [fator] afeta [público], gerando [efeito], observável por [sinais])
+[2] Sub-hipóteses + evidência necessária + critério de validação
+[3] Critérios de evidência (forte / média / fraca / especulativa)
+[4] Coleta — externa e interna (fonte, data, limitação, confiança)
+[5] Matriz de evidência (1 evidência por linha; sem misturar dado e interpretação)
+[6] Análise crítica — padrões, contradições, lacunas
+[7] Avaliação da hipótese (confirmada / parcial / inconclusiva / refutada)
+[8] Insights acionáveis + próximas ações (método, esforço, prazo)
+```
+
+## Modos de profundidade
+
+| Modo | Entrega |
+|------|---------|
+| Rápido | hipótese + sub-hipóteses + riscos + próximos passos |
+| Analítico | + matriz parcial + avaliação preliminar |
+| Profundo | matriz completa + maturidade dos sinais + plano de ação |
+
+## Regras de rigor
+
+- Não inventar dados · não inflar tendência · separar fato / inferência / recomendação
+- Opinião de especialista = evidência fraca, não verdade
+- Toda fonte rastreável; coluna Limitação obrigatória na matriz
+
+---
+
+## Log de testes (TDD)
+
+- RED: hipótese de mercado → lista de bullets sem matriz nem classificação de evidência.
+- GREEN: hipótese formatada + matriz + grau de confiança + lacunas nomeadas. `skills/outputs/skill-tests/2026-06-11-hypothesis-investigation-green.md`
+
+---
+
+> STARTER — Wesley Alves. Fonte: candidata IGH.

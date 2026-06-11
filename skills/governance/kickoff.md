@@ -1,30 +1,19 @@
 # kickoff.md — Comando "Começar projeto"
 
 > **Para:** product designer · não precisa saber stack nem termos técnicos  
-> **Gatilho:** uma frase → o agente pergunta → só depois cria tudo
+> **Skill:** `project-starter` · **Não criar arquivos** antes da confirmação (exceto limpeza Fase 0)
 
 ---
 
-## Gatilhos (qualquer um dispara este protocolo)
+## Gatilhos
 
-```
-Começar projeto
-Comecar projeto
-Iniciar projeto
-Novo projeto
-Start projeto
-```
-
-**Skill:** `project-starter` · **Não criar arquivos** antes da fase de confirmação (exceto limpeza Fase 0).
+`Começar projeto` · `Comecar projeto` · `Iniciar projeto` · `Novo projeto` · `Start projeto`
 
 ---
 
 ## Fase 0 — Limpeza automática (SEMPRE primeiro)
 
-> Protocolo: `governance/bootstrap-cleanup.md`  
-> O usuário **não** apaga manualmente.
-
-**Antes da pergunta 1**, executar:
+> Protocolo: `governance/bootstrap-cleanup.md`
 
 ```bash
 bash skills/scripts/clean-framework-artifacts.sh
@@ -33,93 +22,74 @@ bash skills/scripts/clean-framework-artifacts.sh
 Apaga: `CONTEXT.md`, `PRD.md` (raiz), `skills/runtime/`, `skills/outputs/`  
 Mantém: `skills/` (resto), `AGENTS.md`
 
-**Pular Fase 0** só se o usuário disser **continuar projeto existente**.
+**Pular Fase 0** só se usuário disser "continuar projeto existente".  
+Após Fase 0: `project-start.md` [1] restaura `skills/runtime/` de `templates/runtime/` somente após o "sim".
 
-Uma linha para o usuário: *"Limpei cópias do framework STARTER; agora vamos ao seu app."*
+Uma linha ao usuário: *"Limpei cópias do framework STARTER; agora vamos ao seu app."*
 
 ---
 
 ## Regra de ouro
 
-O usuário **não** precisa citar Next.js, pnpm, runtime ou skills.  
-O agente **infere** stack e documenta em linguagem simples antes de executar.
+O usuário **não** precisa citar Next.js, pnpm, runtime ou skills. O agente **infere** stack e documenta antes de executar.
 
 ---
 
-## Fase 1 — Só perguntas (máximo 4)
+## Fase 1 — Perguntas (máx. 4 + Pergunta 0 de idioma)
 
-Fazer **uma pergunta por vez**. Tom de colega, não de formulário técnico.
+Uma pergunta por vez. Tom de colega, não de formulário técnico.
+
+### Pergunta 0 — Idioma (não conta no limite de 4)
+
+> Antes de começar: a comunicação deste projeto será em **português ou inglês**?  
+> Vale para textos do site/app e documentação. Se forem diferentes, me diga os dois.
+
+- Grava `language.docs` e `language.product` em `runtime/context.yaml`; default `pt-BR` nos dois.
+- Se já indicado na primeira mensagem → inferir, confirmar no resumo, não perguntar de novo.
+
+> **TDD 2026-06-11 GREEN:** resposta mista ("site para mercado americano, docs em português") → `product: en / docs: pt-BR`. PASS.
 
 ### Pergunta 1 — O que é?
-
-> **Como você chama esse projeto e, em uma ou duas frases, o que ele faz e para quem?**
-
-Exemplo de resposta boa: *"FlowTask — app para freelancers organizarem clientes e prazos."*
-
----
+> Como você chama esse projeto e, em uma ou duas frases, o que ele faz e para quem?
 
 ### Pergunta 2 — Primeiro entregável
-
-> **O que você quer ver funcionando primeiro?**  
-> Pode ser bem pequeno: só estrutura e documentação, uma landing, uma tela, ou um MVP com 2–3 fluxos.
-
-Opções para ajudar (não ler como lista obrigatória):
-
-- Só organizar projeto (pastas + docs, sem tela ainda)
-- Uma página / landing
-- Uma feature (ex: login, dashboard)
-- MVP com fluxo principal
-
----
+> O que você quer ver funcionando primeiro?  
+> Pode ser: só estrutura + docs · uma landing · uma tela · MVP com 2–3 fluxos.
 
 ### Pergunta 3 — Direção visual
-
-> **Tem Figma, site de referência ou uma direção visual clara?**  
-> Se tiver, envie links ou diga: paleta base, estilo desejado, tom tipográfico e o que quer evitar.  
+> Tem Figma, site de referência ou direção visual clara? (links, paleta, estilo, o que evitar)  
 > Se não tiver, diga "não" — eu proponho uma direção inicial.
 
-**Se a resposta vier vaga, mas houver ambição estética clara:** sintetizar um brief curto com `visual-direction-brief` antes do resumo da Fase 2.
-
----
+Se a resposta vier vaga mas com ambição estética: sintetizar brief com `visual-direction-brief` antes do resumo.
 
 ### Pergunta 4 — Fora do escopo (opcional)
+> Tem algo que **não** deve entrar nesta primeira versão?
 
-> **Tem algo que **não** deve entrar nesta primeira versão?**  
-> Se não souber agora, pode dizer "nada por enquanto".
-
-**Se o usuário já respondeu tudo na primeira mensagem** → pular perguntas repetidas e ir direto ao resumo (Fase 2).
+Se usuário já respondeu tudo na primeira mensagem → pular perguntas repetidas, ir direto ao resumo.
 
 ---
 
-## Fase 2 — Resumo + confirmação (antes de criar qualquer pasta)
-
-Apresentar em **português simples**:
+## Fase 2 — Resumo + confirmação
 
 ```markdown
 ## Entendi assim
-
 - **Projeto:** [nome]
 - **Resumo:** [1 frase]
-- **Primeiro passo:** [o que vai existir ao final desta sessão]
-- **Visual:** [referência, proposta ou brief de direção visual]
+- **Idioma:** [ex: site em inglês, documentos em português]
+- **Primeiro passo:** [o que existirá ao final desta sessão]
+- **Visual:** [referência, proposta ou brief]
 - **Fora do escopo agora:** [lista ou "nenhum definido"]
 
-## O que vou configurar (sem você precisar escolher)
-
-- **Tipo de app:** [ex: site/app web]
-- **Stack (técnico — só informativo):** [ex: Next.js + Tailwind + shadcn + pnpm]
-- **Na raiz do projeto:** AGENTS.md, CONTEXT.md, PRD.md (sobre SEU app)
-- **Pasta skills/:** governança, runtime, QA
-- **Código:** [pastas iniciais conforme primeiro entregável]
-
-**Recomendo:** [1 frase — ex: Next.js porque é produto completo com rotas e deploy simples]
+## O que vou configurar
+- **Stack:** [ex: Next.js + Tailwind + shadcn + pnpm] — [1 linha de motivo]
+- Na raiz: AGENTS.md, CONTEXT.md, PRD.md (sobre SEU app)
+- Pasta skills/: governança, runtime, QA
+- Código: [pastas conforme P2]
 
 Posso começar a criar? (sim / ajustar: …)
 ```
 
-**Aguardar "sim"** (ou ajuste). **Proibido** criar arquivos antes do sim.
-
-> **Equivalência de aprovação:** o **"sim"** nesta fase aprova também o **contrato da primeira entrega** (`sprint-contract.md` na raiz). Não é necessário pedir aprovação duplicada — o contrato é gerado automaticamente na Fase 4 a partir deste resumo.
+**Aguardar "sim".** O "sim" aqui aprova também o `sprint-contract.md` da primeira entrega — não pedir aprovação duplicada.
 
 ---
 
@@ -127,98 +97,72 @@ Posso começar a criar? (sim / ajustar: …)
 
 > Skill: `ux-diamond.skill`
 
-**Quando ativar:** resposta da Pergunta 2 indica tela, landing, MVP ou feature com UI.
-**Pular:** se P2 = "só organizar projeto (pastas + docs, sem tela)".
-
-Executar UX Diamond **após** confirmação do resumo, **antes** de inferir stack.
-O resultado alimenta o sprint-contract com decisões de UX validadas.
+Ativar quando P2 indica tela/landing/MVP/feature com UI. Pular se P2 = "só estrutura + docs".  
+Executar **após** confirmação do resumo, **antes** de inferir stack.
 
 ```
-Fase 2 "sim" → ★ ux-diamond → Fase 3 (stack)
+Fase 2 "sim" → ux-diamond → Fase 3 (stack)
 ```
 
 ---
 
-## Fase 3 — Inferência de stack (agente decide)
+## Fase 3 — Inferência de stack
 
-| Sinais nas respostas | Stack padrão | Structure skill |
-|----------------------|--------------|-----------------|
+| Sinais | Stack | Structure skill |
+|--------|-------|-----------------|
 | App, produto, login, dashboard, várias telas | Next.js + shadcn + pnpm | `nextjs-structure.skill` |
-| Landing única, página rápida, protótipo leve | React + Vite + shadcn + pnpm | `react-vite-structure.skill` |
-| Só docs / estrutura, sem app ainda | Next.js (prepara app) ou só `skills/` + docs | conforme P2 |
+| Landing única, protótipo leve | React + Vite + shadcn + pnpm | `react-vite-structure.skill` |
+| Só docs / estrutura | Next.js (prepara app) ou só `skills/` + docs | conforme P2 |
 | API / backend explícito | backend skill | `backend-structure.skill` |
 | Dúvida | **Next.js** | `nextjs-structure.skill` |
 
-Registrar escolha em `runtime/stack.yaml` e explicar em 1 linha no CONTEXT.md.
-
-Detalhe técnico: `governance/stack-guide.md`
+Registrar em `runtime/stack.yaml` e explicar em 1 linha no CONTEXT.md.
 
 ---
 
 ## Fase 4 — Execução (após "sim")
-
-Seguir na ordem:
 
 ```
 1. governance/project-start.md
 2. Copiar templates/runtime/ → skills/runtime/
 3. Structure skill detectada
 4. CONTEXT.md + PRD.md na raiz (do projeto, não do STARTER)
-5. sprint-contract.md na raiz (primeira entrega — template templates/sprint-contract.md)
-   → preencher critérios a partir do resumo aprovado na Fase 2
-   → marcar "Aprovado por você: [x] Sim" (o "sim" da Fase 2 = aprovação do contrato)
+5. sprint-contract.md na raiz (se P2 pede UI):
+   - critérios a partir do resumo Fase 2 + UX Diamond
+   - marcar "Aprovado: [x] Sim (kickoff Fase 2)"
 6. skills/outputs/ (BRIEF, ROADMAP, ARCHITECTURE)
-7. Código inicial só se P2 pedir tela/MVP — senão só estrutura + docs
+7. Código inicial só se P2 pedir tela/MVP
 8. validate.py → 0 failed
 9. Mensagem final: o que foi criado + próximo passo em 1 frase
 ```
 
-### sprint-contract.md no kickoff (primeira entrega)
-
-Gerar **na raiz do projeto** (não em `specs/`) quando P2 pedir tela, landing ou MVP com UI.
-Preencher a partir do resumo da Fase 2 + saída do UX Diamond (se aplicável):
-
-- **O que o usuário deve conseguir:** itens do "Primeiro passo" do resumo
-- **Critérios testáveis:** 3–4 linhas verificáveis (Hero, CTA, mobile 375px, build)
-- **Fora desta sprint:** itens do "Fora do escopo"
-- **Aprovado:** `[x] Sim — aprovado no kickoff (Fase 2)`
-
-Sem UI na P2 → **não** gerar sprint-contract (QA Gate de código só entra com entrega visual).
-
-**Manter na raiz:** `AGENTS.md`, `CONTEXT.md`, `PRD.md` — **nunca apagar** após kickoff.
+Sem UI em P2 → **não** gerar sprint-contract.  
+**Manter na raiz:** `AGENTS.md`, `CONTEXT.md`, `PRD.md` — nunca apagar após kickoff.
 
 ---
 
-## Mensagem final para o usuário (template)
+## Mensagem final (template)
 
-> Projeto **[nome]** iniciado.  
-> Abra `CONTEXT.md` para o resumo. `PRD.md` tem o escopo.  
-> Próximo passo: **[ex: pedir nova feature ou testar no navegador 5 min]** — é só me pedir.
-
----
-
-## Bootstrap do usuário
-
-Colar na pasta nova: **`skills/`** + **`AGENTS.md`** (opcional `COMECAR-PROJETO.md`).  
-**Não** precisa apagar nada — a **Fase 0** faz isso ao dizer "Começar projeto".
+> Projeto **[nome]** iniciado. Abra `CONTEXT.md` para o resumo. `PRD.md` tem o escopo.  
+> Próximo passo: **[ex: pedir nova feature ou testar 5 min no navegador]** — é só me pedir.
 
 ---
 
 ## Anti-padrões
 
-- Pedir stack, framework ou pnpm ao usuário no início
+- Pedir stack/framework/pnpm ao usuário no início
 - Criar pastas antes do "sim"
-- Deixar CONTEXT/PRD do STARTER na raiz durante kickoff (mistura contexto)
-- Apagar AGENTS.md ou CONTEXT/PRD **do app** depois que o kickoff criou
-- Copiar CONTEXT/PRD do repositório STARTER e **não** substituir pelo do app
+- Deixar CONTEXT/PRD do STARTER na raiz durante kickoff
+- Apagar AGENTS.md ou CONTEXT/PRD **do app** após kickoff
+- Copiar CONTEXT/PRD do STARTER sem substituir pelo do app
 
 ---
 
-> **Autoria & Rastro de Segurança**
->
-> Este documento faz parte do framework **STARTER**, criado e mantido por **Wesley Alves**.
->
-> 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
->
-> Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-07
+## Bootstrap do usuário
+
+Colar na pasta nova: **`skills/`** + **`AGENTS.md`** (opcional: `COMECAR-PROJETO.md`).  
+**Não** precisa apagar nada — Fase 0 faz isso automaticamente.
+
+---
+
+> **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · Última atualização: 2026-06-11

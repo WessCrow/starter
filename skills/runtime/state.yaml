@@ -7,9 +7,11 @@ phase:
   name: Enterprise Runtime + QA Gate
   previous: ai_native_runtime
 
-last: "P3 assimilação Superpowers completa: 6 padrões aplicados + ciclo GREEN executado (4/4 PASS em sessão limpa — relatório outputs/skill-tests/2026-06-11-p3-green.md). Decisões em skills-governance.md (P3) + decisions.yaml."
+last: "Dogfood 007: T2/T3/T4 [P] Task fast paralelo; T1 validate_model_orchestration_log; validate-skills 16/0; session-review bloco C delegação=sim."
 next:
-  - nova_feature_via_feature_flow
+  - browser_5min_pilotos_mantenedor
+  - sprint_002_fechamento_commit_tag
+  - dogfood_model_tier_feature_ui_lab
 blockers: []
 
 health:

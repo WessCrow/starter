@@ -7,6 +7,12 @@ project:
   type: web_app
   root: /path/to/project
 
+# Definido pela Pergunta 0 do kickoff (governance/kickoff.md)
+# docs = artefatos/relatórios/specs · product = copy de UI do produto
+language:
+  docs: pt-BR
+  product: pt-BR
+
 runtime:
   index: runtime/index.yaml
   schema: runtime/schema/

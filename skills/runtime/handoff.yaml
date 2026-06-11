@@ -2,25 +2,30 @@ v: "5.1"
 updated: "2026-06-11"
 
 session:
-  last_completed: p3_superpowers_assimilation_plus_green_tests_4of4_pass
-  next_action: nova_feature_via_feature_flow
+  last_completed: dogfood_007_model_tier_delegacao_paralela_pass
+  next_action: browser_5min_pilotos_ou_sprint_002_fechamento
   blocked: false
 
 qa:
   last_status: pass
-  last_report_path: qa/reports/2026-06-09-repo-hygiene.md
-  last_run_at: "2026-06-10"
+  last_report_path: docs/private/reviews/2026-06-11-dogfood-007-model-tier.md
+  last_run_at: "2026-06-11"
   failures_open: []
 
 feature:
-  id: sprint-002-ci-readme-governance
-  sprint_contract_path: null
-  spec_path: docs/private/plano-sprint-proxima.md
+  id: 007-dogfood-model-tier
+  sprint_contract_path: specs/007-dogfood-model-tier/sprint-contract.md
+  spec_path: specs/007-dogfood-model-tier/spec.md
 
 user:
   verified_in_browser: false
   verified_at: null
-  notes: "Manutenção de framework — sem UI. P3 (assimilação Superpowers) executado: 6 padrões; validate-skills 15/0, validate.py 11/0; decisões em skills-governance.md (P3) e decisions.yaml."
+  notes: "Dogfood §0g concluído. T2/T3/T4 delegadas Task fast paralelo; T1 orquestrador. validate-skills 16/0 validate.py 11/0."
+
+review:
+  last_review_path: docs/private/reviews/2026-06-11-dogfood-007-model-tier.md
+  last_review_at: "2026-06-11"
+  reviews_since_improvement_sprint: 4
 
 reminders:
   - id: phase_4_playwright
@@ -29,6 +34,9 @@ reminders:
   - id: pre_push_hygiene
     when: "Antes de commit ou push"
     action: "python3 skills/scripts/check-repo-hygiene.py"
+  - id: model_tier_delegation_missed
+    when: "Session-review bloco C com volume alto no Cursor sem delegação"
+    action: "Registrar achado; reforçar AGENTS.md §0g e model-orchestration.md"
   - id: sprint_002_fechamento
     when: "Próxima sessão"
     action: "Commit/push da consolidação P2 + tag v5.2.0 (critérios de saída da Sprint 002 cumpridos)"

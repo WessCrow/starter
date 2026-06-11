@@ -1,0 +1,136 @@
+---
+name: product-vision
+description: Conduzir descoberta estratégica e consolidar Visão de Produto, pilares, horizontes H1–H3, roadmap e KPIs. Use quando o usuário pedir visão de produto, estratégia de produto, roadmap estratégico ou posicionamento além do kickoff. Não usar para implementar features (feature-flow) nem para copy/UI de landing.
+---
+
+# product-vision.skill
+
+> **Tipo:** Local Skill · **Domínio:** product-strategy · discovery
+> **Idioma:** `runtime/context.yaml` → `language.docs` (default: pt-BR)
+> **Fonte:** candidata `TESTAR_Agente Especialista em Criação de Vis` — refinada Sprint 005
+
+---
+
+## Propósito
+
+Transformar ideia, produto existente ou respostas soltas em **estratégia de produto acionável**: visão, oportunidades, pilares, movimentos estratégicos, horizontes de inovação, roadmap e indicadores — sem assumir tipo de produto (delivery é só exemplo).
+
+Diferente do kickoff (`project-starter`): aqui o foco é **estratégia de longo prazo**, não bootstrap técnico.
+
+---
+
+## Quando usar
+
+- "Visão de produto", "estratégia de produto", "roadmap estratégico"
+- Revisar ou consolidar visão/estratégia existente
+- Transformar exercícios ou notas em estratégia estruturada
+- Antes de feature-flow quando falta clareza estratégica (complementa `ux-diamond`)
+
+## Quando NÃO usar
+
+- Kickoff de projeto novo → `project-starter`
+- Feature específica com contrato → `feature-flow.md`
+- Copy de landing ou microcopy → `prompt-library` cat.2
+- Auditoria de UX de tela existente → `ux-audit`
+
+---
+
+## Fluxo (progressivo — uma etapa por vez)
+
+```
+[1] Triagem     → criar do zero | revisar existente | consolidar notas | modo acelerado
+[2] Entender    → produto, público, problema, estágio, ambição (perguntas objetivas)
+[3] Visão       → 1–3 frases + intenção estratégica + impacto esperado
+[4] Oportunidades → problemas → necessidades → oportunidades (tabela)
+[5] Movimentos  → direções de longo prazo (não features isoladas)
+[6] Pilares     → bases de decisão para produto/tecnologia/negócio
+[7] Horizontes  → H1 otimização · H2 expansão · H3 disrupção
+[8] Roadmap     → trimestre / semestre / ano (evolução, não lista de tarefas)
+[9] KPIs        → conectados à estratégia, não genéricos
+[10] Consolidar → documento final (ver template abaixo)
+```
+
+**Regras de conversa:**
+
+- Uma pergunta por vez (salvo modo acelerado: máx. 5 perguntas essenciais).
+- Não gerar estratégia completa sem entender produto + público + problema.
+- Marcar hipóteses explicitamente quando faltarem dados.
+- **Proibido** inventar benchmarks, estatísticas ou dados de mercado.
+
+---
+
+## Modo acelerado (5 perguntas)
+
+1. Qual é o produto?
+2. Quem é o público-alvo principal?
+3. Qual problema principal resolve?
+4. Que mudança quer causar?
+5. Qual o maior objetivo de negócio?
+
+→ Entregar versão inicial com premissas marcadas.
+
+---
+
+## Modo revisão
+
+Avaliar visão existente em: clareza, ambição, realismo, especificidade, conexão com problema, diferenciação, viabilidade.
+
+Entregar: diagnóstico (fortes · lacunas · riscos) + perguntas de refinamento + versão refinada.
+
+---
+
+## Template de entrega consolidada
+
+```md
+# Estratégia de Produto — [nome]
+
+## Contexto
+Produto · Público · Problema central · Estágio · Ambição
+
+## Visão de Produto
+[1–3 frases]
+
+## Oportunidades prioritárias
+| Problema | Necessidade | Oportunidade |
+
+## Pilares estratégicos
+### Pilar N: [nome] — decisões que orienta
+
+## Movimentos estratégicos
+### Movimento N — objetivo · ecossistema · impacto · riscos
+
+## Horizontes
+H1 · H2 · H3 (objetivo + iniciativas)
+
+## Roadmap estratégico
+| Período | Prioridade | Iniciativas | Resultado |
+
+## Indicadores de sucesso
+| KPI | O que mede | Relação com estratégia |
+
+## Síntese
+[parágrafo final]
+```
+
+---
+
+## Checklist antes de entregar
+
+- [ ] Visão não é genérica (específica ao produto descrito)
+- [ ] Necessidades ≠ soluções; oportunidades ≠ features
+- [ ] Movimentos são de longo prazo
+- [ ] Roadmap mostra evolução estratégica
+- [ ] KPIs ligados à visão
+- [ ] Hipóteses marcadas onde faltam dados
+
+---
+
+## Log de testes (TDD)
+
+- 2026-06-11 RED: pedido "cria visão de produto para app de finanças" sem skill → visão genérica em 1 parágrafo, sem roadmap/KPIs/horizontes, sem perguntas de descoberta.
+- 2026-06-11 GREEN: mesma tarefa com skill → perguntas progressivas, entrega estruturada com oportunidades, pilares e KPIs rastreáveis. Relatório: `skills/outputs/skill-tests/2026-06-11-product-vision-green.md` (local).
+
+---
+
+> Parte do framework **STARTER** — criado e mantido por **Wesley Alves**.
+> Crédito da fonte original: candidata TESTAR_ (mantenedor). Última atualização: 2026-06-11

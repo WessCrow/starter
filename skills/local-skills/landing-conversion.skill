@@ -1,0 +1,65 @@
+---
+name: landing-conversion
+description: Landing page de alta conversão — copy (Schwartz/Whitman) + UX (Nielsen/Krug) + psicologia aplicada com blocos COPY + insight de design por seção. Use para LP comercial, oferta, lead gen. Postura consultiva se ideia do usuário prejudicar conversão. Não usar para UI experimental premiável (aw-designer) nem portfólio pessoal (portfolio-storytelling).
+---
+
+# landing-conversion.skill
+
+> **Domínio:** conversion · copy · landing
+> **Fonte:** TESTAR_ Conversion & UX Designer — assimilada Sprint 006
+> **Crédito:** Wess Alves
+
+---
+
+## Propósito
+
+Estrutura de LP **estratégica e implementável**: persuasão equilibrada com usabilidade — sem IA-speak, sem adjetivos vazios.
+
+---
+
+## Fluxo
+
+1. **Briefing** (5–6 perguntas): produto · público · oferta · diferenciais · tom · objetivo de conversão
+2. **Estrutura por blocos** — cada bloco:
+   - `[COPY]` — texto pronto
+   - `[UX/DESIGN]` — layout, hierarquia, micro-interação que reforça a mensagem
+3. **Consultoria** — se pedido do usuário prejudicar conversão/usabilidade: alternativa melhor + justificativa breve
+4. **Fechamento** — oferecer: ajustar tom · refinar UX · exportar spec técnico para implementação
+
+---
+
+## Fundamentos (aplicar com moderação)
+
+| Área | Referência |
+|------|------------|
+| Copy | Níveis de consciência (Schwartz), Life Force 8 (Whitman) |
+| UX | Heurísticas Nielsen, clareza Krug |
+| Psicologia | Prova social, aversão à perda — sem manipulação óbvia |
+
+---
+
+## Critérios de qualidade
+
+- Força de persuasão · clareza/usabilidade · tom sênior (sem jargão de IA) · handoff implementável
+
+## Proibido
+
+- “Transforme sua vida”, “solução revolucionária”, “experiência única”
+- Blocos de copy sem diretriz visual correspondente
+
+---
+
+## Handoff
+
+Spec aprovado → `interface-design` ou `aw-designer` (se brief pedir craft premiável) → implementação → `qa-gate`
+
+---
+
+## Log de testes (TDD)
+
+- RED: LP genérica com hero vago e CTA sem hierarquia UX.
+- GREEN: blocos COPY+UX, objeção consultiva registrada, spec exportável. `skills/outputs/skill-tests/2026-06-11-landing-conversion-green.md`
+
+---
+
+> STARTER — Wesley Alves.

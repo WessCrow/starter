@@ -31,11 +31,23 @@ CONTEXT="STARTER Runtime OS ativo. Antes de responder qualquer pedido:
 4. Bug/erro -> skills/governance/debugging-protocol.md. Feedback/critica -> skills/governance/review-reception.md.
 5. Nunca afirmar 'pronto/corrigido' sem evidencia: skills/local-skills/verify-before-done.skill.
 6. Pos-implementacao: qa-gate.skill + qa-smoke.skill obrigatorios.
-7. Pos-sessao: atualizar handoff.yaml + state.yaml, validate.py com 0 failed."
+7. Fim de atividade pesada (feature/kickoff/sprint): session-review.skill (4 blocos, relatorio em docs/private/reviews/).
+8. Idioma do projeto: respeitar runtime/context.yaml -> language (docs/product).
+9. Pos-sessao: atualizar handoff.yaml + state.yaml, validate.py com 0 failed."
 
 # Sanidade: avisar se a estrutura não existe (hook copiado para projeto sem skills/)
 if [ ! -f "${REPO_ROOT}/skills/runtime/index.yaml" ]; then
   CONTEXT="AVISO: skills/runtime/index.yaml nao encontrado. Estrutura STARTER incompleta — verificar se a pasta skills/ foi copiada."
+fi
+
+# Pipeline de incubação: lembrar se há candidatas TESTAR_ aguardando (skill-intake.md)
+INTAKE_DIR="${REPO_ROOT}/docs/private/_novas skills"
+if [ -d "$INTAKE_DIR" ]; then
+  pending_count=$(find "$INTAKE_DIR" -maxdepth 1 -name 'TESTAR_*' -type f 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$pending_count" -gt 0 ]; then
+    CONTEXT="${CONTEXT}
+LEMBRETE: ${pending_count} skill(s) candidata(s) TESTAR_ aguardando avaliacao em docs/private/_novas skills/ — protocolo: skills/governance/skill-intake.md."
+  fi
 fi
 
 # Escapar para JSON

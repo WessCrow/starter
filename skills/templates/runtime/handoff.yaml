@@ -17,3 +17,8 @@ feature:
 
 user:
   verified_in_browser: false
+
+review:
+  last_review_path: null
+  last_review_at: null
+  reviews_since_improvement_sprint: 0

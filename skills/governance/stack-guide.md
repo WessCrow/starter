@@ -50,6 +50,7 @@ onlyBuiltDependencies:
   - esbuild
   - "@swc/core"
   - sharp
+  - unrs-resolver
 
 verifyDepsBeforeRun: false
 ```
@@ -57,7 +58,7 @@ verifyDepsBeforeRun: false
 - `onlyBuiltDependencies` — lista pacotes que podem rodar scripts de install sem prompt
 - `verifyDepsBeforeRun: false` — evita bloqueio em CI e em agentes
 
-As structure skills (`nextjs-structure.skill`, `react-vite-structure.skill`) devem gerar este arquivo junto com `package.json`.
+As structure skills (`nextjs-structure.skill`, `react-vite-structure.skill`) devem chamar `bash skills/scripts/patch-pnpm-workspace.sh` após o scaffold (ou gerar o mesmo conteúdo).
 
 **Proibido:** `pnpm approve-builds` em fluxos automatizados ou kickoff.
 

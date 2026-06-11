@@ -76,13 +76,24 @@ Ler `governance/stack-guide.md`:
 
 ---
 
-## 4. Skills
+## 4. Orquestração por tier (opt-in)
+
+Quando o harness suporta delegação (Cursor Task, Claude subagents, Cline Plan→Act):
+
+- Orquestrador mantém gates; executor faz volume pós-contrato.
+- Protocolo: `governance/model-orchestration.md` · entrada: `AGENTS.md` §0g.
+- Harness sem Task tool: ignorar delegação automática — single-session + context-scoping.
+
+---
+
+## 5. Skills
 
 | Momento | Skill |
 |---------|-------|
 | Após kickoff, antes de structure (se UI) | `ux-diamond` |
 | Após implementar | `qa-gate` → `qa-smoke` |
 | Antes de afirmar "pronto/corrigido/funciona" (sempre) | `verify-before-done` |
+| Fim de atividade pesada (feature/kickoff/sprint/assimilação) | `session-review` |
 | Bug / erro / build FAIL | `governance/debugging-protocol.md` |
 | Feedback / crítica do usuário | `governance/review-reception.md` |
 | Criar/editar skill | `governance/skill-testing.md` |
@@ -100,16 +111,17 @@ Ler `governance/stack-guide.md`:
 
 ---
 
-## 5. Pós-sessão
+## 6. Pós-sessão
 
-1. Atualizar YAML  
-2. `validate.py` → 0 failed  
-3. `handoff.yaml` + `state.yaml`  
-4. Lembrete: Fase 4 Playwright em `handoff.reminders` / ROADMAP
+1. Atividade pesada concluída? → `session-review.skill` (4 blocos; relatório em `docs/private/reviews/`)
+2. Atualizar YAML  
+3. `validate.py` → 0 failed  
+4. `handoff.yaml` + `state.yaml` (incl. bloco `review`)  
+5. Lembrete: Fase 4 Playwright em `handoff.reminders` / ROADMAP
 
 ---
 
-## 6. Fluxo resumido
+## 7. Fluxo resumido
 
 ```txt
 index → validate → hot → warm (incl. architecture) → implement → QA GATE → persist

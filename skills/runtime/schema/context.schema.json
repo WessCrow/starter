@@ -16,6 +16,15 @@
       "required": ["id", "name", "type"],
       "additionalProperties": false
     },
+    "language": {
+      "type": "object",
+      "properties": {
+        "docs": { "type": "string", "enum": ["pt-BR", "en"] },
+        "product": { "type": "string", "enum": ["pt-BR", "en"] }
+      },
+      "required": ["docs", "product"],
+      "additionalProperties": false
+    },
     "runtime": {
       "type": "object",
       "properties": {

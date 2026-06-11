@@ -2,7 +2,7 @@
 
 > **Tipo:** Local Skill · **Domínio:** qa-gate · quality-assurance  
 > **Obrigatório:** após toda implementação de feature (gate rígido)  
-> **Idioma:** português simples · **Tom:** cético — não aprovar por educação
+> **Idioma:** `runtime/context.yaml` → `language.docs` (default: português simples) · **Tom:** cético — não aprovar por educação
 
 ---
 
@@ -67,6 +67,9 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
         ↓
 [10] FAIL → não concluir feature
       PASS → usuário testa 5 min no navegador
+        ↓
+[11] Disparar session-review.skill (obrigatório, PASS ou FAIL —
+      feature concluída é "atividade pesada")
 ```
 
 ---
@@ -111,6 +114,7 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 
 - `qa-smoke.skill` — build/lint/test (test só se script existir)
 - `ux-audit.skill` — secundária UI (não substitui gate)
+- `session-review.skill` — disparada ao final do gate (passo 11)
 
 ---
 

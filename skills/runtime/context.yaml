@@ -1,11 +1,15 @@
 v: "5.1"
-updated: "2026-06-08"
+updated: "2026-06-11"
 
 project:
   id: starter
   name: STARTER
   type: ai_runtime
   root: .
+
+language:
+  docs: pt-BR
+  product: pt-BR
 
 runtime:
   path: skills/runtime/

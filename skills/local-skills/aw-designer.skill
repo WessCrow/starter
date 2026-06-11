@@ -1,0 +1,113 @@
+---
+name: aw-designer
+description: Direção criativa de UI experimental com potencial Awwwards — conceito ousado, decisões com trade-off, tokens JSON, layout concreto, motion com função e handoff Figma/código. Use quando o usuário pedir projeto fora do padrão, premiável, experimental, Awwwards, site memorável ou identidade visual radical. Não usar para UI dentro de design system existente (interface-design) nem brief inicial vago (visual-direction-brief).
+---
+
+# aw-designer.skill
+
+> **Tipo:** Local Skill · **Domínio:** art-direction · award-level-ui
+> **Idioma:** `runtime/context.yaml` → `language.docs`
+> **Fonte:** candidata TESTAR_AWDesigner — assimilada Sprint 006 (override mantenedor)
+> **Crédito:** Wess Alves (autor original)
+
+---
+
+## Propósito
+
+Criar **experiências digitais fora do padrão** — memoráveis, com identidade forte e viáveis de implementar — no nível de case Awwwards / FWA / CSS Design Awards.
+
+Não é “UI bonita genérica”. É **direção criativa com consequências**: cada decisão ousada declara o trade-off.
+
+**Diferença no roteamento:**
+
+| Skill | Quando |
+|-------|--------|
+| `visual-direction-brief` | Referência vaga → brief curto antes do layout |
+| `interface-design` | UI consistente com sistema existente |
+| `emil-design-eng` | Polish e motion em UI já definida |
+| **`aw-designer`** | **Conceito premiável do zero — experimental, assinatura forte** |
+
+---
+
+## Quando usar
+
+- Awwwards, FWA, site premiável, UI experimental, fora do template
+- Projeto que precisa **identidade radical** + tokens + handoff dev
+- Hero/editorial/motion que define o case (não componente isolado)
+
+## Quando NÃO usar
+
+- CRUD, dashboard padrão, design system corporativo estável
+- Ajuste fino em tela existente → `emil-design-eng`
+- Só copy de landing → `landing-conversion`
+
+---
+
+## Regras fundamentais
+
+1. **Decisão única** — não listar 3 opções abertas; escolher e justificar.
+2. **Trade-off explícito** — o que piora para ganhar memorabilidade.
+3. **Anti-Dribbble** — proibir “moderno minimalista” sem metáfora e restrição criativa.
+4. **Conceito → sistema → execução** — tokens JSON obrigatórios.
+5. **Viabilidade** — Figma variables + stack sugerida (GSAP, Framer Motion, etc.).
+6. **Sem clichê** — proibido hero gradiente genérico, cards SaaS iguais, Inter+roxo sem motivo.
+
+---
+
+## Estrutura de entrega (8 blocos — ordem fixa)
+
+### 1. Conceito criativo (art direction)
+Nome do conceito · metáfora · contexto/público · emoções · narrativa da experiência · **restrição criativa intencional**
+
+### 2. Decisões criativas radicais (1–3)
+O quê · por que foge do comum · trade-off
+
+### 3. Sistema visual + tokens
+Princípio do sistema · naming (cores, tipo, espaço, componentes) · **JSON de tokens** (cores, tipografia, spacing, motion) · assinatura visual replicável
+
+### 4. Diretrizes e anti-padrões
+Limites de uso · o que tornaria o design genérico
+
+### 5. Layout concreto
+Proporções (vh, colunas) · grid · fluxo · quebras de padrão · responsivo
+
+### 6. Motion com função
+Papel do motion · duração (ms) · easing · interações · **momento WOW** (1 interação memorável, detalhe técnico)
+
+### 7. Critério Awwwards
+O que é único · vs mercado · inovação real · por que premiável (Site of the Day / Developer Award / etc.)
+
+### 8. Entrega prática
+Prompt Midjourney/imagem direcionado · estrutura Figma (variables, componentes) · implementação (libs, tokens no código, performance)
+
+---
+
+## Template JSON tokens (mínimo)
+
+```json
+{
+  "color": { "base": {}, "surface": {}, "signal": {} },
+  "typography": { "family": {}, "scale": {}, "weight": {} },
+  "spacing": {},
+  "motion": { "duration": {}, "easing": {} }
+}
+```
+
+Valores concretos — não placeholders.
+
+---
+
+## Handoff para implementação
+
+Após entrega, sugerir cadeia: `aw-designer` → `interface-design` ou `scroll-animation` + `fluid-ui` → `emil-design-eng` → `qa-gate`.
+
+---
+
+## Log de testes (TDD)
+
+- 2026-06-11 RED: “landing para fintech premium” sem skill → layout SaaS genérico, gradiente roxo, sem tokens nem trade-offs.
+- 2026-06-11 GREEN: com skill → conceito nomeado, 2 decisões radicais com trade-off, tokens JSON, momento WOW, critério Awwwards. Relatório: `skills/outputs/skill-tests/2026-06-11-aw-designer-green.md` (local).
+
+---
+
+> Parte do framework **STARTER** — Wesley Alves. Override mantenedor Sprint 006 (overlap parcial aceito por intenção distinta).

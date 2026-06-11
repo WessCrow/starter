@@ -1,0 +1,122 @@
+---
+name: storyboard-cinematic
+description: Criar cenas, storyboards e prompts de imagem com linguagem de direção cinematográfica — planos, luz, paleta, decupagem e negative prompt. Use para storyboard, shot list, cena única, prancha visual ou prompt para IA generativa. Não usar para roteiro de comercial de 8 takes (nicho) nem implementação de vídeo HTML — hyperframes.
+---
+
+# storyboard-cinematic.skill
+
+> **Tipo:** Local Skill · **Domínio:** visual-storytelling · pre-production
+> **Idioma:** `runtime/context.yaml` → `language.docs` (default: pt-BR)
+> **Fonte:** candidata `TESTAR_STORYMASTER` — refinada Sprint 005
+
+---
+
+## Propósito
+
+Transformar ideia, roteiro, referência ou produto em **documento de direção visual** utilizável por artista, equipe ou ferramenta de IA — não apenas "texto bonito".
+
+Complementa `hyperframes-media` (pipeline TTS/render) e `visual-direction-brief` (UI web): foco em **cena cinematográfica e geração de imagem**.
+
+---
+
+## Quando usar
+
+- Storyboard, shot list, cena única, prancha de produção
+- Prompt de imagem com enquadramento, luz e paleta definidos
+- Campanha, curta, sequência visual, moodboard narrativo
+- "Deixe mais cinematográfico/técnico/comercial/filme de autor"
+
+## Quando NÃO usar
+
+- Vídeo HTML / render HyperFrames → `hyperframes` + `hyperframes-cli`
+- Brief visual de landing/UI web → `visual-direction-brief`
+- Roteiro longo de comercial premiável (8 takes) — fora do escopo; usar modo cena/sequência curta
+
+---
+
+## Modos (escolher um)
+
+| Modo | Gatilho | Entrega |
+|------|---------|---------|
+| Cena única | uma cena | função narrativa + decupagem + prompt + negative prompt |
+| Storyboard | sequência | ficha geral + shots numerados + prompts por quadro |
+| Prancha | "como prancha" / referência visual | project + palette + cast + shot grid |
+| Só prompt | "gere o prompt" | prompt completo + curto + negative |
+
+---
+
+## Estrutura — cena única
+
+```md
+# Cena — [nome]
+
+## Função narrativa
+## Descrição cinematográfica (ação, ambiente, emoção, composição, luz)
+## Decupagem (plano, ângulo, movimento, profundidade, paleta)
+## Prompt de imagem (preciso, aspect ratio, estilo)
+## Prompt curto
+## Negative prompt
+## Notas de continuidade
+```
+
+---
+
+## Estrutura — storyboard (sequência)
+
+```md
+# [Título]
+
+## Ficha geral
+Formato · Duração · Shots · Aspect ratio · Estilo · Tom · Paleta · Objetivo narrativo
+
+## Logline visual (2–4 linhas)
+
+## Personagens (silhueta, figurino, energia, prompt visual)
+## Cenário (local, texturas, prompt visual)
+## Paleta | Linguagem de câmera | Iluminação
+
+## Shot N.N
+Título · Plano · Ângulo · Movimento · Descrição · Ação · Emoção · Luz · Transição · Prompt · Prompt curto · Continuidade
+
+## Notas finais de direção
+```
+
+---
+
+## Regras de prompt de imagem
+
+Incluir quando relevante: sujeito, ação, cenário, atmosfera, estilo, enquadramento, lente/plano, ângulo, iluminação, paleta, textura, figurino, expressão, proporção, realismo/estilização.
+
+**Evitar prompts vagos** ("mulher em sala bonita"). **Exigir precisão** ("plano médio, luz lateral suave, paleta pastel dessaturada, 16:9").
+
+Em sequências: manter consistência de personagem, paleta, figurino e estilo — explicar mudanças.
+
+**Proibido:** copiar marcas, rostos ou personagens protegidos; exigir pessoa real como casting.
+
+---
+
+## Comandos reconhecidos
+
+`crie uma cena` · `crie um storyboard` · `faça como prancha` · `quebre em shots` · `gere o prompt` · `deixe mais cinematográfico/técnico/poético` · `faça versão comercial` · `mantenha consistência`
+
+---
+
+## Checklist interno
+
+- [ ] Função narrativa clara
+- [ ] Personagem e ambiente concretos
+- [ ] Enquadramento e luz definidos
+- [ ] Prompt utilizável por IA ou artista
+- [ ] Consistência entre shots (se sequência)
+
+---
+
+## Log de testes (TDD)
+
+- 2026-06-11 RED: "storyboard de 4 shots para campanha de tênis" sem skill → descrições literárias sem planos, prompts vagos, sem paleta/continuidade.
+- 2026-06-11 GREEN: mesma tarefa com skill → ficha + shots numerados + prompts precisos + negative prompt + notas de continuidade. Relatório: `skills/outputs/skill-tests/2026-06-11-storyboard-cinematic-green.md` (local).
+
+---
+
+> Parte do framework **STARTER** — criado e mantido por **Wesley Alves**.
+> Crédito da fonte original: candidata TESTAR_STORYMASTER (mantenedor). Última atualização: 2026-06-11

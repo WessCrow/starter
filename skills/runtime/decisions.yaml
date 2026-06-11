@@ -30,3 +30,35 @@ decisions:
     choice: keep_single_session_flow
     reason: target_ides_lack_uniform_task_tool_support
     since: "2026-06-11"
+  - id: model_orchestration_opt_in
+    choice: tier_orchestration_progressive_enhancement_not_core
+    reason: reduce_model_overhead_see_governance_model_orchestration_md_agents_0g
+    since: "2026-06-11"
+  - id: kickoff_language_question
+    choice: pergunta_zero_idioma_docs_e_product_default_ptbr
+    reason: projects_may_target_foreign_markets_artifacts_and_ui_can_differ
+    since: "2026-06-11"
+  - id: session_review_mandatory
+    choice: four_block_review_after_heavy_activity_feeds_tool_improvement
+    reason: continuous_improvement_loop_performance_code_tokens_suggestions
+    since: "2026-06-11"
+  - id: skill_intake_pipeline
+    choice: testar_prefix_six_stage_funnel_skill_intake_md
+    reason: formal_incubation_with_reject_as_valid_outcome
+    since: "2026-06-11"
+  - id: sprint_005_assimilations
+    choice: product_vision_and_storyboard_cinematic_only
+    reason: two_clear_routing_gaps_three_deferred_four_rejected_overlap_or_niche
+    since: "2026-06-11"
+  - id: aw_designer_maintainer_override
+    choice: assimilate_aw_designer_despite_partial_overlap
+    reason: maintainer_wants_awwwards_level_experimental_ui_distinct_from_interface_design
+    since: "2026-06-11"
+  - id: sprint_006_intake_assimilations
+    choice: aw_designer_hypothesis_investigation_landing_conversion_portfolio_storytelling
+    reason: deferred_batch_plus_aw_designer_override_all_with_green_logged
+    since: "2026-06-11"
+  - id: pnpm_patch_script
+    choice: patch_pnpm_workspace_sh_after_scaffold_and_on_qa_smoke_retry
+    reason: create_next_app_yaml_incompatible_with_pnpm_11_agent_builds
+    since: "2026-06-11"

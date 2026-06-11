@@ -10,9 +10,10 @@ Se o usuário disser **`Começar projeto`** (ou equivalente):
 
 1. **`bash skills/scripts/clean-framework-artifacts.sh`** — Fase 0 (ver `bootstrap-cleanup.md`)
 2. Ler `skills/governance/kickoff.md`
-3. Fazer até **4 perguntas** em português simples (uma por vez)
-3. Resumir + **"Posso começar?"** — **não criar arquivos antes do sim**
-4. Após sim → `project-starter.skill` + `project-start.md`
+3. **Pergunta 0 (idioma):** português ou inglês? → grava `language` (docs/product) em `runtime/context.yaml`; default pt-BR — *não conta no limite de 4*
+4. Fazer até **4 perguntas** em português simples (uma por vez)
+5. Resumir + **"Posso começar?"** — **não criar arquivos antes do sim**
+6. Após sim → `project-starter.skill` + `project-start.md`
 
 O usuário **não** precisa citar stack. Ver `COMECAR-PROJETO.md` na raiz.
 
@@ -43,12 +44,9 @@ Ao abrir este repositório em uma IDE diferente ou reiniciar uma sessão:
 
 ---
 
-## 0c. Regra de Limpeza de Contexto e Proteção de Janela (Anti-Alucinação)
+## 0c. Proteção de Janela (Anti-Alucinação)
 
-Para evitar alucinações causadas por janelas de contexto infladas (Lost in the Middle):
-- **O agente deve monitorar o tamanho da conversa.** Se a sessão ativa ultrapassar **8 mensagens** de chat ou acumular mais de **5 arquivos abertos** simultaneamente, o agente **deve** disparar o seguinte aviso no início da sua resposta:
-  > [!WARNING]
-  > **⚠️ ALERTA DE CONTEXTO:** Sessão longa detectada. Para manter a máxima velocidade, economia de tokens e evitar alucinações, considere abrir uma nova janela de chat. Você pode usar a skill `context-cleaner.skill` para obter um resumo operacional rápido para colar na nova sessão.
+Sessão longa (>8 mensagens ou >5 arquivos abertos): sugerir nova janela com resumo via `context-cleaner.skill`.
 
 ---
 
@@ -75,6 +73,27 @@ Durante a execução de comandos (`run_command`):
 ## 0f. Hook de Sessão (opt-in — Claude Code)
 
 Para injetar este bootstrap automaticamente em toda sessão (convenção → garantia): registrar `bash skills/scripts/session-start-hook.sh` como hook `SessionStart` no `.claude/settings.json` do projeto (instruções no próprio script). Editores sem suporte a hooks seguem lendo este arquivo normalmente.
+
+---
+
+## 0g. Orquestração por Tier de Modelo (opt-in — economia de modelo)
+
+Complementa §0c/context-scoping: reduz **overhead de modelo** (tier caro em volume), não substitui escopo de contexto. Protocolo: `skills/governance/model-orchestration.md`.
+
+**Papéis:** Orquestrador (chat principal) · Raciocínio profundo (spec, analyze, debug difícil) · Executor rápido (explore, edits mecânicos, shell, tasks `[P]`).
+
+**O usuário não precisa** escolher subagents nem trocar modelo — o agente delega quando aplicável.
+
+| Harness | Comportamento |
+|---------|---------------|
+| **Cursor / Claude Code** | Delegar via Task/subagent com tier executor quando houver volume ou tasks `[P]` pós-contrato |
+| **Antigravity / Windsurf** | Orquestrador no chat; volume via fluxo auxiliar ou nova sessão + `context-cleaner.skill` |
+| **Cline / Roo** | Plan/Architect (raciocínio) → Act/Code (executor) — nativo do produto |
+| **Demais** | Single-session + `handoff.yaml`; nova janela com resumo se sessão longa (§0c) |
+
+**Nunca delegar (gates):** sprint-contract · QA Gate · verify-before-done · kickoff/spec/clarify/analyze · ajuste trivial.
+
+**Continuidade:** §0b (`state.yaml` + `handoff.yaml`) vale sempre — especialmente ao trocar IDE ou sessão.
 
 ---
 
@@ -105,10 +124,7 @@ skills/governance/Start-ops.md
 
 Config: `runtime/qa.yaml` · Protocolo: `governance/qa-protocol.md`
 
-### 📢 Imposição Determinística do QA (Alerta Obrigatório)
-- **Toda vez que o agente concluir uma alteração ou funcionalidade de código**, ele é obrigado a adicionar este box de encerramento na sua resposta final:
-  > [!IMPORTANT]
-  > **Revisão de Qualidade Obrigatória:** Solicito a execução do QA Gate para validar as mudanças. Digite `bash skills/local-skills/qa-gate.skill` (ou acione a skill correspondente) para rodar o pipeline de testes.
+**QA Gate após código:** executar `qa-gate.skill` — sem exceções.
 
 ## 4. Stack novos projetos
 

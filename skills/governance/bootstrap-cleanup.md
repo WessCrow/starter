@@ -63,10 +63,16 @@ Se o usuário disser explicitamente **"continuar projeto"** / **"não é projeto
 
 ---
 
-## Depois da limpeza
+## Depois da limpeza (obrigatório antes de codar)
+
+A Fase 0 remove `skills/runtime/`. Links em `skills/INDEX.md` ficam inválidos até restaurar o runtime do **novo** projeto.
 
 1. Confirmar em uma linha: *"Limpei artefatos do framework; vamos definir seu app."*
-2. Seguir `kickoff.md` → perguntas → "Posso começar?" → `project-start.md`
+2. Seguir `kickoff.md` → perguntas → "Posso começar?"
+3. Após **"sim"**: `project-start.md` **[1]** — copiar `skills/templates/runtime/` → `skills/runtime/` (não pular)
+4. **Proibido** implementar código do app antes do passo 3 em projeto novo
+
+Pilotos em `_lab/`: mesma regra — ver `docs/private/plano-sprint-006-fechamento.md` (roteiro 7 passos).
 
 ---
 

@@ -8,8 +8,10 @@
 
 ## Propósito
 
-Iniciar projeto novo com **3–4 perguntas em português**, sem exigir stack nem jargão.  
+Iniciar projeto novo com **Pergunta 0 (idioma) + 3–4 perguntas em português**, sem exigir stack nem jargão.
 Só depois do **"sim"** do usuário: pastas, runtime, PRD, código (se aplicável).
+
+**Idioma:** a resposta da Pergunta 0 (`kickoff.md`) é gravada em `runtime/context.yaml` → `language` (`docs` e `product`, default `pt-BR`). Todos os artefatos gerados a partir daí seguem `language.docs`; copy de UI segue `language.product`.
 
 ---
 
@@ -38,6 +40,8 @@ Só depois do **"sim"** do usuário: pastas, runtime, PRD, código (se aplicáve
 [2] templates/runtime/ → skills/runtime/
         ↓
 [3] structure skill (inferida no kickoff — não perguntar ao usuário)
+        ↓
+[3b] Se pnpm-lock.yaml na raiz do app: bash skills/scripts/patch-pnpm-workspace.sh
         ↓
 [4] CONTEXT.md + PRD.md na raiz do PROJETO
         ↓

@@ -131,7 +131,7 @@ Qualquer item reprovado → corrigir artefatos **antes** de seguir. Reportar res
 - **Sem código antes da fase 6.** Specify/clarify/plan/tasks são só documentos. Ver HARD-GATE no topo.
 - Ajuste trivial **não** passa por este fluxo somente se cumprir os 4 critérios rígidos do HARD-GATE (incluindo declaração explícita no chat) — e mantém QA Gate.
 - `rules.yaml` + `RULES.md` funcionam como **constitution**: toda fase pode ser reprovada por violação deles.
-- Idioma dos artefatos: português simples, legível por não-programador (exceto blocos de código).
+- Idioma dos artefatos: segue `runtime/context.yaml` → `language.docs` (default português simples, legível por não-programador; exceto blocos de código). Copy de UI implementada segue `language.product`.
 
 ---
 

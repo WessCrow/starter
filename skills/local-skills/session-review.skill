@@ -1,0 +1,108 @@
+# session-review.skill
+
+> **Tipo:** Local Skill · **Domínio:** melhoria contínua · auto-avaliação
+> **Obrigatório:** ao final de toda **atividade pesada** (ver gatilhos)
+> **Idioma:** `runtime/context.yaml` → `language.docs` (default: português simples) · **Tom:** cético — o objetivo é achar problema, não elogiar
+
+---
+
+## Propósito
+
+Fechar o ciclo de melhoria contínua do STARTER: ao final de cada atividade pesada, o agente audita **o próprio desempenho, o que foi produzido e o custo** — e converte os achados em melhorias concretas da ferramenta.
+
+**Um review que só elogia é um review falho.** Se nenhum problema foi encontrado, a busca foi rasa.
+
+---
+
+## Gatilhos (obrigatórios)
+
+- Feature concluída — disparado pelo passo 11 do `qa-gate.skill` (PASS **ou** FAIL)
+- Kickoff completo de projeto novo
+- Sprint de manutenção do framework concluída
+- Assimilação/rejeição de skill (pipeline `TESTAR_`)
+- Pedido explícito do usuário ("faça o review da sessão")
+
+**Não disparar** para: respostas conversacionais, ajustes triviais isolados, leitura/análise sem produção.
+
+---
+
+## Estrutura do review (4 blocos — todos obrigatórios)
+
+### A. Desempenho do agente
+
+```
+① O que funcionou bem (máx. 3 itens, específicos)
+② Onde hesitei, errei ou improvisei (ser específico: qual passo, qual decisão)
+③ Qual regra/skill do STARTER ajudou de verdade (e como)
+④ Qual regra atrapalhou, foi ambígua ou foi ignorada
+   → regra ignorada = RED gratuito: registrar a racionalização usada
+     (alimenta skill-testing.md)
+⑤ Gap identificado: faltou skill/protocolo para alguma parte da tarefa?
+```
+
+### B. Código e artefatos gerados (auditoria cética)
+
+```
+- Aderência a rules.yaml/RULES.md: sem `any`, sem hardcode de cor/fonte,
+  HTML semântico, sem console.log, imports limpos
+- Dívidas técnicas deixadas (listar — "nenhuma" exige justificativa)
+- Duplicação ou código morto introduzido
+- Qualidade dos artefatos não-código (specs, docs, contratos): claros para
+  uma sessão nova? (padrão júnior-sem-contexto)
+- NOTA 0–10 + justificativa em 1–2 linhas
+```
+
+### C. Custo (tokens/contexto) — estimativa com método declarado
+
+```
+- Arquivos carregados na atividade: quais + tamanho aproximado
+- Quantos eram realmente necessários? (carga desnecessária = desperdício)
+- Nº aproximado de mensagens/iterações; houve retrabalho? Onde?
+- Harness com Task tool (Cursor): volume pós-contrato foi delegado ao tier executor?
+  (ver `governance/model-orchestration.md` · `AGENTS.md` §0g)
+- MAIOR DESPERDÍCIO identificado (1 item) + como evitá-lo
+- Método: declarar como estimou (a contagem exata de tokens não é
+  acessível ao agente — nunca apresentar estimativa como medição)
+```
+
+### D. Sugestões de melhoria da ferramenta
+
+```
+1–3 recomendações concretas, cada uma com:
+- Arquivo alvo (ex: governance/kickoff.md)
+- Mudança proposta (1–2 linhas)
+- Origem (qual achado de A/B/C motivou)
+```
+
+---
+
+## Saída
+
+1. Gravar relatório em `docs/private/reviews/AAAA-MM-DD-[atividade].md` (local, **não versionado** — `repo-hygiene.md`).
+2. Atualizar `runtime/handoff.yaml` → bloco `review` (`last_review_path`, `last_review_at`).
+3. Resumo de 3–5 linhas no chat (não despejar o relatório inteiro).
+
+## Fechamento do loop (regra de acúmulo)
+
+- A cada **~5 reviews** acumulados (ou pedido do usuário): rodar **sprint de melhoria** — ler todos os reviews em `docs/private/reviews/`, agrupar achados, aplicar mudanças na ferramenta, registrar em `skills-governance.md`.
+- Recomendação que aparece em **2+ reviews** = prioridade automática na próxima sprint de melhoria.
+- Review sem nenhuma sugestão em D por 2 atividades seguidas = sinal de review-teatro; endurecer o bloco B/C.
+
+## Racionalizações proibidas
+
+- "A atividade foi simples, não precisa de review" → gatilho disparou, review acontece (pode ser curto).
+- "Correu tudo bem" sem bloco ④/dívidas/desperdício preenchidos → busca rasa, refazer.
+- "O usuário está com pressa" → o resumo no chat tem 3–5 linhas; o custo é mínimo.
+
+---
+
+## Log de testes (TDD — `governance/skill-testing.md`)
+
+- 2026-06-11 RED (baseline de ecossistema): agentes encerram atividades pesadas sem qualquer retrospectiva; quando pedem feedback, geram autoelogio genérico sem itens acionáveis. Brechas atacadas: blocos obrigatórios, regra anti-teatro, racionalizações nomeadas.
+- 2026-06-11 GREEN: subagent em sessão limpa, pressão "não perde tempo com retrospectiva, quero agilidade" — recusou pular, nomeou a racionalização proibida, entregou resumo 3–5 linhas com os 4 blocos + relatório/handoff. PASS. Relatório completo: `skills/outputs/skill-tests/2026-06-11-sprints-003-004-green.md` (local, não versionado).
+
+---
+
+> Parte do framework **STARTER** — criado e mantido por **Wesley Alves**.
+> 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
+> Última atualização: 2026-06-11
