@@ -94,9 +94,32 @@ def validate_file(yaml_path: Path, schema_path: Path) -> list[str]:
     return errors
 
 
-def _is_scan_excluded(path: Path) -> bool:
-    excluded = {"node_modules", ".venv", "venv", ".pnpm-store"}
-    return any(part in excluded for part in path.parts)
+SCAN_EXCLUDED_DIRS = {
+    "node_modules",
+    ".venv",
+    "venv",
+    ".pnpm-store",
+    ".git",
+    ".next",
+    "dist",
+    "build",
+    "coverage",
+}
+
+
+def _walk_workspace(workspace_root: Path):
+    """Percorre o workspace com PODA de diretórios pesados.
+
+    Não usar glob('**/...'): ele atravessa node_modules/.pnpm-store inteiros
+    antes de qualquer filtro, o que trava o validador em projetos reais.
+    os.walk permite remover diretórios excluídos da descida (dirnames[:]).
+    """
+    import os
+
+    for dirpath, dirnames, filenames in os.walk(workspace_root):
+        dirnames[:] = [d for d in dirnames if d not in SCAN_EXCLUDED_DIRS]
+        for name in filenames:
+            yield Path(dirpath) / name
 
 
 def _gitignore_protects_env(content: str) -> bool:
@@ -120,18 +143,20 @@ def _gitignore_protects_env(content: str) -> bool:
     return False
 
 
-def _collect_env_files(workspace_root: Path) -> list[Path]:
+def _scan_sensitive_files(workspace_root: Path) -> tuple[list[Path], list[Path]]:
+    """Uma única passada (com poda) coletando .env e possíveis chaves privadas."""
     env_files: list[Path] = []
-    seen: set[Path] = set()
-    for env in workspace_root.glob("**/.env*"):
-        if not env.is_file() or _is_scan_excluded(env):
-            continue
-        if env.name.startswith(".env.example") or env.name.endswith(".example"):
-            continue
-        if env not in seen:
-            seen.add(env)
-            env_files.append(env)
-    return env_files
+    key_files: list[Path] = []
+    key_suffixes = (".pem", ".key", ".pkcs12", ".pfx")
+    for path in _walk_workspace(workspace_root):
+        name = path.name
+        if name.startswith(".env"):
+            if name.startswith(".env.example") or name.endswith(".example"):
+                continue
+            env_files.append(path)
+        elif name.endswith(key_suffixes):
+            key_files.append(path)
+    return env_files, key_files
 
 
 def check_security_leaks() -> list[str]:
@@ -152,7 +177,7 @@ def check_security_leaks() -> list[str]:
         gitignore_path.read_text(encoding="utf-8") if gitignore_exists else ""
     )
 
-    env_files = _collect_env_files(workspace_root)
+    env_files, key_files = _scan_sensitive_files(workspace_root)
     if env_files:
         if not gitignore_exists:
             for env in env_files:
@@ -169,15 +194,11 @@ def check_security_leaks() -> list[str]:
                     "(adicione linha '.env', '*.env' ou '.env*' — 'venv/' sozinho não basta)!"
                 )
 
-    private_key_patterns = ["*.pem", "*.key", "*.pkcs12", "*.pfx"]
-    for pattern in private_key_patterns:
-        for key_path in workspace_root.glob(f"**/{pattern}"):
-            if _is_scan_excluded(key_path):
-                continue
-            warnings.append(
-                f"  [Host Guard] Possível chave privada/certificado exposto no workspace: "
-                f"'{key_path.relative_to(workspace_root)}'"
-            )
+    for key_path in key_files:
+        warnings.append(
+            f"  [Host Guard] Possível chave privada/certificado exposto no workspace: "
+            f"'{key_path.relative_to(workspace_root)}'"
+        )
 
     return warnings
 
