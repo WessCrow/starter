@@ -82,6 +82,10 @@ Ler `governance/stack-guide.md`:
 |---------|-------|
 | Após kickoff, antes de structure (se UI) | `ux-diamond` |
 | Após implementar | `qa-gate` → `qa-smoke` |
+| Antes de afirmar "pronto/corrigido/funciona" (sempre) | `verify-before-done` |
+| Bug / erro / build FAIL | `governance/debugging-protocol.md` |
+| Feedback / crítica do usuário | `governance/review-reception.md` |
+| Criar/editar skill | `governance/skill-testing.md` |
 | UI só revisão | `ux-audit` (secundária) |
 | Direção visual inicial / referências vagas | `visual-direction-brief` |
 | Referência concreta / site / screenshot | `web-design-cloner` |

@@ -1,5 +1,5 @@
 v: "5.2"
-updated: "2026-06-10"
+updated: "2026-06-11"
 framework_v: "5.2"
 
 phase:
@@ -7,7 +7,7 @@ phase:
   name: Enterprise Runtime + QA Gate
   previous: ai_native_runtime
 
-last: "Sprint 002 publicada: commit+push main, tag v5.2.0 — CI, README honesto, consolidação scroll/fluid-ui, governança P2."
+last: "P3 assimilação Superpowers completa: 6 padrões aplicados + ciclo GREEN executado (4/4 PASS em sessão limpa — relatório outputs/skill-tests/2026-06-11-p3-green.md). Decisões em skills-governance.md (P3) + decisions.yaml."
 next:
   - nova_feature_via_feature_flow
 blockers: []

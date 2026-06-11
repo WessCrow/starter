@@ -1,8 +1,8 @@
 v: "5.1"
-updated: "2026-06-10"
+updated: "2026-06-11"
 
 session:
-  last_completed: sprint_002_release_v5_2_0
+  last_completed: p3_superpowers_assimilation_plus_green_tests_4of4_pass
   next_action: nova_feature_via_feature_flow
   blocked: false
 
@@ -20,7 +20,7 @@ feature:
 user:
   verified_in_browser: false
   verified_at: null
-  notes: "Manutenção de framework — sem UI. P2.8-10 executados; validate-skills 15/0; decisões registradas em skills-governance.md."
+  notes: "Manutenção de framework — sem UI. P3 (assimilação Superpowers) executado: 6 padrões; validate-skills 15/0, validate.py 11/0; decisões em skills-governance.md (P3) e decisions.yaml."
 
 reminders:
   - id: phase_4_playwright

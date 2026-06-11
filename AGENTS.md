@@ -1,4 +1,4 @@
-# AGENTS.md — Runtime OS v5.1 + QA Gate + Host Guard
+# AGENTS.md — Runtime OS v5.2 + QA Gate + Host Guard
 
 Compatível: Antigravity · Cursor · Claude Code · VSCode · Windsurf · Cline · Roo.
 
@@ -30,7 +30,7 @@ Se o usuário pedir **nova feature/funcionalidade** em projeto já iniciado:
 4. `sprint-contract.md` aprovado → implementar → QA Gate (seção 3)
 
 Templates: `skills/templates/specs/` (resolução: `templates/overrides/` vence o core — ver `templates/overrides/README.md`).
-Ajuste trivial (≤ ~20 linhas, sem entidade nova) **não** passa pelo fluxo, mas mantém QA.
+**HARD-GATE:** sem código antes do contrato aprovado, mesmo em feature "simples". Ajuste trivial só escapa do fluxo cumprindo os 4 critérios rígidos de `feature-flow.md` (≤ ~20 linhas, sem entidade/estado novo, sem comportamento novo visível, **declarado explicitamente no chat**) — e mantém QA. Na dúvida, é feature.
 
 ---
 
@@ -60,6 +60,21 @@ Durante a execução de comandos (`run_command`):
   * Executar qualquer comando ou ler/escrever arquivos fora da árvore do projeto (ex: acessar `/tmp`, `/home`, chaves SSH, ou arquivos globais do SO).
   * Executar comandos destrutivos genéricos (como `rm` sem especificar caminhos relativos explicitamente seguros e limitados).
   * Instalar programas globais ou dependências fora do escopo local do projeto.
+
+---
+
+## 0e. Protocolos Comportamentais (sempre ativos)
+
+- **Evidência antes de afirmação:** proibido dizer "pronto", "corrigido" ou "funciona" sem comando executado e saída observada nesta sessão → `skills/local-skills/verify-before-done.skill`. Vale durante toda a sessão, não só no QA Gate.
+- **Bug/erro/build FAIL:** causa raiz antes de fix; uma correção por vez; 3 tentativas falhas = parar e reportar → `skills/governance/debugging-protocol.md`.
+- **Feedback/crítica do usuário:** verificar antes de implementar; sem concordância performática ("você está certo!" sem checar) → `skills/governance/review-reception.md`.
+- **Criar/editar skill ou regra:** ciclo TDD RED→GREEN obrigatório → `skills/governance/skill-testing.md`.
+
+---
+
+## 0f. Hook de Sessão (opt-in — Claude Code)
+
+Para injetar este bootstrap automaticamente em toda sessão (convenção → garantia): registrar `bash skills/scripts/session-start-hook.sh` como hook `SessionStart` no `.claude/settings.json` do projeto (instruções no próprio script). Editores sem suporte a hooks seguem lendo este arquivo normalmente.
 
 ---
 
@@ -121,4 +136,4 @@ Atualizar handoff + state · `validate.py` 0 failed
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-08
+> Última atualização: 2026-06-11

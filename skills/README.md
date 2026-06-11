@@ -84,6 +84,7 @@ Referências centrais:
 | **project-starter.skill** | Kickoff e inicialização de projeto novo |
 | **qa-gate.skill** | QA cético obrigatório após implementação |
 | **qa-smoke.skill** | Smoke de build/lint/test conforme stack (test opt-in) |
+| **verify-before-done.skill** | Evidência antes de afirmação: proibido dizer "pronto/corrigido" sem comando executado e saída observada |
 | **ux-audit.skill** | Auditoria de UX e identificação de problemas |
 | **ux-diamond.skill** | Discovery duplo diamante pós-kickoff: divergir e convergir antes de codar |
 | **context-cleaner.skill** | Resumo operacional para nova sessão; limpeza de contexto e economia de tokens |

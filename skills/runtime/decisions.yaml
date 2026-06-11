@@ -1,5 +1,5 @@
 v: "5.1"
-updated: "2026-05-20"
+updated: "2026-06-11"
 
 decisions:
   - id: bootstrap_cleanup_auto
@@ -14,3 +14,19 @@ decisions:
     choice: comecar_projeto_four_questions
     reason: non_technical_user_no_stack_memory
     since: "2026-05-20"
+  - id: superpowers_assimilation_p3
+    choice: assimilate_six_patterns_from_obra_superpowers
+    reason: tdd_skills_hardgate_junior_tasks_verify_protocols_hook_see_skills_governance_p3
+    since: "2026-06-11"
+  - id: skill_tdd_required
+    choice: red_green_cycle_before_activating_new_skill
+    reason: untested_governance_rules_are_theater_not_guarantees
+    since: "2026-06-11"
+  - id: verify_before_done_always
+    choice: no_success_claim_without_executed_command_evidence
+    reason: agents_claim_fixed_without_running_anything
+    since: "2026-06-11"
+  - id: subagent_driven_dev_not_adopted
+    choice: keep_single_session_flow
+    reason: target_ides_lack_uniform_task_tool_support
+    since: "2026-06-11"

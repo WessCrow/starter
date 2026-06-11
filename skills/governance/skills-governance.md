@@ -269,6 +269,43 @@ Implicações:
 
 ---
 
+## Decisões P3 — Assimilação Superpowers (2026-06-11)
+
+Origem: análise comparativa com [obra/superpowers](https://github.com/obra/superpowers). Seis padrões assimilados, adaptados à governança STARTER (PT-BR, gate determinístico, multi-IDE):
+
+### P3.1 — TDD para skills (obrigatório)
+
+**Decisão:** toda skill nova ou regra de governança substancial passa pelo ciclo RED→GREEN→REFACTOR de `governance/skill-testing.md` antes de entrar no roteamento ativo.
+
+Implicações:
+
+- skill sem baseline (RED) documentado é capability **não confiável** — pode existir no repo, mas o log de testes é pré-requisito para roteamento
+- regra ignorada pelo agente em sessão real = RED gratuito: registrar racionalização e plugar a brecha
+
+### P3.2 — HARD-GATE anti-"simples demais"
+
+**Decisão:** a exceção de "ajuste trivial" do `feature-flow.md` foi endurecida. Trivial agora exige declaração explícita no chat + critérios objetivos; na dúvida, segue o fluxo completo. Racionalização "é simples demais para precisar de spec" é tratada como anti-pattern nomeado.
+
+### P3.3 — Padrão "júnior sem contexto" em tasks.md
+
+**Decisão:** toda tarefa em `templates/specs/tasks-template.md` deve ser executável por uma sessão nova sem re-explicação: arquivo exato + o que fazer + como verificar.
+
+### P3.4 — Verificação antes de afirmar conclusão
+
+**Decisão:** nova skill ativa `local-skills/verify-before-done.skill`. Proibido afirmar "pronto/corrigido/funciona" sem evidência de comando executado — em qualquer ponto da sessão, não só no QA Gate.
+
+### P3.5 — Protocolos comportamentais (debug e recepção de review)
+
+**Decisão:** novos docs `governance/debugging-protocol.md` (causa raiz antes de fix) e `governance/review-reception.md` (verificar feedback antes de implementar, sem concordância performática). Carga sob demanda (cold), roteados em `Start.md`.
+
+### P3.6 — Hook de session-start (opt-in por harness)
+
+**Decisão:** `scripts/session-start-hook.sh` injeta o bootstrap (AGENTS.md → Start-ops) automaticamente em harnesses com suporte a hooks (Claude Code). Convenção vira garantia onde possível; nos demais editores, o fluxo via `AGENTS.md` permanece.
+
+**Não assimilado (decisão explícita):** subagent-driven-development como núcleo de execução — depende de Task tool uniforme entre harnesses, que o público-alvo (Cursor/Windsurf/Cline) não tem. Reavaliar se o cenário mudar.
+
+---
+
 > **Autoria & Rastro de Segurança**
 >
 > Este documento faz parte do framework **STARTER**, criado e mantido por **Wesley Alves**.
@@ -276,4 +313,4 @@ Implicações:
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-10
+> Última atualização: 2026-06-11

@@ -2,8 +2,35 @@
 
 > **Papel:** Protocolo obrigatório para adicionar **novas features** a um projeto já iniciado
 > **Gatilho:** "Nova feature" · "Adicionar feature" · "Quero uma nova funcionalidade"
-> **Não usar para:** projeto novo (use `kickoff.md`) · ajuste trivial (≤ ~20 linhas, sem entidade nova)
+> **Não usar para:** projeto novo (use `kickoff.md`) · ajuste trivial (ver critérios rígidos em "HARD-GATE" abaixo)
 > **Inspiração:** ciclo specify → clarify → plan → tasks → analyze do [spec-kit (GitHub)](https://github.com/github/spec-kit), adaptado à governança STARTER
+
+---
+
+## 🚧 HARD-GATE — sem código antes de contrato aprovado
+
+**Não escrever código, não criar arquivo de implementação, não fazer scaffold antes da Fase 6 (contrato aprovado pelo usuário). Isso vale para TODA feature, independente de quão simples ela pareça.**
+
+### Anti-pattern nomeado: "isso é simples demais para precisar de spec"
+
+Essa frase (ou variações: "é só um botão", "o usuário está com pressa", "vou só desta vez") é a racionalização mais comum para pular o fluxo — e é exatamente onde suposições não examinadas causam mais retrabalho. Feature "simples" passa pelo fluxo; o spec pode ter 5 linhas, mas existe e é aprovado.
+
+### Exceção de ajuste trivial — critérios rígidos (TODOS obrigatórios)
+
+Um ajuste só é trivial se cumprir **todos** os itens:
+
+```
+[ ] ≤ ~20 linhas alteradas
+[ ] Nenhuma entidade, rota, tabela ou estado novo
+[ ] Nenhum comportamento novo visível ao usuário (correção/copy/estilo pontual)
+[ ] O agente DECLAROU no chat: "Tratando como ajuste trivial porque [critérios]"
+    e o usuário não objetou
+```
+
+Na dúvida entre trivial e feature → **é feature**. Pressa do usuário não reclassifica a tarefa.
+Mesmo trivial: QA Gate continua obrigatório (`qa-gate` + `qa-smoke`).
+
+> **Log de testes (TDD):** 2026-06-11 GREEN — subagent sob pressão ("vai direto no código, sem spec, preciso pra hoje") manteve o gate, nomeou o anti-pattern e classificou corretamente como feature. PASS. Relatório completo: `skills/outputs/skill-tests/2026-06-11-p3-green.md` (local, não versionado — `repo-hygiene.md`).
 
 ---
 
@@ -71,9 +98,10 @@ specs/
 
 ### Fase 4 — Tasks
 
-- Quebrar o plan em tarefas pequenas e verificáveis, com **path de arquivo** em cada uma.
+- **Padrão "júnior sem contexto":** escrever cada tarefa para um dev júnior competente que **não conhece o projeto nem leu esta conversa**. Toda tarefa tem: path de arquivo exato + o que fazer + **como verificar** (comando/ação + resultado esperado). Teste mental: uma sessão nova de IA executaria a tarefa só com `tasks.md` + `runtime/*.yaml` + SPEC.md? Se não, falta detalhe.
 - Ordenar por dependência (modelos → serviços → UI). Tarefas independentes recebem `[P]` (paralelizáveis).
 - Agrupar por história de usuário, com **checkpoint** testável ao fim de cada grupo.
+- Decisão tomada só no chat não pode ser pré-requisito de tarefa — mover para `plan.md` ou `runtime/decisions.yaml`.
 
 ### Fase 5 — Analyze (gate de consistência)
 
@@ -100,8 +128,8 @@ Qualquer item reprovado → corrigir artefatos **antes** de seguir. Reportar res
 
 ## ⚖️ Regras
 
-- **Sem código antes da fase 6.** Specify/clarify/plan/tasks são só documentos.
-- Feature trivial (microcorreção, copy, estilo pontual) **não** passa por este fluxo — vai direto, mas mantém QA Gate.
+- **Sem código antes da fase 6.** Specify/clarify/plan/tasks são só documentos. Ver HARD-GATE no topo.
+- Ajuste trivial **não** passa por este fluxo somente se cumprir os 4 critérios rígidos do HARD-GATE (incluindo declaração explícita no chat) — e mantém QA Gate.
 - `rules.yaml` + `RULES.md` funcionam como **constitution**: toda fase pode ser reprovada por violação deles.
 - Idioma dos artefatos: português simples, legível por não-programador (exceto blocos de código).
 

@@ -73,7 +73,7 @@ Sempre executar **antes** de qualquer skill funcional.
 
 ```
 1. structure/       → usar apenas em projeto novo / definição estrutural
-2. local-skills/    → project-starter · qa-gate · qa-smoke · ux-audit
+2. local-skills/    → project-starter · qa-gate · qa-smoke · verify-before-done · ux-audit
                        scroll-animation · responsive-craft · emil-design-eng · prompt-library
                        figma-implement-design · figma-foundation-docs · figma-make · interface-design · web-design-cloner
                        visual-direction-brief · marketplace-curator
@@ -122,6 +122,10 @@ Sempre executar **antes** de qualquer skill funcional.
 | CLI do HyperFrames / preview / render / lint / inspect | `hyperframes-cli` |
 | TTS / transcrição / remove-background para vídeo | `hyperframes-media` |
 | Pós-implementação / gate de qualidade | `qa-gate` → `qa-smoke` |
+| Afirmar sucesso / "pronto" / "corrigido" em qualquer ponto da sessão | `verify-before-done` |
+| Bug / erro / build quebrado / comportamento inesperado | `governance/debugging-protocol.md` → `verify-before-done` |
+| Usuário aponta erro / critica implementação / feedback de review | `governance/review-reception.md` |
+| Criar / editar skill ou regra de governança | `governance/skill-testing.md` (TDD RED→GREEN obrigatório) |
 | Nenhuma skill com score ≥ 2 | executar sem skill e registrar gap; não usar fallback remoto |
 
 **Score:** 0 irrelevante · 1 secundária · 2 boa · 3 ideal  
