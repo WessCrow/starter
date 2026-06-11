@@ -3,106 +3,136 @@
 # STARTER
 
 <p align="center">
-  <strong>O ponto de partida organizado para criar projetos com agentes de IA.</strong><br>
-  Uma estrutura leve, direto ao ponto e feita para eliminar a complicação inicial do desenvolvimento.
+  <strong>Um agente especializado em design engineering e desenvolvimento — com kickoff guiado, fluxo com contrato e QA gate em toda entrega.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Runtime-v5.1-blueviolet?style=for-the-badge" alt="Runtime v5.1">
+  <img src="https://img.shields.io/badge/Runtime-v5.2-blueviolet?style=for-the-badge" alt="Runtime v5.2">
   <img src="https://img.shields.io/badge/QA_Gate-build_+_revisão-emerald?style=for-the-badge" alt="QA Gate build + revisão">
-  <img src="https://img.shields.io/badge/Compatível-AGENTS.md-ff69b4?style=for-the-badge" alt="Compatível AGENTS.md">
+  <img src="https://img.shields.io/badge/30%2B_skills-design_%26_dev-ff69b4?style=for-the-badge" alt="30+ skills design & dev">
+  <img src="https://img.shields.io/badge/Compatível-AGENTS.md-orange?style=for-the-badge" alt="Compatível AGENTS.md">
 </p>
 
 ---
 
 ## Proposta
 
-**Você entra com uma ideia na cabeça. O STARTER organiza o caminho: kickoff guiado, contexto enxuto e validação antes de qualquer entrega.**
+**Você cola dois arquivos na pasta, diz "Começar projeto" e o agente conduz o kickoff, escolhe a stack, configura o projeto e ativa um arsenal de 30+ skills especializadas em UI, design, Figma, produto e front-end.**
 
-Esqueça o tempo perdido configurando pastas do zero ou limpando arquivos inúteis. O **STARTER** conduz você por uma conversa rápida de até 4 perguntas simples e gera um setup profissional sob medida. Ele organiza o contexto da IA para economizar seus tokens e fecha cada entrega com um QA Gate: o build precisa passar e o próprio agente faz uma revisão cética antes de marcar algo como pronto.
+Cada feature nova segue um fluxo com especificação, plano e contrato aprovado — antes de qualquer linha de código. Cada entrega passa por um QA Gate: build obrigatório e revisão cética do agente.
 
 Quer entender o que o STARTER é (e o que ele não é)? Leia [O que é o STARTER](O-QUE-E-O-STARTER.md).
 
 ---
 
-## Como Funciona em Minutos
-
-Apenas 2 arquivos de configuração e 1 comando no chat.
+## Como Funciona em 3 Passos
 
 ```mermaid
 graph TD
-    A[Sua Ideia] --> B[Copiar pasta skills/ e arquivo AGENTS.md]
-    B --> C[Digitar: 'Começar projeto']
-    C --> D[Conversa com a IA: Max 4 perguntas]
-    D --> E[Você aprova o Plano]
-    E --> F[Base Criada + Validação Automática Ativa]
+    A[Sua Ideia] --> B[Copiar skills/ e AGENTS.md]
+    B --> C["Digitar: Começar projeto"]
+    C --> D[IA faz até 4 perguntas simples]
+    D --> E[Você aprova o plano]
+    E --> F[Projeto criado + 30+ skills ativas]
+    F --> G["Nova feature? → spec → plano → contrato → código → QA Gate"]
 ```
 
-### Passo a Passo Simples:
-
-1. Crie ou abra uma pasta vazia para o seu novo projeto.
+1. Crie ou abra uma pasta vazia para o seu projeto.
 2. Copie a pasta `skills/` e o arquivo `AGENTS.md` para dentro dela.
-3. No chat do seu editor favorito (Cursor, Claude Code, Windsurf, etc.), digite:
-   ```bash
+3. No chat do seu editor favorito (Cursor, Claude Code, Windsurf etc.), digite:
+   ```
    Começar projeto
    ```
-4. Responda às perguntas simples da IA, revise o plano gerado e confirme!
+
+O agente faz até 4 perguntas simples, resume o que vai criar e pede sua aprovação. Só então começa.
 
 ---
 
 ## O que você ganha vs. O que o STARTER evita
 
-| O que você ganha                                                                      | 🚫 O que você nunca mais faz                                                   |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| **Contexto enxuto por design** — carrega só o necessário por sessão                   | ❌ Estourar o limite de uso da IA com arquivos repetitivos ou pesados          |
-| **Sincronização entre editores** (Use Cursor, Claude Code, Cline sem perder o ritmo)  | ❌ Perder o histórico do projeto ou desconfigurar tudo ao trocar de IDE        |
-| **Proteção de Segurança (Host Guard):** Bloqueio contra comandos perigosos            | ❌ Executar scripts perigosos por acidente ou vazar suas chaves `.env` no Git  |
-| **Guia de Engenharia Completo:** Padrões limpos de Front, Back e Organização          | ❌ Escrever códigos confusos, com lentidão ou bagunçados                       |
-| **Início guiado em minutos** diretamente pelo chat                                    | ❌ Perder horas escrevendo documentações ou planejamentos do zero              |
-| **QA Gate em toda entrega** (build obrigatório + revisão cética do agente)            | ❌ Marcar uma feature como pronta sem o build passar                           |
+| O que você ganha | 🚫 O que você nunca mais faz |
+|------------------|------------------------------|
+| **30+ skills especializadas** ativas desde o kickoff — UI, Figma, produto, motion, landing | ❌ Reexplicar o mesmo contexto de design para a IA a cada sessão |
+| **Fluxo spec-driven para features:** spec → plano → contrato aprovado → código | ❌ Receber código que muda o escopo ou quebra o que existia |
+| **Contexto enxuto por design** — hot/warm/cold, só carrega o que a sessão precisa | ❌ Estourar o limite de tokens com arquivos inúteis abertos |
+| **Sincronização entre editores** — Cursor, Claude Code, Cline sem perder o ritmo | ❌ Perder o histórico ao trocar de IDE ou reiniciar uma sessão |
+| **Host Guard:** bloqueio contra comandos destrutivos e vazamento de `.env` | ❌ Executar scripts perigosos por acidente |
+| **QA Gate em toda entrega** — build obrigatório + revisão cética do agente | ❌ Marcar uma feature como pronta sem o build passar |
+| **Padrões de código invioláveis** — Front, Back, Arquitetura, Acessibilidade | ❌ Código com hardcode, `any`, `console.log` ou semântica quebrada |
+
+---
+
+## 30+ Skills Especializadas — ativas desde o kickoff
+
+O STARTER não é só estrutura. Ele vem com um catálogo de skills que o agente aciona conforme a intenção da sua tarefa:
+
+| Domínio | Skills disponíveis |
+|---------|-------------------|
+| **UI & Craft visual** | `interface-design` · `aw-designer` · `emil-design-eng` · `visual-direction-brief` · `web-design-cloner` |
+| **Motion & Responsividade** | `fluid-ui` · `scroll-animation` · `responsive-craft` |
+| **Figma** | `figma-implement-design` · `figma-foundation-docs` · `figma-make` |
+| **Discovery & Produto** | `ux-diamond` · `ux-audit` · `product-vision` · `hypothesis-investigation` |
+| **Conversão & Narrativa** | `landing-conversion` · `portfolio-storytelling` · `storyboard-cinematic` |
+| **Vídeo & Motion HTML** | `hyperframes` · `hyperframes-cli` · `hyperframes-media` |
+| **Governança & QA** | `qa-gate` · `qa-smoke` · `verify-before-done` · `session-review` · `context-cleaner` |
+| **Prompts & Curadoria** | `prompt-library` · `marketplace-curator` |
+
+O agente escolhe a skill certa para cada tarefa. Você não precisa memorizar nada.
+
+---
+
+## Fluxo para Features: Spec-Driven
+
+Projeto em andamento? Cada nova feature segue um fluxo que impede surpresas:
+
+```
+Pedido → spec.md (o quê + por quê) → clarify (≤5 perguntas)
+       → plan.md (como) → tasks.md → analyze → contrato aprovado → código → QA Gate
+```
+
+**HARD-GATE:** sem uma linha de código antes do contrato aprovado por você. Mesmo em features "simples". O agente não improvisa escopo.
 
 ---
 
 ## O que o QA Gate verifica (e o que não verifica)
 
-Para você saber exatamente o que esperar:
-
 - ✅ **Build (smoke):** `pnpm run build` precisa passar antes de qualquer entrega.
 - ✅ **Revisão cética:** o agente audita a própria implementação contra o contrato da sprint e gera relatório em PT-BR.
 - ✅ **Validação de estrutura:** scripts auditam os YAML do runtime, as skills e a higiene do repositório.
-- ⚠️ **Não inclui:** testes E2E automatizados em navegador (módulo Playwright existe no repositório, mas está desativado por decisão registrada). O passo final é sempre você testar 5 minutos no navegador.
+- ⚠️ **Não inclui:** testes E2E automatizados em navegador (módulo Playwright existe, mas está desativado por decisão registrada). O passo final é sempre você testar 5 minutos no navegador.
 
 ---
 
-## Escolha seu Ponto de Partida
+## O que o Agente Sabe Criar
 
-Durante a conversa inicial, você pode guiar a IA para criar o modelo ideal para o seu objetivo:
+Durante o kickoff ou ao pedir nova feature, você pode direcionar para qualquer uma dessas entregas:
 
-- **Landing Page (LP):** Páginas de produto, validação rápida de mercado e visual premium com animações fluidas.
-- **SaaS Dashboard:** Telas de login seguras, gráficos, tabelas dinâmicas e gerenciamento de dados simples (Zustand).
-- **Painel Interno (Backoffice):** Painéis operacionais rápidos, criação/edição automática de dados e foco em eficiência.
-- **Design System:** Componentes que podem ser reutilizados, identidade de marca visual organizada e acessibilidade nativa.
-- **Backend & API:** Serviços robustos, validação de dados segura na entrada (Zod) e tratamento limpo de erros.
+- **Landing de conversão** — copy por bloco, UX orientado a resultado, visual premium
+- **UI experimental / Awwwards** — conceito radical, tokens, motion WOW, handoff dev
+- **SaaS Dashboard** — login, gráficos, tabelas dinâmicas, Zustand
+- **Design System** — tokens, variáveis Figma, componentes reutilizáveis, acessibilidade
+- **Portfólio / Case** — narrativa profissional orientada a conversão
+- **Backend & API** — validação Zod, sanitização de erros, arquitetura SOLID
+- **Composição de vídeo em HTML** — motion graphics, captions, cenas via HyperFrames
 
 ---
 
-## Como Tudo Funciona por Trás dos Panos
+## Como o Sistema Funciona por Trás
 
-O STARTER funciona como um manual de regras rígido e inteligente para a IA. Ele gerencia o fluxo para garantir estabilidade e gastar o mínimo de dinheiro possível através de 5 pilares:
+O STARTER opera em 4 camadas que garantem consistência entre sessões:
 
-1. **`runtime/index.yaml`**: Organiza a ordem exata em que as ferramentas do projeto devem ser ligadas.
-2. **`runtime/rules.yaml` & `runtime/context.yaml`**: O conjunto de regras absolutas de segurança, código e arquitetura que a IA é obrigada a seguir.
-3. **`validate.py`**: O guardião automatizado que audita a pasta, impedindo a IA de fazer bobagem ou expor senhas locais.
-4. **`context-cleaner.skill`**: O faxineiro que limpa o histórico inútil para reduzir o desperdício de tokens.
-5. **`QA Gate (qa-gate.skill)`**: A barreira de qualidade que roda o build e uma revisão cética antes de marcar a entrega como pronta.
+1. **Runtime YAML** (`runtime/index.yaml`): define o que carregar em cada fase — hot (sempre), warm (se feature ativa), cold (sob demanda). A IA não carrega o que não precisa.
+2. **Skill routing** (`governance/Start.md`): mapeia intenção → skill certa. O agente não chuta qual habilidade usar.
+3. **Spec-driven flow** (`governance/feature-flow.md`): toda feature passa por especificação, plano e contrato antes de virar código.
+4. **QA Gate** (`qa-gate.skill` + `qa-smoke.skill`): build + revisão cética obrigatórios antes de qualquer entrega.
 
 ---
 
 ## Compatibilidade
 
-- **Experiência Recomendada:** Cursor, Claude Code e Antigravity (leitura nativa direta do arquivo `AGENTS.md`).
-- **Compatível também:** VSCode, Windsurf, Cline, Roo.
-- **Tecnologias Padrão:** Next.js + pnpm (ou React + Vite para páginas e aplicações ultra rápidas).
+- **Experiência recomendada:** Cursor, Claude Code e Antigravity (leitura nativa do `AGENTS.md`).
+- **Compatível:** VSCode, Windsurf, Cline, Roo.
+- **Stack padrão:** Next.js + pnpm (ou React + Vite para SPAs e protótipos).
 
 ---
 
@@ -114,4 +144,4 @@ O STARTER funciona como um manual de regras rígido e inteligente para a IA. Ele
 >
 > _Sinta-se livre para usar, estudar e evoluir a ferramenta! Apenas pedimos que mantenha os créditos originais do criador._
 >
-> **Última atualização:** 2026-06-10
+> **Última atualização:** 2026-06-11
