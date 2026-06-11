@@ -45,6 +45,13 @@ default_stack_new_projects:
   package_manager: pnpm
 
 phase_4_playwright:
-  status: deferred
-  enabled: false
+  status: deferred          # trocar para "active" ao ativar
+  enabled: false            # trocar para true ao ativar
+  mode: cli                 # cli (estável) | mcp (frágil — evitar)
+  tier: executor            # geração de spec e shell → Haiku
+  project: chromium         # único browser no smoke
+  command: "pnpm run test:e2e"
+  generate_from_contract: true
+  required_for_ui: true     # false para features API-only
   reminder: "skills/_deferred/phase4-playwright/"
+  activate_with: "diga ao agente: ativar Fase 4 Playwright"

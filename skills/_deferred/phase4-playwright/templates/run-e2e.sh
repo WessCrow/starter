@@ -1,26 +1,45 @@
 #!/usr/bin/env bash
-# STARTER QA Fase 4 — roda E2E CLI no projeto filho (não no meta STARTER)
+# STARTER QA Fase 4 — roda smoke E2E no projeto filho (não no meta STARTER)
+# Uso: bash skills/scripts/run-e2e.sh [feature-id]
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+FEATURE="${1:-smoke}"
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 
+# 1. Verificar package.json
 if [[ ! -f package.json ]]; then
-  echo "SKIP: sem package.json — use MCP Playwright ou teste manual"
+  echo "SKIP: sem package.json — teste manual necessário"
   exit 0
 fi
 
-if ! pnpm exec playwright --version &>/dev/null 2>&1 && ! npx playwright --version &>/dev/null 2>&1; then
-  echo "FAIL: Playwright não instalado. Rode: pnpm add -D @playwright/test && pnpm exec playwright install chromium"
+# 2. Verificar instalação do Playwright
+if ! pnpm exec playwright --version &>/dev/null 2>&1; then
+  echo "FAIL: @playwright/test não instalado."
+  echo "  → pnpm add -D @playwright/test"
+  echo "  → pnpm exec playwright install chromium --with-deps"
   exit 1
 fi
 
-if [[ -f qa/e2e-scenario.yaml ]]; then
-  echo "Cenário: qa/e2e-scenario.yaml"
+# 3. Verificar spec da feature
+SPEC="tests/e2e/${FEATURE}.spec.ts"
+if [[ ! -f "$SPEC" ]]; then
+  echo "WARN: $SPEC não encontrado — gerando a partir do sprint-contract..."
+  echo "  → agente (executor Haiku) deve gerar o spec antes de rodar"
+  exit 1
 fi
 
-if pnpm run test:e2e 2>/dev/null; then
-  exit 0
+# 4. Rodar só chromium, só o spec da feature
+echo "→ Rodando: $SPEC (chromium)"
+pnpm exec playwright test "$SPEC" --project=chromium --reporter=list
+
+EXIT=$?
+
+if [[ $EXIT -eq 0 ]]; then
+  echo "✓ PASS — Playwright smoke ok"
+else
+  echo "✗ FAIL — colar log acima no relatório QA"
+  echo "  Screenshots: qa/reports/playwright/"
 fi
 
-pnpm exec playwright test tests/e2e --reporter=list 2>/dev/null || npx playwright test tests/e2e --reporter=list
+exit $EXIT

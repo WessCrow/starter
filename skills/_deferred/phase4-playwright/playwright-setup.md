@@ -1,94 +1,80 @@
-# playwright-setup.md — Fase 4 (Playwright no QA Gate)
+# playwright-setup.md — Fase 4 (Playwright CLI no QA Gate)
 
 > **Para:** construir sozinho, sem ser programador  
-> **Objetivo:** o agente **clica no seu app** como um usuário, antes de você testar
+> **Modo:** CLI only — sem MCP, sem dependência de Cursor conectado  
+> **Objetivo:** o agente roda testes automáticos no browser antes de você confirmar
 
 ---
 
 ## O que você ganha
 
-- Menos “parecia ok no código mas no browser quebrou”
-- Relatório com **o que foi clicado** e **o que falhou** (português)
-- Screenshots em `qa/reports/screenshots/` (projetos filhos)
+- Tela branca detectada **antes** de chegar até você
+- Relatório com o que foi clicado e o que falhou (português)
+- Screenshots em `qa/reports/screenshots/` quando algo quebrar
+- Dev server gerenciado automaticamente pelo Playwright — sem precisar subir manualmente
 
 ---
 
-## Passo 1 — Playwright MCP no Cursor (recomendado)
+## Setup único (uma vez por projeto filho)
 
-1. Abra **Cursor** → **Settings** → **MCP** → **Add new MCP Server**
-2. Nome: `playwright`
-3. Tipo: **command**
-4. Comando: `npx @playwright/mcp@latest`
-
-Ou copie o exemplo do STARTER para o seu usuário Cursor:
-
-- Arquivo modelo: `mcp.playwright.example.json` (raiz do STARTER)
-- Destino: `~/.cursor/mcp.json` ou `.cursor/mcp.json` no projeto — **mesclar** com MCPs existentes
-
-Requisito: **Node.js 18+**
-
-Documentação oficial: https://playwright.dev/docs/getting-started-mcp
-
----
-
-## Passo 2 — Playwright CLI no projeto (fallback)
-
-Quando o MCP não estiver disponível, o agente usa testes em `tests/e2e/`.
-
-No **projeto filho** (não no STARTER meta):
+No terminal, dentro do projeto (não do STARTER):
 
 ```bash
 pnpm add -D @playwright/test
-pnpm exec playwright install chromium
+pnpm exec playwright install chromium --with-deps
 ```
 
-Scripts sugeridos no `package.json`:
+Adicionar ao `package.json` do projeto:
 
 ```json
 "scripts": {
-  "test:e2e": "playwright test",
-  "test:e2e:ui": "playwright test --ui"
+  "test:e2e": "playwright test --project=chromium"
 }
 ```
 
-Templates em `skills/templates/qa/`.
+Copiar `playwright.config.ts` do template para a raiz do projeto:
 
----
-
-## Passo 3 — Cenário E2E (traduz contrato da sprint)
-
-Arquivo: `qa/e2e-scenario.yaml` (copiar de `templates/qa/e2e-scenario.template.yaml`)
-
-Cada linha do sprint-contract vira um passo:
-
-- abrir URL
-- clicar botão
-- ver texto na tela
-- viewport mobile 375px
-
-O agente executa via **qa-playwright.skill**.
-
----
-
-## Passo 4 — Subir o app antes do QA
-
-| Stack | URL típica | Comando |
-|-------|------------|---------|
-| Vite | http://localhost:5173 | `pnpm run dev` |
-| Next.js | http://localhost:3000 | `pnpm run dev` |
-
-**QA Playwright só roda com app no ar.** Se não subir → relatório marca `playwright: skipped` e você testa manual (5 min).
-
----
-
-## Fluxo integrado (Fase 4)
-
-```txt
-sprint-contract → implementar → qa-smoke (build)
-                → qa-playwright (MCP ou CLI)
-                → qa-gate (relatório final)
-                → você confirma no browser
+```bash
+cp skills/_deferred/phase4-playwright/templates/playwright.config.ts.template playwright.config.ts
 ```
+
+Ajustar `baseURL` conforme stack:
+- **Next.js:** `http://localhost:3000`
+- **Vite:** `http://localhost:5173`
+
+---
+
+## Como funciona o `webServer`
+
+O Playwright sobe o dev server automaticamente antes dos testes e derruba depois. Se você já tiver o servidor rodando, ele reaproveitado (`reuseExistingServer: true`).
+
+**Você não precisa fazer nada.** Só rodar:
+
+```bash
+pnpm run test:e2e
+```
+
+---
+
+## Como os testes são gerados
+
+O agente gera `tests/e2e/[feature].spec.ts` **junto com a entrega da feature**, traduzindo cada critério do `sprint-contract.md` em uma assertion. Você não escreve os testes.
+
+Regras que o agente segue:
+- 1 critério do contrato = 1 teste isolado
+- Seletores: `getByRole` > `getByText` > `getByLabel` — nunca classe CSS
+- Sem `waitForTimeout` — `toBeVisible()` já tem retry automático
+- Critério vago no contrato → marcado como `manual` no relatório, não vira teste
+
+---
+
+## Quando o Playwright é pulado
+
+| Situação | Comportamento |
+|----------|---------------|
+| Feature API-only (sem UI) | `playwright.required: false` no contrato → SKIP |
+| Sem `package.json` | SKIP + teste manual 5 min |
+| `@playwright/test` não instalado | FAIL com instrução de setup |
 
 ---
 
@@ -96,26 +82,21 @@ sprint-contract → implementar → qa-smoke (build)
 
 | Problema | Solução |
 |----------|---------|
-| MCP não aparece | Reiniciar Cursor; conferir Node 18+ |
-| Página em branco | `pnpm run dev` rodando? URL certa no e2e-scenario? |
-| Teste CLI falha | `pnpm exec playwright install chromium` |
-| Não é app web | Marcar `playwright.required: false` no e2e-scenario |
+| `pnpm exec playwright install` falha | Verificar Node 18+ · tentar `npx playwright install chromium` |
+| Teste falha com "locator not found" | Seletor CSS quebrou — usar `getByRole`/`getByText` |
+| `webServer` timeout | Aumentar `timeout` no config para 120_000 |
+| Port já em uso | Config tem `reuseExistingServer: true` — reaproveita automaticamente |
 
 ---
 
-## Referências STARTER
+## Ativar a Fase 4 no STARTER
 
-- `local-skills/qa-playwright.skill`
-- `runtime/qa.yaml` → `playwright`
-- `governance/qa-protocol.md`
+```
+Diga ao agente: "ativar Fase 4 Playwright"
+```
+
+O agente move os arquivos de `_deferred/phase4-playwright/` para os lugares certos e atualiza `runtime/qa.yaml`.
 
 ---
 
-> **Autoria & Rastro de Segurança**
->
-> Este documento faz parte do framework **STARTER**, criado e mantido por **Wesley Alves**.
->
-> 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
->
-> Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-07
+> **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · Última atualização: 2026-06-11
