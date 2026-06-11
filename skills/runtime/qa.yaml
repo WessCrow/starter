@@ -45,8 +45,8 @@ default_stack_new_projects:
   package_manager: pnpm
 
 phase_4_playwright:
-  status: deferred          # trocar para "active" ao ativar
-  enabled: false            # trocar para true ao ativar
+  status: active
+  enabled: true
   mode: cli                 # cli (estável) | mcp (frágil — evitar)
   tier: executor            # geração de spec e shell → Haiku
   project: chromium         # único browser no smoke

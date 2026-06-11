@@ -57,7 +57,7 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
 
 ```
 1. structure/       → projeto novo / definição estrutural
-2. local-skills/    → `project-starter` · `qa-gate` · `qa-smoke` · `verify-before-done` · `context-cleaner` · `session-review`
+2. local-skills/    → `project-starter` · `qa-gate` · `qa-smoke` · `qa-playwright` · `verify-before-done` · `context-cleaner` · `session-review`
                        `ux-diamond` · `ux-audit` · `scroll-animation` · `responsive-craft` · `fluid-ui` · `emil-design-eng`
                        `interface-design` · `visual-direction-brief` · `web-design-cloner`
                        `figma-implement-design` · `figma-foundation-docs` · `figma-make`

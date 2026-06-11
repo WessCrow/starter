@@ -1,0 +1,103 @@
+# qa-playwright.skill
+
+> **Tipo:** Local Skill · **Domínio:** qa-playwright · e2e-browser
+> **Fase:** 4 · **Chamado por:** qa-gate.skill (passo 4)
+> **Modo:** CLI only — sem MCP
+> **Tier de execução:** Executor rápido (Haiku) para geração de spec e shell
+
+---
+
+## Propósito
+
+Gerar `tests/e2e/[feature].spec.ts` a partir do `sprint-contract.md` e rodar via CLI. Detectar tela branca, erro JS e critérios visuais que passam pelo build mas quebram em runtime.
+
+---
+
+## Quando usar
+
+- Feature com interface web (Next.js ou Vite)
+- Após `qa-smoke` (build ok)
+- `runtime/qa.yaml` → `phase_4_playwright.enabled: true`
+- `sprint-contract.md` existe e foi aprovado
+
+**Pular:** API-only · script CLI · `playwright.required: false` no contrato
+
+---
+
+## Fluxo
+
+```
+[1] Ler sprint-contract.md
+        ↓
+[2] Verificar se tests/e2e/[feature].spec.ts existe
+      NÃO → GERAR (executor Haiku — brief abaixo)
+      SIM → usar existente
+        ↓
+[3] Verificar playwright.config.ts na raiz do projeto
+      NÃO → copiar de skills/_deferred/phase4-playwright/templates/
+        ↓
+[4] Rodar: pnpm run test:e2e
+      Saída PASS → registrar no relatório
+      Saída FAIL → colar últimas 30 linhas + caminho dos screenshots → orquestrador analisa
+        ↓
+[5] Entregar resultado ao qa-gate.skill (não fechar gate aqui)
+```
+
+---
+
+## Brief para executor (Haiku) — geração do spec
+
+Quando precisar gerar o arquivo de teste, usar este brief exato:
+
+```
+Arquivo: sprint-contract.md (caminho completo)
+Tarefa: gerar tests/e2e/[feature-id].spec.ts
+Template: skills/_deferred/phase4-playwright/templates/playwright-smoke.spec.ts.template
+
+Regras obrigatórias:
+- 1 critério do contrato = 1 test() isolado
+- Seletores: getByRole > getByText > getByLabel — PROIBIDO locator('.classe')
+- Sem waitForTimeout — usar toBeVisible() que tem retry
+- Critério vago (ex: "parece ok") → comentar como "// manual: [critério]", não gerar test()
+- Incluir mobile 375px APENAS se o contrato citar explicitamente
+
+Verificação: arquivo criado em tests/e2e/[feature-id].spec.ts
+Done: listar os test() gerados + quantos ficaram como "// manual"
+```
+
+---
+
+## Interpretação de resultado
+
+| Resultado CLI | Ação |
+|---------------|------|
+| exit 0 (PASS) | Registrar PASS no relatório; prosseguir para qa-gate |
+| exit 1 (FAIL) | Colar últimas 30 linhas do log + path dos screenshots → orquestrador investiga causa raiz |
+| "Cannot find module" | `pnpm add -D @playwright/test` não rodou — registrar como setup pendente |
+| "browserType.launch" falha | `pnpm exec playwright install chromium --with-deps` não rodou |
+| timeout webServer | Aumentar `timeout` no `playwright.config.ts` para 120_000 |
+
+**Nunca** tentar corrigir um teste que falha sem entender a causa. 3 tentativas → reportar para orquestrador.
+
+---
+
+## Debug de falha (orquestrador, não executor)
+
+Quando executor reporta FAIL:
+1. Ler o erro — é de seletor, de timing ou de lógica?
+2. **Seletor:** o HTML mudou? Atualizar para `getByRole`/`getByText` correto
+3. **Timing:** adicionar `await page.waitForURL(...)` antes da assertion — nunca `waitForTimeout`
+4. **Lógica:** o critério do contrato foi implementado de fato? → qa-gate FAIL na dimensão `completo`
+
+---
+
+## Referências
+
+- Template config: `_deferred/phase4-playwright/templates/playwright.config.ts.template`
+- Template spec: `_deferred/phase4-playwright/templates/playwright-smoke.spec.ts.template`
+- Setup humano: `_deferred/phase4-playwright/playwright-setup.md`
+- qa.yaml: `runtime/qa.yaml` → `phase_4_playwright`
+
+---
+
+> **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · Última atualização: 2026-06-11

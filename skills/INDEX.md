@@ -36,6 +36,7 @@
 | `runtime/handoff.yaml` | Retomada + status QA |
 | `local-skills/qa-gate.skill` | Avaliador cético (obrigatório pós-código) |
 | `local-skills/qa-smoke.skill` | build/lint/test |
+| `local-skills/qa-playwright.skill` | QA E2E browser (Fase 4) |
 | `templates/sprint-contract.md` | Contrato antes de codar |
 
 ---
@@ -117,6 +118,7 @@ skills/
 | `project-starter.skill` | Kickoff de projeto |
 | `qa-gate.skill` | QA cético pós-implementação |
 | `qa-smoke.skill` | Build/lint/test |
+| `qa-playwright.skill` | QA E2E browser (Fase 4) |
 | `verify-before-done.skill` | Evidência antes de afirmação |
 | `context-cleaner.skill` | Resumo para nova sessão |
 | `session-review.skill` | Auto-avaliação pós-sessão |
