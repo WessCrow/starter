@@ -44,7 +44,7 @@ ROOT_STARTER_SENTINEL = REPO_ROOT / ".starter-framework-repo"
 
 BOOTSTRAP_SCRIPT = SKILLS_DIR / "scripts" / "clean-framework-artifacts.sh"
 
-TABLE_SKILL_RE = re.compile(r"^\|\s+\*\*([a-z0-9-]+\.skill)\*\*\s+\|", re.MULTILINE)
+TABLE_SKILL_RE = re.compile(r"^\|\s+[`*]{1,2}([a-z0-9-]+\.skill)[`*]{1,2}\s+\|", re.MULTILINE)
 CODE_TOKEN_RE = re.compile(r"`([^`]+)`")
 MARKDOWN_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 VALIDATOR_MAPPING_RE = re.compile(r'"([^"]+\.yaml)"\s*:\s*"([^"]+\.schema\.json)"')
@@ -69,6 +69,8 @@ OUTPUT_TEMPLATE_PAIRS = [
     ("architecture-template.md", "ARCHITECTURE.md"),
 ]
 
+MODEL_ORCHESTRATION_MD = GOVERNANCE_DIR / "model-orchestration.md"
+
 DOC_SNIPPETS = {
     ROOT_README_MD: ["skills/", "AGENTS.md", "Começar projeto"],
     ROOT_COMECAR_MD: ["skills/", "AGENTS.md", "Começar projeto"],
@@ -77,6 +79,7 @@ DOC_SNIPPETS = {
         "skills/governance/kickoff.md",
         "project-starter.skill",
         "COMECAR-PROJETO.md",
+        "0g",
     ],
     KICKOFF_MD: [
         "governance/bootstrap-cleanup.md",
@@ -105,7 +108,7 @@ DOC_SNIPPETS = {
     ],
 }
 
-SKIP_MARKDOWN_PARTS = {".git", ".venv", "__pycache__", ".cursor", "node_modules"}
+SKIP_MARKDOWN_PARTS = {".git", ".venv", "__pycache__", ".cursor", "node_modules", "_lab"}
 
 
 def read_text(path: Path) -> str:
@@ -158,12 +161,18 @@ def extract_start_local_resolution_ids(text: str) -> list[str]:
 
 
 def extract_readme_local_table_ids(text: str) -> set[str]:
-    section = extract_section(text, "## 🔧 `/local-skills`", "## 🔗 `/linked-skills`")
+    # Suporta tanto o header antigo (README.md) quanto o novo (INDEX.md)
+    section = extract_section(text, "## Skills ativas (`local-skills/`)", "\n---")
+    if not section:
+        section = extract_section(text, "## 🔧 `/local-skills`", "## 🔗 `/linked-skills`")
     return {match[:-6] for match in TABLE_SKILL_RE.findall(section)}
 
 
 def extract_start_routing_skill_ids(text: str) -> set[str]:
-    section = extract_section(text, "## 🗺️ Roteamento por intenção", "**Score:**")
+    # Suporta header com ou sem emoji
+    section = extract_section(text, "## Roteamento por intenção", "**Score:**")
+    if not section:
+        section = extract_section(text, "## 🗺️ Roteamento por intenção", "**Score:**")
     tokens = CODE_TOKEN_RE.findall(section)
     out: set[str] = set()
 
@@ -230,7 +239,7 @@ def validate_skill_catalog() -> tuple[list[str], list[str]]:
     deferred_stems = list_skill_stems(DEFERRED_DIR, recursive=True)
 
     start_text = read_text(START_MD)
-    readme_text = read_text(README_MD)
+    readme_text = read_text(INDEX_MD)   # README.md unificado em INDEX.md (Plano 6)
     index_text = read_text(INDEX_MD)
     project_start_text = read_text(PROJECT_START_MD)
     governance_text = read_text(SKILLS_GOVERNANCE_MD)
@@ -488,6 +497,32 @@ def validate_repo_hygiene() -> tuple[list[str], list[str]]:
     return ["OK   repo:hygiene"], []
 
 
+def validate_model_orchestration_log() -> tuple[list[str], list[str]]:
+    """Garante protocolo §0g com log TDD e racionalizações documentadas."""
+    errors: list[str] = []
+    path = MODEL_ORCHESTRATION_MD
+    if not path.exists():
+        return [], [f"Protocolo ausente: {rel(path)}"]
+
+    text = read_text(path)
+    required_sections = [
+        "## Log de testes (TDD)",
+        "## Racionalizações proibidas",
+    ]
+    for section in required_sections:
+        if section not in text:
+            errors.append(f"{rel(path)} sem seção obrigatória: {section}")
+
+    log_markers = ["**RED:**", "**GREEN:**", "**REFACTOR"]
+    for marker in log_markers:
+        if marker not in text:
+            errors.append(f"{rel(path)} log TDD incompleto: falta linha com {marker}")
+
+    if errors:
+        return [], errors
+    return ["OK   governance:model-orchestration-log"], []
+
+
 def validate_bootstrap_contract() -> tuple[list[str], list[str]]:
     errors: list[str] = []
 
@@ -527,6 +562,92 @@ def validate_bootstrap_contract() -> tuple[list[str], list[str]]:
     return ["OK   bootstrap"], []
 
 
+# Orçamento de contexto (bytes) — economia verificável, não declarada.
+# Grupos refletem o custo real de carga por sessão (AGENTS.md §2: hot/warm).
+# Limites = estado atual + folga pequena; aumentar limite exige decisão registrada.
+CONTEXT_BUDGETS: dict[str, tuple[list[Path], int]] = {
+    "hot (toda sessão)": (
+        [
+            ROOT_AGENTS_MD,
+            RUNTIME_DIR / "index.yaml",
+            RUNTIME_DIR / "rules.yaml",
+            RUNTIME_DIR / "context.yaml",
+            RUNTIME_DIR / "state.yaml",
+            GOVERNANCE_DIR / "Start-ops.md",
+        ],
+        20_000,
+    ),
+    "warm (sob demanda frequente)": (
+        [
+            RUNTIME_DIR / "handoff.yaml",
+            RUNTIME_DIR / "qa.yaml",
+            RUNTIME_DIR / "active-feature.yaml",
+        ],
+        8_000,
+    ),
+    "entrada (docs de orientação)": (
+        [INDEX_MD, ROOT_COMECAR_MD],   # README.md + STRUCTURE.md unificados em INDEX.md (Plano 6)
+        24_000,
+    ),
+}
+
+GOVERNANCE_TOTAL_BUDGET = 130_000
+GOVERNANCE_FILE_BUDGET = 14_000
+LOCAL_SKILL_FILE_BUDGET = 20_000
+
+
+def validate_context_budget() -> tuple[list[str], list[str]]:
+    """Falha se o peso de contexto regredir além do orçamento por camada."""
+    passes: list[str] = []
+    errors: list[str] = []
+
+    for group, (files, limit) in CONTEXT_BUDGETS.items():
+        total = 0
+        for f in files:
+            if not f.exists():
+                errors.append(f"budget: arquivo ausente no grupo '{group}': {rel(f)}")
+                continue
+            total += f.stat().st_size
+        if total > limit:
+            errors.append(
+                f"budget: grupo '{group}' estourou — {total:,} bytes > limite {limit:,}"
+            )
+        else:
+            passes.append(f"OK   budget:{group} ({total:,}/{limit:,} bytes)")
+
+    gov_files = sorted(GOVERNANCE_DIR.glob("*.md"))
+    gov_total = sum(f.stat().st_size for f in gov_files)
+    if gov_total > GOVERNANCE_TOTAL_BUDGET:
+        errors.append(
+            f"budget: governance/ total {gov_total:,} bytes > limite {GOVERNANCE_TOTAL_BUDGET:,}"
+        )
+    else:
+        passes.append(
+            f"OK   budget:governance-total ({gov_total:,}/{GOVERNANCE_TOTAL_BUDGET:,} bytes)"
+        )
+    for f in gov_files:
+        if f.stat().st_size > GOVERNANCE_FILE_BUDGET:
+            errors.append(
+                f"budget: {rel(f)} tem {f.stat().st_size:,} bytes > limite por arquivo {GOVERNANCE_FILE_BUDGET:,}"
+            )
+
+    oversized_skills = [
+        f
+        for f in sorted(LOCAL_DIR.glob("*.skill"))
+        if f.stat().st_size > LOCAL_SKILL_FILE_BUDGET
+    ]
+    for f in oversized_skills:
+        errors.append(
+            f"budget: {rel(f)} tem {f.stat().st_size:,} bytes > limite por skill {LOCAL_SKILL_FILE_BUDGET:,}"
+        )
+    if not oversized_skills:
+        passes.append(
+            f"OK   budget:local-skills (todas ≤ {LOCAL_SKILL_FILE_BUDGET:,} bytes)"
+        )
+
+    return passes, errors
+
+
 def validate() -> tuple[list[str], list[str]]:
     passes: list[str] = []
     errors: list[str] = []
@@ -535,10 +656,12 @@ def validate() -> tuple[list[str], list[str]]:
         validate_skill_catalog,
         validate_markdown_links,
         validate_doc_snippets,
+        validate_model_orchestration_log,
         validate_template_output_consistency,
         validate_runtime_template_mirror,
         validate_repo_hygiene,
         validate_bootstrap_contract,
+        validate_context_budget,
     ]:
         ok_items, err_items = validator()
         passes.extend(ok_items)
