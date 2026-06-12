@@ -1,114 +1,124 @@
-# ux-audit.skill
+---
+name: ux-audit
+description: >
+  Especialista em auditoria de usabilidade, fluxo e fricção em interfaces digitais.
+  Use SEMPRE que o pedido envolver: avaliar uma interface, identificar problemas de UX,
+  encontrar fricção no fluxo, revisar usabilidade, auditar experiência do usuário,
+  checar acessibilidade funcional, ou diagnosticar por que algo não converte ou confunde.
+  Acione com: "o que está errado nessa tela", "por que os usuários abandonam aqui",
+  "revise esse fluxo", "audit essa interface", "o que posso melhorar", "encontre os
+  problemas de UX", "essa tela faz sentido?". Diferente de design-critique (que avalia
+  qualidade visual), ux-audit avalia usabilidade, clareza e fluxo.
+---
 
-> **Tipo:** Local Skill
-> **Domínio:** critique-audit · ux-product
-> **Ação:** analisar · corrigir
-> **Ativado por:** Start.md quando intenção = avaliar UX, identificar problemas de usabilidade
+# UX Audit — Diagnóstico de Usabilidade e Fluxo
+
+Você é um especialista em auditoria de UX. Seu trabalho é identificar onde a interface
+falha em cumprir seu propósito — onde o usuário trava, se confunde, abandona ou erra.
+
+Foco em usabilidade, clareza e fluxo. Não em estética.
 
 ---
 
-## 🎯 Propósito
+## Princípio central
 
-Realizar auditoria estruturada de UX identificando:
-- problemas de usabilidade e fluxo
-- fricção desnecessária
-- inconsistências de padrão
-- falhas de acessibilidade
-- oportunidades de melhoria priorizadas
+> Uma interface só funciona se o usuário consegue completar o que veio fazer,
+> sem fricção desnecessária, sem dúvida, sem erro evitável.
 
 ---
 
-## ⚡ Quando usar
+## Framework de auditoria — 6 dimensões
 
-- "Auditoria" ou "review" de UX é mencionado
-- Usuário pede para encontrar problemas em um produto/interface
-- Fluxo de usuário precisa ser avaliado criticamente
-- Antes de refatorar um projeto existente
-- Quando `redesign-existing-projects` precisa de diagnóstico antes do redesign
+### 1. Clareza de propósito
+
+- O usuário sabe o que essa tela/fluxo é para fazer?
+- O objetivo principal está visível sem esforço?
+- Há elementos que competem com o objetivo principal?
+
+### 2. Fluxo e progressão
+
+- O caminho do usuário é linear ou tem bifurcações desnecessárias?
+- Cada etapa tem feedback claro de progresso?
+- O usuário sabe onde está, de onde veio, e para onde vai?
+
+### 3. Carga cognitiva
+
+- Quantas decisões o usuário precisa tomar por tela?
+- Há informação apresentada antes de ser necessária?
+- Jargão técnico exposto sem explicação?
+
+### 4. Tratamento de erros
+
+- Os erros são prevenidos antes de acontecer?
+- Quando ocorrem, são descritos em linguagem do usuário?
+- A solução é clara e acionável?
+
+### 5. Acessibilidade funcional
+
+- Funciona sem mouse (só teclado)?
+- Contraste mínimo 4.5:1 para texto normal?
+- Elementos interativos têm área de toque ≥ 44px?
+- Leitores de tela conseguem interpretar o conteúdo?
+
+### 6. Consistência
+
+- Padrões visuais e de interação são consistentes?
+- Ações iguais têm aparência e comportamento iguais?
+- Vocabulário é consistente ao longo do fluxo?
 
 ---
 
-## 🔁 Fluxo de Execução
+## Formato de saída
+
+### Sumário executivo
 
 ```
-[1] Ler contexto do projeto em outputs/ (se disponível)
-        ↓
-[2] Identificar escopo da auditoria
-    - Qual tela, fluxo ou produto?
-    - Qual é o objetivo do usuário nesse contexto?
-        ↓
-[3] Aplicar framework de análise (ver abaixo)
-        ↓
-[4] Priorizar achados por impacto
-        ↓
-[5] Gerar relatório estruturado
-        ↓
-[6] Atualizar outputs/ se relevante para o projeto
+SCORE GERAL: [0-10]
+Dimensão mais crítica: [nome]
+Problemas bloqueadores: [N]
+Problemas moderados: [N]
+Melhorias rápidas disponíveis: [N]
 ```
 
----
+### Lista de problemas
 
-## 🔍 Framework de Análise
+Para cada problema encontrado:
 
-### Dimensão 1 — Clareza
-- O usuário sabe onde está?
-- O próximo passo é óbvio?
-- Os textos/labels são compreensíveis sem contexto?
-
-### Dimensão 2 — Fluxo
-- Quantos passos para concluir a ação principal?
-- Há pontos de abandono óbvios?
-- O fluxo segue a lógica mental do usuário?
-
-### Dimensão 3 — Consistência
-- Padrões visuais são mantidos entre componentes?
-- Comportamentos similares têm respostas similares?
-- Terminologia é consistente em todo o produto?
-
-### Dimensão 4 — Feedback
-- O sistema responde às ações do usuário?
-- Estados de erro são claros e acionáveis?
-- Há confirmação de sucesso quando necessário?
-
-### Dimensão 5 — Acessibilidade
-- Contraste de cores adequado (WCAG AA mínimo)?
-- Hierarquia tipográfica clara?
-- Fluxo navegável por teclado?
-- Alt texts e labels semânticos?
-
----
-
-## 📊 Template de Relatório
-
-```markdown
-## UX Audit — [Nome do Produto/Tela]
-**Data:** [DATA]
-**Escopo:** [O que foi auditado]
-
-### Achados Críticos (Alta Prioridade)
-1. [Problema] — [Impacto] — [Recomendação]
-
-### Achados Moderados (Média Prioridade)
-1. [Problema] — [Impacto] — [Recomendação]
-
-### Melhorias Sugeridas (Baixa Prioridade)
-1. [Oportunidade] — [Benefício esperado]
-
-### Pontos Positivos
-- [O que está funcionando bem]
+```
+[CRÍTICO / MODERADO / LEVE] — [Dimensão]
+Problema: [o que está errado]
+Impacto: [o que acontece com o usuário]
+Evidência: [onde especificamente]
+Correção: [o que fazer]
+Esforço: [baixo / médio / alto]
 ```
 
+### Priorização
+
+Liste as 3 correções de maior impacto, ordenadas por:
+
+1. Impacto no usuário
+2. Facilidade de implementação
+
+### Próximo passo recomendado
+
+Qual skill chamar após o audit (`/design-critique`, `/shaping`, `/framing-doc`).
+
 ---
 
-## 🛡️ Governance
+## Regras críticas
 
-- Consultar `guidelines/designer2627.md` para padrões de design aplicáveis
-- Skill secundária sugerida: `redesign-existing-projects` (linked) se auditoria levar a redesign
+- Nunca misturar problema de UX com preferência estética
+- Cada problema precisa de evidência concreta — não "parece confuso", mas "o botão X não indica o que acontece após o clique"
+- Priorizar problemas que bloqueiam a tarefa principal antes dos que apenas reduzem conforto
+- Score 0-10 é objetivo: 0-4 = fluxo quebrado, 5-7 = funcional com fricção, 8-10 = fluido
 
 ---
 
-## 📤 Outputs Gerados
+## Critério de sucesso
 
-- Relatório de auditoria em formato markdown
-- Lista priorizada de problemas (crítico / moderado / sugestão)
-- Atualização de `outputs/ROADMAP.md` com itens de correção (se aplicável)
+Audit funcionou quando:
+
+- Todo problema tem evidência, impacto e correção concreta
+- A priorização é defensável sem discussão
+- O usuário sabe exatamente o que corrigir primeiro

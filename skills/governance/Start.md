@@ -65,6 +65,7 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
                        `product-vision` · `storyboard-cinematic` · `aw-designer`
                        `hypothesis-investigation` · `landing-conversion` · `portfolio-storytelling`
                        `hyperframes` · `hyperframes-cli` · `hyperframes-media`
+                       `discovery` · `shaping` · `design-critique` · `ux-audit` · `framing-doc`
 3. _deferred/       → incubação; não entra no roteamento ativo
 4. linked-skills/ + cache/ → capability futura; fora do fluxo atual
 ```

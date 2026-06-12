@@ -145,6 +145,10 @@ skills/
 | `hyperframes.skill` | Composições de vídeo HTML |
 | `hyperframes-cli.skill` | CLI do HyperFrames |
 | `hyperframes-media.skill` | TTS, transcrição, remoção de fundo |
+| `discovery.skill` | Estruturação de problema e contexto |
+| `shaping.skill` | De ideia aberta a direção concreta |
+| `design-critique.skill` | Qualidade visual e coerência estética |
+| `framing-doc.skill` | Raciocínio em documentação utilizável |
 
 ---
 
