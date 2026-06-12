@@ -62,25 +62,64 @@ Só depois do **"sim"** do usuário: pastas, runtime, PRD, código (se aplicáve
 
 ## O usuário NÃO precisa informar
 
-- Next.js, Vite, pnpm, npm  
-- runtime, YAML, skills  
-- structure skill  
+- Next.js, Vite, pnpm, npm
+- runtime, YAML, skills
+- structure skill
+- tipo de projeto (research/design/dev/presentation/full)
 
-O agente infere e documenta em linguagem simples no resumo (Fase 2).
+O agente infere tudo e documenta em linguagem simples no resumo (Fase 2).
+
+---
+
+## Inferência de tipo de projeto
+
+Detectar nas respostas P1 + P2 e registrar em `runtime/context.yaml → project_type`:
+
+| Sinal | Tipo | `work/` gerado |
+|-------|------|----------------|
+| Pesquisa, relatório, análise, dados | `research-only` | `work/research/` |
+| Landing, visual, Figma, tela (sem código) | `design-only` | `work/visual-foundation/` · `work/design/` |
+| API, backend, CRUD, script, código puro | `dev-only` | `work/technical-context/` · `work/development/` · `work/qa/` |
+| Apresentação, deck, pitch, slides | `presentation` | `work/research-light/` · `work/narrative/` |
+| App, produto, MVP, múltiplos fluxos | `full-product` | `work/product-thinking/` + todos os módulos |
+| Dúvida | `full-product` | todos os módulos (pode ser podado depois) |
+
+**Regra:** gerar apenas os módulos do tipo detectado — nunca criar `work/` completo por padrão.
+
+---
+
+## Memória de projeto (context/)
+
+Criar após o "sim" do usuário, a partir dos templates:
+
+```
+context/decisions.md  ← de templates/context/decisions.md
+context/assumptions.md ← de templates/context/assumptions.md
+```
+
+Preencher no kickoff:
+- `decisions.md` → entrada inicial com direção aprovada + stack escolhida
+- `assumptions.md` → premissas óbvias detectadas nas Fases 1-2
+
+Atualizar `decisions.md` **somente** quando ocorrer mudança de rumo, descarte de alternativa ou decisão relevante. Nunca atualizar por rotina.
 
 ---
 
 ## Checklist de saída
 
-- [ ] Kickoff: usuário confirmou com "sim"  
-- [ ] `sprint-contract.md` na raiz (se primeira entrega inclui UI)  
-- [ ] `skills/runtime/` criado e validado  
-- [ ] `AGENTS.md` mantido na raiz  
-- [ ] `CONTEXT.md` + `PRD.md` do **app** na raiz (≤50 linhas no CONTEXT)  
-- [ ] Stack registrada em `runtime/stack.yaml`  
-- [ ] `.env.example` na raiz do app (placeholders; nunca commitar `.env.local`)  
-- [ ] `skills/outputs/` com BRIEF, ROADMAP, ARCHITECTURE  
-- [ ] Nenhum CONTEXT/PRD do STARTER meta copiado por engano  
+- [ ] Kickoff: usuário confirmou com "sim"
+- [ ] `sprint-contract.md` na raiz (se primeira entrega inclui UI)
+- [ ] `skills/runtime/` criado e validado
+- [ ] `runtime/context.yaml` → `project_type` preenchido
+- [ ] `AGENTS.md` mantido na raiz
+- [ ] `CONTEXT.md` + `PRD.md` do **app** na raiz (≤50 linhas no CONTEXT)
+- [ ] Stack registrada em `runtime/stack.yaml`
+- [ ] `context/decisions.md` criado com entrada inicial
+- [ ] `context/assumptions.md` criado com premissas do kickoff
+- [ ] `work/` com apenas os módulos do tipo detectado
+- [ ] `.env.example` na raiz do app (placeholders; nunca commitar `.env.local`)
+- [ ] `skills/outputs/` com BRIEF, ROADMAP, ARCHITECTURE
+- [ ] Nenhum CONTEXT/PRD do STARTER meta copiado por engano
 
 ---
 

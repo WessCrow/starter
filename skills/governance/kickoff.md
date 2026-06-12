@@ -120,6 +120,30 @@ Registrar em `runtime/stack.yaml` e explicar em 1 linha no CONTEXT.md.
 
 ---
 
+## Fase 3b — Tipo de projeto → estrutura `work/` proporcional
+
+Inferir o tipo a partir das respostas P1 + P2. Gerar **apenas os módulos necessários**.
+
+| Tipo detectado | Módulos em `work/` |
+|----------------|--------------------|
+| `research-only` | `work/research/` |
+| `design-only` | `work/visual-foundation/` · `work/design/` |
+| `dev-only` | `work/technical-context/` · `work/development/` · `work/qa/` |
+| `presentation` | `work/research-light/` · `work/narrative/` |
+| `full-product` | `work/product-thinking/` · `work/research/` · `work/visual-foundation/` · `work/design/` · `work/development/` · `work/qa/` · `work/handoff/` |
+
+Sinais de inferência:
+- "só pesquisa / relatório / análise" → `research-only`
+- "landing / visual / Figma / tela" sem código → `design-only`
+- "API / backend / CRUD / código" sem design → `dev-only`
+- "apresentação / deck / pitch" → `presentation`
+- "app / produto / MVP / múltiplos fluxos" → `full-product`
+- Dúvida → `full-product` (pode ser podado depois)
+
+Registrar tipo em `runtime/context.yaml` → `project_type`.
+
+---
+
 ## Fase 4 — Execução (após "sim")
 
 ```
@@ -127,13 +151,19 @@ Registrar em `runtime/stack.yaml` e explicar em 1 linha no CONTEXT.md.
 2. Copiar templates/runtime/ → skills/runtime/
 3. Structure skill detectada
 4. CONTEXT.md + PRD.md na raiz (do projeto, não do STARTER)
-5. sprint-contract.md na raiz (se P2 pede UI):
+5. context/ — criar pasta e arquivos de memória:
+   - context/decisions.md (de templates/context/decisions.md)
+     → preencher entrada inicial com direção aprovada no "sim"
+   - context/assumptions.md (de templates/context/assumptions.md)
+     → preencher premissas óbvias detectadas nas Fases 1-2
+6. work/ — criar apenas módulos do tipo detectado (ver Fase 3b)
+7. sprint-contract.md na raiz (se P2 pede UI):
    - critérios a partir do resumo Fase 2 + UX Diamond
    - marcar "Aprovado: [x] Sim (kickoff Fase 2)"
-6. skills/outputs/ (BRIEF, ROADMAP, ARCHITECTURE)
-7. Código inicial só se P2 pedir tela/MVP
-8. validate.py → 0 failed
-9. Mensagem final: o que foi criado + próximo passo em 1 frase
+8. skills/outputs/ (BRIEF, ROADMAP, ARCHITECTURE)
+9. Código inicial só se P2 pedir tela/MVP
+10. validate.py → 0 failed
+11. Mensagem final: o que foi criado + próximo passo em 1 frase
 ```
 
 Sem UI em P2 → **não** gerar sprint-contract.  
