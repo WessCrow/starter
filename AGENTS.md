@@ -52,12 +52,12 @@ Sessão longa (>8 mensagens ou >5 arquivos abertos): sugerir nova janela com res
 
 ## 0d. Segurança e Isolamento do Host (Host Guard)
 
-Durante a execução de comandos (`run_command`):
-- O agente está restrito **estritamente à pasta raiz do workspace** (`/Users/drt79427/Desktop/Estudos/STARTER` ou a raiz do projeto de destino).
-- **Proibido:**
-  * Executar qualquer comando ou ler/escrever arquivos fora da árvore do projeto (ex: acessar `/tmp`, `/home`, chaves SSH, ou arquivos globais do SO).
-  * Executar comandos destrutivos genéricos (como `rm` sem especificar caminhos relativos explicitamente seguros e limitados).
-  * Instalar programas globais ou dependências fora do escopo local do projeto.
+Modelo em duas camadas — protocolo completo em `skills/flows/host-guard.md`.
+
+**Camada 1 (convenção):** Durante a execução de comandos (`run_command`), o agente está restrito **estritamente à pasta raiz do workspace**.
+- **Proibido:** comandos/arquivos fora da árvore do projeto (`/tmp`, `/home`, `~/.ssh`, globais do SO); destrutivos genéricos (`rm -rf` em raiz/home, `mkfs`, `dd` em `/dev/`); pipe-to-shell (`curl … | sh`); instalação global (`npm/pnpm/yarn -g`, `sudo apt|brew`); force push em `main`/`master`.
+
+**Camada 2 (enforce):** Hook `PreToolUse:Bash` executa `skills/infra/scripts/host-guard.sh`, que intercepta cada comando e **bloqueia com exit 2** os padrões acima — determinístico, independente do modelo. Ativação opt-in em `.claude/settings.json` (ver `skills/flows/host-guard.md`).
 
 ---
 

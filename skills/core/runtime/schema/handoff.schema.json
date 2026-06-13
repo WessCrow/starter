@@ -58,6 +58,24 @@
       },
       "additionalProperties": false
     },
+    "context_metrics": {
+      "type": "object",
+      "properties": {
+        "last_session_at": { "type": ["string", "null"] },
+        "files_loaded": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "files_loaded_count": { "type": "integer", "minimum": 0 },
+        "estimated_tokens": { "type": "integer", "minimum": 0 },
+        "unnecessary_files": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "estimation_method": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
     "reminders": {
       "type": "array",
       "items": {
