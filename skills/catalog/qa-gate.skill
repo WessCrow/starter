@@ -39,7 +39,7 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 
 ---
 
-## Fluxo (v5.1 — Fase 4 Playwright **inativa**)
+## Fluxo (v5.2 — Fase 4 Playwright **ativa** via CLI)
 
 ```
 [1] Ler sprint-contract.md + SPEC.md da feature
@@ -48,8 +48,10 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
         ↓
 [3] Executar qa-smoke.skill (build/lint/test) se projeto tiver package.json
         ↓
+[3b] Se feature tem UI e `runtime/qa.yaml → phase_4_playwright.enabled: true`:
+     executar qa-playwright.skill (CLI · chromium · gera spec do contrato)
+        ↓
 [4] Testar como usuário — descrever passos no relatório
-        (Fase 4 Playwright: NÃO usar — deferred)
         ↓
 [5] Pontuar dimensões 0–10 (ver qa.yaml)
         ↓

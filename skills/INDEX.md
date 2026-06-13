@@ -84,8 +84,10 @@ index.yaml → validate.py → hot → warm? → cold? → Start-ops → skill �
 | `runtime/rules.yaml` | Regras IA (hot, validado) |
 | `flows/feature-flow.md` | Fluxo spec-driven |
 | `flows/repo-hygiene.md` | O que versionar |
+| `flows/host-guard.md` | Modelo Host Guard (convenção + hook) |
 | `scripts/validate-skills.py` | Antidrift |
 | `scripts/check-repo-hygiene.py` | Bloqueia fixtures no índice git |
+| `scripts/host-guard.sh` | Hook PreToolUse:Bash — bloqueia comandos perigosos |
 
 ---
 

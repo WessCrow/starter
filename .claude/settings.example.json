@@ -1,0 +1,17 @@
+{
+  "_comment": "Copie para .claude/settings.json no seu projeto para ativar o Host Guard.",
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash skills/infra/scripts/host-guard.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
