@@ -29,9 +29,9 @@ user:
   notes: "Sprint A concluída. validate-skills 23/0. Próxima sessão: Sprint B (evidência executada nos pilotos)."
 
 review:
-  last_review_path: docs/private/reviews/2026-06-11-dogfood-007-model-tier.md
-  last_review_at: "2026-06-11"
-  reviews_since_improvement_sprint: 4
+  last_review_path: docs/private/reviews/done/2026-06-12-rtk-review-ASSIMILADO-rtk-opcional-failures-metricas.md
+  last_review_at: "2026-06-13"
+  reviews_since_improvement_sprint: 0   # sprint de melhoria 2026-06-13: reviews 003-006 + rtk aplicados e arquivados em reviews/done/
 
 # ─────────────────────────────────────────────────────────────────────────────
 # MÉTRICAS DE SESSÃO  (atualizar ao fim de cada atividade pesada)

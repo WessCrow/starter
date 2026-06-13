@@ -1,7 +1,7 @@
 # stack-guide.md — Stack para projetos disruptivos
 
 > **Para:** quem constrói sozinho, sem ser programador  
-> **Atualizado:** 2026-05-20 · **Runtime:** `runtime/stack.yaml`
+> **Atualizado:** 2026-06-13 · **Runtime:** `runtime/stack.yaml`
 
 ---
 
@@ -64,6 +64,16 @@ As structure skills (`nextjs-structure.skill`, `react-vite-structure.skill`) dev
 
 ---
 
+## rtk — compressor de output de comandos (opcional, recomendado)
+
+Componente **opcional** que ataca a ponta que o `context-cleaner.skill` não alcança: a **saída bruta** de comandos (`git status`, `pnpm run build`, testes, lint, docker). É um proxy CLI em Rust (binário único, zero dependências) que filtra e comprime esse output antes de chegar ao contexto do agente — economia declarada de 60–90% de tokens, <10ms de overhead.
+
+Setup (uma vez, opt-in): `rtk init -g --agent <cursor|claude|...>` — instala um hook `PreToolUse` que reescreve os comandos (`git status` → `rtk git status`) de forma transparente. Não substitui o context-cleaner nem a governança do STARTER; **complementa** (camada mecânica × camada de processo).
+
+Repo: `github.com/rtk-ai/rtk` · Apache-2.0. Sem rtk, o fluxo segue normal — é só economia adicional.
+
+---
+
 ## Stack “disruptiva” no sentido produto (não experimental)
 
 Evitar stacks exóticas só por hype — **disruptivo = produto + UX + velocidade de iteração**.
@@ -92,4 +102,4 @@ Evitar stacks exóticas só por hype — **disruptivo = produto + UX + velocidad
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-07
+> Última atualização: 2026-06-13

@@ -104,6 +104,19 @@ O STARTER funciona como um manual de regras rígido e inteligente para a IA. Ele
 - **Compatível também:** VSCode, Windsurf, Cline, Roo.
 - **Tecnologias Padrão:** Next.js + pnpm (ou React + Vite para páginas e aplicações ultra rápidas).
 
+### Degradação graciosa por ambiente
+
+O STARTER funciona em qualquer editor que leia `AGENTS.md`. Recursos automatizados (hooks, orquestração por tier) **degradam para convenção manual** onde o harness não os suporta — nada quebra, você só perde a automação. O que cada ambiente garante de fato:
+
+| Editor / Harness | Lê `AGENTS.md` | Hook de sessão (§0f) | Orquestração por tier (§0g) |
+|------------------|:--------------:|----------------------|------------------------------|
+| **Cursor / Claude Code** | ✅ nativo | ✅ `SessionStart` automático | ✅ delega via Task/subagent |
+| **Antigravity** | ✅ nativo | ⚠️ via protocolo (nova sessão) | ⚠️ fluxo auxiliar / nova sessão |
+| **Cline / Roo** | ✅ leitura | ❌ sem hook → lê `AGENTS.md` | ✅ Plan/Architect → Act/Code (nativo) |
+| **Windsurf / VSCode** | ✅ leitura | ❌ → lê `AGENTS.md` no início | ❌ single-session + `handoff.yaml` |
+
+**Por sistema operacional:** macOS/Linux rodam os scripts `.sh` (validate, hooks, patch pnpm) nativamente — cobertura total. No **Windows**, os scripts exigem **WSL ou Git Bash**; sem eles, o framework continua válido por convenção (o agente lê `AGENTS.md` e segue os protocolos manualmente), apenas sem os scripts de hook/validação automáticos.
+
 ---
 
 > ### Segurança & Autoria
@@ -114,4 +127,4 @@ O STARTER funciona como um manual de regras rígido e inteligente para a IA. Ele
 >
 > _Sinta-se livre para usar, estudar e evoluir a ferramenta! Apenas pedimos que mantenha os créditos originais do criador._
 >
-> **Última atualização:** 2026-06-10
+> **Última atualização:** 2026-06-13

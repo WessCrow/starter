@@ -118,6 +118,8 @@ Fase 2 "sim" → ux-diamond → Fase 3 (stack)
 
 Registrar em `runtime/stack.yaml` e explicar em 1 linha no CONTEXT.md.
 
+> **Opcional (economia de tokens):** se o ambiente do usuário suportar, recomendar `rtk init -g --agent <cursor|claude|...>` — comprime a saída bruta de comandos (build/git/test) antes de chegar ao contexto. Opt-in, complementa o `context-cleaner`; detalhes em `stack-guide.md`.
+
 ---
 
 ## Fase 3b — Tipo de projeto → estrutura `work/` proporcional
