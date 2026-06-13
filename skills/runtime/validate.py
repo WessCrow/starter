@@ -36,6 +36,7 @@ FILE_TO_SCHEMA = {
 
 
 def _import_deps():
+    """Importa pyyaml e jsonschema; encerra com exit(2) se ausentes."""
     try:
         import yaml
         from jsonschema import Draft202012Validator
@@ -61,11 +62,13 @@ def merge_meta(schema: dict) -> dict:
 
 
 def merge_meta_branch(branch: dict) -> dict:
+    """Injeta metapropriedades em um branch de oneOf."""
     b = copy.deepcopy(branch)
     return inject_meta(b)
 
 
 def inject_meta(schema: dict) -> dict:
+    """Adiciona propriedades v/updated ao schema e garante que são required."""
     props = schema.setdefault("properties", {})
     props.update(META_PROPS)
     req = list(schema.get("required", []))
@@ -77,6 +80,7 @@ def inject_meta(schema: dict) -> dict:
 
 
 def validate_file(yaml_path: Path, schema_path: Path) -> list[str]:
+    """Valida yaml_path contra schema_path; retorna lista de mensagens de erro (vazia = OK)."""
     yaml_mod, Draft202012Validator = _import_deps()
 
     with schema_path.open(encoding="utf-8") as f:
@@ -204,6 +208,7 @@ def check_security_leaks() -> list[str]:
 
 
 def main() -> int:
+    """Ponto de entrada: valida YAMLs do runtime e exibe resultado; retorna 0 (OK) ou 1 (falha)."""
     targets = sys.argv[1:]
     if targets:
         mapping = {

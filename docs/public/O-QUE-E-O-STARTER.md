@@ -127,6 +127,25 @@ O valor real dele está na combinação de:
 
 ---
 
+## Custo de contexto por sessão
+
+O STARTER não é invisível em tokens — e esse número é medido, não estimado.
+
+**Metodologia:** `validate-skills.py` mede o tamanho em bytes de cada camada de contexto definida em `skills/runtime/context-budget.yaml`. Conversão: 1 token ≈ 4 bytes (GPT-tokenizer para texto em inglês/PT-BR técnico).
+
+| Camada | Conteúdo | Tamanho | Tokens est. |
+|--------|----------|---------|-------------|
+| **hot** (sempre carregada) | AGENTS.md, INDEX, state, handoff, qa.yaml | 15.401 bytes | ~3.850 |
+| **warm** (sob demanda frequente) | skills de governance ativas da sessão | 4.107 bytes | ~1.030 |
+| **entrada** (docs de orientação) | COMECAR-PROJETO + Start.md | 8.474 bytes | ~2.120 |
+| **Sessão típica (hot + warm + entrada)** | — | **27.982 bytes** | **~7.000** |
+
+Referência: um modelo com janela de 200 k tokens comporta ~28 sessões STARTER completas em paralelo. Em uso real, apenas hot (~3.850 tok) é carregada em toda sessão; warm e entrada entram sob demanda.
+
+Medição registrada em: 2026-06-12 · versão do framework: v5.2 · fonte: `skills/runtime/context-budget.yaml`.
+
+---
+
 ## Descrição de posicionamento
 
 O `STARTER` é um framework AI-native para começar projetos com agentes sem perder contexto, consistência e qualidade.  
@@ -150,4 +169,4 @@ Se eu tivesse que resumir em uma frase:
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-07
+> Última atualização: 2026-06-12

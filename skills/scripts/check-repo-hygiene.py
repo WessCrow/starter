@@ -54,6 +54,7 @@ NAME_PATTERN_ALLOW_PREFIXES = (
 
 
 def _run_git(args: list[str]) -> list[str]:
+    """Executa um comando git e retorna linhas de stdout; retorna [] em caso de erro."""
     try:
         result = subprocess.run(
             ["git", *args],
@@ -70,12 +71,14 @@ def _run_git(args: list[str]) -> list[str]:
 
 
 def _git_tracked_files(staged_only: bool) -> list[str]:
+    """Retorna lista de caminhos rastreados pelo git (todos ou apenas staged)."""
     if staged_only:
         return _run_git(["diff", "--cached", "--name-only", "--diff-filter=ACMR"])
     return _run_git(["ls-files"])
 
 
 def _matches_forbidden_glob(path: str) -> bool:
+    """Retorna True se o caminho bater em algum padrão glob proibido."""
     normalized = path.replace("\\", "/")
     for pattern in FORBIDDEN_GLOBS:
         if fnmatch.fnmatch(normalized, pattern):
@@ -84,6 +87,7 @@ def _matches_forbidden_glob(path: str) -> bool:
 
 
 def _matches_forbidden_name(path: str) -> bool:
+    """Retorna True se o nome do arquivo bater em algum padrão proibido (fora de pastas permitidas)."""
     normalized = path.replace("\\", "/")
     for prefix in NAME_PATTERN_ALLOW_PREFIXES:
         if normalized.startswith(prefix):
@@ -93,6 +97,7 @@ def _matches_forbidden_name(path: str) -> bool:
 
 
 def check_tracked_files(paths: list[str]) -> list[str]:
+    """Verifica lista de caminhos rastreados e retorna mensagens de violação encontradas."""
     violations: list[str] = []
 
     for raw in paths:
@@ -152,6 +157,7 @@ def check_workspace_leaks() -> list[str]:
 
 
 def main() -> int:
+    """Ponto de entrada: verifica higiene do repo e retorna 0 (OK) ou 1 (violações)."""
     staged_only = "--staged" in sys.argv
     scope = "staged" if staged_only else "tracked"
 

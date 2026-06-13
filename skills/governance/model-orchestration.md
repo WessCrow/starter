@@ -150,7 +150,8 @@ Alerta §0c (>8 mensagens): `context-cleaner` + nova sessão executor para traba
 - 2026-06-11 **REFACTOR GREEN:** Cline 5×[P] + Task paralela → FAIL se Task; Plan→Act nativo. PASS.
 - 2026-06-11 **REFACTOR GREEN:** trivial 15L + 3 subagents → recusa (G2 anti-overhead). PASS.
 - 2026-06-11 **DOGFOOD:** specs/007 — T2/T3/T4 `[P]` delegadas Task paralelo; T1 orquestrador; validate-skills 16/0. PASS.
+- 2026-06-12 **DOGFOOD UI:** specs/002-stats-panel (pilot-dashboard-pt) — T1+T2 `[P]` executor (StatsPanel.tsx + integração, <40L, brief fechado); T3 orquestrador (QA Gate: build + E2E Playwright 5/5 PASS). Tier caro: specify/plan/contrato/QA. Tier barato: T1+T2. PASS.
 
 ---
 
-> **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · Última atualização: 2026-06-11
+> **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · Última atualização: 2026-06-12
