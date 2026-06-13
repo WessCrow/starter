@@ -22,3 +22,16 @@ review:
   last_review_path: null
   last_review_at: null
   reviews_since_improvement_sprint: 0
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MÉTRICAS DE SESSÃO  (atualizar ao fim de cada atividade pesada)
+# Método: listar arquivos lidos + estimar tokens por tamanho de disco.
+# Estimativa: 1 KB ≈ 250 tokens. Não precisa ser exata — ser consistente.
+# ─────────────────────────────────────────────────────────────────────────────
+context_metrics:
+  last_session_at: null
+  files_loaded: []
+  files_loaded_count: 0
+  estimated_tokens: 0
+  unnecessary_files: []
+  estimation_method: "1 KB ≈ 250 tokens (tamanho em disco)"

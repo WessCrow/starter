@@ -16,7 +16,7 @@ projeto/
 
 ## Setup rápido
 
-1. `governance/playwright-setup.md` (Cursor MCP)  
+1. `flows/playwright-setup.md` (Cursor MCP)  
 2. `pnpm add -D @playwright/test && pnpm exec playwright install chromium`  
 3. Preencher `qa/e2e-scenario.yaml`  
 4. `pnpm run dev` em um terminal  

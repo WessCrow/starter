@@ -3,13 +3,13 @@
 > **Feature:** NNN-[nome-kebab]
 > **Baseado em:** `spec.md` (status: clarificado)
 > **Criado em:** YYYY-MM-DD
-> **Protocolo:** `skills/governance/feature-flow.md`
+> **Protocolo:** `skills/flows/feature-flow.md`
 
 ---
 
 <!--
 ⚠️ REGRA DESTE ARQUIVO: descrever o COMO.
-Stack deve respeitar runtime/stack.yaml do projeto (padrão: governance/stack-guide.md).
+Stack deve respeitar runtime/stack.yaml do projeto (padrão: flows/stack-guide.md).
 Decisões relevantes → espelhar em runtime/decisions.yaml.
 -->
 
@@ -47,17 +47,27 @@ src/features/[feature]/
 
 ---
 
+## Nível arquitetural
+
+> Declarar o nível antes de detalhar a arquitetura (ver `flows/feature-flow.md` Fase 3).
+
+- **Nível:** [ ] S  [ ] M  [ ] L  [ ] XL
+- **Justificativa:** [por que este nível e não o acima]
+- **Descartado:** [padrão descartado] — [motivo]
+
+---
+
 ## Riscos e decisões
 
-| Decisão | Alternativa descartada | Motivo |
-|---------|------------------------|--------|
-| | | |
+| Decisão | Rastreia para (critério do spec.md) | Alternativa descartada | Motivo |
+|---------|--------------------------------------|------------------------|--------|
+| | | | |
 
 ---
 
 ## Constitution check
 
-> Conferir contra `runtime/rules.yaml` + `governance/RULES.md` antes de gerar tasks.
+> Conferir contra `runtime/rules.yaml` + `flows/RULES.md` antes de gerar tasks.
 
 - [ ] Nenhuma regra de segurança violada (Host Guard, .env, validação de entrada)
 - [ ] Padrões de código e acessibilidade respeitados

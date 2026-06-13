@@ -1,0 +1,58 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# FORMATO DO HANDOFF  (regra A5 — retomada fria sem perguntas)
+# Cada campo: máx. 1 linha de texto livre, sem siglas internas sem link.
+# Exemplo válido:  last_completed: "feature X finalizada; QA PASS; tag v5.3.0"
+# Exemplo inválido: "P2.9 revertida" (sigla interna sem contexto)
+# ─────────────────────────────────────────────────────────────────────────────
+v: "5.2"
+updated: "2026-06-12"
+
+session:
+  last_completed: "Sprint A do Plano Todos-os-Pilares: sync Playwright, antidrift validator, versões v5.2, tag v5.3.0"
+  next_action: "Sprint B — rodar pnpm dev nos pilotos, Playwright E2E real, dogfood §0g com feature UI"
+  blocked: false
+
+qa:
+  last_status: pass
+  last_report_path: docs/private/reviews/2026-06-11-dogfood-007-model-tier.md
+  last_run_at: "2026-06-11"
+  failures_open: []
+
+feature:
+  id: plano-todos-os-pilares-sprint-a
+  sprint_contract_path: docs/private/plano-90-todos-pilares.md
+  spec_path: docs/private/plano-90-todos-pilares.md
+
+user:
+  verified_in_browser: false
+  verified_at: null
+  notes: "Sprint A concluída. validate-skills 23/0. Próxima sessão: Sprint B (evidência executada nos pilotos)."
+
+review:
+  last_review_path: docs/private/reviews/2026-06-11-dogfood-007-model-tier.md
+  last_review_at: "2026-06-11"
+  reviews_since_improvement_sprint: 4
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MÉTRICAS DE SESSÃO  (atualizar ao fim de cada atividade pesada)
+# Método: listar arquivos lidos + estimar tokens por tamanho de disco.
+# Estimativa: 1 KB ≈ 250 tokens. Não precisa ser exata — ser consistente.
+# ─────────────────────────────────────────────────────────────────────────────
+context_metrics:
+  last_session_at: "2026-06-13"
+  files_loaded: []          # lista dos arquivos carregados na última sessão
+  files_loaded_count: 0
+  estimated_tokens: 0       # soma estimada em tokens (1 KB ≈ 250 t)
+  unnecessary_files: []     # arquivos carregados mas não usados — aponta desperdício
+  estimation_method: "1 KB ≈ 250 tokens (tamanho em disco)"
+
+reminders:
+  - id: phase_4_playwright
+    when: "Ao rodar QA Gate em feature com UI"
+    action: "Fase 4 ativa — rodar pnpm run test:e2e; spec gerado via generate_from_contract: true"
+  - id: pre_push_hygiene
+    when: "Antes de commit ou push"
+    action: "python3 skills/infra/scripts/check-repo-hygiene.py"
+  - id: sprint_b_prioridade
+    when: "Próxima sessão"
+    action: "Executar Sprint B: pnpm dev pilotos + E2E Playwright + dogfood §0g + check-spec-coherence.py"

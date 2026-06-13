@@ -11,7 +11,7 @@
 2. runtime/ hot → rules, context, state
 3. runtime/ warm → active-feature (se aplicável)
 4. runtime/ cold → sob demanda
-5. governance/Start-ops.md
+5. flows/Start-ops.md
 6. validate.py (após editar runtime)
 ```
 
@@ -31,12 +31,12 @@
 
 | Recurso | Papel |
 |---------|-------|
-| `governance/qa-protocol.md` | Portaria de qualidade |
+| `flows/qa-protocol.md` | Portaria de qualidade |
 | `runtime/qa.yaml` | Pesos + gate rígido |
 | `runtime/handoff.yaml` | Retomada + status QA |
-| `local-skills/qa-gate.skill` | Avaliador cético (obrigatório pós-código) |
-| `local-skills/qa-smoke.skill` | build/lint/test |
-| `local-skills/qa-playwright.skill` | QA E2E browser (Fase 4) |
+| `catalog/qa-gate.skill` | Avaliador cético (obrigatório pós-código) |
+| `catalog/qa-smoke.skill` | build/lint/test |
+| `catalog/qa-playwright.skill` | QA E2E browser (Fase 4) |
 | `templates/sprint-contract.md` | Contrato antes de codar |
 
 ---
@@ -54,8 +54,8 @@ index.yaml → validate.py → hot → warm? → cold? → Start-ops → skill �
 | Recurso | Papel |
 |---------|-------|
 | `../COMECAR-PROJETO.md` | Só diga "Começar projeto" |
-| `governance/kickoff.md` | Limpeza + 4 perguntas |
-| `local-skills/project-starter.skill` | Execução após "sim" |
+| `flows/kickoff.md` | Limpeza + 4 perguntas |
+| `catalog/project-starter.skill` | Execução após "sim" |
 | `scripts/clean-framework-artifacts.sh` | Fase 0 automática |
 
 ---
@@ -64,7 +64,7 @@ index.yaml → validate.py → hot → warm? → cold? → Start-ops → skill �
 
 | Recurso | Papel |
 |---------|-------|
-| `governance/feature-flow.md` | specify → clarify → plan → tasks → analyze → implementar |
+| `flows/feature-flow.md` | specify → clarify → plan → tasks → analyze → implementar |
 | `templates/specs/spec-template.md` | O quê + por quê |
 | `templates/specs/plan-template.md` | Como: stack, dados, arquitetura |
 | `templates/specs/tasks-template.md` | Tarefas com `[P]` e dependências |
@@ -76,14 +76,14 @@ index.yaml → validate.py → hot → warm? → cold? → Start-ops → skill �
 
 | Doc | Papel |
 |-----|-------|
-| `governance/Start-ops.md` | Orchestrator + fluxo QA |
-| `governance/Start.md` | Roteamento de skills |
-| `governance/skills-governance.md` | Capability ativa/adiada/futura |
-| `governance/model-orchestration.md` | Orquestração por tier (opt-in) |
-| `governance/RULES.md` | Regras invioláveis (referência humana) |
+| `flows/Start-ops.md` | Orchestrator + fluxo QA |
+| `flows/Start.md` | Roteamento de skills |
+| `flows/skills-governance.md` | Capability ativa/adiada/futura |
+| `flows/model-orchestration.md` | Orquestração por tier (opt-in) |
+| `flows/RULES.md` | Regras invioláveis (referência humana) |
 | `runtime/rules.yaml` | Regras IA (hot, validado) |
-| `governance/feature-flow.md` | Fluxo spec-driven |
-| `governance/repo-hygiene.md` | O que versionar |
+| `flows/feature-flow.md` | Fluxo spec-driven |
+| `flows/repo-hygiene.md` | O que versionar |
 | `scripts/validate-skills.py` | Antidrift |
 | `scripts/check-repo-hygiene.py` | Bloqueia fixtures no índice git |
 
@@ -93,9 +93,9 @@ index.yaml → validate.py → hot → warm? → cold? → Start-ops → skill �
 
 ```
 skills/
-├── runtime/          ★ YAML operacional (hot/warm/cold + schema/)
-├── governance/       Protocolos e orchestrator
-├── local-skills/     Skills funcionais (.skill)
+├── core/runtime/          ★ YAML operacional (hot/warm/cold + schema/)
+├── flows/       Protocolos e orchestrator
+├── catalog/     Skills funcionais (.skill)
 ├── structure/        Arquitetura de pastas por stack
 ├── templates/        Boilerplates (runtime/ + specs/ + overrides/)
 ├── guidelines/       Padrões de design
@@ -105,13 +105,13 @@ skills/
 └── _deferred/        Skills adiadas (ex: Playwright)
 ```
 
-- **Ativas:** `structure/` + `local-skills/`
+- **Ativas:** `structure/` + `catalog/`
 - **Adiadas:** `_deferred/`
 - **Futuras:** `linked-skills/` + `cache/`
 
 ---
 
-## Skills ativas (`local-skills/`)
+## Skills ativas (`catalog/`)
 
 | Skill | Domínio |
 |-------|---------|
@@ -154,10 +154,10 @@ skills/
 
 ## Checklist de manutenção
 
-- [ ] `governance/Start.md` sincronizado com skills disponíveis?
-- [ ] `governance/skills-governance.md` reflete capability real?
-- [ ] Novos arquivos em `local-skills/` e `structure/` documentados neste INDEX?
-- [ ] `python3 skills/scripts/validate-skills.py` passa sem erro?
+- [ ] `flows/Start.md` sincronizado com skills disponíveis?
+- [ ] `flows/skills-governance.md` reflete capability real?
+- [ ] Novos arquivos em `catalog/` e `structure/` documentados neste INDEX?
+- [ ] `python3 skills/infra/scripts/validate-skills.py` passa sem erro?
 - [ ] Templates atualizados conforme evolução?
 
 ---

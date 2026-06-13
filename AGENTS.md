@@ -8,8 +8,8 @@ Compatível: Antigravity · Cursor · Claude Code · VSCode · Windsurf · Cline
 
 Se o usuário disser **`Começar projeto`** (ou equivalente):
 
-1. **`bash skills/scripts/clean-framework-artifacts.sh`** — Fase 0 (ver `bootstrap-cleanup.md`)
-2. Ler `skills/governance/kickoff.md`
+1. **`bash skills/infra/scripts/clean-framework-artifacts.sh`** — Fase 0 (ver `bootstrap-cleanup.md`)
+2. Ler `skills/flows/kickoff.md`
 3. **Pergunta 0 (idioma):** português ou inglês? → grava `language` (docs/product) em `runtime/context.yaml`; default pt-BR — *não conta no limite de 4*
 4. Fazer até **4 perguntas** em português simples (uma por vez)
 5. Resumir + **"Posso começar?"** — **não criar arquivos antes do sim**
@@ -25,7 +25,7 @@ O usuário **não** precisa citar stack. Ver `COMECAR-PROJETO.md` na raiz.
 
 Se o usuário pedir **nova feature/funcionalidade** em projeto já iniciado:
 
-1. Ler `skills/governance/feature-flow.md`
+1. Ler `skills/flows/feature-flow.md`
 2. Criar `specs/NNN-nome/` → **specify** (`spec.md`, sem tecnologia) → **clarify** (≤5 perguntas registradas) → **plan** (`plan.md`) → **tasks** (`tasks.md`, dependências + `[P]`)
 3. **Analyze:** checar spec ↔ plan ↔ tasks ↔ `rules.yaml` antes do contrato
 4. `sprint-contract.md` aprovado → implementar → QA Gate (seção 3)
@@ -39,7 +39,7 @@ Templates: `skills/templates/specs/` (resolução: `templates/overrides/` vence 
 
 Ao abrir este repositório em uma IDE diferente ou reiniciar uma sessão:
 - **Não confie no cache do histórico local da IDE.**
-- **Carregue e use estritamente** o arquivo `skills/runtime/state.yaml` e `skills/runtime/handoff.yaml` como a **única fonte da verdade** para restabelecer o contexto, a tarefa ativa e as decisões tomadas.
+- **Carregue e use estritamente** o arquivo `skills/core/runtime/state.yaml` e `skills/core/runtime/handoff.yaml` como a **única fonte da verdade** para restabelecer o contexto, a tarefa ativa e as decisões tomadas.
 - Qualquer transição de IDE (ex: migrar do Cursor para o Antigravity) deve ter o estado operacional sincronizado imediatamente a partir dos metadados desses dois arquivos YAML.
 
 ---
@@ -63,22 +63,22 @@ Durante a execução de comandos (`run_command`):
 
 ## 0e. Protocolos Comportamentais (sempre ativos)
 
-- **Evidência antes de afirmação:** proibido dizer "pronto", "corrigido" ou "funciona" sem comando executado e saída observada nesta sessão → `skills/local-skills/verify-before-done.skill`. Vale durante toda a sessão, não só no QA Gate.
-- **Bug/erro/build FAIL:** causa raiz antes de fix; uma correção por vez; 3 tentativas falhas = parar e reportar → `skills/governance/debugging-protocol.md`.
-- **Feedback/crítica do usuário:** verificar antes de implementar; sem concordância performática ("você está certo!" sem checar) → `skills/governance/review-reception.md`.
-- **Criar/editar skill ou regra:** ciclo TDD RED→GREEN obrigatório → `skills/governance/skill-testing.md`.
+- **Evidência antes de afirmação:** proibido dizer "pronto", "corrigido" ou "funciona" sem comando executado e saída observada nesta sessão → `skills/catalog/verify-before-done.skill`. Vale durante toda a sessão, não só no QA Gate.
+- **Bug/erro/build FAIL:** causa raiz antes de fix; uma correção por vez; 3 tentativas falhas = parar e reportar → `skills/flows/debugging-protocol.md`.
+- **Feedback/crítica do usuário:** verificar antes de implementar; sem concordância performática ("você está certo!" sem checar) → `skills/flows/review-reception.md`.
+- **Criar/editar skill ou regra:** ciclo TDD RED→GREEN obrigatório → `skills/flows/skill-testing.md`.
 
 ---
 
 ## 0f. Hook de Sessão (opt-in — Claude Code)
 
-Para injetar este bootstrap automaticamente em toda sessão (convenção → garantia): registrar `bash skills/scripts/session-start-hook.sh` como hook `SessionStart` no `.claude/settings.json` do projeto (instruções no próprio script). Editores sem suporte a hooks seguem lendo este arquivo normalmente.
+Para injetar este bootstrap automaticamente em toda sessão (convenção → garantia): registrar `bash skills/infra/scripts/session-start-hook.sh` como hook `SessionStart` no `.claude/settings.json` do projeto (instruções no próprio script). Editores sem suporte a hooks seguem lendo este arquivo normalmente.
 
 ---
 
 ## 0g. Orquestração por Tier de Modelo (opt-in — economia de modelo)
 
-Complementa §0c/context-scoping: reduz **overhead de modelo** (tier caro em volume), não substitui escopo de contexto. Protocolo: `skills/governance/model-orchestration.md`.
+Complementa §0c/context-scoping: reduz **overhead de modelo** (tier caro em volume), não substitui escopo de contexto. Protocolo: `skills/flows/model-orchestration.md`.
 
 **Papéis:** Orquestrador (chat principal) · Raciocínio profundo (spec, analyze, debug difícil) · Executor rápido (explore, edits mecânicos, shell, tasks `[P]`).
 
@@ -100,9 +100,9 @@ Complementa §0c/context-scoping: reduz **overhead de modelo** (tier caro em vol
 ## 1. Bootstrap
 
 ```
-skills/runtime/index.yaml
-skills/runtime/validate.py   (após editar YAML)
-skills/governance/Start-ops.md
+skills/core/runtime/index.yaml
+skills/core/runtime/validate.py   (após editar YAML)
+skills/flows/Start-ops.md
 ```
 
 ## 2. Carregamento
@@ -122,13 +122,13 @@ skills/governance/Start-ops.md
 4. **FAIL** → não marcar feature pronta; listar correções claras  
 5. **PASS** → pedir usuário testar 5 min no navegador  
 
-Config: `runtime/qa.yaml` · Protocolo: `governance/qa-protocol.md`
+Config: `runtime/qa.yaml` · Protocolo: `flows/qa-protocol.md`
 
 **QA Gate após código:** executar `qa-gate.skill` — sem exceções.
 
 ## 4. Stack novos projetos
 
-- **Padrão:** Next.js + pnpm (`governance/stack-guide.md`)  
+- **Padrão:** Next.js + pnpm (`flows/stack-guide.md`)  
 - Alternativa SPA: React + Vite + pnpm  
 
 ## 5. Não carregar como contexto operacional

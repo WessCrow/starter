@@ -2,27 +2,47 @@
 
 ## Para quem usa o framework → `public/`
 
-Documentos pensados para leitura e compartilhamento:
+Documentos pensados para leitura e compartilhamento externo.
 
 | Arquivo | Conteúdo |
 |---------|----------|
 | [`public/O-QUE-E-O-STARTER.md`](public/O-QUE-E-O-STARTER.md) | Visão geral do produto |
-| [`public/lp-github.md`](public/lp-github.md) | Texto/copy para README do GitHub |
+| [`public/lp-github.md`](public/lp-github.md) | Copy para README do GitHub |
 | [`public/LANDING-PAGE.md`](public/LANDING-PAGE.md) | Brief da landing page |
+
+---
 
 ## Só na sua máquina → `private/`
 
-Relatórios de teste, planos de melhoria, diagnósticos e meta-docs do mantenedor **não vão para o repositório público**.
+Organizado em camadas (inspirado em Clean Architecture): **domínio estável no centro, execução em volta, backlog/arquivo na periferia**.
 
-Coloque arquivos como:
+### `core/` — Contratos permanentes
+O que muda menos. Base de decisão para tudo mais.
 
-- `relatorio-teste-*.md`
-- `plano-acao-*.md` / `plano-melhoria-*.md`
-- `diagnostico.md`
-- `STARTER-PRD.md`, `STARTER-CONTEXT.md`
+| Arquivo | Conteúdo |
+|---------|----------|
+| `STARTER-PRD.md` | Produto, escopo, features principais |
+| `STARTER-CONTEXT.md` | Estado atual do runtime, fase, próximos passos |
+| `claude.md` | Instruções do agente (comportamento e governança) |
+| `README.md` | Guia do mantenedor |
 
-Ver política completa: [`skills/governance/repo-hygiene.md`](../skills/governance/repo-hygiene.md)
+### `delivered/` — Concluído
+Sprints encerradas, relatórios finalizados, planos que viraram código.
 
-```bash
-python3 skills/scripts/check-repo-hygiene.py
-```
+### `in-progress/` — Em andamento
+Sprint ativa e triagem corrente. Ao concluir, mover para `delivered/`.
+
+### `backlog/` — Planejado / Pendente
+Melhorias mapeadas, diagnósticos, planos de pilares futuros aguardando priorização.
+
+### `reviews/` — Revisões e auditorias
+Reviews de sprint, diagnósticos completos, planos com rastreabilidade.
+
+### `_archive/` — Descartado
+Skills rejeitadas e conteúdo obsoleto. Mantido para referência histórica.
+
+---
+
+> Política de higiene: [`skills/flows/repo-hygiene.md`](../skills/flows/repo-hygiene.md)
+>
+> Verificar: `python3 skills/infra/scripts/check-repo-hygiene.py`

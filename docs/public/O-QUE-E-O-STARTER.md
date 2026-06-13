@@ -20,7 +20,7 @@ Ele entrega um fluxo de trabalho com:
 O `STARTER` é:
 
 - um **sistema de kickoff** para tirar um projeto do zero com poucas perguntas
-- um **runtime AI-native** com contexto persistente em `skills/runtime/*.yaml`
+- um **runtime AI-native** com contexto persistente em `skills/core/runtime/*.yaml`
 - um **orchestrator de skills** para escolher a capacidade certa conforme a tarefa
 - um **framework de governança** para reduzir deriva entre sessões
 - um **guardrail de qualidade** para impedir que implementação seja dada como pronta sem validação
@@ -131,7 +131,7 @@ O valor real dele está na combinação de:
 
 O STARTER não é invisível em tokens — e esse número é medido, não estimado.
 
-**Metodologia:** `validate-skills.py` mede o tamanho em bytes de cada camada de contexto definida em `skills/runtime/context-budget.yaml`. Conversão: 1 token ≈ 4 bytes (GPT-tokenizer para texto em inglês/PT-BR técnico).
+**Metodologia:** `validate-skills.py` mede o tamanho em bytes de cada camada de contexto definida em `skills/core/runtime/context-budget.yaml`. Conversão: 1 token ≈ 4 bytes (GPT-tokenizer para texto em inglês/PT-BR técnico).
 
 | Camada | Conteúdo | Tamanho | Tokens est. |
 |--------|----------|---------|-------------|
@@ -142,7 +142,7 @@ O STARTER não é invisível em tokens — e esse número é medido, não estima
 
 Referência: um modelo com janela de 200 k tokens comporta ~28 sessões STARTER completas em paralelo. Em uso real, apenas hot (~3.850 tok) é carregada em toda sessão; warm e entrada entram sob demanda.
 
-Medição registrada em: 2026-06-12 · versão do framework: v5.2 · fonte: `skills/runtime/context-budget.yaml`.
+Medição registrada em: 2026-06-12 · versão do framework: v5.2 · fonte: `skills/core/runtime/context-budget.yaml`.
 
 ---
 

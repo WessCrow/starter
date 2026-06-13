@@ -13,7 +13,7 @@
 
 | # | Critério | PASS/FAIL |
 |---|----------|-----------|
-| 1 | `python3 skills/scripts/validate-skills.py` → 0 failed | PASS |
+| 1 | `python3 skills/infra/scripts/validate-skills.py` → 0 failed | PASS |
 | 2 | `COMECAR-PROJETO.md` menciona §0g | PASS |
 | 3 | `README.md` menciona orquestração/tier | PASS |
 | 4 | `INDEX.md` lista model-orchestration.md | PASS |

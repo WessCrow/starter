@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # STARTER QA Fase 4 — roda smoke E2E no projeto filho (não no meta STARTER)
-# Uso: bash skills/scripts/run-e2e.sh [feature-id]
+# Uso: bash skills/infra/scripts/run-e2e.sh [feature-id]
 set -euo pipefail
 
 FEATURE="${1:-smoke}"

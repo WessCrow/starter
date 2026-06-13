@@ -29,11 +29,10 @@ skills/cache/
 # pnpm local store (nunca versionar)
 .pnpm-store/
 
-# --- Repo hygiene (ver skills/governance/repo-hygiene.md) ---
+# --- Repo hygiene (ver skills/flows/repo-hygiene.md) ---
 
-# Documentação interna do mantenedor
-docs/private/*
-!docs/private/README.md
+# Documentação interna do mantenedor (não vai para o repositório público)
+docs/private/
 
 # Fixtures e testes de execução local
 _lab/

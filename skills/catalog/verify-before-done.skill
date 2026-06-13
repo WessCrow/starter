@@ -1,0 +1,62 @@
+# verify-before-done.skill
+
+> **Tipo:** Local Skill · **Domínio:** verificação · honestidade operacional
+> **Obrigatório:** antes de QUALQUER afirmação de sucesso ("pronto", "corrigido", "funciona", "build passa")
+> **Idioma:** português simples · **Inspiração:** `verification-before-completion` do obra/superpowers
+
+---
+
+## Propósito
+
+**Afirmar que algo está pronto sem verificar é desonestidade, não eficiência.**
+
+O QA Gate cobre o fim da feature. Esta skill cobre **todo o resto da sessão**: cada "corrigi o bug", "agora compila", "o teste passa" dito no meio do trabalho precisa de evidência — um comando executado com saída observada — antes de ser dito.
+
+---
+
+## Regra central
+
+```
+ANTES de afirmar sucesso → RODAR o comando que prova → OBSERVAR a saída → SÓ ENTÃO afirmar
+```
+
+Nunca o contrário. Nunca "deve funcionar agora". Nunca inferir sucesso porque a edição "parece certa".
+
+## Tabela de evidência mínima
+
+| Afirmação | Evidência obrigatória antes de dizer |
+|-----------|--------------------------------------|
+| "O build passa" | `pnpm run build` executado nesta sessão, saída sem erro |
+| "Corrigi o bug" | Reproduzir o cenário do bug e observar o comportamento correto |
+| "O teste passa" | Comando de teste executado, resultado verde visto |
+| "O lint está limpo" | `pnpm run lint` executado, zero erros |
+| "A página renderiza" | Build/dev server sem erro + (se possível) verificação da rota |
+| "Feature completa" | Não é desta skill — disparar `qa-gate.skill` |
+
+Sem como rodar a verificação (ex.: depende de browser do usuário)? **Dizer isso explicitamente:** "Alterei X; não consigo verificar Y daqui — verifique [ação] no navegador." Proibido mascarar incerteza com afirmação.
+
+## Racionalizações proibidas (anti-patterns nomeados)
+
+- "A mudança é pequena, não precisa rodar de novo" → rodar.
+- "O erro era óbvio, a correção certamente resolve" → rodar.
+- "Já rodei antes da última edição" → a evidência expirou; rodar de novo.
+- "O usuário está com pressa" → afirmar sem evidência desperdiça mais tempo dele.
+
+## Formato no chat
+
+Ao afirmar sucesso, citar a evidência em 1 linha:
+
+> ✅ Corrigido — `pnpm run build` sem erros (rodado agora).
+
+---
+
+## Log de testes (TDD — `flows/skill-testing.md`)
+
+- 2026-06-11 RED (baseline observado no ecossistema): agentes afirmam "corrigido" após editar arquivo, sem rodar build — racionalização "a edição é trivial". Brecha endereçada na tabela de evidência + anti-patterns.
+- 2026-06-11 GREEN: subagent em sessão limpa, pressão dupla (pressa + "mudança pequena") — recusou confirmar sem rodar `pnpm run build`; citou evidência como pré-requisito. PASS. Relatório completo: `skills/outputs/skill-tests/2026-06-11-p3-green.md` (local, não versionado).
+
+---
+
+> Parte do framework **STARTER** — criado e mantido por **Wesley Alves**.
+> 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
+> Última atualização: 2026-06-11

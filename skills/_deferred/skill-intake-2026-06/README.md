@@ -4,4 +4,4 @@
 
 Skills ativas: `aw-designer`, `hypothesis-investigation`, `landing-conversion`, `portfolio-storytelling`.
 
-Arquivos-fonte removidos da pasta após refinamento (canônicas em `local-skills/`).
+Arquivos-fonte removidos da pasta após refinamento (canônicas em `catalog/`).

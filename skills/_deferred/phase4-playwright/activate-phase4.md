@@ -41,7 +41,7 @@ mkdir -p tests/e2e qa/reports/playwright
 
 ## Passo 3 — Ativar no runtime
 
-Editar `skills/runtime/qa.yaml`:
+Editar `skills/core/runtime/qa.yaml`:
 
 ```yaml
 phase_4_playwright:
@@ -54,10 +54,10 @@ phase_4_playwright:
 ## Passo 4 — Mover skill para local-skills
 
 ```bash
-cp skills/_deferred/phase4-playwright/qa-playwright.skill skills/local-skills/qa-playwright.skill
+cp skills/_deferred/phase4-playwright/qa-playwright.skill skills/catalog/qa-playwright.skill
 ```
 
-Adicionar ao roteamento em `skills/governance/Start.md` — linha 2 da resolução:
+Adicionar ao roteamento em `skills/flows/Start.md` — linha 2 da resolução:
 
 ```
 `qa-playwright` ·
@@ -74,7 +74,7 @@ Adicionar ao `INDEX.md` na tabela de skills ativas:
 ## Passo 5 — Validar
 
 ```bash
-python3 skills/scripts/validate-skills.py
+python3 skills/infra/scripts/validate-skills.py
 ```
 
 Deve passar 21/0. Se falhar em `skill-catalog:start-local` → verificar se `qa-playwright` foi adicionado na linha 2 do Start.md.
@@ -130,7 +130,7 @@ phase_4_playwright:
 
 ```bash
 # mover skill de volta
-mv skills/local-skills/qa-playwright.skill skills/_deferred/phase4-playwright/
+mv skills/catalog/qa-playwright.skill skills/_deferred/phase4-playwright/
 ```
 
 Remover `qa-playwright` da linha 2 do `Start.md` e do `INDEX.md`.  

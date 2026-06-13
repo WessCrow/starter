@@ -4,7 +4,7 @@
 > **Projeto:** [nome do projeto]
 > **Criado em:** YYYY-MM-DD
 > **Status:** rascunho | clarificado | aprovado
-> **Protocolo:** `skills/governance/feature-flow.md`
+> **Protocolo:** `skills/flows/feature-flow.md`
 
 ---
 

@@ -76,7 +76,7 @@ Este documento detalha a estratégia de UX Writing, estrutura de conteúdo e mat
 | **Intent Preview** | *"Vou analisar suas respostas para criar uma estrutura modular baseada em Next.js + pnpm com o design system ativo."* |
 | **Explainable Rationale** | *"Escolhi pnpm como gerenciador de pacotes padrão devido ao tempo de build 40% menor mapeado na stack."* |
 | **Confidence Signal** | *"Alta Confiança: Respostas completas e sem conflitos de dependências."* |
-| **Action Audit & Undo** | *Histórico de geração salvo em `skills/runtime/decisions.yaml` com a opção de reverter o scaffolding.* |
+| **Action Audit & Undo** | *Histórico de geração salvo em `skills/core/runtime/decisions.yaml` com a opção de reverter o scaffolding.* |
 | **Escalation Pathway** | *"Se o scaffolding gerado não atender ao esperado, digite 'Ajustar plano' para recalibrar o escopo manualmente."* |
 
 ---

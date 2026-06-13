@@ -122,8 +122,8 @@ Durante o kickoff ou ao pedir nova feature, você pode direcionar para qualquer 
 O STARTER opera em 4 camadas que garantem consistência entre sessões:
 
 1. **Runtime YAML** (`runtime/index.yaml`): define o que carregar em cada fase — hot (sempre), warm (se feature ativa), cold (sob demanda). A IA não carrega o que não precisa.
-2. **Skill routing** (`governance/Start.md`): mapeia intenção → skill certa. O agente não chuta qual habilidade usar.
-3. **Spec-driven flow** (`governance/feature-flow.md`): toda feature passa por especificação, plano e contrato antes de virar código.
+2. **Skill routing** (`flows/Start.md`): mapeia intenção → skill certa. O agente não chuta qual habilidade usar.
+3. **Spec-driven flow** (`flows/feature-flow.md`): toda feature passa por especificação, plano e contrato antes de virar código.
 4. **QA Gate** (`qa-gate.skill` + `qa-smoke.skill`): build + revisão cética obrigatórios antes de qualquer entrega.
 
 ---

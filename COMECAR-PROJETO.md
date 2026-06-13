@@ -60,7 +60,7 @@ Isso e interno do sistema. Para usar, voce so precisa copiar `skills/` + `AGENTS
 
 Em Cursor e Antigravity, o agente pode delegar automaticamente tarefas pesadas (explore, edits mecânicos, shell) para modelos mais leves e econômicos.
 Você não precisa escolher modelo nem subagent — isso é opcional e transparente.
-Detalhes em `AGENTS.md` §0g e `skills/governance/model-orchestration.md`.
+Detalhes em `AGENTS.md` §0g e `skills/flows/model-orchestration.md`.
 
 ## Compatibilidade rapida
 

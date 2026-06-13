@@ -1,6 +1,6 @@
 # CONTEXT.md — [Nome do Projeto] (camada humana)
 
-> **Runtime IA:** `skills/runtime/*.yaml` — fonte operacional para agentes  
+> **Runtime IA:** `skills/core/runtime/*.yaml` — fonte operacional para agentes  
 > **Este arquivo:** resumo humano ≤50 linhas — não substituir o runtime  
 > **PRD:** `PRD.md` na raiz · **Atualizar:** após sessões significativas  
 > **Última atualização:** [DATA]

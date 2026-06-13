@@ -1,0 +1,93 @@
+# qa-smoke.skill
+
+> **Tipo:** Local Skill · **Domínio:** qa-smoke  
+> **Chamado por:** qa-gate.skill (passo 3)  
+> **Objetivo:** provar que o projeto **compila** antes de dizer que funciona
+
+---
+
+## Propósito
+
+Rodar comandos mínimos de **build**, **lint** (se existir) e **test** (se existir) conforme stack. Resultado alimenta dimensão **Estável** do QA Gate.
+
+---
+
+## Detecção de stack
+
+| Sinal no projeto | Stack |
+|------------------|-------|
+| `next.config.*` | nextjs |
+| `vite.config.*` | react_vite |
+| `package.json` scripts | ler `build`, `lint`, `test` |
+
+**Gerenciador:** se existir `pnpm-lock.yaml` → `pnpm`. Se só `package-lock.json` → `npm`.
+
+**pnpm 11:** se o build falhar com `ERR_PNPM_IGNORED_BUILDS` ou pedido de aprovação de scripts:
+
+1. Rodar `bash skills/infra/scripts/patch-pnpm-workspace.sh` na raiz do app (onde está `package.json`)
+2. Repetir `pnpm run build` **uma vez**
+3. Se ainda falhar → FAIL (colar log). Ver `flows/stack-guide.md`.
+
+**Nunca** rodar `pnpm approve-builds` — trava agentes.
+
+---
+
+## Comandos (ordem)
+
+### Next.js
+
+```bash
+pnpm run build
+# ou: npm run build
+pnpm run lint
+# ou: npm run lint  (se script existir — senão SKIP lint)
+pnpm run test
+# ou: npm run test  (se script "test" existir em package.json — senão SKIP test)
+```
+
+### React + Vite
+
+```bash
+pnpm run build
+pnpm run lint
+pnpm run test
+# (lint e test: SKIP se script não existir)
+```
+
+---
+
+## Interpretação
+
+| Resultado | Estável |
+|-----------|---------|
+| build exit 0 | PASS |
+| build exit ≠ 0 | FAIL — ver log salvo |
+| lint exit ≠ 0 | FAIL (ou WARN se só style e usuário aceitar — padrão FAIL) |
+| test exit ≠ 0 | FAIL — ver log salvo |
+| sem script `test` | SKIP test — não exige suíte; opt-in por existência do script |
+| sem package.json | SKIP — anotar "projeto sem build; verificação manual" |
+
+---
+
+## Padrão failures-only
+
+Em PASS, reportar apenas: `build ✓ · lint ✓ · test ✓ (N passed)` — sem colar output de sucesso.
+
+Em FAIL, fazer as duas coisas:
+
+1. **Gravar log bruto completo** em `qa/reports/AAAA-MM-DD-[feature]-smoke.log` (usando tee ou redirecionamento) para recuperação sem re-executar.
+2. **Reportar no `qa-report.md`** as últimas **30 linhas** do log + caminho do arquivo completo: `[full output: qa/reports/AAAA-MM-DD-[feature]-smoke.log]`
+
+Exemplo de comando com tee (Next.js):
+```bash
+pnpm run build 2>&1 | tee qa/reports/$(date +%Y-%m-%d)-[feature]-smoke.log
+```
+
+Não esconder erros. Não resumir "deu erro" sem colar as linhas.
+
+---
+
+## Referência
+
+`runtime/qa.yaml` → `smoke_commands`  
+`flows/stack-guide.md` → pnpm vs npm

@@ -3,7 +3,7 @@
 > **Feature:** NNN-[nome-kebab]
 > **Baseado em:** `plan.md`
 > **Criado em:** YYYY-MM-DD
-> **Protocolo:** `skills/governance/feature-flow.md`
+> **Protocolo:** `skills/flows/feature-flow.md`
 
 ---
 

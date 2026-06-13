@@ -114,7 +114,7 @@ Gerar arquitetura base de projeto Next.js com App Router — estrutura de pastas
         ↓
 [8] Gerar middleware.ts se auth detectado
         ↓
-[9] Se pnpm: bash skills/scripts/patch-pnpm-workspace.sh (raiz do app — pnpm 11)
+[9] Se pnpm: bash skills/infra/scripts/patch-pnpm-workspace.sh (raiz do app — pnpm 11)
         ↓
 [10] Registrar decisões em outputs/ARCHITECTURE.md
 ```
@@ -129,7 +129,7 @@ Gerar arquitetura base de projeto Next.js com App Router — estrutura de pastas
 - **Sempre** separar Server Actions em `actions/` (nunca inline em componentes)
 - **Sempre** usar grupos de rota `()` para organizar layouts distintos
 - **Sempre** criar `.env.example` com variáveis esperadas — nunca commitar secrets em `.env.local`
-- **Sempre** após scaffold com pnpm: `bash skills/scripts/patch-pnpm-workspace.sh` na raiz do app
+- **Sempre** após scaffold com pnpm: `bash skills/infra/scripts/patch-pnpm-workspace.sh` na raiz do app
 
 ---
 

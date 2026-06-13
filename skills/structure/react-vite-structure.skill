@@ -124,7 +124,7 @@ Incluir sempre:
         ↓
 [7] Gerar .env.example com placeholders (ex.: `VITE_*` — sem valores reais)
         ↓
-[8] Se pnpm: bash skills/scripts/patch-pnpm-workspace.sh (raiz do app — pnpm 11)
+[8] Se pnpm: bash skills/infra/scripts/patch-pnpm-workspace.sh (raiz do app — pnpm 11)
         ↓
 [9] Registrar decisões em outputs/ARCHITECTURE.md
 ```
@@ -138,7 +138,7 @@ Incluir sempre:
 - **Sempre** tipar props com TypeScript (sem `any` explícito)
 - **Sempre** configurar alias `@/` antes de qualquer import
 - **Sempre** criar `.env.example` — variáveis `VITE_*` documentadas; nunca commitar `.env.local`
-- **Sempre** após scaffold com pnpm: `bash skills/scripts/patch-pnpm-workspace.sh` na raiz do app
+- **Sempre** após scaffold com pnpm: `bash skills/infra/scripts/patch-pnpm-workspace.sh` na raiz do app
 
 ---
 

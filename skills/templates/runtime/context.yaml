@@ -7,7 +7,7 @@ project:
   type: web_app
   root: /path/to/project
 
-# Definido pela Pergunta 0 do kickoff (governance/kickoff.md)
+# Definido pela Pergunta 0 do kickoff (flows/kickoff.md)
 # docs = artefatos/relatórios/specs · product = copy de UI do produto
 language:
   docs: pt-BR
@@ -16,7 +16,7 @@ language:
 runtime:
   index: runtime/index.yaml
   schema: runtime/schema/
-  orchestrator: governance/Start-ops.md
+  orchestrator: flows/Start-ops.md
   human_context: CONTEXT.md
   human_prd: PRD.md
 
