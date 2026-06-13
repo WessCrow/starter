@@ -648,6 +648,105 @@ def validate_context_budget() -> tuple[list[str], list[str]]:
     return passes, errors
 
 
+# ---------------------------------------------------------------------------
+# Mapa declarativo de sincronização docs ↔ runtime
+# Cada entrada: (yaml_file, yaml_key_path, doc_files, expected_text, description)
+#   yaml_key_path: lista de chaves para navegar no YAML
+#   expected_text: texto que DEVE aparecer nos docs quando o status for o mapeado
+#   A validação falha se yaml status = mapeado e nenhum doc contém expected_text
+#   ou se yaml status ≠ mapeado e algum doc contém o texto proibido (negação)
+# ---------------------------------------------------------------------------
+_DOC_RUNTIME_SYNC_PAIRS: list[dict] = [
+    {
+        "id": "playwright_active",
+        "yaml_file": RUNTIME_DIR / "qa.yaml",
+        "yaml_path": ["phase_4_playwright", "status"],
+        "expected_yaml_value": "active",
+        "doc_files": [
+            REPO_ROOT / "README.md",
+            REPO_ROOT / "docs" / "public" / "lp-github.md",
+        ],
+        # texto que DEVE aparecer nos docs quando status=active
+        "required_text": "Fase 4",
+        # texto que NÃO pode aparecer nos docs quando status=active
+        "forbidden_pattern": r"desativado.*playwright|playwright.*desativado",
+        "description": "Playwright Fase 4 ativo em qa.yaml ↔ docs públicos coerentes",
+    },
+]
+
+
+def _yaml_get(data: dict, path: list[str]):
+    """Navega num dict aninhado por lista de chaves; retorna None se não encontrar."""
+    for key in path:
+        if not isinstance(data, dict):
+            return None
+        data = data.get(key)
+    return data
+
+
+def validate_doc_runtime_sync() -> tuple[list[str], list[str]]:
+    """Verifica coerência entre valores de runtime YAML e menções nos docs públicos."""
+    passes: list[str] = []
+    errors: list[str] = []
+
+    try:
+        import yaml  # type: ignore
+    except ImportError:
+        errors.append("doc-runtime-sync: módulo PyYAML não encontrado; instale com pip install pyyaml")
+        return passes, errors
+
+    for pair in _DOC_RUNTIME_SYNC_PAIRS:
+        yaml_file: Path = pair["yaml_file"]
+        if not yaml_file.exists():
+            errors.append(f"doc-runtime-sync[{pair['id']}]: YAML não encontrado: {rel(yaml_file)}")
+            continue
+
+        with yaml_file.open(encoding="utf-8") as fh:
+            data = yaml.safe_load(fh)
+
+        actual_value = _yaml_get(data, pair["yaml_path"])
+        expected_value = pair["expected_yaml_value"]
+
+        if actual_value != expected_value:
+            # YAML diverge do esperado — nenhuma restrição nos docs agora
+            passes.append(
+                f"OK   doc-runtime-sync[{pair['id']}]: yaml={actual_value!r} (esperado {expected_value!r} — sem restrição nos docs)"
+            )
+            continue
+
+        # YAML está no estado esperado — verificar docs
+        for doc_file in pair.get("doc_files", []):
+            doc_file = Path(doc_file)
+            if not doc_file.exists():
+                errors.append(f"doc-runtime-sync[{pair['id']}]: doc ausente: {rel(doc_file)}")
+                continue
+            content = doc_file.read_text(encoding="utf-8")
+
+            # Texto obrigatório
+            required = pair.get("required_text")
+            if required and required not in content:
+                errors.append(
+                    f"doc-runtime-sync[{pair['id']}]: '{required}' ausente em {rel(doc_file)} "
+                    f"(yaml {'.'.join(pair['yaml_path'])}={expected_value!r})"
+                )
+            else:
+                passes.append(
+                    f"OK   doc-runtime-sync[{pair['id']}]: texto obrigatório presente em {rel(doc_file)}"
+                )
+
+            # Padrão proibido
+            forbidden = pair.get("forbidden_pattern")
+            if forbidden and re.search(forbidden, content, re.IGNORECASE):
+                errors.append(
+                    f"doc-runtime-sync[{pair['id']}]: padrão proibido '{forbidden}' encontrado em {rel(doc_file)}"
+                )
+
+    if not _DOC_RUNTIME_SYNC_PAIRS:
+        passes.append("OK   doc-runtime-sync: nenhum par configurado")
+
+    return passes, errors
+
+
 def validate() -> tuple[list[str], list[str]]:
     passes: list[str] = []
     errors: list[str] = []
@@ -662,6 +761,7 @@ def validate() -> tuple[list[str], list[str]]:
         validate_repo_hygiene,
         validate_bootstrap_contract,
         validate_context_budget,
+        validate_doc_runtime_sync,
     ]:
         ok_items, err_items = validator()
         passes.extend(ok_items)

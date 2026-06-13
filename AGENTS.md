@@ -137,7 +137,7 @@ CONTEXT.md · PRD.md · outputs/*.md (salvo pedido)
 
 ## 6. Fase 4 Playwright
 
-**Inativa** — não carregar `qa-playwright` nem MCP. Rascunhos: `skills/_deferred/phase4-playwright/`. Ativar só quando você pedir.
+**Ativa** — CLI, chromium, `pnpm run test:e2e`. Geração de spec via `generate_from_contract: true`; obrigatório para features UI (`required_for_ui: true`). Scripts em `skills/_deferred/phase4-playwright/`. Não usar modo MCP (frágil).
 
 ## 7. Pós-sessão
 

@@ -23,8 +23,7 @@
 | `linked-skills/` | Reservado para symlinks futuros. Diretório vazio ≠ suporte existente. |
 | `skills.sh` | Fallback remoto desligado. Pode ser citado como direção futura, não como fluxo confiável. |
 | `cache/` | Não é fonte operacional. Cache vazio ≠ erro estrutural. |
-| `_deferred/` | Incubação — não promover implicitamente a capability ativa. |
-| `_deferred/phase4-playwright/` | Playwright adiado. QA Gate = build smoke + revisão cética — nada mais. |
+| `_deferred/` | Incubação — não promover implicitamente a capability ativa. Exceção: subpasta `phase4-pw/` contém scripts E2E da Fase 4 (ativa via CLI, `test:e2e`). |
 
 ---
 

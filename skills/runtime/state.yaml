@@ -7,11 +7,21 @@ phase:
   name: Enterprise Runtime + QA Gate
   previous: ai_native_runtime
 
-last: "Dogfood 007: T2/T3/T4 [P] Task fast paralelo; T1 validate_model_orchestration_log; validate-skills 16/0; session-review bloco C delegação=sim."
+last: "Sprint A: sync Playwright docs↔runtime; antidrift validator (validate_doc_runtime_sync); index.yaml→v5.2; tag v5.3.0."
 next:
-  - browser_5min_pilotos_mantenedor
-  - sprint_002_fechamento_commit_tag
-  - dogfood_model_tier_feature_ui_lab
+  # Sprint B
+  - browser_5min_pilotos_mantenedor          # B1: pnpm dev + checklist 5min nos 2 pilotos
+  - e2e_playwright_pilot_dashboard_pt        # B1: primeira execução real Fase 4
+  - dogfood_model_tier_feature_ui_lab        # B2: feature UI com delegação §0g registrada
+  - check_spec_coherence_script              # B3: scripts/check-spec-coherence.py + CI
+  - template_overrides_pilot_dashboard       # B4: 1 override real no piloto dashboard
+  - token_measurement_kickoff_comparison     # B5: medir tokens com/sem STARTER
+  # Sprint C
+  - pnpm_workspace_yaml_boilerplates         # C1: snippet pnpm em todas structure skills
+  - pilot_api_backend_kickoff                # C2: piloto sintético backend/API
+  - curadoria_local_skills_33                # C3: classificar core vs nicho
+  - changelog_upgrade_script_pilotos         # C4: CHANGELOG.md + upgrade-from-starter.sh
+  - case_publico_piloto                      # C5: case anonimizado em docs/public/
 blockers: []
 
 health:

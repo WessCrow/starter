@@ -2,7 +2,7 @@
 
 > **Relatórios:** português simples  
 > **Gate rígido:** feature **não** conclui sem `qa.last_status: pass`  
-> **Fase 4 Playwright:** **inativa** — rascunhos em `skills/_deferred/phase4-playwright/`
+> **Fase 4 Playwright:** **ativa** — CLI, chromium, `pnpm run test:e2e`; geração de spec via `generate_from_contract: true`
 
 ---
 
@@ -45,9 +45,9 @@ Relatório: `templates/qa-report.md` → `qa/reports/`
 
 ---
 
-## Fase 4 (futuro — não usar agora)
+## Fase 4 — Playwright (ativo)
 
-Playwright MCP + cliques automáticos. Ativar quando você pedir. Ver `_deferred/phase4-playwright/README.md`.
+CLI, chromium, `pnpm run test:e2e`. Spec gerado automaticamente a partir do sprint-contract (`generate_from_contract: true`). Obrigatório para features com UI (`required_for_ui: true`). Scripts em `skills/phase4-playwright/`.
 
 ---
 

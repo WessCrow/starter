@@ -1,9 +1,15 @@
-v: "5.1"
-updated: "2026-06-11"
+# ─────────────────────────────────────────────────────────────────────────────
+# FORMATO DO HANDOFF  (regra A5 — retomada fria sem perguntas)
+# Cada campo: máx. 1 linha de texto livre, sem siglas internas sem link.
+# Exemplo válido:  last_completed: "feature X finalizada; QA PASS; tag v5.3.0"
+# Exemplo inválido: "P2.9 revertida" (sigla interna sem contexto)
+# ─────────────────────────────────────────────────────────────────────────────
+v: "5.2"
+updated: "2026-06-12"
 
 session:
-  last_completed: dogfood_007_model_tier_delegacao_paralela_pass
-  next_action: browser_5min_pilotos_ou_sprint_002_fechamento
+  last_completed: "Sprint A do Plano Todos-os-Pilares: sync Playwright, antidrift validator, versões v5.2, tag v5.3.0"
+  next_action: "Sprint B — rodar pnpm dev nos pilotos, Playwright E2E real, dogfood §0g com feature UI"
   blocked: false
 
 qa:
@@ -13,14 +19,14 @@ qa:
   failures_open: []
 
 feature:
-  id: 007-dogfood-model-tier
-  sprint_contract_path: specs/007-dogfood-model-tier/sprint-contract.md
-  spec_path: specs/007-dogfood-model-tier/spec.md
+  id: plano-todos-os-pilares-sprint-a
+  sprint_contract_path: docs/private/plano-90-todos-pilares.md
+  spec_path: docs/private/plano-90-todos-pilares.md
 
 user:
   verified_in_browser: false
   verified_at: null
-  notes: "Dogfood §0g concluído. T2/T3/T4 delegadas Task fast paralelo; T1 orquestrador. validate-skills 16/0 validate.py 11/0."
+  notes: "Sprint A concluída. validate-skills 23/0. Próxima sessão: Sprint B (evidência executada nos pilotos)."
 
 review:
   last_review_path: docs/private/reviews/2026-06-11-dogfood-007-model-tier.md
@@ -29,14 +35,11 @@ review:
 
 reminders:
   - id: phase_4_playwright
-    when: "Quando pedir ativar Fase 4"
-    action: "No-go registrado em skills-governance.md (P2.10); reativação exige decisão explícita + skills/_deferred/phase4-playwright/README.md"
+    when: "Ao rodar QA Gate em feature com UI"
+    action: "Fase 4 ativa — rodar pnpm run test:e2e; spec gerado via generate_from_contract: true"
   - id: pre_push_hygiene
     when: "Antes de commit ou push"
     action: "python3 skills/scripts/check-repo-hygiene.py"
-  - id: model_tier_delegation_missed
-    when: "Session-review bloco C com volume alto no Cursor sem delegação"
-    action: "Registrar achado; reforçar AGENTS.md §0g e model-orchestration.md"
-  - id: sprint_002_fechamento
+  - id: sprint_b_prioridade
     when: "Próxima sessão"
-    action: "Commit/push da consolidação P2 + tag v5.2.0 (critérios de saída da Sprint 002 cumpridos)"
+    action: "Executar Sprint B: pnpm dev pilotos + E2E Playwright + dogfood §0g + check-spec-coherence.py"

@@ -148,6 +148,25 @@ Usar **Conventional Commits**.
 feat: adiciona login com Google
 fix: corrige erro no formulário
 refactor: simplifica validação de usuário
+```
+
+---
+
+# 🏷️ ETAPA 6 — Cadência de Release do Framework
+
+**Regra:** criar uma tag semântica a cada fechamento de sprint do framework STARTER.
+
+| Evento | Ação |
+|--------|------|
+| Fechamento de Sprint (A, B, C…) | `git tag vX.Y.Z && git push --tags` |
+| Hotfix crítico entre sprints | Tag patch: `vX.Y.Z+1` |
+| Nova fase do framework | Tag minor ou major |
+
+**Formato:** `vMAJOR.MINOR.PATCH` seguindo semver.  
+**Próxima tag prevista:** `v5.4.0` ao fechar Sprint C do Plano Todos-os-Pilares.
+
+Verificar após push: `git describe --tags` deve retornar a tag limpa no HEAD.
+
 ---
 
 > **Autoria & Rastro de Segurança**

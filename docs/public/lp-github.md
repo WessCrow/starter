@@ -99,7 +99,7 @@ Pedido → spec.md (o quê + por quê) → clarify (≤5 perguntas)
 - ✅ **Build (smoke):** `pnpm run build` precisa passar antes de qualquer entrega.
 - ✅ **Revisão cética:** o agente audita a própria implementação contra o contrato da sprint e gera relatório em PT-BR.
 - ✅ **Validação de estrutura:** scripts auditam os YAML do runtime, as skills e a higiene do repositório.
-- ⚠️ **Não inclui:** testes E2E automatizados em navegador (módulo Playwright existe, mas está desativado por decisão registrada). O passo final é sempre você testar 5 minutos no navegador.
+- ✅ **Testes E2E (Fase 4 Playwright):** ativos no modo CLI via `pnpm run test:e2e` (chromium). Geração automática de spec a partir do sprint-contract (`required_for_ui: true`). O passo final é sempre você testar 5 minutos no navegador.
 
 ---
 
