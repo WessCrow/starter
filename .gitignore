@@ -50,3 +50,7 @@ build/
 .env
 .env.*
 !.env.example
+
+# Claude Code — settings pessoais não vão para o repo
+.claude/settings.local.json
+.claude/worktrees/
