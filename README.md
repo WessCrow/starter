@@ -2,7 +2,7 @@
 
 **Um framework de regras para agentes de IA construírem projetos de software com método — kickoff guiado, contexto enxuto, validação obrigatória antes de qualquer "pronto".**
 
-![Runtime v5.2](https://img.shields.io/badge/Runtime-v5.2-blueviolet?style=flat-square)
+![Runtime v5.4](https://img.shields.io/badge/Runtime-v5.4-blueviolet?style=flat-square)
 ![CI validate](https://github.com/WessCrow/starter/actions/workflows/validate.yml/badge.svg)
 ![QA Gate](https://img.shields.io/badge/QA_Gate-build_+_revisão_cética-emerald?style=flat-square)
 ![AGENTS.md](https://img.shields.io/badge/Compatível-AGENTS.md-ff69b4?style=flat-square)
@@ -40,6 +40,7 @@ O agente faz o resto: infere stack, monta `runtime/`, gera CONTEXT.md/PRD.md, pr
 |---|---|
 | **Kickoff em ≤4 perguntas, sem jargão técnico** | [`flows/kickoff.md`](skills/flows/kickoff.md) + [`project-starter.skill`](skills/catalog/project-starter.skill) |
 | **Validação de estrutura — 0 failures obrigatório** | [`validate.py`](skills/core/runtime/validate.py) contra 11 JSON Schemas em `runtime/schema/` |
+| **Roteamento por tipo de ação — contrato condicional + gate Figma** | [`flows/action-router.md`](skills/flows/action-router.md) + [`action-router.skill`](skills/catalog/action-router.skill) |
 | **QA Gate cético antes de declarar feature pronta** | [`qa-gate.skill`](skills/catalog/qa-gate.skill) — pontua 5 dimensões, FAIL se contrato não cumprido |
 | **Build obrigatório** | [`qa-smoke.skill`](skills/catalog/qa-smoke.skill) roda `pnpm run build` (ou `npm`) |
 | **E2E real no browser** | [`qa-playwright.skill`](skills/catalog/qa-playwright.skill) — CLI/chromium, spec gerada do contrato |
@@ -116,4 +117,4 @@ Detalhes em [`skills/INDEX.md`](skills/INDEX.md) · [O que é o STARTER](docs/pu
 >
 > _Sinta-se livre para usar, estudar e evoluir a ferramenta! Apenas pedimos que mantenha os créditos originais do criador._
 >
-> **Última atualização:** 2026-06-13
+> **Última atualização:** 2026-06-16
