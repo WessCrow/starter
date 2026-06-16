@@ -1,4 +1,4 @@
-# AGENTS.md — Runtime OS v5.2 + QA Gate + Host Guard
+# AGENTS.md — Runtime OS v5.2 + QA Gate + Host Guard + Action Router
 
 Compatível: Antigravity · Cursor · Claude Code · VSCode · Windsurf · Cline · Roo.
 
@@ -97,6 +97,26 @@ Complementa §0c/context-scoping: reduz **overhead de modelo** (tier caro em vol
 
 ---
 
+## 0h. Roteamento por Tipo de Ação (Action Router)
+
+Decide **o que impor e quando** — corta o overprocessing de governança e impõe fidelidade na fonte. Protocolo completo: `skills/flows/action-router.md`. Turbo (Claude): `catalog/action-router.skill`.
+
+**Híbrido com o usuário no volante:** o agente infere o modo pelo estado do repo; **o sinal explícito sempre sobrepõe**; nada destrutivo sem aval.
+
+| Sinal | Modo | Governança imposta |
+|-------|------|--------------------|
+| `#novo` | NOVO | kickoff §0 + contrato de definição |
+| `#feature` | FEATURE | spec-driven §0a + `sprint-contract` |
+| `#ajuste` | AJUSTE | **lê** contrato, **não recria** (4 critérios de `feature-flow.md`) |
+| `#figma` | FIGMA | herda contrato + **Gate de Fidelidade** obrigatório |
+| `#doc` | DOC | só documentação (entregável); não recria contrato |
+
+**Regras duras:** AJUSTE/DOC nunca recriam contrato · na dúvida AJUSTE↔FEATURE, **é FEATURE** · documentação só após o QA Gate dar PASS.
+
+**Gate de Fidelidade (modo FIGMA / UI com referência)** — mata os 3 modos de falha: (1) pré-check de MCP Figma conectado + screenshot **antes** de codar (proíbe inventar UI); (2) `search_design_system` + mapeamento de tokens, proibido hardcode (proporção/cor/componente); (3) ler `rules.yaml` + `stack.yaml` para garantir encaixe de stack/convenções. Sem PASS, a UI não é "pronta".
+
+---
+
 ## 1. Bootstrap
 
 ```
@@ -152,4 +172,4 @@ Atualizar handoff + state · `validate.py` 0 failed
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-11
+> Última atualização: 2026-06-16

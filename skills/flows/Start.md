@@ -57,7 +57,7 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
 
 ```
 1. structure/       → projeto novo / definição estrutural
-2. catalog/    → `project-starter` · `qa-gate` · `qa-smoke` · `qa-playwright` · `verify-before-done` · `context-cleaner` · `session-review`
+2. catalog/    → `action-router` · `project-starter` · `qa-gate` · `qa-smoke` · `qa-playwright` · `verify-before-done` · `context-cleaner` · `session-review`
                        `ux-diamond` · `ux-audit` · `scroll-animation` · `responsive-craft` · `fluid-ui` · `emil-design-eng`
                        `interface-design` · `visual-direction-brief` · `web-design-cloner`
                        `figma-implement-design` · `figma-foundation-docs` · `figma-make`
@@ -76,6 +76,7 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
 
 | Intenção | Skills prioritárias |
 |----------|---------------------|
+| Classificar ação / decidir contrato (novo·ajuste·doc·figma) | `action-router` (`flows/action-router.md`) |
 | Explorar problema / validar hipóteses | `ux-diamond` |
 | Direção visual / referências / estilo | `visual-direction-brief` → `web-design-cloner` → `interface-design` |
 | UI experimental / Awwwards | `aw-designer` → `scroll-animation` · `fluid-ui` → `emil-design-eng` |

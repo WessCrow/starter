@@ -78,6 +78,8 @@ index.yaml → validate.py → hot → warm? → cold? → Start-ops → skill �
 |-----|-------|
 | `flows/Start-ops.md` | Orchestrator + fluxo QA |
 | `flows/Start.md` | Roteamento de skills |
+| `flows/action-router.md` | Roteador por tipo de ação + gate de fidelidade Figma |
+| `catalog/action-router.skill` | Turbo (Claude): classifica modo e impõe contrato condicional |
 | `flows/skills-governance.md` | Capability ativa/adiada/futura |
 | `flows/model-orchestration.md` | Orquestração por tier (opt-in) |
 | `flows/RULES.md` | Regras invioláveis (referência humana) |

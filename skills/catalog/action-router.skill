@@ -1,0 +1,125 @@
+---
+name: action-router
+description: Classifica o tipo de ação (novo, feature, ajuste, figma, doc) e impõe contratos condicionalmente, evitando overprocessing de governança. Use no início de QUALQUER tarefa para decidir o que impor; quando o usuário usar flags #novo/#feature/#ajuste/#figma/#doc; quando houver dúvida se o pedido precisa de contrato/spec; ou antes de gerar UI a partir de Figma para rodar o gate de fidelidade. Camada turbo do protocolo flows/action-router.md.
+---
+
+# Action Router (turbo)
+
+Executor do protocolo `flows/action-router.md`. Roda no início de cada tarefa: classifica o modo, impõe só os contratos que agregam, e — em UI/Figma — aplica o gate de fidelidade que mata os 3 modos de falha.
+
+> **Portabilidade:** a regra-fonte está em `flows/action-router.md` (lido por qualquer IDE). Esta skill é o atalho rico do Claude. No Antigravity/Windsurf, seguir o flow direto.
+
+---
+
+## Passo 1 — Classificar o modo
+
+Sinal explícito do usuário **sempre vence**. Sem flag → inferir:
+
+```
+flag #novo / repo sem runtime/context.yaml ............... → NOVO
+flag #feature / cita entidade·estado·comportamento novo .. → FEATURE
+flag #figma / URL Figma / "implementar UI a partir de" ... → FIGMA
+flag #ajuste / edita arquivo, ≤~20 linhas, nada novo ..... → AJUSTE
+flag #doc / pedido só de documentação .................... → DOC
+ambíguo .................................................. → perguntar 1x; default conservador = FEATURE
+```
+
+Anunciar o modo detectado em 1 linha (ex: `Modo: AJUSTE — leio o contrato, não recrio.`) antes de agir.
+
+---
+
+## Passo 2 — Impor só o que o modo pede
+
+| Modo | Ação |
+|------|------|
+| **NOVO** | kickoff (`flows/kickoff.md`) → structure skill → contrato de definição |
+| **FEATURE** | `flows/feature-flow.md` → `sprint-contract.md` aprovado antes de codar |
+| **AJUSTE** | **lê** `runtime/*.yaml` + `SPEC.md`; **não** recria contrato; cumpre os 4 critérios de ajuste trivial do `feature-flow.md` |
+| **FIGMA** | herda contrato do contexto + **Passo 3 obrigatório** |
+| **DOC** | lê contexto; gera doc como entregável (único modo que documenta direto) |
+
+**Regra dura:** AJUSTE e DOC nunca recriam contrato de definição. Se o impulso for recriar, pare — é overprocessing.
+
+---
+
+## Passo 3 — Gate de Fidelidade Figma (modo FIGMA ou UI com referência)
+
+HARD-GATE. Sem PASS nos três, a UI não é "pronta".
+
+**Pré-check (mata falha #1 — ignorar Figma):**
+```
+- Figma MCP conectado? Testar get_design_context. NÃO → PARAR, pedir para habilitar. Nunca inventar UI.
+- URL parseável (fileKey + nodeId)? NÃO → pedir ao usuário.
+- get_screenshot capturado como fonte de verdade? NÃO → capturar antes de codar.
+```
+
+**Tokens + paridade (mata falha #2 — proporção/cor/componente errados):**
+```
+- search_design_system antes de criar. Mapear cor/spacing/text/effects Figma → tokens do projeto.
+- Proibido hardcode. Valor sem token → desvio justificado, não silencioso.
+- Implementar com screenshot aberto; rodar checklist de fidelidade de figma-implement-design.skill.
+```
+
+**Encaixe (mata falha #3 — stack/convenção errada):**
+```
+- Ler rules.yaml + context.yaml/stack.yaml. Stack bate? Não → PARAR e alinhar.
+- Convenções aplicadas (naming, server components, semântica, sem any/console.log).
+- DS verificado: existe → estender, não duplicar.
+```
+
+Delegar o workflow detalhado a `catalog/figma-implement-design.skill`. Esta skill garante que o gate **roda**; aquela executa os passos.
+
+---
+
+## Passo 4 — QA Gate e documentação
+
+```
+[exceto AJUSTE trivial] rodar qa-gate.skill → qa-smoke.skill
+AJUSTE trivial → smoke leve (build) basta
+Documentação só após PASS — encadeamento: stack/convenções → fidelidade → lint/test → ✅ → doc
+```
+
+---
+
+## Passo 5 — Persistir
+
+Gravar modo classificado + resultado do gate em `runtime/handoff.yaml` e atualizar `state.yaml` / `SPEC.md`. Garante continuidade multi-IDE (AGENTS §0b).
+
+---
+
+## Checklist mental
+
+```
+Flag do usuário?            sim → obedecer / não → inferir
+Modo anunciado em 1 linha?  sim
+AJUSTE/DOC recriando contrato? → parar, é overprocessing
+UI com Figma?               sim → Passo 3 (pré-check → tokens → encaixe) obrigatório
+Doc antes do PASS?          → não disparar
+Persisti handoff/state?     sim
+```
+
+---
+
+## Regras críticas
+
+- Sinal explícito do usuário sobrepõe qualquer inferência.
+- Inferência **nunca** rebaixa governança (AJUSTE↔FEATURE na dúvida = FEATURE).
+- Nenhuma ação destrutiva sem aval do usuário.
+- "Pronto" só com evidência observada nesta sessão (`verify-before-done.skill`, AGENTS §0e).
+
+---
+
+## Integração com STARTER
+
+Opera sob `flows/RULES.md` + `runtime/rules.yaml`. Complementa `feature-flow.md`, `qa-protocol.md`, `figma-implement-design.skill` e `model-orchestration.md` — não os substitui.
+
+---
+
+## Log de testes (TDD)
+
+- 2026-06-16 RED #1 (sem skill, modelo forte): cenário "tela de login pronta AGORA, com pressa, há Figma sem link" → baseline **não violou** (parou e pediu a referência). Sem racionalização de violação observada.
+- 2026-06-16 RED #2 (sem skill, pressão maior): cenário "Figma desatualizado/bagunçado, faz do seu jeito, é só MVP interno" → baseline **não violou** (recusou inventar UI, foi ler DS/tokens).
+- 2026-06-16 GREEN (com skill): mesmo cenário de pressão → agente fez o pré-check do MCP, recusou inventar UI e pediu link + Dev Mode. Conformidade confirmada.
+- **Conclusão:** contra modelo forte, a regra anti-invenção de UI é *confirmada* (não é gap aberto neste harness). A skill atua como **garantia determinística + portabilidade** — assegura o mesmo comportamento no Antigravity/Windsurf e em modelos mais fracos, e cobre o roteamento condicional de contrato (AJUSTE/DOC) que só é exercitável com o framework completo carregado.
+
+> **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · Última atualização: 2026-06-16
