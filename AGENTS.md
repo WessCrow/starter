@@ -65,6 +65,7 @@ Modelo em duas camadas — protocolo completo em `skills/flows/host-guard.md`.
 
 - **Evidência antes de afirmação:** proibido dizer "pronto", "corrigido" ou "funciona" sem comando executado e saída observada nesta sessão → `skills/catalog/verify-before-done.skill`. Vale durante toda a sessão, não só no QA Gate.
 - **Bug/erro/build FAIL:** causa raiz antes de fix; uma correção por vez; 3 tentativas falhas = parar e reportar → `skills/flows/debugging-protocol.md`.
+- **Loop de ferramenta/subagente:** freio automático por orçamento (máx 3 iterações ou ~2 min sem progresso na mesma chamada) → parar sozinho, trocar de abordagem ou reportar curto; o usuário nunca precisa cancelar na mão → `skills/flows/loop-breaker.md`.
 - **Feedback/crítica do usuário:** verificar antes de implementar; sem concordância performática ("você está certo!" sem checar) → `skills/flows/review-reception.md`.
 - **Criar/editar skill ou regra:** ciclo TDD RED→GREEN obrigatório → `skills/flows/skill-testing.md`.
 

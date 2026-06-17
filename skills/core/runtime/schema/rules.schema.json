@@ -15,6 +15,7 @@
     "performance": { "type": "object", "additionalProperties": true },
     "security": { "type": "object", "additionalProperties": true },
     "host_guard": { "type": "boolean" },
+    "anti_loop": { "type": "object", "additionalProperties": true },
     "front_end": { "type": "object", "additionalProperties": true },
     "back_end": { "type": "object", "additionalProperties": true },
     "architecture": { "type": "object", "additionalProperties": true }
