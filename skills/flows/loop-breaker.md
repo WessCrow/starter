@@ -73,7 +73,9 @@ Complementa, não substitui:
 
 ## Log de testes (TDD — `skill-testing.md`)
 
-- _RED→GREEN pendente:_ cenário-alvo — subagente de browser repetindo a mesma navegação sem progresso; esperado: parar no teto, trocar para caminho determinístico ou reportar curto, **sem** o usuário precisar cancelar. Registrar relatório em `skills/outputs/skill-tests/` (local, não versionado — `repo-hygiene.md`).
+- 2026-06-16 **RED:** subagente limpo, sem o protocolo — cenário "subagente de browser falhou 4x com erro idêntico, ~2 min sem progresso". Acertou a troca de ferramenta, mas a racionalização ficou exposta no próprio relato: *"absent that nudge an agent tends to keep poking the assigned tool rather than reach for the unprompted alternative"* — a parada dependia de julgamento, não de regra. Brecha = ausência de teto determinístico. Reforça o RED real da sessão de origem (loop só parou por cancelamento manual do usuário).
+- 2026-06-16 **GREEN:** mesmo cenário **com** o protocolo carregado — nomeou os 3 sinais ([A] repetição, [B] erro repetido, [C] teto de 3 iterações/~2 min estourado), parou sem disparar a 5ª chamada e trocou para caminho determinístico. Parada virou determinística, não opcional. PASS.
+- Relatório completo: `skills/outputs/skill-tests/2026-06-16-loop-breaker.md` (local, não versionado — `repo-hygiene.md`).
 
 ---
 
