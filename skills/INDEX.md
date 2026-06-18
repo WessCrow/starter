@@ -153,6 +153,12 @@ skills/
 | `shaping.skill` | De ideia aberta a direção concreta |
 | `design-critique.skill` | Qualidade visual e coerência estética |
 | `framing-doc.skill` | Raciocínio em documentação utilizável |
+| `web-quality-audit.skill` | Auditoria web completa (Lighthouse — orquestra as demais) |
+| `performance.skill` | Performance de carregamento e runtime (Core Web Vitals) |
+| `core-web-vitals.skill` | LCP, INP, CLS — otimização específica de métricas Google |
+| `accessibility.skill` | Acessibilidade WCAG 2.2 em código (a11y implementação) |
+| `seo.skill` | SEO técnico, meta tags, structured data, crawlability |
+| `best-practices.skill` | Segurança, APIs modernas, qualidade de código frontend |
 
 ---
 

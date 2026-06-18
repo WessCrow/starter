@@ -83,6 +83,25 @@
 
 ---
 
+## Decisões P5 — Sprint 008 (2026-06-18)
+
+### Skill intake — web-quality-skills (addyosmani/web-quality-skills)
+
+| Skill | Veredito | Destino |
+|-------|----------|---------|
+| `web-quality-audit` | ASSIMILAR | `catalog/web-quality-audit.skill` |
+| `performance` | ASSIMILAR | `catalog/performance.skill` |
+| `core-web-vitals` | ASSIMILAR | `catalog/core-web-vitals.skill` |
+| `accessibility` | ASSIMILAR | `catalog/accessibility.skill` |
+| `seo` | ASSIMILAR | `catalog/seo.skill` |
+| `best-practices` | ASSIMILAR | `catalog/best-practices.skill` |
+
+**Motivação:** gap crítico identificado no pilar Frontend Engineering (~30% de maturidade). Skills externas cobrem performance, a11y em código, Core Web Vitals e SEO técnico — áreas sem qualquer cobertura prévia no catalog.  
+**Fonte:** MIT · Addy Osmani (Chrome DevTools) · 1.8k stars · [github.com/addyosmani/web-quality-skills](https://github.com/addyosmani/web-quality-skills)  
+**Intenções registradas no Start.md:** auditoria web, performance, LCP/INP/CLS, WCAG, SEO, boas práticas frontend.
+
+---
+
 ## Como adicionar nova skill
 
 1. Criar `.skill` em `catalog/` (ou `structure/` se estrutural)

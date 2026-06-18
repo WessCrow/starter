@@ -66,6 +66,7 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
                        `hypothesis-investigation` · `landing-conversion` · `portfolio-storytelling`
                        `hyperframes` · `hyperframes-cli` · `hyperframes-media`
                        `discovery` · `shaping` · `design-critique` · `ux-audit` · `framing-doc`
+                       `web-quality-audit` · `performance` · `core-web-vitals` · `accessibility` · `seo` · `best-practices`
 3. _deferred/       → incubação; não entra no roteamento ativo
 4. linked-skills/ + cache/ → capability futura; fora do fluxo atual
 ```
@@ -89,7 +90,12 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
 | Iniciar projeto novo | structure skill → `project-starter` |
 | Nova feature (spec-driven) | `flows/feature-flow.md` → `templates/specs/` → `qa-gate` |
 | Refatorar projeto | `ux-audit` → `interface-design` |
-| Padrões web / boas práticas | `emil-design-eng` → `responsive-craft` |
+| Padrões web / boas práticas | `best-practices` → `emil-design-eng` → `responsive-craft` |
+| Auditoria web completa (Lighthouse) | `web-quality-audit` |
+| Performance / velocidade / bundle | `performance` → `core-web-vitals` |
+| Core Web Vitals (LCP · INP · CLS) | `core-web-vitals` |
+| Acessibilidade em código / WCAG | `accessibility` |
+| SEO técnico / meta tags / structured data | `seo` |
 | Figma → código | `figma-implement-design` |
 | Figma foundations / variables | `figma-foundation-docs` |
 | Figma Make / prompt-to-app | `figma-make` |
