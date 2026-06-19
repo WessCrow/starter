@@ -36,3 +36,20 @@ intents:
     triggers: [tts, transcribe, remove-background, voiceover, transcript, legenda]
   ui_component_visual:
     primary: interface-design
+
+activation_matrix:
+  novo:
+    squad: [orchestrator, product_strategist, architect]
+    steps: [kickoff, plan, contract]
+  feature:
+    squad: [orchestrator, product_strategist, architect, implementer, independent_qa, doc_writer]
+    steps: [specify, clarify, plan, tasks, implement, qa_verification, documentation]
+  ajuste:
+    squad: [implementer, local_qa]
+    steps: [implement, smoke_check]
+  figma:
+    squad: [orchestrator, designer, implementer, independent_qa, doc_writer]
+    steps: [fidelity_gate, implement, qa_verification, documentation]
+  doc:
+    squad: [doc_writer]
+    steps: [document]

@@ -28,15 +28,20 @@ Anunciar o modo detectado em 1 linha (ex: `Modo: AJUSTE — leio o contrato, nã
 
 ---
 
-## Passo 2 — Impor só o que o modo pede
+## Passo 2 — Carregar a Matriz de Ativação (dados do `routes.yaml`)
 
-| Modo | Ação |
-|------|------|
-| **NOVO** | kickoff (`flows/kickoff.md`) → structure skill → contrato de definição |
-| **FEATURE** | `flows/feature-flow.md` → `sprint-contract.md` aprovado antes de codar |
-| **AJUSTE** | **lê** `runtime/*.yaml` + `SPEC.md`; **não** recria contrato; cumpre os 4 critérios de ajuste trivial do `feature-flow.md` |
-| **FIGMA** | herda contrato do contexto + **Passo 3 obrigatório** |
-| **DOC** | lê contexto; gera doc como entregável (único modo que documenta direto) |
+O Roteador carrega as regras de squad e etapas diretamente de `activation_matrix` no `routes.yaml`:
+
+| Modo | Squad Ativo | Etapas / Ações a Executar |
+|------|-------------|---------------------------|
+| **NOVO** | `[orchestrator, product_strategist, architect]` | kickoff, plan, contract |
+| **FEATURE** | `[orchestrator, product_strategist, architect, implementer, independent_qa, doc_writer]` | specify, clarify, plan, tasks, implement, qa_verification, documentation |
+| **AJUSTE** | `[implementer, local_qa]` | implement, smoke_check (ajuste leve) |
+| **FIGMA** | `[orchestrator, designer, implementer, independent_qa, doc_writer]` | fidelity_gate, implement, qa_verification, documentation |
+| **DOC** | `[doc_writer]` | document |
+
+**Regra de Anúncio:**
+O agente deve anunciar o modo detectado, o squad ativado e a etapa atual em 1 linha no início da tarefa (ex: `[STARTER] Modo: FEATURE | Squad: [orchestrator, ...] | Etapa: specify`).
 
 **Regra dura:** AJUSTE e DOC nunca recriam contrato de definição. Se o impulso for recriar, pare — é overprocessing.
 

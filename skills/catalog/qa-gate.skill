@@ -39,38 +39,46 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 
 ---
 
-## Fluxo (v5.2 — Fase 4 Playwright **ativa** via CLI)
+## Fluxo (v5.5 — Verificador Independente)
 
 ```
 [1] Ler sprint-contract.md + SPEC.md da feature
         ↓
-[2] Ler runtime/qa.yaml (pesos, pass_rule)
+[2] Ler runtime/qa.yaml (pesos, pass_rule, gate.independent_verifier)
         ↓
-[3] Executar qa-smoke.skill (build/lint/test) se projeto tiver package.json
+[3] Se gate.independent_verifier for true:
+    - Se a IDE/ambiente suporta subagentes de texto (Roo/Cline subagent, Claude Code task):
+      delegar a execução inteira do QA Gate para um subagente independente.
+    - Se não suportar:
+      executar `python3 skills/infra/scripts/independent-qa.py` para obter uma avaliação
+      imparcial e mecânica das regras de código e testes do repositório.
+    - Se o veredito do validador independente for FAIL, o QA Gate deve falhar imediatamente.
         ↓
-[3b] Se feature tem UI e `runtime/qa.yaml → phase_4_playwright.enabled: true`:
+[4] Executar qa-smoke.skill se projeto tiver package.json (se não executado pelo script independente)
+        ↓
+[4b] Se feature tem UI e `runtime/qa.yaml → phase_4_playwright.enabled: true`:
      executar qa-playwright.skill (CLI · chromium · gera spec do contrato)
         ↓
-[4] Testar como usuário — descrever passos no relatório
+[5] Testar como usuário — descrever passos no relatório
         ↓
-[5] Pontuar dimensões 0–10 (ver qa.yaml)
+[6] Pontuar dimensões 0–10 (ver qa.yaml)
         ↓
-[6] Marcar cada critério do contrato PASS/FAIL
+[7] Marcar cada critério do contrato PASS/FAIL
         ↓
-[6b] Constitution check — a implementação viola runtime/rules.yaml
+[7b] Constitution check — a implementação viola runtime/rules.yaml
      ou flows/RULES.md? (segurança, código, acessibilidade)
      Violação = FAIL, citando a regra violada
         ↓
-[7] Decisão final PASS ou FAIL (pass_rule)
+[8] Decisão final PASS ou FAIL (pass_rule)
         ↓
-[8] Gerar qa/reports/YYYY-MM-DD-[feature].md (template qa-report.md)
+[9] Gerar qa/reports/YYYY-MM-DD-[feature].md (baseado no template ou na saída do independent-qa.py)
         ↓
-[9] Atualizar runtime/handoff.yaml (qa.last_status, qa.last_report_path)
+[10] Atualizar runtime/handoff.yaml (qa.last_status, qa.last_report_path)
         ↓
-[10] FAIL → não concluir feature
+[11] FAIL → não concluir feature
       PASS → usuário testa 5 min no navegador
         ↓
-[11] Disparar session-review.skill (obrigatório, PASS ou FAIL —
+[12] Disparar session-review.skill (obrigatório, PASS ou FAIL —
       feature concluída é "atividade pesada")
 ```
 

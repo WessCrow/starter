@@ -120,6 +120,8 @@ skills/
 | Skill | Domínio |
 |-------|---------|
 | `project-starter.skill` | Kickoff de projeto |
+| `action-router.skill` | Roteador de ações e governança |
+| `retro-analyst.skill` | Retrospectiva e evolução de regras |
 | `qa-gate.skill` | QA cético pós-implementação |
 | `qa-smoke.skill` | Build/lint/test |
 | `qa-playwright.skill` | QA E2E browser (Fase 4) |

@@ -45,7 +45,7 @@ O agente infere a stack, monta `runtime/`, gera CONTEXT.md/PRD.md e prepara o pr
 | Roteamento por tipo de ação | `flows/action-router.md` + `action-router.skill` |
 | QA Gate antes de declarar feature pronta | `qa-gate.skill` (5 dimensões, FAIL se contrato não cumprido) |
 | Build obrigatório | `qa-smoke.skill` (`pnpm run build` ou `npm`) |
-| E2E no browser | `qa-playwright.skill` (CLI/chromium, spec gerada do contrato) |
+| E2E no browser (Fase 4) | `qa-playwright.skill` (CLI/chromium, spec gerada do contrato) |
 | Host Guard com enforce | Hook `PreToolUse:Bash` → `host-guard.sh` |
 | Spec-driven para nova feature | `flows/feature-flow.md` |
 | Continuidade entre IDEs/sessões | `state.yaml` + `handoff.yaml` |

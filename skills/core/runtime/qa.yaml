@@ -6,6 +6,8 @@ gate:
   block_feature_done_without_pass: true
   require_sprint_contract: true
   require_user_browser_check_after_pass: true
+  independent_verifier: true
+  independent_verifier_mode: script
 
 report:
   language: pt-BR

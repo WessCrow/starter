@@ -15,14 +15,13 @@
 
 ---
 
-## Fluxo (v5.1 — ativo hoje)
+## Fluxo (v5.5 — Verificador Independente)
 
 ```txt
 Ideia → Especialista que Pergunta → sprint-contract (aprovação)
      → Implementar
-     → qa-smoke (build/lint/test)
-     → qa-gate (relatório PASS/FAIL)
-     → você testa no browser → handoff pass
+     → QA Gate (delegado para Subagente OU script independent-qa.py)
+     → se PASS → você testa no browser (5 min) → handoff pass
 ```
 
 **Proibido:** concluir feature com QA FAIL.

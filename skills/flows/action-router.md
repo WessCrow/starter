@@ -47,17 +47,19 @@ O agente decide o **modo da ação** combinando inferência + sinal explícito. 
 
 ---
 
-## 2. Tabela de roteamento — o que cada modo impõe
+## 2. Matriz de Ativação de Squads e Roteamento (v5.5)
 
-| Modo | Contrato de definição | Spec-driven (`feature-flow.md`) | Gate Figma | QA Gate | Documentação |
-|------|:---:|:---:|:---:|:---:|:---:|
-| **NOVO** | ✅ impõe (kickoff §0) | — | se houver Figma | ✅ | só no fim, após PASS |
-| **FEATURE** | ✅ lê + `sprint-contract` | ✅ obrigatório | se UI/Figma | ✅ | só no fim, após PASS |
-| **AJUSTE** | 🔁 **lê, não recria** | ❌ (escapa pelos 4 critérios) | se tocar UI | ✅ leve (smoke) | ❌ não dispara |
-| **FIGMA** | 🔁 lê | herda do contexto (feature/ajuste) | ✅ **obrigatório** | ✅ | só no fim, após PASS |
-| **DOC** | 🔁 lê | — | — | — | ✅ **este é o entregável** |
+A governança, os papéis ativos e as etapas obrigatórias de cada ação são obtidas diretamente da `activation_matrix` do `routes.yaml`:
 
-Legenda: ✅ impõe · 🔁 lê o existente sem recriar · ❌ não dispara · — não aplicável.
+| Modo | Squad Ativo | Etapas / Ações a Executar |
+|------|-------------|---------------------------|
+| **NOVO** | `[orchestrator, product_strategist, architect]` | kickoff, plan, contract |
+| **FEATURE** | `[orchestrator, product_strategist, architect, implementer, independent_qa, doc_writer]` | specify, clarify, plan, tasks, implement, qa_verification, documentation |
+| **AJUSTE** | `[implementer, local_qa]` | implement, smoke_check (ajuste leve) |
+| **FIGMA** | `[orchestrator, designer, implementer, independent_qa, doc_writer]` | fidelity_gate, implement, qa_verification, documentation |
+| **DOC** | `[doc_writer]` | document |
+
+Legenda de papéis: `orchestrator` (mediação), `product_strategist` (clarificação), `architect` (contrato), `implementer` (código), `independent_qa` (validador sético independente), `doc_writer` (especialista de documentação).
 
 **Princípio:** `AJUSTE` e `DOC` **nunca** recriam contrato — só consultam `runtime/*.yaml` + `SPEC.md`. Isso mata o overprocessing.
 

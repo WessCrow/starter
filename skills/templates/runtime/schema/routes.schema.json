@@ -57,7 +57,19 @@
         "items": { "type": "string" }
       }
     },
-    "linked_skills_status": { "type": "string" }
+    "linked_skills_status": { "type": "string" },
+    "activation_matrix": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "squad": { "type": "array", "items": { "type": "string" } },
+          "steps": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["squad", "steps"],
+        "additionalProperties": false
+      }
+    }
   },
   "required": ["resolution", "protocol", "intents"],
   "additionalProperties": false

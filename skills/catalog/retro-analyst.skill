@@ -1,0 +1,58 @@
+# retro-analyst.skill
+
+> **Tipo:** Local Skill · **Domínio:** retrospectives · quality-assurance  
+> **Quando usar:** Opcional ao final de sprints ou após atividades pesadas (após QA PASS)  
+> **Idioma:** português simples · **Tom:** reflexivo e pragmático
+
+---
+
+## Propósito
+
+Identificar fricções operacionais da sessão e propor melhorias diretas para as regras do repositório (`runtime/rules.yaml` e `flows/RULES.md`), ajudando o framework a evoluir e prevenir a repetição de falhas comuns.
+
+---
+
+## Fluxo de Execução
+
+```
+[1] Verificar se a feature/sprint atual obteve QA PASS
+        ↓
+[2] Ler o arquivo runtime/handoff.yaml e os relatórios de QA gerados na sessão
+        ↓
+[3] Executar o script `python3 skills/infra/scripts/retro-analyst.py` para analisar o histórico
+    git e logs de erros da sessão
+        ↓
+[4] Gerar um diagnóstico sucinto em `docs/private/retrospectives/YYYY-MM-DD-[sprint-id].md`
+        ↓
+[5] Se houver repetições sistemáticas de erros (ex: console.log esquecido, bugs de imports,
+    tipagem TS incorreta):
+    propor uma modificação pontual em `runtime/rules.yaml` ou `flows/RULES.md`
+        ↓
+[6] Apresentar a recomendação de melhoria ao usuário
+```
+
+---
+
+## O que o relatório retrospectivo deve conter:
+
+1. **Eficiência da Sessão:**
+   - Estimativa de interações e retrabalhos até o PASS.
+   - Lista de erros de build/lint ocorridos durante o ciclo de desenvolvimento.
+
+2. **Detecção de Desvios (Drift):**
+   - Regras do `rules.yaml` que foram quebradas no meio do processo e que o QA Gate detectou.
+
+3. **Recomendações Práticas:**
+   - "Adicionar a regra X ao rules.yaml para evitar o erro Y."
+   - "Melhorar a skill Z para incluir o passo W."
+
+---
+
+## Log de testes (TDD)
+
+- 2026-06-18 RED: sem a skill, o agente realiza retrospectiva genérica, dando autoelogios e ignorando commits locais ou erros reais de build.
+- 2026-06-18 GREEN: com a skill e retro-analyst.py, o agente extrai commits reais via Git, aponta arquivos tocados e formula recomendações de regras baseadas em tipos de extensão editados.
+
+---
+
+> **Autoria:** Wesley Alves · Última atualização: 2026-06-18

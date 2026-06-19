@@ -43,7 +43,7 @@ O agente faz o resto: infere stack, monta `runtime/`, gera CONTEXT.md/PRD.md, pr
 | **Roteamento por tipo de ação — contrato condicional + gate Figma** | [`flows/action-router.md`](skills/flows/action-router.md) + [`action-router.skill`](skills/catalog/action-router.skill) |
 | **QA Gate cético antes de declarar feature pronta** | [`qa-gate.skill`](skills/catalog/qa-gate.skill) — pontua 5 dimensões, FAIL se contrato não cumprido |
 | **Build obrigatório** | [`qa-smoke.skill`](skills/catalog/qa-smoke.skill) roda `pnpm run build` (ou `npm`) |
-| **E2E real no browser** | [`qa-playwright.skill`](skills/catalog/qa-playwright.skill) — CLI/chromium, spec gerada do contrato |
+| **E2E real no browser (Fase 4)** | [`qa-playwright.skill`](skills/catalog/qa-playwright.skill) — CLI/chromium, spec gerada do contrato |
 | **Host Guard com enforce real** | Hook `PreToolUse:Bash` → [`host-guard.sh`](skills/infra/scripts/host-guard.sh) bloqueia `rm -rf /`, pipe-to-shell, `~/.ssh`, install global, force push em `main` |
 | **Spec-driven para nova feature** | [`flows/feature-flow.md`](skills/flows/feature-flow.md): specify → clarify → plan → tasks → analyze → implement |
 | **Continuidade entre IDEs/sessões** | `state.yaml` + `handoff.yaml` como única fonte da verdade |
