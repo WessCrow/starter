@@ -1,0 +1,71 @@
+/**
+ * Template de Tratamento Funcional de Erros (Result / Either Pattern)
+ * Local: skills/templates/specs/result.ts.template
+ * 
+ * Utilize este template para representar falhas e exceções em tempo de compilação,
+ * forçando o tratamento explícito no front-end e eliminando try/catch genéricos de domínio.
+ */
+
+// 1. Definição do Tipo Genérico Result
+export type Result<T, E> = 
+  | { ok: true; value: T } 
+  | { ok: false; error: E };
+
+// 2. Construtores Utilitários para Sucesso e Falha
+export const success = <T, E>(value: T): Result<T, E> => ({
+  ok: true,
+  value
+});
+
+export const failure = <T, E>(error: E): Result<T, E> => ({
+  ok: false,
+  error
+});
+
+/**
+ * Exemplo Prático de Uso (API & Domain Service)
+ * 
+ * type PaymentError = 'INSUFFICIENT_FUNDS' | 'EXPIRED_CARD' | 'NETWORK_ERROR';
+ * 
+ * export async function processPayment(amount: number): Promise<Result<{ txId: string }, PaymentError>> {
+ *   try {
+ *     const res = await api.post('/pay', { amount });
+ *     return success({ txId: res.data.id });
+ *   } catch (err: any) {
+ *     const status = err?.response?.status;
+ *     if (status === 402) return failure('INSUFFICIENT_FUNDS');
+ *     if (status === 403) return failure('EXPIRED_CARD');
+ *     return failure('NETWORK_ERROR');
+ *   }
+ * }
+ */
+
+/**
+ * Exemplo Prático de Uso (Front-end UI React Component)
+ * 
+ * const handlePayment = async () => {
+ *   setLoading(true);
+ *   const result = await processPayment(100);
+ *   setLoading(false);
+ * 
+ *   if (result.ok) {
+ *     // O compilador sabe que result.value existe aqui
+ *     showToast(`Sucesso! Transação: ${result.value.txId}`);
+ *     navigateToReceipt();
+ *   } else {
+ *     // O compilador sabe que result.error existe aqui
+ *     // Padrão de UX do Designer2627: explicar o erro de forma empática
+ *     switch (result.error) {
+ *       case 'INSUFFICIENT_FUNDS':
+ *         showError("Saldo insuficiente. Por favor, utilize outra forma de pagamento.");
+ *         break;
+ *       case 'EXPIRED_CARD':
+ *         showError("Cartão expirado. Verifique os dados digitados ou tente outro cartão.");
+ *         break;
+ *       case 'NETWORK_ERROR':
+ *         showError("Não conseguimos conectar ao servidor. Tente novamente em instantes.");
+ *         break;
+ *     }
+ *   }
+ * };
+ */

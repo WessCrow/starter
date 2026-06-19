@@ -162,7 +162,30 @@ CONTEXT.md · PRD.md · outputs/*.md (salvo pedido)
 
 ## 7. Pós-sessão
 
-Atualizar handoff + state · `validate.py` 0 failed
+Executar `python3 skills/scripts/calculate_tokens.py` · Atualizar handoff + state · `validate.py` 0 failed
+
+---
+
+## 8. Autonomia Avançada (Daemon & Agentes Paralelos)
+
+### Modo Daemon (Terminal Silencioso)
+Para evitar popups de confirmação do host em comandos do terminal:
+1. O desenvolvedor inicializa o daemon em um terminal externo: `python3 skills/scripts/daemon_watcher.py`
+2. O agente de IA pode solicitar execuções adicionando comandos na seção `daemon.commands` de `state.yaml`:
+   ```yaml
+   daemon:
+     commands:
+       - id: "unique_cmd_id"
+         cmd: "pnpm run test"
+         status: "pending"
+   ```
+3. O agente monitora o arquivo `state.yaml` até o status mudar para `success` ou `failed` e lê a saída em `qa/reports/daemon_[id].log`.
+
+### Fila de Agentes Paralelos (Orquestração de Escrita)
+Para orquestrar a escrita de código em paralelo sem abrir janelas de chat secundárias:
+1. O agente adiciona as tarefas de geração de código em `specs/queue.yaml`.
+2. Executa `python3 skills/scripts/run_parallel_agents.py` (via Daemon ou comando aprovado).
+3. O script chama as APIs de LLMs em background e aplica as alterações diretamente nos arquivos de destino em disco.
 
 ---
 

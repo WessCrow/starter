@@ -1,0 +1,16 @@
+{
+  "*.ts": [
+    "tsc --noEmit",
+    "eslint --fix"
+  ],
+  "*.tsx": [
+    "tsc --noEmit",
+    "eslint --fix"
+  ],
+  "*.js": [
+    "eslint --fix"
+  ],
+  "skills/core/runtime/*.yaml": [
+    "python3 skills/core/runtime/validate.py --file"
+  ]
+}

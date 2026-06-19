@@ -1,14 +1,14 @@
-v: "5.1"
-updated: "2026-05-20"
-active: false
+v: "5.2"
+updated: "2026-06-19"
+active: true
 
 feature:
-  id: null
-  name: null
-  path: null
+  id: "008-night-mode"
+  name: "Night Mode / Autonomous Safe Mode"
+  path: "specs/008-night-mode/spec.md"
 
 spec:
-  required: false
+  required: true
 
 status:
-  phase: idle
+  phase: "clarify"

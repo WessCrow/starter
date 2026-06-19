@@ -55,13 +55,17 @@ A governança, os papéis ativos e as etapas obrigatórias de cada ação são o
 |------|-------------|---------------------------|
 | **NOVO** | `[orchestrator, product_strategist, architect]` | kickoff, plan, contract |
 | **FEATURE** | `[orchestrator, product_strategist, architect, implementer, independent_qa, doc_writer]` | specify, clarify, plan, tasks, implement, qa_verification, documentation |
-| **AJUSTE** | `[implementer, local_qa]` | implement, smoke_check (ajuste leve) |
+| **AJUSTE** | `[implementer, local_qa]` | Fast-Track: implement, local_smoke_check |
 | **FIGMA** | `[orchestrator, designer, implementer, independent_qa, doc_writer]` | fidelity_gate, implement, qa_verification, documentation |
 | **DOC** | `[doc_writer]` | document |
 
 Legenda de papéis: `orchestrator` (mediação), `product_strategist` (clarificação), `architect` (contrato), `implementer` (código), `independent_qa` (validador sético independente), `doc_writer` (especialista de documentação).
 
-**Princípio:** `AJUSTE` e `DOC` **nunca** recriam contrato — só consultam `runtime/*.yaml` + `SPEC.md`. Isso mata o overprocessing.
+**Princípio de Fast-Track para AJUSTE:**
+- `AJUSTE` **nunca** cria pastas/arquivos de especificação física (`specs/NNN-*`) nem recria contratos de sprint.
+- O agente faz a edição pontual de código diretamente nos arquivos alvo.
+- Executa imediatamente o pipeline estático local (`qa-smoke`) após editar.
+- Atualiza somente o `handoff.yaml` com o resumo das alterações e o status de QA. Isso reduz a burocracia de DX em ~90% para micro-tarefas.
 
 ---
 

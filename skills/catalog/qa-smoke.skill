@@ -34,6 +34,15 @@ Rodar comandos mínimos de **build**, **lint** (se existir) e **test** (se exist
 
 ## Comandos (ordem)
 
+### TypeScript Compiler Gate (Obrigatório em TS)
+
+Se existir `tsconfig.json` ou arquivos TypeScript no workspace:
+```bash
+pnpm exec tsc --noEmit
+# ou: npx tsc --noEmit
+```
+*   **Comportamento:** Qualquer erro do compilador do TypeScript de nível de tipagem deve causar FAIL sumário no pipeline, impedindo que o build prossiga.
+
 ### Next.js
 
 ```bash

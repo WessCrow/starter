@@ -3,8 +3,10 @@ updated: "2026-06-16"
 enforcement: required
 
 code:
-  never: [dead_code, console_log, ts_any, css_important]
-  always: [descriptive_names, explicit_error_handling]
+  strict_mode: true
+  typescript: strict
+  never: [dead_code, console_log, ts_any, ts_casting_assertion, css_important]
+  always: [descriptive_names, explicit_error_handling, functional_error_handling]
 
 html:
   semantic_elements: [header, main, nav, section, article]

@@ -81,6 +81,7 @@ specs/
 
 - Capturar **o quê** e **por quê** em linguagem simples (histórias de usuário + critérios de aceite).
 - **Proibido** citar framework, biblioteca ou banco nesta fase. Se o usuário citar stack, anotar para o plan e manter o spec limpo.
+- **Type-First Specs (Obrigatório em TS):** Em projetos com tipagem estática, modelar os tipos e contratos centrais do domínio (ex: assinaturas, estados da UI, tipos union de erros) em um arquivo `specs/NNN-nome/types.ts` ou direto no `spec.md` (como blocos de tipos conceituais) para ancorar logicamente o escopo.
 - Marcar pontos vagos com `[PRECISA CLARIFICAR: …]`.
 
 ### Fase 2 — Clarify (obrigatória antes do plan)
@@ -135,6 +136,7 @@ Checagem cética, antes de pedir aprovação do contrato:
 [ ] plan.md contradiz o spec.md em algum ponto?
 [ ] Alguma decisão viola runtime/rules.yaml ou RULES.md? (constitution check)
 [ ] Restam [PRECISA CLARIFICAR] não resolvidos?
+[ ] Os tipos e assinaturas (`types.ts`) estão mapeados, passam no validador do compilador e cobrem todos os caminhos felizes e de exceção?
 [ ] O padrão arquitetural é proporcional ao nível declarado (S/M/L/XL)?
 ```
 
