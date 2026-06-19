@@ -32,6 +32,30 @@
     "framework_v": {
       "type": "string",
       "description": "Versão do framework STARTER usada para bootstrap/upgrade"
+    },
+    "daemon": {
+      "type": "object",
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "cmd": { "type": "string" },
+              "status": {
+                "type": "string",
+                "enum": ["pending", "running", "success", "failed"]
+              },
+              "exit_code": { "type": ["integer", "null"] },
+              "log_path": { "type": ["string", "null"] }
+            },
+            "required": ["id", "cmd", "status"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
     }
   },
   "required": ["phase"],

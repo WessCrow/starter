@@ -108,7 +108,7 @@ DOC_SNIPPETS = {
     ],
 }
 
-SKIP_MARKDOWN_PARTS = {".git", ".venv", "__pycache__", ".cursor", "node_modules", "_lab"}
+SKIP_MARKDOWN_PARTS = {".git", ".venv", "__pycache__", ".cursor", "node_modules", "_lab", "_archive"}
 
 
 def read_text(path: Path) -> str:

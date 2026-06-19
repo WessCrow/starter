@@ -20,7 +20,11 @@ def get_yaml_lib():
         import yaml
         return yaml
     except ImportError:
-        print("Erro: biblioteca pyyaml não encontrada. Por favor, execute no ambiente com dependências.")
+        print("\n[Erro] Biblioteca 'pyyaml' não encontrada no ambiente Python atual.")
+        print("Para resolver, execute o daemon utilizando o ambiente virtual (.venv) do projeto:")
+        print("  .venv/bin/python3 skills/scripts/daemon_watcher.py")
+        print("Ou ative o ambiente virtual antes de rodar:")
+        print("  source .venv/bin/activate && python3 skills/scripts/daemon_watcher.py\n")
         sys.exit(1)
 
 def run_cmd(cmd_str: str, cmd_id: str) -> tuple[int, Path]:

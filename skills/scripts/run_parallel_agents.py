@@ -16,7 +16,11 @@ def get_yaml_lib():
         import yaml
         return yaml
     except ImportError:
-        print("Erro: biblioteca pyyaml não encontrada.")
+        print("\n[Erro] Biblioteca 'pyyaml' não encontrada no ambiente Python atual.")
+        print("Para resolver, execute o script utilizando o ambiente virtual (.venv) do projeto:")
+        print("  .venv/bin/python3 skills/scripts/run_parallel_agents.py")
+        print("Ou ative o ambiente virtual antes de rodar:")
+        print("  source .venv/bin/activate && python3 skills/scripts/run_parallel_agents.py\n")
         sys.exit(1)
 
 def call_gemini_api(api_key: str, prompt: str) -> str:
