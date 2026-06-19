@@ -2,7 +2,7 @@
 
 **Um framework de regras para agentes de IA construírem projetos de software com método — kickoff guiado, contexto enxuto, validação obrigatória antes de qualquer "pronto".**
 
-![Runtime v5.4](https://img.shields.io/badge/Runtime-v5.4-blueviolet?style=flat-square)
+![Runtime v5.5](https://img.shields.io/badge/Runtime-v5.5-blueviolet?style=flat-square)
 ![CI validate](https://github.com/WessCrow/starter/actions/workflows/validate.yml/badge.svg)
 ![QA Gate](https://img.shields.io/badge/QA_Gate-build_+_revisão_cética-emerald?style=flat-square)
 ![AGENTS.md](https://img.shields.io/badge/Compatível-AGENTS.md-ff69b4?style=flat-square)
@@ -48,6 +48,7 @@ O agente faz o resto: infere stack, monta `runtime/`, gera CONTEXT.md/PRD.md, pr
 | **Spec-driven para nova feature** | [`flows/feature-flow.md`](skills/flows/feature-flow.md): specify → clarify → plan → tasks → analyze → implement |
 | **Continuidade entre IDEs/sessões** | `state.yaml` + `handoff.yaml` como única fonte da verdade |
 | **Economia de tokens e de tier** | `context-cleaner.skill` + orquestração por tier ([AGENTS.md §0g](AGENTS.md)) |
+| **Retrospectiva pós-sprint para melhoria de regras** | [`retro-analyst.skill`](skills/catalog/retro-analyst.skill) — analisa commits e logs para sugerir evoluções do runtime |
 
 ---
 
