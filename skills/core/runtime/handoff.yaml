@@ -11,9 +11,9 @@ qa:
   last_run_at: '2026-06-19'
   failures_open: []
 feature:
-  id: 010-autonomia-agente-daemon
-  sprint_contract_path: specs/010-autonomia-agente-daemon/sprint-contract.md
-  spec_path: specs/010-autonomia-agente-daemon/spec.md
+  id: 011-check-spec-coherence-ci
+  sprint_contract_path: specs/011-check-spec-coherence-ci/sprint-contract.md
+  spec_path: specs/011-check-spec-coherence-ci/spec.md
 user:
   verified_in_browser: false
   verified_at: null

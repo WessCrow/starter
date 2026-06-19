@@ -1,14 +1,14 @@
 v: "5.2"
 updated: "2026-06-19"
-active: true
+active: false
 
 feature:
-  id: "008-night-mode"
-  name: "Night Mode / Autonomous Safe Mode"
-  path: "specs/008-night-mode/spec.md"
+  id: "011-check-spec-coherence-ci"
+  name: "Integração do Check de Coerência de Specs no CI e Git Hooks"
+  path: "specs/011-check-spec-coherence-ci/spec.md"
 
 spec:
   required: true
 
 status:
-  phase: "clarify"
+  phase: "completed"

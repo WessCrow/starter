@@ -28,5 +28,8 @@ jobs:
       - name: Skills — validate-skills.py
         run: python skills/infra/scripts/validate-skills.py
 
+      - name: Coerência de specs — check-spec-coherence.py
+        run: python skills/infra/scripts/check-spec-coherence.py --strict
+
       - name: Higiene de repo — check-repo-hygiene.py
         run: python skills/infra/scripts/check-repo-hygiene.py

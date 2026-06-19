@@ -12,3 +12,10 @@ python3 skills/infra/scripts/check-repo-hygiene.py --staged || {
   echo "   Veja skills/flows/repo-hygiene.md para detalhes."
   exit 1
 }
+
+python3 skills/infra/scripts/check-spec-coherence.py --strict || {
+  echo ""
+  echo "❌ Commit bloqueado: especificações (specs) incoerentes encontradas."
+  echo "   Corrija as inconsistências em specs/ antes de commitar."
+  exit 1
+}
