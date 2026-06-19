@@ -2,7 +2,7 @@
 
 **Um framework de regras para agentes de IA construírem projetos de software com método — kickoff guiado, contexto enxuto, validação obrigatória antes de qualquer "pronto".**
 
-![Runtime v5.5](https://img.shields.io/badge/Runtime-v5.5-blueviolet?style=flat-square)
+![Runtime v5.6](https://img.shields.io/badge/Runtime-v5.6-blueviolet?style=flat-square)
 ![CI validate](https://github.com/WessCrow/starter/actions/workflows/validate.yml/badge.svg)
 ![QA Gate](https://img.shields.io/badge/QA_Gate-build_+_revisão_cética-emerald?style=flat-square)
 ![AGENTS.md](https://img.shields.io/badge/Compatível-AGENTS.md-ff69b4?style=flat-square)
@@ -48,6 +48,7 @@ O agente faz o resto: infere stack, monta `runtime/`, gera CONTEXT.md/PRD.md, pr
 | **Spec-driven para nova feature** | [`flows/feature-flow.md`](skills/flows/feature-flow.md): specify → clarify → plan → tasks → analyze → implement |
 | **Continuidade entre IDEs/sessões** | `state.yaml` + `handoff.yaml` como única fonte da verdade |
 | **Economia de tokens e de tier** | `context-cleaner.skill` + orquestração por tier ([AGENTS.md §0g](AGENTS.md)) |
+| **Autonomia de infraestrutura local — Daemon & Agentes Paralelos** | [AGENTS.md §8](AGENTS.md) — script [daemon_watcher.py](skills/scripts/daemon_watcher.py) executa comandos locais sem popups; [run_parallel_agents.py](skills/scripts/run_parallel_agents.py) processa filas em paralelo |
 | **Retrospectiva pós-sprint para melhoria de regras** | [`retro-analyst.skill`](skills/catalog/retro-analyst.skill) — analisa commits e logs para sugerir evoluções do runtime |
 
 ---
@@ -118,4 +119,4 @@ Detalhes em [`skills/INDEX.md`](skills/INDEX.md) · [O que é o STARTER](docs/pu
 >
 > _Sinta-se livre para usar, estudar e evoluir a ferramenta! Apenas pedimos que mantenha os créditos originais do criador._
 >
-> **Última atualização:** 2026-06-16
+> **Última atualização:** 2026-06-19
