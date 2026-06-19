@@ -1,11 +1,11 @@
 v: "5.2"
 updated: "2026-06-19"
-active: false
+active: true
 
 feature:
-  id: "011-check-spec-coherence-ci"
-  name: "Integração do Check de Coerência de Specs no CI e Git Hooks"
-  path: "specs/011-check-spec-coherence-ci/spec.md"
+  id: "012-continuous-learning"
+  name: "Aprendizado Contínuo (Double-Loop Learning)"
+  path: "specs/012-continuous-learning/spec.md"
 
 spec:
   required: true

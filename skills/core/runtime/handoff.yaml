@@ -1,19 +1,19 @@
 v: '5.2'
 updated: '2026-06-19'
 session:
-  last_completed: Implementada a infraestrutura de autonomia (scripts daemon_watcher.py,
-    run_parallel_agents.py e schema de estado)
-  next_action: Inicializar o daemon watcher no host e executar testes de fluxo integrado
+  last_completed: Implementada a infraestrutura completa de aprendizado contínuo (record_session.py,
+    continuous_learner.py, learn.skill e continuous-learning.md)
+  next_action: Executar o QA Gate e verificar no terminal
   blocked: false
 qa:
   last_status: pass
-  last_report_path: qa/reports/2026-06-19-autonomia-agente-daemon.md
+  last_report_path: qa/reports/2026-06-19-012-continuous-learning.md
   last_run_at: '2026-06-19'
   failures_open: []
 feature:
-  id: 011-check-spec-coherence-ci
-  sprint_contract_path: specs/011-check-spec-coherence-ci/sprint-contract.md
-  spec_path: specs/011-check-spec-coherence-ci/spec.md
+  id: 012-continuous-learning
+  sprint_contract_path: specs/012-continuous-learning/sprint-contract.md
+  spec_path: specs/012-continuous-learning/spec.md
 user:
   verified_in_browser: false
   verified_at: null
@@ -49,6 +49,7 @@ context_metrics:
   - skills/catalog/hypothesis-investigation.skill
   - skills/catalog/interface-design.skill
   - skills/catalog/landing-conversion.skill
+  - skills/catalog/learn.skill
   - skills/catalog/marketplace-curator.skill
   - skills/catalog/performance.skill
   - skills/catalog/portfolio-storytelling.skill
@@ -88,6 +89,7 @@ context_metrics:
   - skills/flows/action-router.md
   - skills/flows/bootstrap-cleanup.md
   - skills/flows/context-scoping.md
+  - skills/flows/continuous-learning.md
   - skills/flows/debugging-protocol.md
   - skills/flows/feature-flow.md
   - skills/flows/gitprotocol.md
@@ -105,12 +107,13 @@ context_metrics:
   - skills/flows/skill-testing.md
   - skills/flows/skills-governance.md
   - skills/flows/stack-guide.md
-  - specs/010-autonomia-agente-daemon/plan.md
-  - specs/010-autonomia-agente-daemon/spec.md
-  - specs/010-autonomia-agente-daemon/sprint-contract.md
-  - specs/010-autonomia-agente-daemon/tasks.md
-  files_loaded_count: 83
-  estimated_tokens: 111075
+  - specs/012-continuous-learning/plan.md
+  - specs/012-continuous-learning/spec.md
+  - specs/012-continuous-learning/sprint-contract.md
+  - specs/012-continuous-learning/tasks.md
+  files_loaded_count: 85
+  estimated_tokens: 111936
+  context_limit_exceeded: true
   unnecessary_files: []
   estimation_method: fallback (1 token ≈ 4 caracteres)
 reminders:

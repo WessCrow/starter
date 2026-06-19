@@ -44,6 +44,8 @@ anti_loop:
   enabled: true
   max_iterations_per_tool: 3        # mesma ferramenta/subagente
   max_seconds_no_progress: 120      # tempo de parede sem entregável observável
+  warn_threshold: 3                 # limite para avisos de repetição
+  hard_limit: 5                     # limite rígido de interrupção
   on_detect: stop_switch_or_report  # parar → trocar abordagem → reportar curto
   user_cancel_required: false       # o agente para sozinho; usuário não cancela na mão
 

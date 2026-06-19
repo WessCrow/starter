@@ -31,3 +31,6 @@ daemon:
     status: success
     exit_code: 0
     log_path: qa/reports/daemon_teste_daemon_validation.log
+  - id: run_validate_anti_loop
+    cmd: python3 skills/core/runtime/validate.py
+    status: pending

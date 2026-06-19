@@ -68,6 +68,7 @@
         },
         "files_loaded_count": { "type": "integer", "minimum": 0 },
         "estimated_tokens": { "type": "integer", "minimum": 0 },
+        "context_limit_exceeded": { "type": "boolean" },
         "unnecessary_files": {
           "type": "array",
           "items": { "type": "string" }

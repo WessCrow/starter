@@ -93,11 +93,15 @@ def main():
             print(f"Aviso: erro ao ler {file_path}: {e}")
 
     # 3. Atualizar handoff.yaml
+    TETO_OTIMIZADO_TOKENS = 35000
+    limit_exceeded = total_tokens > TETO_OTIMIZADO_TOKENS
+
     metrics = {
         "last_session_at": datetime.date.today().isoformat(),
         "files_loaded": sorted(loaded_files_rel),
         "files_loaded_count": len(loaded_files_rel),
         "estimated_tokens": total_tokens,
+        "context_limit_exceeded": limit_exceeded,
         "unnecessary_files": [],
         "estimation_method": method_used
     }
@@ -109,6 +113,10 @@ def main():
         yaml.safe_dump(handoff_data, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
 
     print(f"Sucesso: handoff.yaml atualizado com {len(loaded_files_rel)} arquivos e {total_tokens} tokens usando o método: {method_used}")
+    
+    if limit_exceeded:
+        print(f"\n[AVISO DE CONTEXTO] Contexto estimado ({total_tokens} tokens) excedeu o limite recomendado de {TETO_OTIMIZADO_TOKENS} tokens.")
+        print("Sugere-se executar a skill 'context-cleaner.skill' para arquivar/resumir arquivos desnecessários.")
 
 if __name__ == "__main__":
     main()

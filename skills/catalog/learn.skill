@@ -1,0 +1,55 @@
+# learn.skill
+
+> **Tipo:** Local Skill · **Domínio:** meta-aprendizado · prevenção de erros
+> **Obrigatório:** Durante a consolidação de regras do Loop 2
+> **Idioma:** português simples · **Inspiração:** Double-Loop Learning
+
+---
+
+## Propósito
+
+Guiar a IA na análise crítica de traces de execuções anteriores, identificando discrepâncias operacionais com as correções manuais de desenvolvedores humanos e escrevendo patches cirúrgicos e validados para fechar lacunas sem quebrar outras regras.
+
+---
+
+## Regra Central
+
+```
+IDENTIFICAR desalinhamento (Trace vs Git Commit) -> EXTRAIR a causa raiz -> REDIGIR alteração concisa -> VALIDAR contra regressões
+```
+
+---
+
+## Heurísticas de Refinamento de Habilidades
+
+Ao encontrar um desalinhamento operacional:
+
+1. **Evitar Alterações de Estilo:** Não mude redações funcionais de skills apenas por preferência estética. Concentre-se em diretivas claras de controle (ex: prevenir o uso de caminhos errados, acrescentar comandos de teste obrigatórios).
+2. **Localização Precisa:** Identifique se o erro detectado pertence a uma skill específica (como `verify-before-done.skill`), a uma regra geral (`rules.yaml`) ou a um documento de fluxo.
+3. **Escrita do Log TDD:** Toda modificação inserida em uma skill deve vir acompanhada de uma entrada no histórico de testes TDD da skill:
+   - `RED:` Cenário onde o agente falhou.
+   - `GREEN:` A nova instrução aplicada para bloquear essa falha em execuções futuras.
+4. **Respeito aos Orçamentos (Context Budgets):** Certifique-se de que a alteração mantenha o arquivo abaixo dos limites definidos em `validate-skills.py`.
+
+---
+
+## Matriz de Prevenção de Erros (Heurísticas vs Ações)
+
+| Sintoma de Erro no Trace | Causa Raiz Provável | Ação na Habilidade |
+|--------------------------|---------------------|-------------------|
+| Erro de compilação pós-merge | Comando de build omitido pelo agente | Acrescentar o build às evidências obrigatórias da skill correspondente |
+| Arquivo temporário versionado | Falta de verificação de repo-hygiene | Adicionar regra explícita em `rules.yaml` de pré-commit |
+| Perda de contexto ou alucinação de caminho | Uso de caminhos relativos incorretos | Atualizar regras de Host Guard e referências na skill `context-scoping.md` |
+
+---
+
+## Log de testes (TDD — `flows/skill-testing.md`)
+
+- 2026-06-19 RED: Inicialização do mecanismo. As alterações eram propostas sem controle estrutural, levando a reescritas excessivas de arquivos de skills.
+- 2026-06-19 GREEN: Implementação das heurísticas restritivas de alteração concisa e o checklist de portão de regressão estático.
+
+---
+
+> Parte do framework **STARTER** — criado e mantido por **Wesley Alves**.
+> 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
+> Última atualização: 2026-06-19

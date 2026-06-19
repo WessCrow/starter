@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-06-19T17:22:18.584127+00:00",
+  "feature_id": "011-check-spec-coherence-ci",
+  "last_completed": "Implementada a infraestrutura de autonomia (scripts daemon_watcher.py, run_parallel_agents.py e schema de estado)",
+  "git_status_raw": "M skills/INDEX.md\n M skills/flows/Start.md\n?? skills/catalog/learn.skill\n?? skills/flows/continuous-learning.md\n?? skills/infra/scripts/continuous_learner.py\n?? skills/infra/scripts/record_session.py\n?? specs/",
+  "files_touched": [
+    "skills/INDEX.md",
+    "skills/flows/Start.md"
+  ],
+  "framework_version": "5.2",
+  "qa_status": "pass"
+}

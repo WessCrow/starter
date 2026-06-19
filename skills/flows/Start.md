@@ -57,7 +57,7 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
 
 ```
 1. structure/       → projeto novo / definição estrutural
-2. catalog/    → `action-router` · `project-starter` · `qa-gate` · `qa-smoke` · `qa-playwright` · `verify-before-done` · `context-cleaner` · `session-review` · `retro-analyst`
+2. catalog/    → `action-router` · `project-starter` · `qa-gate` · `qa-smoke` · `qa-playwright` · `verify-before-done` · `context-cleaner` · `session-review` · `retro-analyst` · `learn`
                        `ux-diamond` · `ux-audit` · `scroll-animation` · `responsive-craft` · `fluid-ui` · `emil-design-eng`
                        `interface-design` · `visual-direction-brief` · `web-design-cloner`
                        `figma-implement-design` · `figma-foundation-docs` · `figma-make`
@@ -114,6 +114,7 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
 | Afirmar "pronto/corrigido" | `verify-before-done` |
 | Fim de atividade pesada | `session-review` |
 | Retrospectiva pós-sprint | `retro-analyst` |
+| Aprendizado contínuo / prevenção de erros | `learn` (`flows/continuous-learning.md`) |
 | Bug / erro / build quebrado | `flows/debugging-protocol.md` → `verify-before-done` |
 | Feedback / crítica do usuário | `flows/review-reception.md` |
 | Criar / editar skill ou regra | `flows/skill-testing.md` (TDD RED→GREEN) |
