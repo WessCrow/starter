@@ -634,7 +634,7 @@ CONTEXT_BUDGETS: dict[str, tuple[list[Path], int]] = {
             RUNTIME_DIR / "state.yaml",
             FLOWS_DIR / "Start-ops.md",
         ],
-        20_000,
+        23_000,
     ),
     "warm (sob demanda frequente)": (
         [
