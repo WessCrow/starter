@@ -249,6 +249,30 @@ def main() -> int:
     else:
         print("OK    Nenhum segredo ou chave privada exposta no workspace.")
 
+    # Executar checagem de loops (Anti-Loop)
+    print("\n--- ANTI-LOOP VALIDATION ---")
+    try:
+        import subprocess
+        script_path = RUNTIME_DIR.parent.parent / "scripts" / "check_loop.py"
+        if script_path.exists():
+            res = subprocess.run(
+                [sys.executable, str(script_path)],
+                capture_output=True,
+                text=True
+            )
+            out = res.stdout.strip()
+            if out:
+                print(out)
+            if res.returncode != 0:
+                print(f"FAIL  check_loop.py (exit code {res.returncode})")
+                failed += 1
+            else:
+                print("OK    Nenhum loop detectado na sessão ativa.")
+        else:
+            print("SKIP  check_loop.py (script não encontrado)")
+    except Exception as e:
+        print(f"Erro ao executar check_loop.py: {e}")
+
     print(f"\n{passed} passed, {failed} failed")
     return 1 if failed else 0
 
