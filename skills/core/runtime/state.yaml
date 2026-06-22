@@ -11,13 +11,14 @@ last: >
   learning runtime (record_session.py + continuous_learner.py + learn.skill),
   deterministic anti-loop (loop-breaker sempre-ativo), context token warnings.
   Sprint 012-continuous-learning concluída. Tag v5.5.
+  Sprint B (Evidência & Dogfooding) concluída: B1 (E2E Playwright), B2 (Dogfood §0g),
+  B3 (CI Coherence), B4 (Override de template) e B5 (Tokens) entregues e arquivados.
 next:
-- sprint_b_e2e_playwright_real
-- dogfood_ag0g_verificador_independente
 - browser_5min_pilotos_mantenedor
-- token_measurement_kickoff_comparison
-- check_spec_coherence_ci
 - case_publico_piloto
+- refine_independent_qa_llm_fallback
+- instrument_record_session_real_tokens
+- budget_token_enforce_skills
 blockers: []
 health:
   runtime_layer: active

@@ -35,6 +35,30 @@ Exemplo: se existir `overrides/specs/spec-template.md`, ele vence `specs/spec-te
 
 ---
 
+## Overrides ativos
+
+| Path do override | Vence o core | Projeto | O que muda |
+|------------------|--------------|---------|------------|
+| `sprint-contract.md` | `templates/sprint-contract.md` | `pilot-dashboard-pt` | Adiciona seção **"Critérios fixos da org"** (pt-BR, acessibilidade `aria-*`, responsivo 375px, `pnpm build` PASS, erros em português) e marcador de proveniência. Mantém todas as seções obrigatórias do core. |
+
+### Resolver
+
+`resolve-template.sh <path>` implementa a ordem fixa e imprime a origem (`override` ou `core`):
+
+```
+$ ./resolve-template.sh sprint-contract.md
+ORIGEM: override
+PATH:   .../templates/overrides/sprint-contract.md
+
+$ ./resolve-template.sh roadmap-template.md   # sem override
+ORIGEM: core
+PATH:   .../templates/roadmap-template.md
+```
+
+Evidência da execução (B4): `docs/private/reviews/2026-06-22-b4-override-template.md`.
+
+---
+
 > **Autoria & Rastro de Segurança**
 >
 > Este documento faz parte do framework **STARTER**, criado e mantido por **Wesley Alves**.

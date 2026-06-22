@@ -62,6 +62,11 @@ Em Cursor e Antigravity, o agente pode delegar automaticamente tarefas pesadas (
 Você não precisa escolher modelo nem subagent — isso é opcional e transparente.
 Detalhes em `AGENTS.md` §0g e `skills/flows/model-orchestration.md`.
 
+## Economia de tokens (opcional) — RTK
+
+Se voce usa terminal, pode instalar o `RTK` para reduzir tokens em comandos de shell: `brew install rtk && rtk init -g`.
+E totalmente opcional. Apos instalar, leia o `RTK.md` (gerado pelo `rtk init`) e veja `AGENTS.md` §0j.
+
 ## Compatibilidade rapida
 
 - Melhor em `Cursor`, `Claude Code` e `Antigravity`.
@@ -83,4 +88,4 @@ Detalhes em `AGENTS.md` §0g e `skills/flows/model-orchestration.md`.
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-07
+> Última atualização: 2026-06-22

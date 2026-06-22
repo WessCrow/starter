@@ -77,3 +77,8 @@ Antes de gerar qualquer código, preciso confirmar o que entendi da referência 
 
 > Parte do framework **STARTER** — criado e mantido por **Wesley Alves**.
 > Última atualização: 2026-06-21
+
+## Análise de Riscos
+
+- **Risco:** O agente travar ou aguardar confirmação em tarefas sem UI onde a palavra "Figma" é apenas mencionada como contexto histórico.
+  - **Mitigação:** Restrição do gatilho a menções ativas de alterações de UI com referência visual pendente.

@@ -31,8 +31,18 @@ Complementa, não substitui:
 [C] TETO DE ORÇAMENTO ESTOURADO  ← freio duro, vale mesmo "achando que avança"
     - Iterações na MESMA ferramenta/subagente: máx 3.
     - Tempo de parede na mesma sub-tarefa sem entregável observável: ~2 min.
+    - Tokens: orçamento da sub-tarefa estourado (ver "Teto de tokens" abaixo).
     Estourou qualquer um → PARAR imediatamente. Não pedir permissão para parar.
 ```
+
+### Teto de tokens (fonte de dados do kill-switch)
+
+O eixo de **tokens** do teto [C] precisa de uma fonte de consumo. Em ordem de preferência:
+
+1. **`rtk gain --format json`** (preferido, quando `rtk` está no `PATH` — ver `AGENTS.md` §0j) — entrega o consumo por sessão. Antes de continuar o loop, o agente PODE consultá-lo para verificar se ainda está dentro do orçamento.
+2. **Estimativa manual** (fallback, sempre disponível) — quando o RTK não está instalado, estimar pelo volume de input/output da sub-tarefa.
+
+Dentro do orçamento → continua. Fora → vale [C]: PARAR, trocar de abordagem uma vez, ou reportar curto.
 
 > O teto [C] é o coração do protocolo: ele dispara **mesmo quando o agente acredita estar progredindo**. Percepção de progresso não autoriza a 4ª iteração.
 
@@ -86,4 +96,4 @@ Complementa, não substitui:
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-16
+> Última atualização: 2026-06-22

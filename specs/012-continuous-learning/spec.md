@@ -52,3 +52,8 @@ Evitar a regressão e o retrabalho em sessões recorrentes do agente, capturando
 
 > Parte do framework **STARTER** — criado e mantido por **Wesley Alves**.
 > Última atualização: 2026-06-19
+
+## Análise de Riscos
+
+- **Risco:** Geração de patches infinitos ou loop de correções de skills contraditórias entre execuções diferentes.
+  - **Mitigação:** Registro histórico de decisões de aprendizado em decisions.yaml e regras estritas de não-sobrescrita em skills consolidadas.

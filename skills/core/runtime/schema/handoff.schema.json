@@ -49,6 +49,41 @@
       },
       "additionalProperties": false
     },
+    "delegation": {
+      "type": "object",
+      "description": "Registro de delegação por tier de modelo (§0g). Opcional.",
+      "properties": {
+        "feature": { "type": ["string", "null"] },
+        "date": { "type": ["string", "null"] },
+        "protocol": { "type": ["string", "null"] },
+        "delegated": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tasks": { "type": "array", "items": { "type": "string" } },
+              "to": { "type": "string" },
+              "escopo": { "type": "string" },
+              "resultado": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "not_delegated": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "what": { "type": "string" },
+              "reason": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "ganho_estimado": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
     "review": {
       "type": "object",
       "properties": {

@@ -144,7 +144,7 @@ def run_task(task_data: dict, yaml):
         elif claude_key:
             response_code = call_claude_api(claude_key, full_prompt)
         else:
-            raise Exception("Nenhuma API Key (GEMINI_API_KEY ou ANTHROPIC_API_KEY) encontrada no ambiente ou .env")
+            raise Exception("API Keys ausentes. Por favor, configure GEMINI_API_KEY ou ANTHROPIC_API_KEY nas variáveis de ambiente ou em um arquivo .env na raiz do projeto.")
             
         # 5. Tratar limpeza básica de markdown no código se o modelo falhar nas regras
         lines = response_code.strip().splitlines()

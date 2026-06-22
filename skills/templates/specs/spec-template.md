@@ -39,6 +39,15 @@
 
 ---
 
+## Análise de Riscos
+
+> Mapeie riscos técnicos, de design ou de segurança, e suas respectivas mitigações.
+
+- **Risco:** [Descreva o risco, ex: Vazamento de dados em sessão aberta]
+  - **Mitigação:** [Descreva a mitigação, ex: Expirar token JWT após 15 minutos]
+
+---
+
 ## Fora do escopo
 
 - 

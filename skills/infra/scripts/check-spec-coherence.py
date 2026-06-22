@@ -43,6 +43,11 @@ _CRITERIA_SECTION_HEADERS = re.compile(
     re.IGNORECASE,
 )
 _CRITERION_LINE = re.compile(r"^\s*[-*]|\s*\d+\.")
+_RISKS_SECTION_HEADERS = re.compile(
+    r"^#{1,3}\s+(análise\s+de\s+riscos?|riscos?|risks?)",
+    re.IGNORECASE,
+)
+_RISK_LINE = re.compile(r"^\s*[-*]\s+\*\*Risco:\*\*|^\s*[-*]\s+risk:", re.IGNORECASE)
 _TASK_LINE = re.compile(
     r"^\|\s*\[[ xX]\]"  # tabela Markdown com checkbox
     r"|^\s*-\s*\[[ xX]\]"  # lista com checkbox
@@ -92,6 +97,37 @@ def _extract_criteria(spec_text: str) -> list[str]:
                     criteria.append(text)
 
     return criteria
+
+
+def _extract_risks(spec_text: str) -> list[str]:
+    """Extrai linhas de riscos da seção Análise de Riscos do spec.md."""
+    lines = spec_text.splitlines()
+    in_section = False
+    risks: list[str] = []
+
+    for line in lines:
+        if _RISKS_SECTION_HEADERS.match(line):
+            in_section = True
+            continue
+        if in_section:
+            if re.match(r"^#{1,3}\s+", line) and not _RISKS_SECTION_HEADERS.match(line):
+                break
+            if _RISK_LINE.match(line) or _RISK_LINE.match(line.lstrip()):
+                text = line.strip()
+                # Extrair o conteúdo após **Risco:** ou risk:
+                if "**risco:**" in text.lower():
+                    # Remover prefixo e o próprio Risco:
+                    parts = re.split(r"\*\*risco:\*\*", text, flags=re.IGNORECASE)
+                    text = parts[-1].strip()
+                elif "risk:" in text.lower():
+                    parts = re.split(r"risk:", text, flags=re.IGNORECASE)
+                    text = parts[-1].strip()
+                else:
+                    text = text.lstrip("-* []")
+                if text:
+                    risks.append(text)
+
+    return risks
 
 
 def _count_tasks(tasks_text: str) -> int:
@@ -193,13 +229,21 @@ def _check_criteria_coverage(spec_dir: Path) -> tuple[list[str], list[str]]:
     spec_text = spec_path.read_text(encoding="utf-8")
     criteria = _extract_criteria(spec_text)
 
-    if not criteria:
-        passes.append(f"{spec_dir.name}: sem critérios de aceite declarados (OK ou spec incompleto)")
+    # Filtrar placeholders
+    valid_criteria = []
+    for c in criteria:
+        if "[ação]" in c or "[resultado]" in c or "[comportamento]" in c or "Ao , o usuário vê" in c:
+            errors.append(f"{spec_dir.name}: critério de aceite contém placeholder não preenchido: '{c}'")
+        else:
+            valid_criteria.append(c)
+
+    if not valid_criteria:
+        errors.append(f"{spec_dir.name}: nenhum critério de aceite válido declarado em spec.md")
         return passes, errors
 
     if not tasks_path.is_file():
         errors.append(
-            f"{spec_dir.name}: {len(criteria)} critério(s) em spec.md mas tasks.md AUSENTE"
+            f"{spec_dir.name}: {len(valid_criteria)} critério(s) em spec.md mas tasks.md AUSENTE"
         )
         return passes, errors
 
@@ -208,16 +252,51 @@ def _check_criteria_coverage(spec_dir: Path) -> tuple[list[str], list[str]]:
 
     if n_tasks == 0:
         errors.append(
-            f"{spec_dir.name}: {len(criteria)} critério(s) em spec.md mas tasks.md não tem tasks com checkbox"
+            f"{spec_dir.name}: {len(valid_criteria)} critério(s) em spec.md mas tasks.md não tem tasks com checkbox"
         )
-    elif n_tasks < len(criteria):
+    elif n_tasks < len(valid_criteria):
         errors.append(
-            f"{spec_dir.name}: {len(criteria)} critério(s) mas apenas {n_tasks} task(s) — cobertura insuficiente"
+            f"{spec_dir.name}: {len(valid_criteria)} critério(s) mas apenas {n_tasks} task(s) — cobertura insuficiente"
         )
     else:
         passes.append(
-            f"{spec_dir.name}: {len(criteria)} critério(s) cobertas por {n_tasks} task(s)"
+            f"{spec_dir.name}: {len(valid_criteria)} critério(s) cobertas por {n_tasks} task(s)"
         )
+
+    return passes, errors
+
+
+def _check_risks_analysis(spec_dir: Path) -> tuple[list[str], list[str]]:
+    """Garante que a Análise de Riscos existe no spec.md e tem riscos válidos mapeados."""
+    passes: list[str] = []
+    errors: list[str] = []
+
+    spec_path = spec_dir / "spec.md"
+    if not spec_path.is_file():
+        return passes, errors
+
+    spec_text = spec_path.read_text(encoding="utf-8")
+    
+    # 1. Verificar se a seção existe
+    has_section = any(_RISKS_SECTION_HEADERS.match(line) for line in spec_text.splitlines())
+    if not has_section:
+        errors.append(f"{spec_dir.name}: spec.md não contém a seção de 'Análise de Riscos'")
+        return passes, errors
+
+    risks = _extract_risks(spec_text)
+    
+    # 2. Verificar se existem riscos válidos e sem placeholders
+    valid_risks = []
+    for r in risks:
+        if "[Descreva o risco" in r or "Vazamento de dados em sessão aberta" in r:
+            errors.append(f"{spec_dir.name}: análise de riscos contém placeholder não preenchido: '{r}'")
+        else:
+            valid_risks.append(r)
+
+    if not valid_risks:
+        errors.append(f"{spec_dir.name}: nenhum risco válido com mitigação declarado em Análise de Riscos")
+    else:
+        passes.append(f"{spec_dir.name}: {len(valid_risks)} risco(s) e mitigação(ões) mapeados")
 
     return passes, errors
 
@@ -279,6 +358,7 @@ def check_spec_coherence(
             _check_files_exist,
             lambda d: _check_plan_before_tasks(d, strict),
             _check_criteria_coverage,
+            _check_risks_analysis,
             _check_verification_filled,
         ):
             p, e = check_fn(spec_dir)

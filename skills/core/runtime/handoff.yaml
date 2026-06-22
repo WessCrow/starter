@@ -1,45 +1,151 @@
 v: '5.5'
 updated: '2026-06-22'
 session:
-  last_completed: >
-    AL0 — Reconciliação de drift do runtime (state/handoff/index/decisions/CONTEXT
-    atualizados de v5.2 → v5.5). Sessão anterior (2026-06-19): sprint 012-continuous-learning
-    entregue (record_session.py, continuous_learner.py, learn.skill, continuous-learning.md,
-    deterministic anti-loop, context token warnings).
-  next_action: Sprint B — evidência executada nos pilotos (E2E Playwright real, dogfood §0g, tokens)
+  last_completed: 'B6 — Fechamento formal da Sprint B. Arquivados os reviews B1 (Smoke
+    + E2E), B2 (Dogfood §0g), e B4 (Override de template) na pasta reviews/done/,
+    e o relatório de tokens B5 movido para docs/private/delivered/. Todos os scripts
+    de validação passando (11/11 OK).
+
+    '
+  next_action: Validação manual final de 5 min nos pilotos locais + implementação
+    das melhorias de Fallback LLM no independent-qa.py e orçamento de tokens.
   blocked: false
 qa:
   last_status: pass
-  last_report_path: qa/reports/2026-06-19-012-continuous-learning.md
-  last_run_at: '2026-06-19'
+  last_report_path: qa/reports/2026-06-22-003-filtro-status.md
+  last_run_at: '2026-06-22'
   failures_open: []
 feature:
-  id: al0-runtime-reconcile
-  sprint_contract_path: docs/private/plano-sprint-agentic-loop.md
-  spec_path: null
+  id: 003-filtro-status
+  sprint_contract_path: _lab/pilot-dashboard-pt/specs/003-filtro-status/sprint-contract.md
+  spec_path: _lab/pilot-dashboard-pt/specs/003-filtro-status/spec.md
+delegation:
+  feature: 003-filtro-status
+  date: '2026-06-22'
+  protocol: skills/flows/model-orchestration.md (§0g)
+  delegated:
+  - tasks:
+    - T1
+    - T2
+    to: executor (tier barato — subagent modelo haiku)
+    escopo: edits em web/src/app/clientes/page.tsx — estado statusFilter + useMemo
+      + controle segmentado (~38 linhas), brief autossuficiente, sem decisão de arquitetura
+    resultado: edits aplicados; tipagem conferida por inspeção (sem any/console.log/!important)
+  not_delegated:
+  - what: spec/plan/sprint-contract/tasks (raciocínio) + T3 QA Gate
+    reason: gates §0g — kickoff/spec e verify-before-done nunca descem de tier
+  ganho_estimado: 'parte mecânica (~38 linhas de edição determinística) movida do
+    tier orquestrador para o tier executor. Economia ~1 round-trip de raciocínio caro;
+    o orquestrador reteve apenas o design da feature e o QA Gate. Primeiro caso real
+    de §0g medido.
+
+    '
 user:
   verified_in_browser: false
   verified_at: null
-  notes: 'v5.5 shippado (verificador independente, anti-loop, continuous learning, daemon). AL0 reconciliado 2026-06-22. Próxima: Sprint B.'
+  notes: v5.5 shippado (verificador independente, anti-loop, continuous learning,
+    daemon). AL0 reconciliado 2026-06-22. Sprint B concluída e arquivada.
 review:
-  last_review_path: docs/private/reviews/done/2026-06-12-rtk-review-ASSIMILADO-rtk-opcional-failures-metricas.md
-  last_review_at: '2026-06-13'
-  reviews_since_improvement_sprint: 0
+  last_review_path: docs/private/reviews/done/2026-06-22-b4-override-template-ASSIMILADO.md
+  last_review_at: '2026-06-22'
+  reviews_since_improvement_sprint: 3
 context_metrics:
   last_session_at: '2026-06-22'
-  files_loaded: []
-  files_loaded_count: 0
-  estimated_tokens: 0
-  context_limit_exceeded: false
+  files_loaded:
+  - AGENTS.md
+  - COMECAR-PROJETO.md
+  - README.md
+  - skills/catalog/accessibility.skill
+  - skills/catalog/action-router.skill
+  - skills/catalog/aw-designer.skill
+  - skills/catalog/best-practices.skill
+  - skills/catalog/context-cleaner.skill
+  - skills/catalog/core-web-vitals.skill
+  - skills/catalog/design-critique.skill
+  - skills/catalog/discovery.skill
+  - skills/catalog/emil-design-eng.skill
+  - skills/catalog/figma-foundation-docs.skill
+  - skills/catalog/figma-implement-design.skill
+  - skills/catalog/figma-make.skill
+  - skills/catalog/fluid-ui.skill
+  - skills/catalog/framing-doc.skill
+  - skills/catalog/hyperframes-cli.skill
+  - skills/catalog/hyperframes-media.skill
+  - skills/catalog/hyperframes.skill
+  - skills/catalog/hypothesis-investigation.skill
+  - skills/catalog/interface-design.skill
+  - skills/catalog/landing-conversion.skill
+  - skills/catalog/learn.skill
+  - skills/catalog/marketplace-curator.skill
+  - skills/catalog/performance.skill
+  - skills/catalog/portfolio-storytelling.skill
+  - skills/catalog/product-vision.skill
+  - skills/catalog/project-starter.skill
+  - skills/catalog/prompt-library.skill
+  - skills/catalog/qa-gate.skill
+  - skills/catalog/qa-playwright.skill
+  - skills/catalog/qa-smoke.skill
+  - skills/catalog/responsive-craft.skill
+  - skills/catalog/retro-analyst.skill
+  - skills/catalog/scroll-animation.skill
+  - skills/catalog/seo.skill
+  - skills/catalog/session-review.skill
+  - skills/catalog/shaping.skill
+  - skills/catalog/storyboard-cinematic.skill
+  - skills/catalog/ux-audit.skill
+  - skills/catalog/ux-diamond.skill
+  - skills/catalog/verify-before-done.skill
+  - skills/catalog/visual-direction-brief.skill
+  - skills/catalog/web-design-cloner.skill
+  - skills/catalog/web-quality-audit.skill
+  - skills/core/runtime/active-feature.yaml
+  - skills/core/runtime/architecture.yaml
+  - skills/core/runtime/context.yaml
+  - skills/core/runtime/decisions.yaml
+  - skills/core/runtime/handoff.yaml
+  - skills/core/runtime/index.yaml
+  - skills/core/runtime/qa.yaml
+  - skills/core/runtime/routes.yaml
+  - skills/core/runtime/rules.yaml
+  - skills/core/runtime/stack.yaml
+  - skills/core/runtime/state.yaml
+  - skills/flows/RULES.md
+  - skills/flows/Start-ops.md
+  - skills/flows/Start.md
+  - skills/flows/action-router.md
+  - skills/flows/bootstrap-cleanup.md
+  - skills/flows/context-scoping.md
+  - skills/flows/continuous-learning.md
+  - skills/flows/debugging-protocol.md
+  - skills/flows/feature-flow.md
+  - skills/flows/gitprotocol.md
+  - skills/flows/host-guard.md
+  - skills/flows/kickoff.md
+  - skills/flows/loop-breaker.md
+  - skills/flows/model-orchestration.md
+  - skills/flows/project-start.md
+  - skills/flows/prompt-engineering.md
+  - skills/flows/qa-protocol.md
+  - skills/flows/repo-hygiene.md
+  - skills/flows/review-reception.md
+  - skills/flows/runtime-protocol.md
+  - skills/flows/skill-intake.md
+  - skills/flows/skill-testing.md
+  - skills/flows/skills-governance.md
+  - skills/flows/stack-guide.md
+  files_loaded_count: 81
+  estimated_tokens: 109829
+  context_limit_exceeded: true
   unnecessary_files: []
-  estimation_method: reset_on_al0_reconcile
+  estimation_method: fallback (1 token ≈ 4 caracteres)
 reminders:
 - id: pre_push_hygiene
   when: Antes de commit ou push
   action: python3 skills/infra/scripts/check-repo-hygiene.py
-- id: sprint_b_prioridade
+- id: validacao_manual_pilotos
   when: Próxima sessão
-  action: 'Sprint B: E2E Playwright real + dogfood §0g verificador independente + check-spec-coherence.py + medição de tokens'
+  action: Rodar pnpm run build nos pilotos locais e testar manualmente no navegador
+    por 5 min.
 - id: phase_4_playwright
   when: Ao rodar QA Gate em feature com UI
-  action: 'Fase 4 ativa — rodar pnpm run test:e2e'
+  action: Fase 4 ativa — rodar pnpm run test:e2e

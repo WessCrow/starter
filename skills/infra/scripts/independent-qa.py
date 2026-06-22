@@ -58,8 +58,51 @@ def run_cmd(args: list[str], cwd: Path = REPO_ROOT) -> tuple[int, str]:
     except FileNotFoundError:
         return -1, "Command not found"
 
+def load_env_file() -> None:
+    """Loads environment variables from a .env file in the repository root if present."""
+    env_path = REPO_ROOT / ".env"
+    if env_path.is_file():
+        with env_path.open(encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                k = k.strip()
+                v = v.strip().strip('"').strip("'")
+                if k and v and k not in os.environ:
+                    os.environ[k] = v
+
+# Extensões de código onde as regras code.never.* fazem sentido. Docs (.md/.yaml/.txt)
+# costumam *mencionar* os padrões proibidos como texto — escaneá-los gera falso-positivo.
+CODE_EXTENSIONS = (
+    ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs",
+    ".css", ".scss", ".sass", ".less", ".vue", ".svelte",
+)
+
+def filter_code_diff(diff_text: str) -> str:
+    """Mantém apenas as seções de diff (por arquivo) cujo alvo é um arquivo de código.
+
+    O diff completo do repo inclui .md/.yaml; rodar os regexes de regra sobre eles
+    marca como violação qualquer documento que apenas cite 'console.log'/'!important'.
+    Aqui dividimos por cabeçalho 'diff --git' e descartamos arquivos não-código.
+    """
+    sections = re.split(r"(?=^diff --git )", diff_text, flags=re.MULTILINE)
+    kept = []
+    for sec in sections:
+        if not sec.strip():
+            continue
+        header = sec.splitlines()[0] if sec.splitlines() else ""
+        # Caminho de destino no cabeçalho 'diff --git a/... b/...'
+        m = re.search(r"\bb/(\S+)", header)
+        target = m.group(1) if m else ""
+        if target.lower().endswith(CODE_EXTENSIONS):
+            kept.append(sec)
+    return "\n".join(kept)
+
 def check_rules_violations(diff_text: str) -> list[str]:
-    """Checks the diff text for rules violations."""
+    """Checks the diff text for rules violations (apenas em arquivos de código)."""
+    diff_text = filter_code_diff(diff_text)
     violations = []
     # Search for console.log
     if re.search(r"\+.*console\.log\b", diff_text):
@@ -71,6 +114,68 @@ def check_rules_violations(diff_text: str) -> list[str]:
     if re.search(r"\+.*!important\b", diff_text):
         violations.append("Adição de CSS !important detectada (regra code.never.css_important)")
     return violations
+
+def mock_local_semantic_audit(contract_text: str, diff_text: str) -> str:
+    """Gera um diagnóstico local alternativo comparando arquivos do Diff e o Contrato."""
+    # Encontra arquivos modificados no diff (linhas que começam com +++ b/)
+    changed_files = []
+    for line in diff_text.splitlines():
+        if line.startswith("+++ b/"):
+            parts = line.split("b/")
+            if len(parts) > 1:
+                changed_files.append(parts[1].strip())
+    
+    # Valida presença e coerência básica
+    matches = []
+    unmatched = []
+    
+    # Se o contrato estiver vazio
+    if not contract_text.strip():
+        return (
+            "#### Análise do Diferencial (Simulação Local)\n"
+            "⚠️ **Aviso**: Contrato de entrega (`sprint-contract.md`) não localizado ou vazio.\n"
+            "Não foi possível cruzar os dados de escopo com as modificações do Git.\n\n"
+            "#### Veredito do Auditor Local\n"
+            "🟡 **AVALIAÇÃO PARCIAL** (Ambiente local íntegro, mas sem chaves de IA e sem contrato de escopo)."
+        )
+        
+    for f in changed_files:
+        basename = f.split("/")[-1]
+        if basename in contract_text or f in contract_text:
+            matches.append(f)
+        else:
+            unmatched.append(f)
+
+    # Constrói o diagnóstico markdown
+    audit_md = "#### Análise do Diferencial (Simulação Local)\n"
+    if matches:
+        audit_md += "Arquivos modificados que coincidem com itens citados no contrato de sprint:\n"
+        for m in matches:
+            audit_md += f"- [x] `{m}` (Coerente com escopo)\n"
+    else:
+        audit_md += "⚠️ Nenhum arquivo modificado coincide explicitamente com nomes citados no `sprint-contract.md`.\n"
+        
+    if unmatched:
+        audit_md += "\nOutros arquivos modificados detectados no diff:\n"
+        for u in unmatched:
+            # Ignora arquivos de documentação para não poluir
+            if not u.endswith((".md", ".yaml", ".json")):
+                audit_md += f"- `[ ]` `{u}`\n"
+                
+    audit_md += "\n#### Avaliação dos Critérios (Simulação Local)\n"
+    if matches:
+        audit_md += "- **Arquivos e Escopo**: Modificações parecem coerentes com a descrição do contrato.\n"
+        audit_md += "- **Lógica de Negócios**: Requer verificação humana ou chaves de IA configuradas para análise semântica profunda.\n"
+    else:
+        audit_md += "- **Atenção**: Modificações no Git Diff parecem fora do escopo descrito no contrato de sprint.\n"
+
+    audit_md += "\n#### Veredito do Auditor Local\n"
+    if matches:
+        audit_md += "🟡 **PASS PARCIAL** (Validações locais de build/sintaxe passaram; cobertura de contrato lógica requer IA)."
+    else:
+        audit_md += "🟡 **NECESSITA REVISÃO** (Modificações diferem do escopo indicado no contrato. Ajuste os arquivos ou atualize o `sprint-contract.md`)."
+
+    return audit_md
 
 def get_llm_audit(contract_text: str, diff_text: str) -> str:
     """Invokes LLM API (Gemini or Anthropic) if keys are present for an unbiased audit."""
@@ -129,9 +234,27 @@ def get_llm_audit(contract_text: str, diff_text: str) -> str:
         except Exception as e:
             return f"Erro na chamada do Anthropic API: {e}"
 
-    return "Auditoria de LLM externa não configurada (variáveis GEMINI_API_KEY ou ANTHROPIC_API_KEY ausentes)."
+    print("AVISO: Chaves GEMINI_API_KEY ou ANTHROPIC_API_KEY ausentes. Usando auditoria simulada local.")
+    warning_banner = (
+        "> [!WARNING]\n"
+        "> ### Auditoria Cognitiva Externa Desabilitada\n"
+        "> As chaves `GEMINI_API_KEY` ou `ANTHROPIC_API_KEY` não foram encontradas no ambiente.\n"
+        ">\n"
+        "> **Ação Recomendada:**\n"
+        "> Para ativar a análise semântica por IA completa, configure as chaves no arquivo `.env` da raiz:\n"
+        "> ```bash\n"
+        "> GEMINI_API_KEY=\"sua_chave_aqui\"\n"
+        "> # ou\n"
+        "> ANTHROPIC_API_KEY=\"sua_chave_aqui\"\n"
+        "> ```\n"
+        "> *Prosseguindo com Auditoria Semântica Local Simulada (Heurística de Escopo)...*\n\n"
+    )
+    
+    local_audit = mock_local_semantic_audit(contract_text, diff_text)
+    return warning_banner + local_audit
 
 def main():
+    load_env_file()
     print("--- INICIANDO VERIFICADOR QA INDEPENDENTE ---")
     
     # Load settings
