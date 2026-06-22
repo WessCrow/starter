@@ -1,5 +1,5 @@
-v: "5.2"
-updated: "2026-06-12"
+v: "5.5"
+updated: "2026-06-22"
 schema_dir: schema/
 validate_before_load: true
 validate_after_write: true

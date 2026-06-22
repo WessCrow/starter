@@ -1,5 +1,5 @@
-v: "5.1"
-updated: "2026-06-11"
+v: "5.5"
+updated: "2026-06-22"
 
 decisions:
   - id: bootstrap_cleanup_auto
@@ -62,3 +62,23 @@ decisions:
     choice: patch_pnpm_workspace_sh_after_scaffold_and_on_qa_smoke_retry
     reason: create_next_app_yaml_incompatible_with_pnpm_11_agent_builds
     since: "2026-06-11"
+  - id: independent_qa_verifier
+    choice: escritor_nao_e_avaliador_subagent_clean_session_runs_qa_gate
+    reason: reduce_autoavaliacao_bias_agentic_loop_hardening_v5.5
+    since: "2026-06-19"
+  - id: loop_breaker_always_active
+    choice: deterministic_anti_loop_teto_iteracoes_sem_progress_real
+    reason: evitar_loop_em_circulos_custo_ilimitado_sem_entrega
+    since: "2026-06-19"
+  - id: continuous_learning_runtime
+    choice: record_session_py_continuous_learner_py_learn_skill
+    reason: feedback_de_sessao_alimenta_melhoria_incremental_do_framework
+    since: "2026-06-19"
+  - id: daemon_watcher_opt_in
+    choice: daemon_parallel_agent_queue_progressive_enhancement
+    reason: autonomia_controlada_usuario_continua_dirigindo_sem_autoGPT
+    since: "2026-06-19"
+  - id: web_quality_skills_assimilated
+    choice: assimilate_addyosmani_performance_a11y_cwv_seo_best_practices_audit
+    reason: gap_critico_frontend_engineering_pilar_30pct_recuperacao
+    since: "2026-06-18"

@@ -1,9 +1,12 @@
-v: '5.2'
-updated: '2026-06-19'
+v: '5.5'
+updated: '2026-06-22'
 session:
-  last_completed: Implementada a infraestrutura completa de aprendizado contínuo (record_session.py,
-    continuous_learner.py, learn.skill e continuous-learning.md)
-  next_action: Executar o QA Gate e verificar no terminal
+  last_completed: >
+    AL0 — Reconciliação de drift do runtime (state/handoff/index/decisions/CONTEXT
+    atualizados de v5.2 → v5.5). Sessão anterior (2026-06-19): sprint 012-continuous-learning
+    entregue (record_session.py, continuous_learner.py, learn.skill, continuous-learning.md,
+    deterministic anti-loop, context token warnings).
+  next_action: Sprint B — evidência executada nos pilotos (E2E Playwright real, dogfood §0g, tokens)
   blocked: false
 qa:
   last_status: pass
@@ -11,119 +14,32 @@ qa:
   last_run_at: '2026-06-19'
   failures_open: []
 feature:
-  id: 012-continuous-learning
-  sprint_contract_path: specs/012-continuous-learning/sprint-contract.md
-  spec_path: specs/012-continuous-learning/spec.md
+  id: al0-runtime-reconcile
+  sprint_contract_path: docs/private/plano-sprint-agentic-loop.md
+  spec_path: null
 user:
   verified_in_browser: false
   verified_at: null
-  notes: 'Sprint A concluída. validate-skills 23/0. Próxima sessão: Sprint B (evidência
-    executada nos pilotos).'
+  notes: 'v5.5 shippado (verificador independente, anti-loop, continuous learning, daemon). AL0 reconciliado 2026-06-22. Próxima: Sprint B.'
 review:
   last_review_path: docs/private/reviews/done/2026-06-12-rtk-review-ASSIMILADO-rtk-opcional-failures-metricas.md
   last_review_at: '2026-06-13'
   reviews_since_improvement_sprint: 0
 context_metrics:
-  last_session_at: '2026-06-19'
-  files_loaded:
-  - AGENTS.md
-  - COMECAR-PROJETO.md
-  - README.md
-  - skills/catalog/accessibility.skill
-  - skills/catalog/action-router.skill
-  - skills/catalog/aw-designer.skill
-  - skills/catalog/best-practices.skill
-  - skills/catalog/context-cleaner.skill
-  - skills/catalog/core-web-vitals.skill
-  - skills/catalog/design-critique.skill
-  - skills/catalog/discovery.skill
-  - skills/catalog/emil-design-eng.skill
-  - skills/catalog/figma-foundation-docs.skill
-  - skills/catalog/figma-implement-design.skill
-  - skills/catalog/figma-make.skill
-  - skills/catalog/fluid-ui.skill
-  - skills/catalog/framing-doc.skill
-  - skills/catalog/hyperframes-cli.skill
-  - skills/catalog/hyperframes-media.skill
-  - skills/catalog/hyperframes.skill
-  - skills/catalog/hypothesis-investigation.skill
-  - skills/catalog/interface-design.skill
-  - skills/catalog/landing-conversion.skill
-  - skills/catalog/learn.skill
-  - skills/catalog/marketplace-curator.skill
-  - skills/catalog/performance.skill
-  - skills/catalog/portfolio-storytelling.skill
-  - skills/catalog/product-vision.skill
-  - skills/catalog/project-starter.skill
-  - skills/catalog/prompt-library.skill
-  - skills/catalog/qa-gate.skill
-  - skills/catalog/qa-playwright.skill
-  - skills/catalog/qa-smoke.skill
-  - skills/catalog/responsive-craft.skill
-  - skills/catalog/retro-analyst.skill
-  - skills/catalog/scroll-animation.skill
-  - skills/catalog/seo.skill
-  - skills/catalog/session-review.skill
-  - skills/catalog/shaping.skill
-  - skills/catalog/storyboard-cinematic.skill
-  - skills/catalog/ux-audit.skill
-  - skills/catalog/ux-diamond.skill
-  - skills/catalog/verify-before-done.skill
-  - skills/catalog/visual-direction-brief.skill
-  - skills/catalog/web-design-cloner.skill
-  - skills/catalog/web-quality-audit.skill
-  - skills/core/runtime/active-feature.yaml
-  - skills/core/runtime/architecture.yaml
-  - skills/core/runtime/context.yaml
-  - skills/core/runtime/decisions.yaml
-  - skills/core/runtime/handoff.yaml
-  - skills/core/runtime/index.yaml
-  - skills/core/runtime/qa.yaml
-  - skills/core/runtime/routes.yaml
-  - skills/core/runtime/rules.yaml
-  - skills/core/runtime/stack.yaml
-  - skills/core/runtime/state.yaml
-  - skills/flows/RULES.md
-  - skills/flows/Start-ops.md
-  - skills/flows/Start.md
-  - skills/flows/action-router.md
-  - skills/flows/bootstrap-cleanup.md
-  - skills/flows/context-scoping.md
-  - skills/flows/continuous-learning.md
-  - skills/flows/debugging-protocol.md
-  - skills/flows/feature-flow.md
-  - skills/flows/gitprotocol.md
-  - skills/flows/host-guard.md
-  - skills/flows/kickoff.md
-  - skills/flows/loop-breaker.md
-  - skills/flows/model-orchestration.md
-  - skills/flows/project-start.md
-  - skills/flows/prompt-engineering.md
-  - skills/flows/qa-protocol.md
-  - skills/flows/repo-hygiene.md
-  - skills/flows/review-reception.md
-  - skills/flows/runtime-protocol.md
-  - skills/flows/skill-intake.md
-  - skills/flows/skill-testing.md
-  - skills/flows/skills-governance.md
-  - skills/flows/stack-guide.md
-  - specs/012-continuous-learning/plan.md
-  - specs/012-continuous-learning/spec.md
-  - specs/012-continuous-learning/sprint-contract.md
-  - specs/012-continuous-learning/tasks.md
-  files_loaded_count: 85
-  estimated_tokens: 111936
-  context_limit_exceeded: true
+  last_session_at: '2026-06-22'
+  files_loaded: []
+  files_loaded_count: 0
+  estimated_tokens: 0
+  context_limit_exceeded: false
   unnecessary_files: []
-  estimation_method: fallback (1 token ≈ 4 caracteres)
+  estimation_method: reset_on_al0_reconcile
 reminders:
-- id: phase_4_playwright
-  when: Ao rodar QA Gate em feature com UI
-  action: 'Fase 4 ativa — rodar pnpm run test:e2e; spec gerado via generate_from_contract:
-    true'
 - id: pre_push_hygiene
   when: Antes de commit ou push
   action: python3 skills/infra/scripts/check-repo-hygiene.py
 - id: sprint_b_prioridade
   when: Próxima sessão
-  action: 'Executar Sprint B: pnpm dev pilotos + E2E Playwright + dogfood §0g + check-spec-coherence.py'
+  action: 'Sprint B: E2E Playwright real + dogfood §0g verificador independente + check-spec-coherence.py + medição de tokens'
+- id: phase_4_playwright
+  when: Ao rodar QA Gate em feature com UI
+  action: 'Fase 4 ativa — rodar pnpm run test:e2e'

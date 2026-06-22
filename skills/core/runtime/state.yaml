@@ -1,36 +1,32 @@
-v: '5.2'
-updated: '2026-06-19'
-framework_v: '5.2'
+v: '5.5'
+updated: '2026-06-22'
+framework_v: '5.5'
 phase:
   id: 5
-  name: Enterprise Runtime + QA Gate
-  previous: ai_native_runtime
-last: 'Sprint A: sync Playwright docs↔runtime; antidrift validator (validate_doc_runtime_sync);
-  index.yaml→v5.2; tag v5.3.0.'
+  name: Agentic Loop Hardening + Continuous Learning
+  previous: Enterprise Runtime + QA Gate
+last: >
+  Agentic Loop Hardening (v5.5.0): verificador independente (escritor ≠ avaliador),
+  adaptive matrix, retro-analyst, daemon watcher, parallel agent queue, continuous
+  learning runtime (record_session.py + continuous_learner.py + learn.skill),
+  deterministic anti-loop (loop-breaker sempre-ativo), context token warnings.
+  Sprint 012-continuous-learning concluída. Tag v5.5.
 next:
+- sprint_b_e2e_playwright_real
+- dogfood_ag0g_verificador_independente
 - browser_5min_pilotos_mantenedor
-- e2e_playwright_pilot_dashboard_pt
-- dogfood_model_tier_feature_ui_lab
-- check_spec_coherence_script
-- template_overrides_pilot_dashboard
 - token_measurement_kickoff_comparison
-- pnpm_workspace_yaml_boilerplates
-- pilot_api_backend_kickoff
-- curadoria_local_skills_33
-- changelog_upgrade_script_pilotos
+- check_spec_coherence_ci
 - case_publico_piloto
 blockers: []
 health:
   runtime_layer: active
   qa_gate: active
   bootstrap_cleanup: active
+  continuous_learning: active
+  loop_breaker: active
 daemon:
   commands:
-  - id: teste_daemon_validation
-    cmd: python3 skills/core/runtime/validate.py
-    status: success
-    exit_code: 0
-    log_path: qa/reports/daemon_teste_daemon_validation.log
-  - id: run_validate_anti_loop
+  - id: al0_reconcile_runtime
     cmd: python3 skills/core/runtime/validate.py
     status: pending
