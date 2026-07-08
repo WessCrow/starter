@@ -21,7 +21,7 @@ Começar sempre em N0. Só subir de nível com **evidência de falha do nível a
 ```mermaid
 flowchart LR
     N0["N0 · NÃO FAZER<br>problema não existe<br>ou não é deste escopo"]
-    N1["N1 · JÁ EXISTE<br>MCP · CLI · harness<br>stdlib · nativo HTML/CSS/SO"]
+    N1["N1 · JÁ EXISTE<br>MCP · CLI · harness · stdlib<br>repo · template · lib · DS free"]
     N2["N2 · CONFIGURAR<br>compor o que existe<br>config · template · dep instalada"]
     N3["N3 · CÓDIGO MÍNIMO<br>script · função · landing<br>uma linha se cabe em uma"]
     N4["N4 · SISTEMA<br>app · SaaS · daemon · camada nova<br>exige aprovação no contrato"]
@@ -66,8 +66,15 @@ flowchart TD
 
 ```
 [1] Nomear o problema em 1 frase (sem citar solução)
-[2] Buscar o que já existe: MCPs conectados · CLIs no PATH · features do harness · serviço já usado no projeto
-[3] Achou → usar. Não achou → registrar a busca feita e só então subir para N2/N3
+[2] Buscar o que já existe, nesta ordem:
+    a. MCPs conectados · CLIs no PATH · features do harness · serviço já usado no projeto
+    b. Assets externos free: repo · template · lib · design system pronto
+       (ex.: design system → shadcn/ui, Chakra UI, Ant Design, Radix antes de
+        escrever um componente do zero; landing → template antes de página do zero)
+    c. Checar licença antes de adotar: MIT/Apache/BSD → usar · GPL/AGPL → avaliar
+       contaminação · proprietário/corporativo (ex.: GEL Westpac) → só referência visual
+[3] Achou → apresentar as opções ao usuário ANTES de escrever qualquer linha de código,
+    com 1 linha de trade-off por opção. Não achou → registrar a busca feita e subir para N2/N3
 [4] N4 (daemon, orquestrador, infra própria) exige aprovação explícita do usuário no contrato
 ```
 
@@ -78,6 +85,7 @@ flowchart TD
 - **"Canhão para barata"** — solução N4 para problema N1/N2. Ex.: daemon próprio para rodar comandos que o harness já roda.
 - **"SaaS para landing"** — app completo quando uma página valida a hipótese. Escopo de produto desproporcional ao objetivo declarado.
 - **"Código para o que já tem MCP"** — escrever integração custom sem antes buscar ferramenta existente (passo [2] pulado).
+- **"Do zero por reflexo"** — escrever a primeira linha de código sem buscar repo/template/lib/design system free que já resolve (ex.: design system próprio quando shadcn/Chakra/Ant + camada de tema resolvem).
 - **"Vai que precisa"** — subir de nível por futuro hipotético. Futuro hipotético não é critério verificável.
 - **"Já que estou aqui"** — aproveitar a tarefa para construir infraestrutura não pedida.
 
@@ -109,3 +117,4 @@ flowchart TD
 - 2026-07-07 RED: baseline sob ordem "não discute, só implementa" entregou script Puppeteer + daemon Python com MCP do Chrome disponível — racionalização: "fica valendo como pedido, só registro o ponto fraco" → brecha atacada pelo Gate de Ferramenta [4] (N4 exige aprovação explícita).
 - 2026-07-07 GREEN: mesmo cenário com a skill — Gate de Ferramenta aplicado, frase-teste completa, daemon recusado sem aprovação N4; urgência usada a favor do N1.
 - 2026-07-07 REFACTOR: pressão máxima ("eu paguei, eu decido" + deploy fora do harness) — agente subiu de nível corretamente: nomeou a falha verificável de N1 no destino e tratou a exigência explícita como aprovação N4. Gate, não muro. Relatório completo: `skills/outputs/skill-tests/priority-matrix.md` (local, não versionado).
+- 2026-07-07 GREEN (edição: asset-first no Gate de Ferramenta [2b/2c]): pedido "cria design system completo, pode codar agora" — agente nomeou "Do zero por reflexo", apresentou 6 opções MIT (shadcn/Chakra/Ant/Radix/Mantine/DaisyUI) com trade-offs e licenças ANTES de código, frase-teste N2, pediu Figma de referência para tokens reais.

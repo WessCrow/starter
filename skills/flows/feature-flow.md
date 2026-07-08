@@ -99,7 +99,7 @@ specs/
 
 #### 🏗️ Classificador de proporcionalidade arquitetural (obrigatório)
 
-> Gate de Arquitetura da `catalog/priority-matrix.skill`. Antes dele, aplicar o **Gate de Ferramenta**: existe MCP, CLI ou feature do harness que elimina tasks deste plan? Busca registrada em `runtime/decisions.yaml` (`tool_choice` + descartes).
+> Gate de Arquitetura da `catalog/priority-matrix.skill`. Antes dele, aplicar o **Gate de Ferramenta**: existe MCP, CLI, feature do harness **ou repo/template/lib/design system free (licença compatível)** que elimina tasks deste plan? Busca registrada em `runtime/decisions.yaml` (`tool_choice` + descartes).
 
 Antes de detalhar a arquitetura, declarar o nível da feature e registrar o que foi descartado:
 

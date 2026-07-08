@@ -131,7 +131,7 @@ A escada YAGNI vive dentro da matriz como **Gate de Código**:
 5. Cabe em uma linha? → uma linha
 6. Só então: o mínimo que funciona
 
-**Gate de Ferramenta:** antes de integrar/automatizar, buscar MCP · CLI · feature do harness já existente (ex.: MCP do Chrome em vez de script de browser; Task/subagent nativo em vez de orquestrador próprio). Achou → usa. Não achou → registra a busca em `decisions.yaml` e só então sobe de nível. **N4 (daemon, orquestrador, infra própria) exige aprovação explícita no contrato.**
+**Gate de Ferramenta:** antes de integrar/automatizar/codar, buscar o que já existe: MCP · CLI · feature do harness · **repo/template/lib/design system free com licença compatível** (ex.: MCP do Chrome em vez de script de browser; Task/subagent nativo em vez de orquestrador próprio; shadcn/Chakra/Ant em vez de design system do zero). Achou → apresenta as opções ao usuário antes da primeira linha de código. Não achou → registra a busca em `decisions.yaml` e só então sobe de nível. **N4 (daemon, orquestrador, infra própria) exige aprovação explícita no contrato.**
 
 **Nunca cortar:** validação de fronteira, tratamento de perda de dados, segurança, acessibilidade.
 
