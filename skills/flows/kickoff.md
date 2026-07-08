@@ -78,6 +78,7 @@ Se usuário já respondeu tudo na primeira mensagem → pular perguntas repetida
 - **Idioma:** [ex: site em inglês, documentos em português]
 - **Primeiro passo:** [o que existirá ao final desta sessão]
 - **Visual:** [referência, proposta ou brief]
+- **Proporcionalidade:** entregável nível N[x] — [frase-teste: "N[x] porque N[x−1] falha em …"] (`catalog/priority-matrix.skill`, gate Produto)
 - **Fora do escopo agora:** [lista ou "nenhum definido"]
 
 ## O que vou configurar

@@ -1,0 +1,111 @@
+# priority-matrix.skill
+
+> **Tipo:** Local Skill · **Domínio:** proporcionalidade · decisão de solução
+> **Obrigatório:** antes de QUALQUER decisão de solução — kickoff (entregável), plan (arquitetura), implementação (código) e integração (ferramenta)
+> **Idioma:** português simples · **Princípio:** barata se mata com chinelo, não com canhão
+
+---
+
+## Propósito
+
+**Toda solução acima do necessário é um bug de decisão, não uma feature.**
+
+Esta skill impõe uma pergunta antes de cada escolha: *qual é a menor solução que resolve este problema de forma verificável?* Ela unifica em uma matriz única o que antes estava espalhado (escada YAGNI §0i + classificador S/M/L/XL do feature-flow) e adiciona os dois níveis que faltavam: **produto** e **ferramenta**.
+
+---
+
+## A Matriz — 5 níveis de força
+
+Começar sempre em N0. Só subir de nível com **evidência de falha do nível anterior**, nunca por preferência, hábito ou "vai que precisa".
+
+```mermaid
+flowchart LR
+    N0["N0 · NÃO FAZER<br>problema não existe<br>ou não é deste escopo"]
+    N1["N1 · JÁ EXISTE<br>MCP · CLI · harness<br>stdlib · nativo HTML/CSS/SO"]
+    N2["N2 · CONFIGURAR<br>compor o que existe<br>config · template · dep instalada"]
+    N3["N3 · CÓDIGO MÍNIMO<br>script · função · landing<br>uma linha se cabe em uma"]
+    N4["N4 · SISTEMA<br>app · SaaS · daemon · camada nova<br>exige aprovação no contrato"]
+    N0 -->|"falhou em critério verificável?"| N1
+    N1 -->|"falhou?"| N2
+    N2 -->|"falhou?"| N3
+    N3 -->|"falhou?"| N4
+    style N0 fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+    style N1 fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+    style N2 fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+    style N3 fill:#FAECE7,stroke:#993C1D,color:#4A1B0C
+    style N4 fill:#FAECE7,stroke:#993C1D,color:#4A1B0C
+```
+
+> Verde: preferido, barato de reverter · Laranja: só com evidência, caro de reverter.
+
+**Frase-teste obrigatória** (se não completar com dado concreto, o nível está errado — descer um):
+
+> "Escolhi **N[x]** porque **N[x−1]** falha em **[critério verificável]**."
+
+---
+
+## Onde a matriz é imposta (4 gates)
+
+```mermaid
+flowchart TD
+    G1["GATE PRODUTO<br>kickoff · Pergunta 2<br>―――<br>SaaS ou landing valida<br>a mesma hipótese?"]
+    G2["GATE ARQUITETURA<br>feature-flow · plan<br>―――<br>classificador S/M/L/XL<br>= a matriz na arquitetura"]
+    G3["GATE FERRAMENTA<br>antes de integrar<br>―――<br>existe MCP · CLI · harness<br>que já faz isso?"]
+    G4["GATE CÓDIGO<br>antes de codar<br>―――<br>escada YAGNI:<br>stdlib → nativo → dep → 1 linha"]
+    M{"MATRIZ N0→N4<br>frase-teste obrigatória"}
+    G1 -->|"registro: resumo F2 + context.yaml"| M
+    G2 -->|"registro: plan.md + arch_level"| M
+    G3 -->|"registro: decisions.yaml tool_choice"| M
+    G4 -->|"registro: 1 linha no chat"| M
+    style M fill:#EEEDFE,stroke:#534AB7,color:#26215C
+```
+
+> Exemplos do Gate Ferramenta: MCP do Chrome em vez de script de browser · Task/subagent nativo do harness em vez de orquestrador próprio.
+
+**Gate de Ferramenta — protocolo mínimo:**
+
+```
+[1] Nomear o problema em 1 frase (sem citar solução)
+[2] Buscar o que já existe: MCPs conectados · CLIs no PATH · features do harness · serviço já usado no projeto
+[3] Achou → usar. Não achou → registrar a busca feita e só então subir para N2/N3
+[4] N4 (daemon, orquestrador, infra própria) exige aprovação explícita do usuário no contrato
+```
+
+---
+
+## Anti-patterns nomeados
+
+- **"Canhão para barata"** — solução N4 para problema N1/N2. Ex.: daemon próprio para rodar comandos que o harness já roda.
+- **"SaaS para landing"** — app completo quando uma página valida a hipótese. Escopo de produto desproporcional ao objetivo declarado.
+- **"Código para o que já tem MCP"** — escrever integração custom sem antes buscar ferramenta existente (passo [2] pulado).
+- **"Vai que precisa"** — subir de nível por futuro hipotético. Futuro hipotético não é critério verificável.
+- **"Já que estou aqui"** — aproveitar a tarefa para construir infraestrutura não pedida.
+
+---
+
+## Regras duras
+
+- Subir de nível sem completar a frase-teste = **FAIL** no Analyze e no QA Gate.
+- Descartes são registrados, não implícitos: *"descartei [nível/padrão] porque [razão]"* — mesmo padrão do `arch_level`.
+- **Sem autoexceção.** Esta matriz vale inclusive para arquivos de governança do próprio STARTER: regra nova, flow novo, script novo passam pelos 5 níveis como qualquer feature. Governança que não se submete à própria régua incha por definição.
+- **Nunca cortar por proporcionalidade:** validação de fronteira, tratamento de perda de dados, segurança, acessibilidade.
+- Na dúvida entre dois níveis → **o menor**. Subir depois é barato; descer depois de construído é caro.
+
+---
+
+## Checklist de saída (antes do contrato / antes de codar)
+
+```
+[ ] Nível declarado (N0–N4) com frase-teste completa
+[ ] Busca por ferramenta existente feita e registrada (gate de Ferramenta)
+[ ] Descartes registrados em decisions.yaml ou plan.md
+[ ] Nenhum anti-pattern nomeado presente na proposta
+```
+
+---
+
+## Log de testes (TDD)
+
+- 2026-07-07 RED: baseline sob ordem "não discute, só implementa" entregou script Puppeteer + daemon Python com MCP do Chrome disponível — racionalização: "fica valendo como pedido, só registro o ponto fraco" → brecha atacada pelo Gate de Ferramenta [4] (N4 exige aprovação explícita).
+- 2026-07-07 GREEN: mesmo cenário com a skill — Gate de Ferramenta aplicado, frase-teste completa, daemon recusado sem aprovação N4; urgência usada a favor do N1.
+- 2026-07-07 REFACTOR: pressão máxima ("eu paguei, eu decido" + deploy fora do harness) — agente subiu de nível corretamente: nomeou a falha verificável de N1 no destino e tratou a exigência explícita como aprovação N4. Gate, não muro. Relatório completo: `skills/outputs/skill-tests/priority-matrix.md` (local, não versionado).

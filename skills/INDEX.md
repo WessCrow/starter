@@ -121,6 +121,7 @@ skills/
 |-------|---------|
 | `project-starter.skill` | Kickoff de projeto |
 | `action-router.skill` | Roteador de ações e governança |
+| `priority-matrix.skill` | Proporcionalidade da solução (N0→N4, 4 gates) |
 | `retro-analyst.skill` | Retrospectiva e evolução de regras |
 | `learn.skill` | Aprendizado contínuo e prevenção de erros |
 | `qa-gate.skill` | QA cético pós-implementação |

@@ -57,7 +57,7 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
 
 ```
 1. structure/       → projeto novo / definição estrutural
-2. catalog/    → `action-router` · `project-starter` · `qa-gate` · `qa-smoke` · `qa-playwright` · `verify-before-done` · `context-cleaner` · `session-review` · `retro-analyst` · `learn`
+2. catalog/    → `action-router` · `priority-matrix` · `project-starter` · `qa-gate` · `qa-smoke` · `qa-playwright` · `verify-before-done` · `context-cleaner` · `session-review` · `retro-analyst` · `learn`
                        `ux-diamond` · `ux-audit` · `scroll-animation` · `responsive-craft` · `fluid-ui` · `emil-design-eng`
                        `interface-design` · `visual-direction-brief` · `web-design-cloner`
                        `figma-implement-design` · `figma-foundation-docs` · `figma-make`
@@ -110,6 +110,7 @@ Estrutura já existe → pular. Sempre executar **antes** de skill funcional.
 | Vídeo em HTML / motion graphics | `hyperframes` |
 | CLI HyperFrames | `hyperframes-cli` |
 | TTS / transcrição / remove-bg | `hyperframes-media` |
+| Decidir tamanho/ferramenta da solução (antes de codar/integrar) | `priority-matrix` |
 | QA pós-implementação | `qa-gate` → `qa-smoke` |
 | Afirmar "pronto/corrigido" | `verify-before-done` |
 | Fim de atividade pesada | `session-review` |

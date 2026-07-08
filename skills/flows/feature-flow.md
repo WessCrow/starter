@@ -99,6 +99,8 @@ specs/
 
 #### 🏗️ Classificador de proporcionalidade arquitetural (obrigatório)
 
+> Gate de Arquitetura da `catalog/priority-matrix.skill`. Antes dele, aplicar o **Gate de Ferramenta**: existe MCP, CLI ou feature do harness que elimina tasks deste plan? Busca registrada em `runtime/decisions.yaml` (`tool_choice` + descartes).
+
 Antes de detalhar a arquitetura, declarar o nível da feature e registrar o que foi descartado:
 
 ```
@@ -138,6 +140,7 @@ Checagem cética, antes de pedir aprovação do contrato:
 [ ] Restam [PRECISA CLARIFICAR] não resolvidos?
 [ ] Os tipos e assinaturas (`types.ts`) estão mapeados, passam no validador do compilador e cobrem todos os caminhos felizes e de exceção?
 [ ] O padrão arquitetural é proporcional ao nível declarado (S/M/L/XL)?
+[ ] Gate de Ferramenta cumprido? (busca por MCP/CLI/harness registrada; nenhum "código para o que já tem MCP")
 ```
 
 Qualquer item reprovado → corrigir artefatos **antes** de seguir. Reportar resultado em 3–5 linhas em português simples.
