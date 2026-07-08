@@ -44,7 +44,7 @@ Como o agente da IDE está contido em um sandbox de segurança e não pode dispa
 ```
 
 ### 1. Mecanismo de Execução de Comandos (Daemon Watcher)
-*   **Arquivo de Controle:** [state.yaml](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/core/runtime/state.yaml)
+*   **Arquivo de Controle:** [state.yaml](../../../../../skills/core/runtime/state.yaml)
 *   **Fluxo:**
     1. O Agente de IA adiciona uma chave `daemon` no final de `state.yaml` contendo a lista de comandos a rodar.
     2. O `daemon_watcher.py` (em execução contínua no terminal do host) detecta os comandos pendentes.

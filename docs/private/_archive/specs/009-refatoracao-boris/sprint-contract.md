@@ -20,11 +20,11 @@
 
 | # | Critério | PASS/FAIL |
 |---|----------|-----------|
-| **1** | O [feature-flow.md](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/flows/feature-flow.md) inclui a obrigação de modelar os tipos de dados principais antes da codificação da feature. | |
-| **2** | O [rules.yaml](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/core/runtime/rules.yaml) bloqueia o uso de `any` e requer o tratamento funcional de erros. | |
-| **3** | O [qa-smoke.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/catalog/qa-smoke.skill) executa `tsc --noEmit` como parte obrigatória do build para detectar erros de tipagem. | |
+| **1** | O [feature-flow.md](../../../../../skills/flows/feature-flow.md) inclui a obrigação de modelar os tipos de dados principais antes da codificação da feature. | |
+| **2** | O [rules.yaml](../../../../../skills/core/runtime/rules.yaml) bloqueia o uso de `any` e requer o tratamento funcional de erros. | |
+| **3** | O [qa-smoke.skill](../../../../../skills/catalog/qa-smoke.skill) executa `tsc --noEmit` como parte obrigatória do build para detectar erros de tipagem. | |
 | **4** | Um script Python em `skills/scripts/calculate_tokens.py` calcula dinamicamente o número aproximado de tokens e atualiza o `handoff.yaml` de forma robusta. | |
-| **5** | O [action-router.md](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/flows/action-router.md) reconhece a flag `#ajuste` e permite a alteração de código com validação rápida local (Fast-Track). | |
+| **5** | O [action-router.md](../../../../../skills/flows/action-router.md) reconhece a flag `#ajuste` e permite a alteração de código com validação rápida local (Fast-Track). | |
 | **6** | Existe um template reutilizável para tratamento funcional de erros (`Result<T, E>`) em `skills/templates/specs/result.ts.template`. | |
 
 ---

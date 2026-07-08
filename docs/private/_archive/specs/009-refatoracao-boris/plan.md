@@ -46,13 +46,13 @@ graph TD
 ## Detalhes de Implementação por Componente
 
 ### 1. Especificações Baseadas em Tipos (Type-First Specs)
-*   **Onde:** [feature-flow.md](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/flows/feature-flow.md)
+*   **Onde:** [feature-flow.md](../../../../../skills/flows/feature-flow.md)
 *   **O que muda:** 
     *   Na Fase 1 (Specify), se for um projeto TypeScript, instruir o agente a criar um arquivo `specs/NNN-nome/types.ts` ou declarar as assinaturas em código no início da especificação.
     *   Integrar a validação de tipos na Fase 5 (Analyze).
 
 ### 2. Compiler-Driven Gates e ESLint Estrito Nativos
-*   **Onde:** [qa-smoke.skill](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/catalog/qa-smoke.skill) e [rules.yaml](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/core/runtime/rules.yaml)
+*   **Onde:** [qa-smoke.skill](../../../../../skills/catalog/qa-smoke.skill) e [rules.yaml](../../../../../skills/core/runtime/rules.yaml)
 *   **O que muda:**
     *   Em `qa-smoke.skill`, se for TypeScript, executar `tsc --noEmit` como passo obrigatório do build. Se o compilador falhar, o build falha.
     *   Em `rules.yaml`, sob `code`, adicionar `typescript: strict` e reforçar a proibição de `any` ou type assertion inseguro.
@@ -63,7 +63,7 @@ graph TD
     *   Criar um script em Python que lê a estrutura do workspace, calcula a quantidade de tokens aproximada utilizando o tokenizer da OpenAI (via biblioteca `tiktoken` ou aproximação matemática baseada em contagem de caracteres por palavra se `tiktoken` não estiver instalado, mantendo robustez sem dependências duras) e grava diretamente no `handoff.yaml` sob a chave `context_metrics`.
 
 ### 4. Pipeline Simplificado de Ajustes (CI Local)
-*   **Onde:** [action-router.md](file:///Users/drt79427/Desktop/Estudos/STARTER/skills/flows/action-router.md)
+*   **Onde:** [action-router.md](../../../../../skills/flows/action-router.md)
 *   **O que muda:**
     *   Adicionar tratamento para o sinal `#ajuste` no roteador, pulando a criação e a validação do `spec.md`/`plan.md` e permitindo a modificação direta com validação no `qa-smoke` local.
 

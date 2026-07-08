@@ -87,7 +87,7 @@ def main():
     parser.add_argument("--transcript", type=str, help="Caminho direto para o transcript.jsonl")
     parser.add_argument("--warn", type=int, default=DEFAULT_WARN_THRESHOLD, help="Limite para avisos")
     parser.add_argument("--hard", type=int, default=DEFAULT_HARD_LIMIT, help="Limite rígido para falha")
-    parser.add_argument("--app-data", type=str, default="/Users/drt79427/.gemini/antigravity-ide", help="Caminho do App Data do Gemini")
+    parser.add_argument("--app-data", type=str, default=str(Path.home() / ".gemini" / "antigravity-ide"), help="Caminho do App Data do Gemini")
     
     args = parser.parse_args()
     
