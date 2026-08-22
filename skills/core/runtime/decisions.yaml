@@ -1,5 +1,5 @@
 v: "5.5"
-updated: "2026-06-22"
+updated: "2026-08-21"
 
 decisions:
   - id: bootstrap_cleanup_auto
@@ -82,3 +82,15 @@ decisions:
     choice: assimilate_addyosmani_performance_a11y_cwv_seo_best_practices_audit
     reason: gap_critico_frontend_engineering_pilar_30pct_recuperacao
     since: "2026-06-18"
+  - id: starter_lite_architecture
+    choice: profile_lite_inside_single_starter_base_arch_level_l
+    reason: n1_existing_runtime_fails_by_imposing_full_feature_documents_on_small_low_risk_work_separate_distribution_would_duplicate_maintenance
+    since: "2026-08-21"
+  - id: starter_lite_tool_choice
+    choice: reuse_action_router_priority_matrix_spec_validator_and_qa_with_clustered_sources_on_demand
+    reason: n2_composition_avoids_new_search_service_crawler_or_parallel_governance_stack
+    since: "2026-08-21"
+  - id: headroom_deferred
+    choice: no_integration_before_real_control_treatment_benchmark
+    reason: current_context_measurement_is_inflated_and_there_is_no_local_evidence_of_net_token_quality_latency_gain
+    since: "2026-08-21"

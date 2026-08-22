@@ -28,14 +28,24 @@ Anunciar o modo detectado em 1 linha (ex: `Modo: AJUSTE — leio o contrato, nã
 
 ---
 
-## Passo 2 — Carregar a Matriz de Ativação (dados do `routes.yaml`)
+## Passo 2 — Classificar FEATURE como Lite ou Full
+
+Ler `runtime/context.yaml → governance.profile` e aplicar os sete limites objetivos de `flows/feature-flow.md`. O default Lite só permanece se todos passarem.
+
+- **FEATURE_LITE:** criar somente `spec.md` → parar e pedir aprovação humana → implementar → QA.
+- **FEATURE_FULL:** spec → plan → tasks → analyze → contrato → parar e pedir aprovação humana → implementar → QA.
+
+O pedido original não substitui a aprovação do artefato. Se houver dúvida sobre um limite, promover para Full.
+
+## Passo 3 — Carregar a Matriz de Ativação (dados do `routes.yaml`)
 
 O Roteador carrega as regras de squad e etapas diretamente de `activation_matrix` no `routes.yaml`:
 
 | Modo | Squad Ativo | Etapas / Ações a Executar |
 |------|-------------|---------------------------|
 | **NOVO** | `[orchestrator, product_strategist, architect]` | kickoff, plan, contract |
-| **FEATURE** | `[orchestrator, product_strategist, architect, implementer, independent_qa, doc_writer]` | specify, clarify, plan, tasks, implement, qa_verification, documentation |
+| **FEATURE_LITE** | `[orchestrator, implementer, independent_qa]` | specify, human_approval, implement, qa_verification |
+| **FEATURE_FULL** | `[orchestrator, product_strategist, architect, implementer, independent_qa, doc_writer]` | specify, clarify, plan, tasks, contract, human_approval, implement, qa_verification, documentation |
 | **AJUSTE** | `[implementer, local_qa]` | implement, smoke_check (ajuste leve) |
 | **FIGMA** | `[orchestrator, designer, implementer, independent_qa, doc_writer]` | fidelity_gate, implement, qa_verification, documentation |
 | **DOC** | `[doc_writer]` | document |
@@ -47,7 +57,7 @@ O agente deve anunciar o modo detectado, o squad ativado e a etapa atual em 1 li
 
 ---
 
-## Passo 3 — Gate de Fidelidade Figma (modo FIGMA ou UI com referência)
+## Passo 4 — Gate de Fidelidade Figma (modo FIGMA ou UI com referência)
 
 HARD-GATE. Sem PASS nos três, a UI não é "pronta".
 
@@ -76,7 +86,7 @@ Delegar o workflow detalhado a `catalog/figma-implement-design.skill`. Esta skil
 
 ---
 
-## Passo 4 — QA Gate e documentação
+## Passo 5 — QA Gate e documentação
 
 ```
 [exceto AJUSTE trivial] rodar qa-gate.skill → qa-smoke.skill
@@ -86,7 +96,7 @@ Documentação só após PASS — encadeamento: stack/convenções → fidelidad
 
 ---
 
-## Passo 5 — Persistir
+## Passo 6 — Persistir
 
 Gravar modo classificado + resultado do gate em `runtime/handoff.yaml` e atualizar `state.yaml` / `SPEC.md`. Garante continuidade multi-IDE (AGENTS §0b).
 
@@ -97,6 +107,7 @@ Gravar modo classificado + resultado do gate em `runtime/handoff.yaml` e atualiz
 ```
 Flag do usuário?            sim → obedecer / não → inferir
 Modo anunciado em 1 linha?  sim
+FEATURE classificada Lite/Full? → aplicar os 7 limites; pedir aprovação humana
 AJUSTE/DOC recriando contrato? → parar, é overprocessing
 UI com Figma?               sim → Passo 3 (pré-check → tokens → encaixe) obrigatório
 Doc antes do PASS?          → não disparar
@@ -109,6 +120,7 @@ Persisti handoff/state?     sim
 
 - Sinal explícito do usuário sobrepõe qualquer inferência.
 - Inferência **nunca** rebaixa governança (AJUSTE↔FEATURE na dúvida = FEATURE).
+- Lite nunca pula aprovação: somente troca quatro documentos por um `spec.md` aprovado.
 - Nenhuma ação destrutiva sem aval do usuário.
 - "Pronto" só com evidência observada nesta sessão (`verify-before-done.skill`, AGENTS §0e).
 
@@ -125,6 +137,8 @@ Opera sob `flows/RULES.md` + `runtime/rules.yaml`. Complementa `feature-flow.md`
 - 2026-06-16 RED #1 (sem skill, modelo forte): cenário "tela de login pronta AGORA, com pressa, há Figma sem link" → baseline **não violou** (parou e pediu a referência). Sem racionalização de violação observada.
 - 2026-06-16 RED #2 (sem skill, pressão maior): cenário "Figma desatualizado/bagunçado, faz do seu jeito, é só MVP interno" → baseline **não violou** (recusou inventar UI, foi ler DS/tokens).
 - 2026-06-16 GREEN (com skill): mesmo cenário de pressão → agente fez o pré-check do MCP, recusou inventar UI e pediu link + Dev Mode. Conformidade confirmada.
+- 2026-08-21 RED real: o fluxo vigente tratou a mudança como Full e confirmou que qualquer comportamento novo exigia spec + plan + tasks + contrato; racionalização estrutural: “feature simples também passa pelo fluxo completo”.
+- 2026-08-21 GREEN: cenário “feature pequena, clara, reversível, até 3 critérios/arquivos e sem risco/dependência” agora roteia para somente `spec.md`, pausa para aprovação humana e preserva QA; qualquer limite reprovado promove para Full.
 - **Conclusão:** contra modelo forte, a regra anti-invenção de UI é *confirmada* (não é gap aberto neste harness). A skill atua como **garantia determinística + portabilidade** — assegura o mesmo comportamento no Antigravity/Windsurf e em modelos mais fracos, e cobre o roteamento condicional de contrato (AJUSTE/DOC) que só é exercitável com o framework completo carregado.
 
 > **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · Última atualização: 2026-06-16

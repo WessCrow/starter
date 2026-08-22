@@ -3,7 +3,9 @@
 > **Feature:** NNN-[nome-kebab]
 > **Projeto:** [nome do projeto]
 > **Criado em:** YYYY-MM-DD
+> **Profile:** Lite | Full
 > **Status:** rascunho | clarificado | aprovado
+> **Aprovação humana:** pendente | sim — YYYY-MM-DD
 > **Protocolo:** `skills/flows/feature-flow.md`
 
 ---

@@ -50,6 +50,28 @@ def load_yaml(path: Path) -> dict:
                     data[k] = v
         return data
 
+
+def resolve_delivery_contract(handoff: dict, repo_root: Path) -> tuple[Path | None, str]:
+    """Resolve contrato Full primeiro e spec Lite como fallback explícito."""
+    feature = handoff.get("feature", {})
+    candidates = (
+        (feature.get("sprint_contract_path"), "full"),
+        (feature.get("spec_path"), "lite"),
+    )
+    for raw_path, profile in candidates:
+        if not raw_path:
+            continue
+        path = (repo_root / raw_path).resolve()
+        try:
+            path.relative_to(repo_root.resolve())
+        except ValueError:
+            continue
+        if path.is_file():
+            return path, profile
+
+    fallback = repo_root / "sprint-contract.md"
+    return (fallback, "full") if fallback.is_file() else (None, "unknown")
+
 def run_cmd(args: list[str], cwd: Path = REPO_ROOT) -> tuple[int, str]:
     """Runs a shell command and returns status and output."""
     try:
@@ -133,7 +155,7 @@ def mock_local_semantic_audit(contract_text: str, diff_text: str) -> str:
     if not contract_text.strip():
         return (
             "#### Análise do Diferencial (Simulação Local)\n"
-            "⚠️ **Aviso**: Contrato de entrega (`sprint-contract.md`) não localizado ou vazio.\n"
+            "⚠️ **Aviso**: contrato de entrega aprovado não localizado ou vazio.\n"
             "Não foi possível cruzar os dados de escopo com as modificações do Git.\n\n"
             "#### Veredito do Auditor Local\n"
             "🟡 **AVALIAÇÃO PARCIAL** (Ambiente local íntegro, mas sem chaves de IA e sem contrato de escopo)."
@@ -153,7 +175,7 @@ def mock_local_semantic_audit(contract_text: str, diff_text: str) -> str:
         for m in matches:
             audit_md += f"- [x] `{m}` (Coerente com escopo)\n"
     else:
-        audit_md += "⚠️ Nenhum arquivo modificado coincide explicitamente com nomes citados no `sprint-contract.md`.\n"
+        audit_md += "⚠️ Nenhum arquivo modificado coincide explicitamente com o contrato de entrega.\n"
         
     if unmatched:
         audit_md += "\nOutros arquivos modificados detectados no diff:\n"
@@ -173,7 +195,7 @@ def mock_local_semantic_audit(contract_text: str, diff_text: str) -> str:
     if matches:
         audit_md += "🟡 **PASS PARCIAL** (Validações locais de build/sintaxe passaram; cobertura de contrato lógica requer IA)."
     else:
-        audit_md += "🟡 **NECESSITA REVISÃO** (Modificações diferem do escopo indicado no contrato. Ajuste os arquivos ou atualize o `sprint-contract.md`)."
+        audit_md += "🟡 **NECESSITA REVISÃO** (Modificações diferem do contrato de entrega aprovado)."
 
     return audit_md
 
@@ -261,20 +283,15 @@ def main():
     qa_conf = load_yaml(RUNTIME_DIR / "qa.yaml")
     handoff = load_yaml(RUNTIME_DIR / "handoff.yaml")
     
-    # 1. Locate Contract
+    # 1. Localizar contrato de entrega (Full) ou spec aprovada (Lite)
     feature_id = handoff.get("feature", {}).get("id", "feature-indefinida")
-    contract_path_str = handoff.get("feature", {}).get("sprint_contract_path", "sprint-contract.md")
-    contract_path = REPO_ROOT / contract_path_str
-    
-    if not contract_path.is_file():
-        contract_path = REPO_ROOT / "sprint-contract.md"
-        
+    contract_path, contract_profile = resolve_delivery_contract(handoff, REPO_ROOT)
     contract_text = ""
-    if contract_path.is_file():
+    if contract_path is not None:
         contract_text = contract_path.read_text(encoding="utf-8")
-        print(f"Contrato localizado: {contract_path.name}")
+        print(f"Contrato de entrega localizado: {contract_path.name} ({contract_profile})")
     else:
-        print("AVISO: sprint-contract.md não localizado no workspace.")
+        print("AVISO: contrato de entrega aprovado não localizado no workspace.")
 
     # 2. Get git modifications
     # Diff against HEAD~1 or staged changes

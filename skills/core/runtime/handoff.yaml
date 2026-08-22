@@ -1,140 +1,91 @@
 v: '5.5'
-updated: '2026-06-22'
+updated: '2026-08-21'
 session:
-  last_completed: 'B6 — Fechamento formal da Sprint B. Arquivados os reviews B1 (Smoke
-    + E2E), B2 (Dogfood §0g), e B4 (Override de template) na pasta reviews/done/,
-    e o relatório de tokens B5 movido para docs/private/delivered/. Todos os scripts
-    de validação passando (11/11 OK).
+  last_completed: 'Feature 013-starter-lite implementada e validada: Lite/Full, Gate
+    de Solução, QA por contrato de entrega e medição explícita de contexto.
 
     '
-  next_action: Validação manual final de 5 min nos pilotos locais + implementação
-    das melhorias de Fallback LLM no independent-qa.py e orçamento de tokens.
+  next_action: Usuário testa um pedido Lite e um pedido que promova para Full.
   blocked: false
 qa:
   last_status: pass
-  last_report_path: qa/reports/2026-06-22-003-filtro-status.md
-  last_run_at: '2026-06-22'
+  last_report_path: qa/reports/2026-08-21-013-starter-lite.md
+  last_run_at: '2026-08-21'
   failures_open: []
 feature:
-  id: 003-filtro-status
-  sprint_contract_path: _lab/pilot-dashboard-pt/specs/003-filtro-status/sprint-contract.md
-  spec_path: _lab/pilot-dashboard-pt/specs/003-filtro-status/spec.md
+  id: 013-starter-lite
+  sprint_contract_path: specs/013-starter-lite/sprint-contract.md
+  spec_path: specs/013-starter-lite/spec.md
 delegation:
-  feature: 003-filtro-status
-  date: '2026-06-22'
+  feature: 013-starter-lite
+  date: '2026-08-21'
   protocol: skills/flows/model-orchestration.md (§0g)
-  delegated:
-  - tasks:
-    - T1
-    - T2
-    to: executor (tier barato — subagent modelo haiku)
-    escopo: edits em web/src/app/clientes/page.tsx — estado statusFilter + useMemo
-      + controle segmentado (~38 linhas), brief autossuficiente, sem decisão de arquitetura
-    resultado: edits aplicados; tipagem conferida por inspeção (sem any/console.log/!important)
+  delegated: []
   not_delegated:
-  - what: spec/plan/sprint-contract/tasks (raciocínio) + T3 QA Gate
-    reason: gates §0g — kickoff/spec e verify-before-done nunca descem de tier
-  ganho_estimado: 'parte mecânica (~38 linhas de edição determinística) movida do
-    tier orquestrador para o tier executor. Economia ~1 round-trip de raciocínio caro;
-    o orquestrador reteve apenas o design da feature e o QA Gate. Primeiro caso real
-    de §0g medido.
-
-    '
+  - what: feature completa
+    reason: gates de spec e QA não são delegáveis; nenhum subagente foi solicitado
+      pelo usuário
+  ganho_estimado: null
 user:
   verified_in_browser: false
   verified_at: null
-  notes: v5.5 shippado (verificador independente, anti-loop, continuous learning,
-    daemon). AL0 reconciliado 2026-06-22. Sprint B concluída e arquivada.
+  notes: Starter Lite com QA PASS; validação humana de cenário Lite/Full pendente.
 review:
   last_review_path: docs/private/reviews/done/2026-06-22-b4-override-template-ASSIMILADO.md
   last_review_at: '2026-06-22'
   reviews_since_improvement_sprint: 3
 context_metrics:
-  last_session_at: '2026-06-22'
+  last_session_at: '2026-08-21'
   files_loaded:
   - AGENTS.md
-  - COMECAR-PROJETO.md
-  - README.md
-  - skills/catalog/accessibility.skill
+  - skills/flows/feature-flow.md
+  - skills/flows/skill-testing.md
+  - skills/flows/action-router.md
+  - skills/flows/qa-protocol.md
+  - skills/catalog/priority-matrix.skill
   - skills/catalog/action-router.skill
-  - skills/catalog/aw-designer.skill
-  - skills/catalog/best-practices.skill
-  - skills/catalog/context-cleaner.skill
-  - skills/catalog/core-web-vitals.skill
-  - skills/catalog/design-critique.skill
-  - skills/catalog/discovery.skill
-  - skills/catalog/emil-design-eng.skill
-  - skills/catalog/figma-foundation-docs.skill
-  - skills/catalog/figma-implement-design.skill
-  - skills/catalog/figma-make.skill
-  - skills/catalog/fluid-ui.skill
-  - skills/catalog/framing-doc.skill
-  - skills/catalog/hyperframes-cli.skill
-  - skills/catalog/hyperframes-media.skill
-  - skills/catalog/hyperframes.skill
-  - skills/catalog/hypothesis-investigation.skill
-  - skills/catalog/interface-design.skill
-  - skills/catalog/landing-conversion.skill
-  - skills/catalog/learn.skill
-  - skills/catalog/marketplace-curator.skill
-  - skills/catalog/performance.skill
-  - skills/catalog/portfolio-storytelling.skill
-  - skills/catalog/product-vision.skill
-  - skills/catalog/project-starter.skill
-  - skills/catalog/prompt-library.skill
   - skills/catalog/qa-gate.skill
   - skills/catalog/qa-playwright.skill
-  - skills/catalog/qa-smoke.skill
-  - skills/catalog/responsive-craft.skill
-  - skills/catalog/retro-analyst.skill
-  - skills/catalog/scroll-animation.skill
-  - skills/catalog/seo.skill
-  - skills/catalog/session-review.skill
-  - skills/catalog/shaping.skill
-  - skills/catalog/storyboard-cinematic.skill
-  - skills/catalog/ux-audit.skill
-  - skills/catalog/ux-diamond.skill
-  - skills/catalog/verify-before-done.skill
-  - skills/catalog/visual-direction-brief.skill
-  - skills/catalog/web-design-cloner.skill
-  - skills/catalog/web-quality-audit.skill
-  - skills/core/runtime/active-feature.yaml
-  - skills/core/runtime/architecture.yaml
-  - skills/core/runtime/context.yaml
-  - skills/core/runtime/decisions.yaml
-  - skills/core/runtime/handoff.yaml
-  - skills/core/runtime/index.yaml
-  - skills/core/runtime/qa.yaml
-  - skills/core/runtime/routes.yaml
-  - skills/core/runtime/rules.yaml
-  - skills/core/runtime/stack.yaml
+  - skills/catalog/solution-sources.yaml
   - skills/core/runtime/state.yaml
-  - skills/flows/RULES.md
-  - skills/flows/Start-ops.md
-  - skills/flows/Start.md
-  - skills/flows/action-router.md
-  - skills/flows/bootstrap-cleanup.md
-  - skills/flows/context-scoping.md
-  - skills/flows/continuous-learning.md
-  - skills/flows/debugging-protocol.md
-  - skills/flows/feature-flow.md
-  - skills/flows/gitprotocol.md
-  - skills/flows/host-guard.md
-  - skills/flows/kickoff.md
-  - skills/flows/loop-breaker.md
-  - skills/flows/model-orchestration.md
-  - skills/flows/project-start.md
-  - skills/flows/prompt-engineering.md
-  - skills/flows/qa-protocol.md
-  - skills/flows/repo-hygiene.md
-  - skills/flows/review-reception.md
-  - skills/flows/runtime-protocol.md
-  - skills/flows/skill-intake.md
-  - skills/flows/skill-testing.md
-  - skills/flows/skills-governance.md
-  - skills/flows/stack-guide.md
-  files_loaded_count: 81
-  estimated_tokens: 109829
+  - skills/core/runtime/handoff.yaml
+  - skills/core/runtime/rules.yaml
+  - skills/core/runtime/context.yaml
+  - skills/core/runtime/active-feature.yaml
+  - skills/core/runtime/decisions.yaml
+  - skills/core/runtime/routes.yaml
+  - skills/core/runtime/qa.yaml
+  - skills/core/runtime/validate.py
+  - skills/core/runtime/schema/context.schema.json
+  - skills/core/runtime/schema/routes.schema.json
+  - skills/core/runtime/schema/qa.schema.json
+  - skills/core/runtime/schema/handoff.schema.json
+  - skills/core/runtime/schema/state.schema.json
+  - skills/core/runtime/schema/decisions.schema.json
+  - skills/core/runtime/schema/active-feature.schema.json
+  - skills/templates/specs/spec-template.md
+  - skills/templates/specs/plan-template.md
+  - skills/templates/specs/tasks-template.md
+  - skills/templates/runtime/context.yaml
+  - skills/templates/runtime/routes.yaml
+  - skills/templates/runtime/qa.yaml
+  - skills/templates/runtime/schema/context.schema.json
+  - skills/templates/runtime/schema/routes.schema.json
+  - skills/templates/runtime/schema/qa.schema.json
+  - skills/infra/scripts/check-spec-coherence.py
+  - skills/infra/scripts/independent-qa.py
+  - skills/infra/tests/test_spec_coherence.py
+  - skills/infra/tests/test_calculate_tokens.py
+  - skills/infra/tests/test_independent_qa.py
+  - skills/scripts/calculate_tokens.py
+  - specs/012-continuous-learning/sprint-contract.md
+  - specs/013-starter-lite/spec.md
+  - specs/013-starter-lite/plan.md
+  - specs/013-starter-lite/tasks.md
+  - specs/013-starter-lite/sprint-contract.md
+  - qa/reports/2026-08-21-013-starter-lite.md
+  files_loaded_count: 47
+  estimated_tokens: 49046
   context_limit_exceeded: true
   unnecessary_files: []
   estimation_method: fallback (1 token ≈ 4 caracteres)

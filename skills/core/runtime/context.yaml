@@ -11,6 +11,9 @@ language:
   docs: pt-BR
   product: pt-BR
 
+governance:
+  profile: lite
+
 runtime:
   path: skills/core/runtime/
   orchestrator: flows/Start-ops.md

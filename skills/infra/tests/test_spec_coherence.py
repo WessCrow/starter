@@ -55,12 +55,53 @@ _COHERENT_TASKS = """\
 | [ ] Implementar Y | teste unitário Y |
 """
 
+_LITE_APPROVED_SPEC = """\
+# Feature Lite aprovada
+> **Profile:** Lite
+> **Status:** aprovado
+> **Aprovação humana:** sim — 2026-08-21
+## Critérios de aceite
+- O sistema deve fazer X
+## Análise de Riscos
+- **Risco:** Risco A — Solução A
+"""
+
+_LITE_PENDING_SPEC = _LITE_APPROVED_SPEC.replace(
+    "**Status:** aprovado", "**Status:** rascunho"
+).replace(
+    "**Aprovação humana:** sim — 2026-08-21", "**Aprovação humana:** pendente"
+)
+
 
 # ---------------------------------------------------------------------------
 # Caso VERMELHO proposital — gate deve reprovar
 # ---------------------------------------------------------------------------
 
 class TestRedCases:
+    def test_lite_sem_aprovacao_humana_falha(self, tmp_path: Path):
+        """Lite nunca autoriza implementação sem aprovação explícita do humano."""
+        root = tmp_path / "specs"
+        _make_spec(
+            root, "095-lite-pending",
+            spec=_LITE_PENDING_SPEC,
+            plan=None,
+            tasks=None,
+        )
+        _, errors = csc.check_spec_coherence(strict=True, spec_roots=[root])
+        assert any("aprovação humana" in error.lower() for error in errors)
+
+    def test_lite_com_documentacao_full_falha(self, tmp_path: Path):
+        """Lite não pode acumular plan, tasks ou contrato."""
+        root = tmp_path / "specs"
+        _make_spec(
+            root, "094-lite-bloated",
+            spec=_LITE_APPROVED_SPEC,
+            plan="# Plano indevido\n",
+            tasks=None,
+        )
+        _, errors = csc.check_spec_coherence(strict=True, spec_roots=[root])
+        assert any("lite" in error.lower() and "plan.md" in error for error in errors)
+
     def test_criterios_sem_tasks_falha(self, tmp_path: Path):
         """spec.md com critérios, tasks.md sem nenhuma task → FAIL."""
         root = tmp_path / "specs"
@@ -115,6 +156,18 @@ class TestRedCases:
 # ---------------------------------------------------------------------------
 
 class TestGreenCases:
+    def test_lite_aprovada_passa_somente_com_spec(self, tmp_path: Path):
+        """Spec Lite aprovada dispensa plan.md e tasks.md."""
+        root = tmp_path / "specs"
+        _make_spec(
+            root, "002-lite",
+            spec=_LITE_APPROVED_SPEC,
+            plan=None,
+            tasks=None,
+        )
+        _, errors = csc.check_spec_coherence(strict=True, spec_roots=[root])
+        assert errors == [], f"Lite aprovada deveria passar só com spec.md: {errors}"
+
     def test_spec_coerente_passa(self, tmp_path: Path):
         """spec + plan + tasks coerentes, com Verificação → sem erros."""
         root = tmp_path / "specs"

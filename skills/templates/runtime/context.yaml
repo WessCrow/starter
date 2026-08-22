@@ -13,6 +13,10 @@ language:
   docs: pt-BR
   product: pt-BR
 
+# Todo projeto começa pequeno. Promover para full somente pelos limites de feature-flow.md.
+governance:
+  profile: lite
+
 runtime:
   index: runtime/index.yaml
   schema: runtime/schema/

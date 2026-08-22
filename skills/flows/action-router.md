@@ -47,14 +47,17 @@ O agente decide o **modo da ação** combinando inferência + sinal explícito. 
 
 ---
 
-## 2. Matriz de Ativação de Squads e Roteamento (v5.5)
+## 2. Perfil da feature e Matriz de Ativação
+
+Depois de classificar `FEATURE`, ler `runtime/context.yaml → governance.profile` e aplicar os sete limites de `feature-flow.md`. O default Lite não força Lite: qualquer limite reprovado promove para Full. Nos dois perfis, parar para aprovação humana antes de implementar.
 
 A governança, os papéis ativos e as etapas obrigatórias de cada ação são obtidas diretamente da `activation_matrix` do `routes.yaml`:
 
 | Modo | Squad Ativo | Etapas / Ações a Executar |
 |------|-------------|---------------------------|
 | **NOVO** | `[orchestrator, product_strategist, architect]` | kickoff, plan, contract |
-| **FEATURE** | `[orchestrator, product_strategist, architect, implementer, independent_qa, doc_writer]` | specify, clarify, plan, tasks, implement, qa_verification, documentation |
+| **FEATURE_LITE** | `[orchestrator, implementer, independent_qa]` | specify, human_approval, implement, qa_verification |
+| **FEATURE_FULL** | `[orchestrator, product_strategist, architect, implementer, independent_qa, doc_writer]` | specify, clarify, plan, tasks, contract, human_approval, implement, qa_verification, documentation |
 | **AJUSTE** | `[implementer, local_qa]` | Fast-Track: implement, local_smoke_check |
 | **FIGMA** | `[orchestrator, designer, implementer, independent_qa, doc_writer]` | fidelity_gate, implement, qa_verification, documentation |
 | **DOC** | `[doc_writer]` | document |
@@ -122,7 +125,7 @@ ENCAIXE NO PROJETO (governança local imposta na fonte):
 
 ```
 1. Classificar modo (§1)
-2. Aplicar contratos do modo (§2)        ← AJUSTE/DOC pulam recriação
+2. Em FEATURE, classificar Lite/Full (§2) ← aprovação humana nos dois
 3. [se UI/Figma] Gate de Fidelidade (§3) ← pré-check → tokens → paridade → encaixe
 4. QA Gate (AGENTS §3 / qa-protocol.md)  ← exceto AJUSTE trivial = smoke leve
 5. [só após PASS] Documentação (§4)
@@ -133,9 +136,9 @@ ENCAIXE NO PROJETO (governança local imposta na fonte):
 
 ## 6. Nunca / Sempre
 
-**Nunca:** recriar contrato em AJUSTE/DOC · gerar UI sem Figma quando há design de referência · hardcodar token · dar "pronto" sem evidência (§0e) · rebaixar governança por inferência sem flag · gerar doc antes do PASS.
+**Nunca:** criar plan/tasks/contrato no Lite · recriar contrato em AJUSTE/DOC · gerar UI sem Figma quando há design de referência · hardcodar token · dar "pronto" sem evidência (§0e) · gerar doc antes do PASS.
 
-**Sempre:** sinal explícito vence a inferência · pré-check de MCP antes de UI Figma · ler `rules.yaml` + contexto antes de codar · na dúvida AJUSTE↔FEATURE, é FEATURE · usuário aprova antes de qualquer ação destrutiva.
+**Sempre:** sinal explícito vence a inferência · FEATURE passa pelos limites Lite/Full · humano aprova antes de implementar · pré-check de MCP antes de UI Figma · ler `rules.yaml` + contexto antes de codar · na dúvida AJUSTE↔FEATURE, é FEATURE.
 
 ---
 
@@ -147,4 +150,4 @@ ENCAIXE NO PROJETO (governança local imposta na fonte):
 
 ---
 
-> **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · Última atualização: 2026-06-16
+> **Autoria:** Wesley Alves · [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · Última atualização: 2026-08-21

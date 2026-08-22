@@ -7,13 +7,13 @@
 
 ---
 
-## 🚧 HARD-GATE — sem código antes de contrato aprovado
+## 🚧 HARD-GATE — sem código antes de aprovação humana
 
-**Não escrever código, não criar arquivo de implementação, não fazer scaffold antes da Fase 6 (contrato aprovado pelo usuário). Isso vale para TODA feature, independente de quão simples ela pareça.**
+**Não escrever código, não criar arquivo de implementação e não fazer scaffold antes do humano aprovar o artefato do perfil:** `spec.md` no Lite; `sprint-contract.md` no Full.
 
 ### Anti-pattern nomeado: "isso é simples demais para precisar de spec"
 
-Essa frase (ou variações: "é só um botão", "o usuário está com pressa", "vou só desta vez") é a racionalização mais comum para pular o fluxo — e é exatamente onde suposições não examinadas causam mais retrabalho. Feature "simples" passa pelo fluxo; o spec pode ter 5 linhas, mas existe e é aprovado.
+Essa frase (ou variações: "é só um botão", "o usuário está com pressa", "vou só desta vez") é a racionalização mais comum para pular o fluxo. Feature pequena passa pelo Lite; o `spec.md` pode ser curto, mas existe e é aprovado.
 
 ### Exceção de ajuste trivial — critérios rígidos (TODOS obrigatórios)
 
@@ -36,7 +36,7 @@ Mesmo trivial: QA Gate continua obrigatório (`qa-gate` + `qa-smoke`).
 
 ## 🎯 Objetivo
 
-O kickoff cobre o **início** do projeto. Este protocolo cobre a **evolução**: toda feature nova passa por um ciclo curto de especificação antes de qualquer código, com rastro em `specs/`.
+O kickoff cobre o **início** do projeto. Este protocolo cobre a **evolução**: toda feature começa pequena, mas cresce para Full quando risco ou complexidade verificável exigir.
 
 Regra central herdada do spec-kit: **o spec define o quê (sem tecnologia); o plan define o como (com tecnologia)**.
 
@@ -44,15 +44,15 @@ Regra central herdada do spec-kit: **o spec define o quê (sem tecnologia); o pl
 
 ## 📂 Estrutura por feature
 
-Cada feature ganha uma pasta numerada na raiz do projeto:
+Cada feature ganha uma pasta numerada. O perfil define o conteúdo:
 
 ```
 specs/
   001-nome-da-feature/
-    spec.md              ← o quê + por quê (sem stack) — com seção Clarificações
-    plan.md              ← como: stack, arquitetura, dados, riscos
-    tasks.md             ← tarefas ordenadas, dependências, marcadores [P]
-    sprint-contract.md   ← contrato aprovado pelo usuário (template existente)
+    spec.md              ← sempre; único documento no Lite
+    plan.md              ← somente Full
+    tasks.md             ← somente Full
+    sprint-contract.md   ← somente Full
 ```
 
 - Numeração sequencial com 3 dígitos (`001`, `002`, …), nome em kebab-case.
@@ -61,20 +61,17 @@ specs/
 
 ---
 
-## 🔁 Fluxo (6 fases)
+## 🔁 Fluxo com promoção
 
 ```
-[1] SPECIFY  → criar specs/NNN-nome/spec.md (o quê, sem tecnologia)
+[1] SPECIFY + CLARIFY → criar spec.md e resolver dúvidas relevantes
         ↓
-[2] CLARIFY  → até 5 perguntas; respostas registradas em "Clarificações" no spec.md
-        ↓
-[3] PLAN     → plan.md (stack, dados, arquitetura) — só após clarify
-        ↓
-[4] TASKS    → tasks.md (ordem, dependências, [P] para paralelizáveis, paths de arquivos)
-        ↓
-[5] ANALYZE  → checagem cruzada spec ↔ plan ↔ tasks ↔ rules.yaml (constitution)
-        ↓
-[6] CONTRATO + IMPLEMENTAÇÃO → sprint-contract.md aprovado → implementar → qa-gate.skill
+[2] CLASSIFICAR → todos os limites Lite passam?
+        ├── SIM → analisar spec ↔ rules → pedir aprovação humana do spec
+        │          → implementar → QA usando spec como contrato
+        └── NÃO → promover para Full → plan → tasks → analyze
+                   → pedir aprovação humana do sprint-contract
+                   → implementar → QA usando sprint-contract
 ```
 
 ### Fase 1 — Specify
@@ -84,14 +81,28 @@ specs/
 - **Type-First Specs (Obrigatório em TS):** Em projetos com tipagem estática, modelar os tipos e contratos centrais do domínio (ex: assinaturas, estados da UI, tipos union de erros) em um arquivo `specs/NNN-nome/types.ts` ou direto no `spec.md` (como blocos de tipos conceituais) para ancorar logicamente o escopo.
 - Marcar pontos vagos com `[PRECISA CLARIFICAR: …]`.
 
-### Fase 2 — Clarify (obrigatória antes do plan)
+### Fase 2 — Clarify
 
 - Uma pergunta por vez, máximo **5**, tom de colega (mesmo estilo do `kickoff.md`).
 - Priorizar os `[PRECISA CLARIFICAR]` de maior impacto (escopo, dados, permissões, estados de erro).
 - Registrar cada resposta na seção **Clarificações** do `spec.md` (data + pergunta + resposta).
-- Pular **somente** se o usuário disser explicitamente que é spike/protótipo descartável — registrar isso no spec.
+- Se não houver ambiguidade material, registrar no spec que a conversa já forneceu as decisões necessárias.
 
-### Fase 3 — Plan
+### Gate Lite/Full
+
+O projeto nasce com `runtime/context.yaml → governance.profile: lite`. Uma feature permanece Lite somente quando **todos** forem verdadeiros:
+
+1. Um comportamento ou entregável pequeno e claramente definido.
+2. No máximo três critérios de aceite.
+3. Estimativa de até três arquivos de implementação alterados.
+4. Sem nova dependência, integração externa, entidade, rota, tabela, migração ou camada arquitetural.
+5. Sem autenticação, autorização, pagamentos, dados sensíveis, operação destrutiva ou risco relevante de perda de dados.
+6. Mudança reversível sem migração.
+7. O humano aprovou explicitamente o `spec.md`.
+
+Falhou qualquer item → marcar `Profile: Full` e seguir as fases abaixo. Nunca reduzir Full para Lite para evitar documentação.
+
+### Fase 3 — Plan (somente Full)
 
 - Decidir stack respeitando `runtime/stack.yaml` do projeto (não reinventar; padrão `flows/stack-guide.md`).
 - Cobrir: arquitetura da feature, modelo de dados, rotas/contratos, riscos, o que **não** será feito.
@@ -99,7 +110,7 @@ specs/
 
 #### 🏗️ Classificador de proporcionalidade arquitetural (obrigatório)
 
-> Gate de Arquitetura da `catalog/priority-matrix.skill`. Antes dele, aplicar o **Gate de Ferramenta**: existe MCP, CLI, feature do harness **ou repo/template/lib/design system free (licença compatível)** que elimina tasks deste plan? Busca registrada em `runtime/decisions.yaml` (`tool_choice` + descartes).
+> Gate de Arquitetura da `catalog/priority-matrix.skill`. Aplicar o **Gate de Solução** somente nos cinco gatilhos definidos: local primeiro; depois um cluster de `solution-sources.yaml`, máximo três candidatos. Registrar escolha e descartes em `runtime/decisions.yaml`.
 
 Antes de detalhar a arquitetura, declarar o nível da feature e registrar o que foi descartado:
 
@@ -121,7 +132,7 @@ Teste de saída desta fase: o agente consegue completar a frase *"Esta feature �
 
 > **Checklist do Analyze (Fase 5):** adicionar item — `[ ] O padrão arquitetural é proporcional ao nível declarado?`
 
-### Fase 4 — Tasks
+### Fase 4 — Tasks (somente Full)
 
 - **Padrão "júnior sem contexto":** escrever cada tarefa para um dev júnior competente que **não conhece o projeto nem leu esta conversa**. Toda tarefa tem: path de arquivo exato + o que fazer + **como verificar** (comando/ação + resultado esperado). Teste mental: uma sessão nova de IA executaria a tarefa só com `tasks.md` + `runtime/*.yaml` + SPEC.md? Se não, falta detalhe.
 - Ordenar por dependência (modelos → serviços → UI). Tarefas independentes recebem `[P]` (paralelizáveis).
@@ -130,7 +141,16 @@ Teste de saída desta fase: o agente consegue completar a frase *"Esta feature �
 
 ### Fase 5 — Analyze (gate de consistência)
 
-Checagem cética, antes de pedir aprovação do contrato:
+No Lite, checar antes de pedir aprovação do `spec.md`:
+
+```
+[ ] Todos os sete limites Lite passam?
+[ ] Critérios e riscos estão preenchidos, sem placeholders?
+[ ] A solução mínima e o Gate de Solução aplicável foram avaliados?
+[ ] rules.yaml e RULES.md continuam respeitados?
+```
+
+No Full, checar antes de pedir aprovação do contrato:
 
 ```
 [ ] Todo critério de aceite do spec.md tem tarefa correspondente em tasks.md?
@@ -140,23 +160,26 @@ Checagem cética, antes de pedir aprovação do contrato:
 [ ] Restam [PRECISA CLARIFICAR] não resolvidos?
 [ ] Os tipos e assinaturas (`types.ts`) estão mapeados, passam no validador do compilador e cobrem todos os caminhos felizes e de exceção?
 [ ] O padrão arquitetural é proporcional ao nível declarado (S/M/L/XL)?
-[ ] Gate de Ferramenta cumprido? (busca por MCP/CLI/harness registrada; nenhum "código para o que já tem MCP")
+[ ] Gate de Solução cumprido quando acionado? (ou marcado não aplicável com motivo)
 ```
 
 Qualquer item reprovado → corrigir artefatos **antes** de seguir. Reportar resultado em 3–5 linhas em português simples.
 
-### Fase 6 — Contrato + Implementação
+### Fase 6 — Aprovação + Implementação
 
-1. Gerar `sprint-contract.md` na pasta da feature (template `templates/sprint-contract.md`) a partir dos critérios do spec.
-2. **Não implementar antes do "sim"** do usuário no contrato.
-3. Implementar seguindo `tasks.md`, marcando tarefas concluídas no próprio arquivo.
-4. Ao final: `qa-gate.skill` (obrigatório) → atualizar `src/features/[feature]/SPEC.md` vivo + `runtime/handoff.yaml` + `runtime/active-feature.yaml`.
+1. Lite: apresentar o `spec.md` e **não implementar antes do "sim"** do usuário; registrar `Status: aprovado` e `Aprovação humana: sim — DATA`.
+2. Full: gerar `sprint-contract.md` e **não implementar antes do "sim"** do usuário.
+3. Implementar; no Full, marcar `tasks.md`. No Lite, executar diretamente contra os critérios do spec.
+4. Rodar `qa-gate.skill`: Lite usa `spec.md` como contrato; Full usa `sprint-contract.md`.
+5. Atualizar `runtime/handoff.yaml` + `runtime/active-feature.yaml` e o SPEC vivo quando existir.
 
 ---
 
 ## ⚖️ Regras
 
-- **Sem código antes da fase 6.** Specify/clarify/plan/tasks são só documentos. Ver HARD-GATE no topo.
+- **Sem código antes da aprovação humana.** O pedido original nunca substitui essa pausa no Lite ou Full.
+- Lite contém somente `spec.md`; criar plan/tasks/contrato nele é overprocessing e falha de coerência.
+- Full mantém specify → clarify → plan → tasks → analyze → contrato.
 - Ajuste trivial **não** passa por este fluxo somente se cumprir os 4 critérios rígidos do HARD-GATE (incluindo declaração explícita no chat) — e mantém QA Gate.
 - `rules.yaml` + `RULES.md` funcionam como **constitution**: toda fase pode ser reprovada por violação deles.
 - Idioma dos artefatos: segue `runtime/context.yaml` → `language.docs` (default português simples, legível por não-programador; exceto blocos de código). Copy de UI implementada segue `language.product`.
@@ -170,4 +193,4 @@ Qualquer item reprovado → corrigir artefatos **antes** de seguir. Reportar res
 > 🔗 [Portfolio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
 >
 > Qualquer reprodução, distribuição ou uso derivado deve manter esta atribuição.
-> Última atualização: 2026-06-09
+> Última atualização: 2026-08-21

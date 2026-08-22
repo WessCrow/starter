@@ -1,19 +1,16 @@
 v: '5.5'
-updated: '2026-06-22'
+updated: '2026-08-21'
 framework_v: '5.5'
 phase:
-  id: 5
-  name: Agentic Loop Hardening + Continuous Learning
-  previous: Enterprise Runtime + QA Gate
+  id: '013'
+  name: Perfil Starter Lite — QA PASS, teste humano pendente
+  previous: Agentic Loop Hardening + Continuous Learning
 last: >
-  Agentic Loop Hardening (v5.5.0): verificador independente (escritor ≠ avaliador),
-  adaptive matrix, retro-analyst, daemon watcher, parallel agent queue, continuous
-  learning runtime (record_session.py + continuous_learner.py + learn.skill),
-  deterministic anti-loop (loop-breaker sempre-ativo), context token warnings.
-  Sprint 012-continuous-learning concluída. Tag v5.5.
-  Sprint B (Evidência & Dogfooding) concluída: B1 (E2E Playwright), B2 (Dogfood §0g),
-  B3 (CI Coherence), B4 (Override de template) e B5 (Tokens) entregues e arquivados.
+  Feature 013 implementada: perfil Lite na base única, spec-only com aprovação humana,
+  promoção para Full, Gate de Solução limitado, QA por contrato de entrega e medição
+  explícita de contexto. QA automático PASS em 2026-08-21.
 next:
+- user_test_starter_lite_and_full
 - browser_5min_pilotos_mantenedor
 - case_publico_piloto
 - refine_independent_qa_llm_fallback
@@ -26,8 +23,11 @@ health:
   bootstrap_cleanup: active
   continuous_learning: active
   loop_breaker: active
+  starter_lite: active
 daemon:
   commands:
   - id: al0_reconcile_runtime
     cmd: python3 skills/core/runtime/validate.py
-    status: pending
+    status: success
+    exit_code: 0
+    log_path: null

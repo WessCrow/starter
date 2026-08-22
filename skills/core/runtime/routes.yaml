@@ -1,5 +1,5 @@
 v: "5.1"
-updated: "2026-05-20"
+updated: "2026-08-21"
 
 resolution:
   order: [local-skills, linked-skills, skills.sh, cache/remote-skills]
@@ -41,9 +41,12 @@ activation_matrix:
   novo:
     squad: [orchestrator, product_strategist, architect]
     steps: [kickoff, plan, contract]
-  feature:
+  feature_lite:
+    squad: [orchestrator, implementer, independent_qa]
+    steps: [specify, human_approval, implement, qa_verification]
+  feature_full:
     squad: [orchestrator, product_strategist, architect, implementer, independent_qa, doc_writer]
-    steps: [specify, clarify, plan, tasks, implement, qa_verification, documentation]
+    steps: [specify, clarify, plan, tasks, contract, human_approval, implement, qa_verification, documentation]
   ajuste:
     squad: [implementer, local_qa]
     steps: [implement, smoke_check]

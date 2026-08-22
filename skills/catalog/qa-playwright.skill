@@ -9,7 +9,7 @@
 
 ## Propósito
 
-Gerar `tests/e2e/[feature].spec.ts` a partir do `sprint-contract.md` e rodar via CLI. Detectar tela branca, erro JS e critérios visuais que passam pelo build mas quebram em runtime.
+Gerar `tests/e2e/[feature].spec.ts` a partir do contrato de entrega aprovado (`spec.md` Lite ou `sprint-contract.md` Full) e rodar via CLI.
 
 ---
 
@@ -18,7 +18,7 @@ Gerar `tests/e2e/[feature].spec.ts` a partir do `sprint-contract.md` e rodar via
 - Feature com interface web (Next.js ou Vite)
 - Após `qa-smoke` (build ok)
 - `runtime/qa.yaml` → `phase_4_playwright.enabled: true`
-- `sprint-contract.md` existe e foi aprovado
+- contrato de entrega existe e foi aprovado pelo humano
 
 **Pular:** API-only · script CLI · `playwright.required: false` no contrato
 
@@ -27,7 +27,7 @@ Gerar `tests/e2e/[feature].spec.ts` a partir do `sprint-contract.md` e rodar via
 ## Fluxo
 
 ```
-[1] Ler sprint-contract.md
+[1] Ler spec.md no Lite ou sprint-contract.md no Full
         ↓
 [2] Verificar se tests/e2e/[feature].spec.ts existe
       NÃO → GERAR (executor Haiku — brief abaixo)
@@ -50,7 +50,7 @@ Gerar `tests/e2e/[feature].spec.ts` a partir do `sprint-contract.md` e rodar via
 Quando precisar gerar o arquivo de teste, usar este brief exato:
 
 ```
-Arquivo: sprint-contract.md (caminho completo)
+Arquivo: contrato de entrega aprovado (caminho completo)
 Tarefa: gerar tests/e2e/[feature-id].spec.ts
 Template: skills/_deferred/phase4-playwright/templates/playwright-smoke.spec.ts.template
 
