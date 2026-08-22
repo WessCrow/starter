@@ -1,90 +1,115 @@
-<!-- lp-github.md = espelho do README.md (fonte). Sincronizar a cada edição do README. -->
+<!-- lp-github.md = espelho do README.md (fonte). Ajuste apenas os caminhos relativos. -->
 
 # STARTER
 
-Framework de regras para agentes de IA construírem software com método: kickoff guiado, contexto enxuto e validação obrigatória antes de qualquer "pronto".
+> **A governança que começa pequena — e só cresce quando o risco exige.**
 
-![Runtime v5.4](https://img.shields.io/badge/Runtime-v5.4-blueviolet?style=flat-square)
-![CI validate](https://github.com/WessCrow/starter/actions/workflows/validate.yml/badge.svg)
-![QA Gate](https://img.shields.io/badge/QA_Gate-build_+_revisão-emerald?style=flat-square)
-![AGENTS.md](https://img.shields.io/badge/Compatível-AGENTS.md-ff69b4?style=flat-square)
+[![Runtime](https://img.shields.io/badge/Runtime-v5.5-8B5CF6?style=flat-square&logo=yaml&logoColor=white)](../../skills/core/runtime/index.yaml)
+[![Starter Lite](https://img.shields.io/badge/Starter-Lite_por_padrão-2563EB?style=flat-square)](../../specs/013-starter-lite/spec.md)
+[![QA Gate](https://img.shields.io/badge/QA_Gate-Ativo-10B981?style=flat-square&logo=github-actions&logoColor=white)](../../skills/catalog/qa-smoke.skill)
+[![License MIT](https://img.shields.io/badge/License-MIT-F59E0B?style=flat-square)](../../LICENSE)
 
----
+O STARTER é uma camada local de governança para agentes de IA que constroem software. Ele reduz o processo quando o pedido é pequeno, promove o trabalho para um fluxo completo quando aparece risco real e mantém aprovação humana, segurança e QA em qualquer tamanho de entrega.
 
-## O que é
-
-Camada de governança entre o usuário e o agente. Não é boilerplate de código nem template visual. Compõe-se de:
-
-- YAML de runtime validado (regras, contexto, stack, decisões); o agente carrega só o necessário por sessão.
-- Skills funcionais (`.skill`) para kickoff, QA, design, debug e refactor.
-- Protocolos de fluxo (`flows/`) que o agente segue.
-- Validadores executáveis que reprovam estrutura inválida ou comando perigoso.
-
-Quem dirige o projeto é o usuário. O framework impede o agente de inventar, pular etapa ou marcar feature como pronta sem o build passar.
+[**Começar em 3 passos**](#comece-em-3-passos) · [Entender Lite → Full](#lite-por-padrão-full-quando-necessário)
 
 ---
 
-## Como usar
+## O problema não é falta de velocidade. É falta de proporção.
+
+Sem regras claras, um agente pode transformar um ajuste pequeno em arquitetura desnecessária — ou tratar uma mudança arriscada como se fosse simples. Nos dois casos, você perde controle: por excesso de processo ou por falta de proteção.
+
+O STARTER dá uma régua objetiva ao agente:
+
+- começar pela menor solução que resolve o problema;
+- pedir aprovação antes de implementar uma feature;
+- aumentar o rigor somente quando escopo, dependência ou risco exigirem;
+- apresentar evidência antes de dizer que algo funciona.
+
+## Lite por padrão, Full quando necessário
+
+O STARTER não é dividido em dois produtos. Existe uma única base, com dois níveis de governança.
+
+| | **Lite** | **Full** |
+|---|---|---|
+| Quando usar | Entrega pequena, clara e reversível | Escopo maior, incerto ou com risco relevante |
+| Documentação | Apenas `spec.md` | `spec.md`, plano, tarefas e contrato de sprint |
+| Limites | Até 3 critérios e 3 arquivos de implementação | Ativado quando qualquer limite Lite falha |
+| Dependências e integrações | Nenhuma nova | Avaliadas e registradas antes da implementação |
+| Aprovação humana | Obrigatória | Obrigatória |
+| QA | Obrigatório | Obrigatório |
+
+Uma feature é promovida para Full antes do código quando envolve nova dependência ou integração, mudança arquitetural, autenticação, pagamentos, dados sensíveis, risco de perda de dados ou escopo que deixou de ser pequeno e definido.
+
+> **Lite não significa “sem processo”.** Significa usar apenas o processo necessário, sem remover as proteções que evitam retrabalho e dano.
+
+## Como o STARTER trabalha
 
 ```text
-1. Copie skills/ + AGENTS.md para a pasta do projeto
-2. No chat do editor, digite: "Começar projeto"
-3. Responda até 4 perguntas e confirme
+Pedido
+  ↓
+Menor solução suficiente (N0 → N4)
+  ↓
+Spec curta e aprovação humana
+  ↓
+Lite permanece pequeno ── ou ── risco promove para Full
+  ↓
+Implementação
+  ↓
+QA Gate + evidência
 ```
 
-O agente infere a stack, monta `runtime/`, gera CONTEXT.md/PRD.md e prepara o primeiro `sprint-contract.md`.
+O agente lê regras e estado diretamente do projeto. Isso mantém as decisões entre sessões e IDEs sem depender da memória do chat.
 
----
+## O que continua obrigatório
 
-## Garantias e mecanismos
+O perfil muda o volume de governança, não o padrão de segurança.
 
-| Garantia | Mecanismo executável |
+| Garantia | Como o STARTER aplica |
 |---|---|
-| Kickoff em ≤4 perguntas, sem jargão | `flows/kickoff.md` + `project-starter.skill` |
-| Validação de estrutura, 0 falhas obrigatório | `validate.py` contra 11 JSON Schemas |
-| Roteamento por tipo de ação | `flows/action-router.md` + `action-router.skill` |
-| QA Gate antes de declarar feature pronta | `qa-gate.skill` (5 dimensões, FAIL se contrato não cumprido) |
-| Build obrigatório | `qa-smoke.skill` (`pnpm run build` ou `npm`) |
-| E2E no browser (Fase 4) | `qa-playwright.skill` (CLI/chromium, spec gerada do contrato) |
-| Host Guard com enforce | Hook `PreToolUse:Bash` → `host-guard.sh` |
-| Spec-driven para nova feature | `flows/feature-flow.md` |
-| Continuidade entre IDEs/sessões | `state.yaml` + `handoff.yaml` |
+| Você continua no controle | Nenhuma feature é implementada antes da aprovação explícita |
+| Solução proporcional | A matriz N0–N4 força o agente a justificar cada aumento de complexidade |
+| Host protegido | O Host Guard bloqueia comandos destrutivos e ações fora do projeto |
+| Entrega verificável | O QA Gate exige validação; na Fase 4, features com UI também passam pelo Playwright |
+| Contexto recuperável | Estado e handoff em YAML preservam decisões entre sessões e IDEs |
+| UI com referência | O Gate de Fidelidade impede inventar uma interface quando existe Figma |
 
----
+## Para quem faz sentido
 
-## O que não entrega
+- Pessoas que constroem software com Cursor, Claude Code, Antigravity, VSCode, Windsurf, Cline ou Roo.
+- Times que querem autonomia do agente sem abrir mão de aprovação e rastreabilidade.
+- Projetos que sofrem tanto com over-engineering quanto com mudanças rápidas sem validação.
+- Mantenedores que preferem regras versionadas no repositório a instruções perdidas no histórico do chat.
 
-- Não é template Next.js; o scaffolding roda quando o agente decide.
-- Não é design system pronto; `design-system-structure.skill` orienta, não gera componentes.
-- Não substitui code review humano; o QA Gate reprova erro óbvio, não substitui senioridade.
-- Não funciona offline puro; depende do agente do editor.
+## O que o STARTER não é
 
----
+- Não é um template visual nem um boilerplate preso a uma stack.
+- Não substitui revisão humana em decisões críticas.
+- Não promete eliminar toda falha de IA.
+- Não cria documentação pesada para toda mudança: trabalhos pequenos permanecem pequenos.
 
-## Fluxo para features
+## Comece em 3 passos
 
-```text
-Pedido → spec.md → clarify (≤5 perguntas) → plan.md → tasks.md → analyze → contrato aprovado → código → QA Gate
-```
+1. Copie [AGENTS.md](../../AGENTS.md) e a pasta [skills/](../../skills) para a raiz do seu projeto.
+2. No chat do seu editor, digite **`Começar projeto`**.
+3. Responda até quatro perguntas, revise o resumo e confirme quando estiver de acordo.
 
-Sem código antes do contrato aprovado, inclusive em features simples.
-
----
+O agente prepara o contexto do projeto e passa a aplicar o fluxo Lite/Full automaticamente. Para uma visão rápida do primeiro uso, consulte [COMECAR-PROJETO.md](../../COMECAR-PROJETO.md).
 
 ## Compatibilidade
 
-| Editor | Status |
+| Ambiente | Como funciona |
 |---|---|
-| Cursor, Claude Code, Antigravity | Nativo (lê `AGENTS.md`) |
-| VSCode, Windsurf, Cline, Roo | Compatível via `AGENTS.md` |
+| Cursor, Claude Code e Antigravity | Leitura nativa das regras do projeto |
+| VSCode, Windsurf, Cline e Roo | Compatível por `AGENTS.md` |
+| macOS, Linux e Windows | Scripts shell no Windows exigem WSL ou Git Bash |
 
-Recursos automatizados (hooks, orquestração por tier) degradam para convenção manual onde o harness não os suporta; nada quebra. Stack padrão: Next.js + pnpm (ou React + Vite). No Windows, os scripts `.sh` exigem WSL ou Git Bash.
+Recursos opcionais, como hooks e orquestração por tier, degradam para convenções manuais quando o editor não oferece suporte. O fluxo principal continua utilizável.
 
----
+## Open source, com licença clara
 
-> Framework open-source mantido por **Wesley Alves**.
-> [Portfólio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)
->
-> Use, estude, evolua. Mantenha os créditos originais.
->
-> **Última atualização:** 2026-06-16
+O STARTER é distribuído sob a [Licença MIT](../../LICENSE). Você pode usar, copiar, modificar e distribuir o projeto, preservando o aviso de copyright e os termos da licença.
+
+Mantido por **Wesley Alves**.
+
+[Portfólio](https://wesscrow.github.io/meu-portfolio/) · [LinkedIn](https://www.linkedin.com/in/wessalves/) · [Behance](https://www.behance.net/wesleyalves)

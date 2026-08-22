@@ -2,14 +2,15 @@ v: '5.5'
 updated: '2026-08-21'
 framework_v: '5.5'
 phase:
-  id: '013'
-  name: Perfil Starter Lite — QA PASS, teste humano pendente
-  previous: Agentic Loop Hardening + Continuous Learning
+  id: '014'
+  name: Landing page Starter Lite + licença MIT — QA PASS, revisão humana pendente
+  previous: Perfil Starter Lite
 last: >
-  Feature 013 implementada: perfil Lite na base única, spec-only com aprovação humana,
-  promoção para Full, Gate de Solução limitado, QA por contrato de entrega e medição
-  explícita de contexto. QA automático PASS em 2026-08-21.
+  Feature 014 implementada: README e LP pública agora comunicam Lite por padrão,
+  promoção para Full, garantias invariantes e adoção em três passos; licença MIT
+  adicionada. QA automático PASS em 2026-08-21.
 next:
+- user_review_lp_and_license
 - user_test_starter_lite_and_full
 - browser_5min_pilotos_mantenedor
 - case_publico_piloto
@@ -24,6 +25,8 @@ health:
   continuous_learning: active
   loop_breaker: active
   starter_lite: active
+  public_lp: active
+  mit_license: active
 daemon:
   commands:
   - id: al0_reconcile_runtime

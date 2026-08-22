@@ -1,92 +1,70 @@
 v: '5.5'
 updated: '2026-08-21'
 session:
-  last_completed: 'Feature 013-starter-lite implementada e validada: Lite/Full, Gate
-    de Solução, QA por contrato de entrega e medição explícita de contexto.
-
-    '
-  next_action: Usuário testa um pedido Lite e um pedido que promova para Full.
+  last_completed: 'Feature 014-lp-starter-lite implementada e validada: nova apresentação
+    pública da proposta Lite/Full e licença MIT adicionada.'
+  next_action: Usuário revisa a apresentação e a licença por 5 minutos.
   blocked: false
 qa:
   last_status: pass
-  last_report_path: qa/reports/2026-08-21-013-starter-lite.md
+  last_report_path: qa/reports/2026-08-21-014-lp-starter-lite.md
   last_run_at: '2026-08-21'
   failures_open: []
 feature:
-  id: 013-starter-lite
-  sprint_contract_path: specs/013-starter-lite/sprint-contract.md
-  spec_path: specs/013-starter-lite/spec.md
+  id: 014-lp-starter-lite
+  sprint_contract_path: null
+  spec_path: specs/014-lp-starter-lite/spec.md
 delegation:
-  feature: 013-starter-lite
+  feature: 014-lp-starter-lite
   date: '2026-08-21'
   protocol: skills/flows/model-orchestration.md (§0g)
   delegated: []
   not_delegated:
-  - what: feature completa
-    reason: gates de spec e QA não são delegáveis; nenhum subagente foi solicitado
-      pelo usuário
+  - what: implementação e QA
+    reason: feature Lite pequena; gates de spec e QA não são delegáveis e nenhum subagente
+      foi solicitado pelo usuário
   ganho_estimado: null
 user:
   verified_in_browser: false
   verified_at: null
-  notes: Starter Lite com QA PASS; validação humana de cenário Lite/Full pendente.
+  notes: Landing page em Markdown com QA PASS; revisão humana do conteúdo e da licença
+    pendente.
 review:
-  last_review_path: docs/private/reviews/done/2026-06-22-b4-override-template-ASSIMILADO.md
-  last_review_at: '2026-06-22'
-  reviews_since_improvement_sprint: 3
+  last_review_path: docs/private/reviews/2026-08-21-014-lp-starter-lite.md
+  last_review_at: '2026-08-21'
+  reviews_since_improvement_sprint: 4
 context_metrics:
   last_session_at: '2026-08-21'
   files_loaded:
   - AGENTS.md
+  - README.md
+  - docs/public/lp-github.md
+  - specs/013-starter-lite/spec.md
+  - specs/014-lp-starter-lite/spec.md
+  - qa/reports/2026-08-21-014-lp-starter-lite.md
   - skills/flows/feature-flow.md
-  - skills/flows/skill-testing.md
   - skills/flows/action-router.md
   - skills/flows/qa-protocol.md
   - skills/catalog/priority-matrix.skill
-  - skills/catalog/action-router.skill
+  - skills/catalog/landing-conversion.skill
   - skills/catalog/qa-gate.skill
-  - skills/catalog/qa-playwright.skill
-  - skills/catalog/solution-sources.yaml
+  - skills/catalog/qa-smoke.skill
+  - skills/catalog/verify-before-done.skill
+  - skills/catalog/session-review.skill
+  - skills/templates/specs/spec-template.md
+  - skills/core/runtime/index.yaml
+  - skills/core/runtime/context.yaml
   - skills/core/runtime/state.yaml
   - skills/core/runtime/handoff.yaml
-  - skills/core/runtime/rules.yaml
-  - skills/core/runtime/context.yaml
   - skills/core/runtime/active-feature.yaml
-  - skills/core/runtime/decisions.yaml
-  - skills/core/runtime/routes.yaml
   - skills/core/runtime/qa.yaml
-  - skills/core/runtime/validate.py
-  - skills/core/runtime/schema/context.schema.json
-  - skills/core/runtime/schema/routes.schema.json
-  - skills/core/runtime/schema/qa.schema.json
+  - skills/core/runtime/schema/active-feature.schema.json
   - skills/core/runtime/schema/handoff.schema.json
   - skills/core/runtime/schema/state.schema.json
-  - skills/core/runtime/schema/decisions.schema.json
-  - skills/core/runtime/schema/active-feature.schema.json
-  - skills/templates/specs/spec-template.md
-  - skills/templates/specs/plan-template.md
-  - skills/templates/specs/tasks-template.md
-  - skills/templates/runtime/context.yaml
-  - skills/templates/runtime/routes.yaml
-  - skills/templates/runtime/qa.yaml
-  - skills/templates/runtime/schema/context.schema.json
-  - skills/templates/runtime/schema/routes.schema.json
-  - skills/templates/runtime/schema/qa.schema.json
-  - skills/infra/scripts/check-spec-coherence.py
-  - skills/infra/scripts/independent-qa.py
-  - skills/infra/tests/test_spec_coherence.py
-  - skills/infra/tests/test_calculate_tokens.py
-  - skills/infra/tests/test_independent_qa.py
   - skills/scripts/calculate_tokens.py
-  - specs/012-continuous-learning/sprint-contract.md
-  - specs/013-starter-lite/spec.md
-  - specs/013-starter-lite/plan.md
-  - specs/013-starter-lite/tasks.md
-  - specs/013-starter-lite/sprint-contract.md
-  - qa/reports/2026-08-21-013-starter-lite.md
-  files_loaded_count: 47
-  estimated_tokens: 49046
-  context_limit_exceeded: true
+  files_loaded_count: 26
+  estimated_tokens: 26458
+  context_limit_exceeded: false
   unnecessary_files: []
   estimation_method: fallback (1 token ≈ 4 caracteres)
 reminders:
