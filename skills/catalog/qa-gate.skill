@@ -29,10 +29,10 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 
 ```
 [ ] runtime/qa.yaml carregado
-[ ] sprint-contract.md existe e foi aprovado pelo usuário
-[ ] Se feature veio do fluxo spec-driven (flows/feature-flow.md):
-    specs/NNN-[feature]/ existe com spec.md + plan.md + tasks.md e a fase
-    Analyze foi executada (sem [PRECISA CLARIFICAR] pendente)
+[ ] Artefato de entrega aprovado pelo humano:
+    Lite → spec.md aprovado; Full → sprint-contract.md aprovado
+[ ] Lite contém somente spec.md; Full contém spec.md + plan.md + tasks.md + contrato
+[ ] Analyze do perfil foi executado, sem [PRECISA CLARIFICAR] pendente
 [ ] handoff.yaml atualizado com feature atual
 [ ] Builder NÃO é este passo — reiniciar mentalmente como QA
 ```
@@ -42,7 +42,7 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 ## Fluxo (v5.5 — Verificador Independente)
 
 ```
-[1] Ler sprint-contract.md + SPEC.md da feature
+[1] Ler o contrato de entrega: spec.md no Lite; sprint-contract.md + SPEC.md no Full
         ↓
 [2] Ler runtime/qa.yaml (pesos, pass_rule, gate.independent_verifier)
         ↓
@@ -63,7 +63,7 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
         ↓
 [6] Pontuar dimensões 0–10 (ver qa.yaml)
         ↓
-[7] Marcar cada critério do contrato PASS/FAIL
+[7] Marcar cada critério do contrato de entrega PASS/FAIL
         ↓
 [7b] Constitution check — a implementação viola runtime/rules.yaml
      ou flows/RULES.md? (segurança, código, acessibilidade)
@@ -89,7 +89,7 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 - Assumir que há bugs até provar o contrário
 - Build falhou → **Estável = FAIL** → status final **FAIL**
 - Regra de `rules.yaml`/`RULES.md` violada → **FAIL** (constitution check)
-- Critério do contrato não testado → **FAIL** com "não verificado"
+- Critério do contrato de entrega não testado → **FAIL** com "não verificado"
 - Não suavizar: bug no fluxo principal = **FAIL**
 
 ---
@@ -133,3 +133,8 @@ Ser o **avaliador separado** do Builder. Reprovar trabalho medíocre ou quebrado
 - `flows/qa-protocol.md`
 - `flows/feature-flow.md` — fluxo spec-driven por feature (specs/NNN-*/)
 - `runtime/handoff.yaml`
+
+## Log de testes (TDD)
+
+- 2026-08-21 RED: QA exigia `sprint-contract.md` para toda feature e tornava o Lite impossível.
+- 2026-08-21 GREEN: Lite usa spec aprovada; Full preserva contrato e documentos atuais.

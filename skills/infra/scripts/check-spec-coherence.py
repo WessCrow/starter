@@ -55,6 +55,18 @@ _TASK_LINE = re.compile(
 _VERIFICATION_COLUMN = re.compile(r"\|\s*verificação\s*\|", re.IGNORECASE)
 _VERIFICATION_SECTION = re.compile(r"^#{1,4}\s+verificação", re.IGNORECASE)
 _VERIFICATION_CELL_FILLED = re.compile(r"\|\s*[^|\s][^|]*\|")
+_PROFILE_LINE = re.compile(
+    r"^\s*>\s*\*\*(?:profile|perfil):\*\*\s*(lite|full)\b",
+    re.IGNORECASE | re.MULTILINE,
+)
+_APPROVED_STATUS = re.compile(
+    r"^\s*>\s*\*\*status:\*\*\s*aprovad[oa]\b",
+    re.IGNORECASE | re.MULTILINE,
+)
+_HUMAN_APPROVAL = re.compile(
+    r"^\s*>\s*\*\*aprova[cç][aã]o humana:\*\*\s*sim\b",
+    re.IGNORECASE | re.MULTILINE,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -135,6 +147,19 @@ def _count_tasks(tasks_text: str) -> int:
     return sum(1 for line in tasks_text.splitlines() if _TASK_LINE.match(line))
 
 
+def _get_profile(spec_text: str) -> str:
+    """Retorna lite/full; specs antigas sem metadado permanecem Full."""
+    match = _PROFILE_LINE.search(spec_text)
+    return match.group(1).lower() if match else "full"
+
+
+def _is_lite(spec_dir: Path) -> bool:
+    spec_path = spec_dir / "spec.md"
+    return spec_path.is_file() and _get_profile(
+        spec_path.read_text(encoding="utf-8")
+    ) == "lite"
+
+
 def _has_verification(tasks_text: str) -> bool:
     """Verifica se tasks.md contém coluna ou seção de Verificação preenchida."""
     lines = tasks_text.splitlines()
@@ -192,10 +217,48 @@ def _check_files_exist(spec_dir: Path) -> tuple[list[str], list[str]]:
     return passes, errors
 
 
+def _check_profile_contract(spec_dir: Path) -> tuple[list[str], list[str]]:
+    """Lite exige spec aprovada e proíbe os três documentos exclusivos do Full."""
+    spec_path = spec_dir / "spec.md"
+    if not spec_path.is_file():
+        return [], []
+
+    spec_text = spec_path.read_text(encoding="utf-8")
+    if _get_profile(spec_text) != "lite":
+        return [f"{spec_dir.name}: perfil Full"], []
+
+    passes: list[str] = []
+    errors: list[str] = []
+    if not _APPROVED_STATUS.search(spec_text) or not _HUMAN_APPROVAL.search(spec_text):
+        errors.append(
+            f"{spec_dir.name}: perfil Lite sem aprovação humana explícita no spec.md"
+        )
+    else:
+        passes.append(f"{spec_dir.name}: spec Lite aprovada pelo humano")
+
+    forbidden = [
+        name
+        for name in ("plan.md", "tasks.md", "sprint-contract.md")
+        if (spec_dir / name).is_file()
+    ]
+    if forbidden:
+        errors.append(
+            f"{spec_dir.name}: perfil Lite contém documentação Full proibida: "
+            + ", ".join(forbidden)
+        )
+    else:
+        passes.append(f"{spec_dir.name}: Lite contém somente spec.md")
+
+    return passes, errors
+
+
 def _check_plan_before_tasks(spec_dir: Path, strict: bool) -> tuple[list[str], list[str]]:
     """(b) plan.md deve existir quando tasks.md existe."""
     passes: list[str] = []
     errors: list[str] = []
+
+    if _is_lite(spec_dir):
+        return passes, errors
 
     has_plan = (spec_dir / "plan.md").is_file()
     has_tasks = (spec_dir / "tasks.md").is_file()
@@ -239,6 +302,12 @@ def _check_criteria_coverage(spec_dir: Path) -> tuple[list[str], list[str]]:
 
     if not valid_criteria:
         errors.append(f"{spec_dir.name}: nenhum critério de aceite válido declarado em spec.md")
+        return passes, errors
+
+    if _is_lite(spec_dir):
+        passes.append(
+            f"{spec_dir.name}: {len(valid_criteria)} critério(s) serão verificados direto no spec Lite"
+        )
         return passes, errors
 
     if not tasks_path.is_file():
@@ -356,6 +425,7 @@ def check_spec_coherence(
     for spec_dir in spec_dirs:
         for check_fn in (
             _check_files_exist,
+            _check_profile_contract,
             lambda d: _check_plan_before_tasks(d, strict),
             _check_criteria_coverage,
             _check_risks_analysis,

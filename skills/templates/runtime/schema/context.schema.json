@@ -25,6 +25,14 @@
       "required": ["docs", "product"],
       "additionalProperties": false
     },
+    "governance": {
+      "type": "object",
+      "properties": {
+        "profile": { "type": "string", "enum": ["lite", "full"] }
+      },
+      "required": ["profile"],
+      "additionalProperties": false
+    },
     "runtime": {
       "type": "object",
       "properties": {

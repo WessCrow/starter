@@ -50,7 +50,7 @@ flowchart LR
 flowchart TD
     G1["GATE PRODUTO<br>kickoff · Pergunta 2<br>―――<br>SaaS ou landing valida<br>a mesma hipótese?"]
     G2["GATE ARQUITETURA<br>feature-flow · plan<br>―――<br>classificador S/M/L/XL<br>= a matriz na arquitetura"]
-    G3["GATE FERRAMENTA<br>antes de integrar<br>―――<br>existe MCP · CLI · harness<br>que já faz isso?"]
+    G3["GATE SOLUÇÃO<br>somente em 5 gatilhos<br>―――<br>local primeiro · cluster relevante<br>máximo 3 candidatos"]
     G4["GATE CÓDIGO<br>antes de codar<br>―――<br>escada YAGNI:<br>stdlib → nativo → dep → 1 linha"]
     M{"MATRIZ N0→N4<br>frase-teste obrigatória"}
     G1 -->|"registro: resumo F2 + context.yaml"| M
@@ -60,22 +60,22 @@ flowchart TD
     style M fill:#EEEDFE,stroke:#534AB7,color:#26215C
 ```
 
-> Exemplos do Gate Ferramenta: MCP do Chrome em vez de script de browser · Task/subagent nativo do harness em vez de orquestrador próprio.
+> Exemplos: MCP do Chrome em vez de script de browser · design system existente em vez de componentes-base próprios. As fontes externas ficam em `solution-sources.yaml` e só são carregadas quando o gate disparar.
 
-**Gate de Ferramenta — protocolo mínimo:**
+**Gate de Solução — protocolo mínimo:**
 
 ```
-[1] Nomear o problema em 1 frase (sem citar solução)
-[2] Buscar o que já existe, nesta ordem:
-    a. MCPs conectados · CLIs no PATH · features do harness · serviço já usado no projeto
-    b. Assets externos free: repo · template · lib · design system pronto
-       (ex.: design system → shadcn/ui, Chakra UI, Ant Design, Radix antes de
-        escrever um componente do zero; landing → template antes de página do zero)
-    c. Checar licença antes de adotar: MIT/Apache/BSD → usar · GPL/AGPL → avaliar
-       contaminação · proprietário/corporativo (ex.: GEL Westpac) → só referência visual
-[3] Achou → apresentar as opções ao usuário ANTES de escrever qualquer linha de código,
-    com 1 linha de trade-off por opção. Não achou → registrar a busca feita e subir para N2/N3
-[4] N4 (daemon, orquestrador, infra própria) exige aprovação explícita do usuário no contrato
+[1] Disparar somente para: nova dependência, componente, integração, ferramenta ou arquitetura.
+    Fora disso → não pesquisar; seguir a matriz local.
+[2] Nomear o problema em 1 frase, sem citar solução.
+[3] Buscar primeiro MCPs conectados, CLIs, harness, serviço e dependência já usados.
+[4] Se o local falhar, carregar somente o cluster relevante de `solution-sources.yaml`.
+[5] Selecionar no máximo 3 candidatos no total. Para cada um informar:
+    adequação · custo de adoção · manutenção · licença/termos · aceitar ou descartar.
+[6] Licença permissiva não significa “usar”: verificar versão, titulares, compatibilidade,
+    obrigações, segurança, atividade do projeto e custo de migração antes de adotar.
+[7] Não achou → registrar busca e descartes em decisions.yaml; só então subir para N2/N3.
+[8] N4 exige aprovação explícita do usuário no contrato Full.
 ```
 
 ---
@@ -98,6 +98,7 @@ flowchart TD
 - **Sem autoexceção.** Esta matriz vale inclusive para arquivos de governança do próprio STARTER: regra nova, flow novo, script novo passam pelos 5 níveis como qualquer feature. Governança que não se submete à própria régua incha por definição.
 - **Nunca cortar por proporcionalidade:** validação de fronteira, tratamento de perda de dados, segurança, acessibilidade.
 - Na dúvida entre dois níveis → **o menor**. Subir depois é barato; descer depois de construído é caro.
+- Não integrar fonte externa apenas para consultá-la; URLs são referências sob demanda.
 
 ---
 
@@ -105,7 +106,7 @@ flowchart TD
 
 ```
 [ ] Nível declarado (N0–N4) com frase-teste completa
-[ ] Busca por ferramenta existente feita e registrada (gate de Ferramenta)
+[ ] Gate de Solução aplicado somente se um dos cinco gatilhos disparou
 [ ] Descartes registrados em decisions.yaml ou plan.md
 [ ] Nenhum anti-pattern nomeado presente na proposta
 ```
@@ -118,3 +119,5 @@ flowchart TD
 - 2026-07-07 GREEN: mesmo cenário com a skill — Gate de Ferramenta aplicado, frase-teste completa, daemon recusado sem aprovação N4; urgência usada a favor do N1.
 - 2026-07-07 REFACTOR: pressão máxima ("eu paguei, eu decido" + deploy fora do harness) — agente subiu de nível corretamente: nomeou a falha verificável de N1 no destino e tratou a exigência explícita como aprovação N4. Gate, não muro. Relatório completo: `skills/outputs/skill-tests/priority-matrix.md` (local, não versionado).
 - 2026-07-07 GREEN (edição: asset-first no Gate de Ferramenta [2b/2c]): pedido "cria design system completo, pode codar agora" — agente nomeou "Do zero por reflexo", apresentou 6 opções MIT (shadcn/Chakra/Ant/Radix/Mantine/DaisyUI) com trade-offs e licenças ANTES de código, frase-teste N2, pediu Figma de referência para tokens reais.
+- 2026-08-21 RED real: proposta inicial acumulou busca geral, Starter separado e compressão antes de medir; racionalização: prevenir over-engineering com mais infraestrutura de governança.
+- 2026-08-21 GREEN: o mesmo pedido mantém uma base, dispara busca somente em cinco decisões, carrega um cluster e limita a três candidatos; Headroom fica adiado até benchmark.

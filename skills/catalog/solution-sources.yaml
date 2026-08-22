@@ -1,0 +1,85 @@
+v: "1.0"
+updated: "2026-08-21"
+
+gate:
+  trigger_on:
+    - new_dependency
+    - new_component
+    - new_integration
+    - new_tool
+    - architecture_change
+  max_candidates_total: 3
+  load_only_relevant_cluster: true
+  search_order:
+    - connected_or_installed
+    - external_cluster
+  license_policy: verify_current_license_and_project_compatibility_before_adoption
+
+clusters:
+  code_projects:
+    use_for: repositorios_templates_bibliotecas_e_implementacoes_existentes
+    sources:
+      - name: GitHub
+        url: https://github.com/
+        role: buscar_repositorios_ativos_e_licencas
+      - name: Package registries
+        url: https://libraries.io/
+        role: verificar_pacotes_manutencao_e_dependencias
+
+  components_design_systems:
+    use_for: componentes_ui_acessiveis_e_design_systems
+    sources:
+      - name: shadcn/ui
+        url: https://ui.shadcn.com/
+      - name: Chakra UI
+        url: https://chakra-ui.com/
+      - name: Radix UI
+        url: https://www.radix-ui.com/
+      - name: Mantine
+        url: https://mantine.dev/
+      - name: Ant Design
+        url: https://ant.design/
+      - name: SnapCN
+        url: https://www.snapcn.dev/docs/components
+        constraint: somente_componentes_remotion
+
+  ui_prompts:
+    use_for: referencias_de_interface_prompts_e_skills_de_ui
+    sources:
+      - name: UI Skills
+        url: https://www.ui-skills.com/
+        constraint: carregar_somente_a_skill_relevante
+      - name: VibePrompts
+        url: https://vibeprompts.dev/
+        constraint: referencia_e_snippet_nao_design_system
+
+  visual_generation:
+    use_for: referencias_e_prompts_para_imagem_ou_video
+    sources:
+      - name: MeiGen
+        url: https://www.meigen.ai/
+        constraint: verificar_termos_do_asset_e_custo_da_api
+      - name: Banana Prompts
+        url: https://www.bananaprompts.xyz/
+        constraint: inspiracao_ate_licenca_do_item_ser_verificada
+
+  code_navigation:
+    use_for: repositorios_grandes_com_busca_e_contexto_de_codigo_dificeis
+    sources:
+      - name: Graft
+        url: https://github.com/NanoNets/Graft
+        constraint: nao_usar_em_projeto_pequeno_sem_ganho_medido
+
+  context_tokens:
+    use_for: compressao_de_contexto_apos_problema_medido
+    sources:
+      - name: Headroom
+        url: https://github.com/headroomlabs-ai/headroom
+        constraint: somente_apos_benchmark_controle_tratamento
+
+  agent_frameworks:
+    use_for: agentes_de_longa_duracao_com_memoria_subagentes_e_planejamento
+    sources:
+      - name: DeepAgents
+        url: https://github.com/langchain-ai/deepagents
+        constraint: n4_nunca_default_lite

@@ -21,17 +21,19 @@ O usuário **não** precisa citar stack. Ver `COMECAR-PROJETO.md` na raiz.
 
 ---
 
-## 0a. Nova feature — fluxo spec-driven (obrigatório)
+## 0a. Nova feature — fluxo spec-driven Lite/Full (obrigatório)
 
 Se o usuário pedir **nova feature/funcionalidade** em projeto já iniciado:
 
 1. Ler `skills/flows/feature-flow.md`
-2. Criar `specs/NNN-nome/` → **specify** (`spec.md` sem tecnologia; obrigatório conter seções de *Critérios de Aceite* e *Análise de Riscos*, ambas preenchidas de forma real e sem placeholders) → **clarify** (≤5 perguntas registradas) → **plan** (`plan.md`) → **tasks** (`tasks.md`, dependências + `[P]`)
-3. **Analyze:** checar spec ↔ plan ↔ tasks ↔ `rules.yaml` antes do contrato (o validador automático do QA Gate rejeita seções ausentes ou placeholders)
-4. `sprint-contract.md` aprovado → implementar → QA Gate (seção 3)
+2. Criar `specs/NNN-nome/spec.md` sem tecnologia, com *Critérios de Aceite*, *Análise de Riscos*, perfil e clarificações reais.
+3. Ler `runtime/context.yaml → governance.profile` e aplicar os limites objetivos de `feature-flow.md`:
+   - **Lite:** somente `spec.md` → análise curta → **parar e pedir aprovação explícita ao humano** → implementar → QA.
+   - **Full:** `spec.md` → `plan.md` → `tasks.md` → Analyze → `sprint-contract.md` → **parar e pedir aprovação explícita ao humano** → implementar → QA.
+4. Qualquer limite Lite que falhar promove para Full antes da implementação; reaproveitar o mesmo `spec.md`.
 
 Templates: `skills/templates/specs/` (resolução: `templates/overrides/` vence o core — ver `templates/overrides/README.md`).
-**HARD-GATE:** sem código antes do contrato aprovado, mesmo em feature "simples". Ajuste trivial só escapa do fluxo cumprindo os 4 critérios rígidos de `feature-flow.md` (≤ ~20 linhas, sem entidade/estado novo, sem comportamento novo visível, **declarado explicitamente no chat**) — e mantém QA. Na dúvida, é feature.
+**HARD-GATE:** sem código antes da aprovação humana — do `spec.md` no Lite ou do `sprint-contract.md` no Full. Ajuste trivial só escapa do fluxo cumprindo os 4 critérios rígidos de `feature-flow.md` (≤ ~20 linhas, sem entidade/estado novo, sem comportamento novo visível, **declarado explicitamente no chat**) — e mantém QA. Na dúvida, é feature.
 
 ---
 
@@ -107,7 +109,7 @@ Decide **o que impor e quando** — corta o overprocessing de governança e imp�
 | Sinal | Modo | Governança imposta |
 |-------|------|--------------------|
 | `#novo` | NOVO | kickoff §0 + `priority-matrix` (gate Produto) + contrato de definição |
-| `#feature` | FEATURE | spec-driven §0a + `priority-matrix` (gates Arquitetura·Ferramenta) + `sprint-contract` |
+| `#feature` | FEATURE | spec-driven §0a + classificação Lite/Full + `priority-matrix`; aprovação humana sempre |
 | `#ajuste` | AJUSTE | **lê** contrato, **não recria** (4 critérios de `feature-flow.md`) |
 | `#figma` | FIGMA | herda contrato + **Gate de Fidelidade** obrigatório |
 | `#doc` | DOC | só documentação (entregável); não recria contrato |
@@ -131,7 +133,7 @@ A escada YAGNI vive dentro da matriz como **Gate de Código**:
 5. Cabe em uma linha? → uma linha
 6. Só então: o mínimo que funciona
 
-**Gate de Ferramenta:** antes de integrar/automatizar/codar, buscar o que já existe: MCP · CLI · feature do harness · **repo/template/lib/design system free com licença compatível** (ex.: MCP do Chrome em vez de script de browser; Task/subagent nativo em vez de orquestrador próprio; shadcn/Chakra/Ant em vez de design system do zero). Achou → apresenta as opções ao usuário antes da primeira linha de código. Não achou → registra a busca em `decisions.yaml` e só então sobe de nível. **N4 (daemon, orquestrador, infra própria) exige aprovação explícita no contrato.**
+**Gate de Solução:** só dispara para nova dependência, componente, integração, ferramenta ou decisão arquitetural. Consultar primeiro recursos locais/conectados e, se necessário, somente o cluster relevante de `catalog/solution-sources.yaml`; apresentar no máximo 3 candidatos com adequação, custo, manutenção e licença. Não achou → registrar em `decisions.yaml`. **N4 exige aprovação explícita no contrato Full.**
 
 **Nunca cortar:** validação de fronteira, tratamento de perda de dados, segurança, acessibilidade.
 
@@ -176,7 +178,7 @@ skills/flows/Start-ops.md
 ## 3. QA Gate — obrigatório após implementar
 
 0. Feature do fluxo spec-driven → fase **Analyze** do `feature-flow.md` concluída  
-1. Existe `sprint-contract.md` aprovado pelo usuário  
+1. Existe contrato de entrega aprovado: `spec.md` no Lite ou `sprint-contract.md` no Full
 2. Executar `qa-gate.skill` (tom **cético**, relatório **PT-BR simples**)  
 3. `qa-smoke.skill` — `pnpm run build` (+ lint/test se scripts existirem; ou `npm` se lock npm)
 4. **FAIL** → não marcar feature pronta; listar correções claras  
@@ -197,11 +199,11 @@ CONTEXT.md · PRD.md · outputs/*.md (salvo pedido)
 
 ## 6. Fase 4 Playwright
 
-**Ativa** — CLI, chromium, `pnpm run test:e2e`. Geração de spec via `generate_from_contract: true`; obrigatório para features UI (`required_for_ui: true`). Scripts em `skills/_deferred/phase4-playwright/`. Não usar modo MCP (frágil).
+**Ativa** — CLI, chromium, `pnpm run test:e2e`. Geração do teste pelo contrato aprovado (`spec.md` Lite ou `sprint-contract.md` Full); obrigatório para features UI. Scripts em `skills/_deferred/phase4-playwright/`. Não usar modo MCP.
 
 ## 7. Pós-sessão
 
-Executar `python3 skills/scripts/calculate_tokens.py` · Atualizar handoff + state · `validate.py` 0 failed
+Executar `python3 skills/scripts/calculate_tokens.py --files <paths efetivamente carregados>` · Atualizar handoff + state · `validate.py` 0 failed
 
 ---
 

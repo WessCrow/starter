@@ -4,7 +4,7 @@ updated: "YYYY-MM-DD"
 gate:
   rigid: true
   block_feature_done_without_pass: true
-  require_sprint_contract: true
+  require_delivery_contract: true
   require_user_browser_check_after_pass: true
 
 report:
