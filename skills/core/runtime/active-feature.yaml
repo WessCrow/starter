@@ -3,12 +3,12 @@ updated: "2026-08-21"
 active: true
 
 feature:
-  id: "013-starter-lite"
-  name: "Perfil Starter Lite"
-  path: "specs/013-starter-lite/spec.md"
+  id: "014-lp-starter-lite"
+  name: "Landing page da proposta Starter Lite"
+  path: "specs/014-lp-starter-lite/spec.md"
 
 spec:
   required: true
 
 status:
-  phase: "qa_pass_user_test_pending"
+  phase: "qa_pass_user_review_pending"
